@@ -18,6 +18,9 @@ class VerifyEmailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Verify email')),
       body: FeaturePlaceholder(
+        // Brand: stacked logo above the form.
+        header: const AppLogo(variant: AppLogoVariant.stacked, size: 72),
+
         title: 'Verify email',
         owner: 'Mogith',
         description: 'Ask the student to open the verification link.',

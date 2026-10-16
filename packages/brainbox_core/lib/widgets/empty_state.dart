@@ -3,21 +3,26 @@ import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_spacing.dart';
 import 'app_button.dart';
+import 'app_logo.dart';
 
 /// Shown when a list has nothing in it yet ("No notes yet").
+///
+/// Without an [icon], the BrAInBox mark is used as the illustration.
 class EmptyState extends StatelessWidget {
   const EmptyState({
     super.key,
     required this.title,
     this.message,
-    this.icon = Icons.inbox_outlined,
+    this.icon,
     this.actionLabel,
     this.onAction,
   });
 
   final String title;
   final String? message;
-  final IconData icon;
+
+  /// Optional icon. When null, the brand mark is shown instead.
+  final IconData? icon;
   final String? actionLabel;
   final VoidCallback? onAction;
 
@@ -30,7 +35,10 @@ class EmptyState extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, size: 56, color: AppColors.muted),
+            if (icon != null)
+              Icon(icon, size: 56, color: AppColors.muted)
+            else
+              const AppLogo(variant: AppLogoVariant.mark, size: 72),
             const SizedBox(height: AppSpacing.lg),
             Text(
               title,

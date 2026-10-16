@@ -19,7 +19,7 @@ class PracticeHubScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(practiceControllerProvider);
     return Scaffold(
-      appBar: AppBar(title: const Text('Practice')),
+      appBar: AppBar(title: const BrandAppBarTitle('Practice')),
       body: state.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, _) => Center(

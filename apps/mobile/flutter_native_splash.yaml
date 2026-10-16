@@ -1,0 +1,18 @@
+# Native splash: what Android shows before Flutter starts. The Flutter
+# SplashScreen (features/splash) then takes over with the brand gradient.
+# Regenerate with `melos run brand:generate` (or
+# `dart run flutter_native_splash:create` in apps/mobile). Commit the output.
+flutter_native_splash:
+  color: "#4F46E5"
+  image: assets/brand/splash_logo_512.png
+  android: true
+  ios: false
+  web: false
+
+  # Android 12+ uses the system splash API, which only shows a centred circle
+  # (768 px of a 1152 px image). splash_logo_512.png would be clipped there, so
+  # android12_splash_1152.png is the same icon (from app_icon_1024.png), only
+  # resized to fit inside that circle.
+  android_12:
+    color: "#4F46E5"
+    image: assets/brand/android12_splash_1152.png

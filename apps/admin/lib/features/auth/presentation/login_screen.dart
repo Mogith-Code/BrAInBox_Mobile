@@ -29,6 +29,21 @@ class LoginScreen extends ConsumerWidget {
           ),
         ),
         data: (summary) => FeaturePlaceholder(
+          // Brand: stacked logo + "Admin portal" above the form.
+          header: const Column(
+            children: [
+              AppLogo(variant: AppLogoVariant.stacked, size: 80),
+              SizedBox(height: AppSpacing.sm),
+              Text(
+                'Admin portal',
+                style: TextStyle(
+                  color: AppColors.muted,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0.5,
+                ),
+              ),
+            ],
+          ),
           title: 'Admin login',
           owner: 'Mogith',
           description:

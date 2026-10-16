@@ -18,6 +18,9 @@ class SignupScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Sign up')),
       body: FeaturePlaceholder(
+        // Brand: stacked logo above the form.
+        header: const AppLogo(variant: AppLogoVariant.stacked, size: 72),
+
         title: 'Sign up',
         owner: 'Mogith',
         description: 'Create an account (name, email, password).',

@@ -21,7 +21,7 @@ class HomeScreen extends ConsumerWidget {
     final state = ref.watch(homeControllerProvider);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
+        title: const BrandAppBarTitle(BrandAssets.appName),
         actions: [
           IconButton(
             tooltip: 'Notifications',

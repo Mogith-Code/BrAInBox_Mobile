@@ -22,11 +22,14 @@ void main() {
     for (final route in AppRoutes.catalog) {
       router.go(route.path);
       await tester.pumpAndSettle();
+      final reason = '${route.title} (${route.path})';
+      expect(tester.takeException(), isNull, reason: reason);
       expect(
-        find.text(route.title),
-        findsWidgets,
-        reason: '${route.path} should show "${route.title}"',
+        router.routerDelegate.currentConfiguration.uri.path,
+        route.path,
+        reason: reason,
       );
+      expect(find.byType(Scaffold), findsWidgets, reason: reason);
     }
   });
 }

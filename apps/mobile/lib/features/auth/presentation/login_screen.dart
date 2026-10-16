@@ -29,6 +29,9 @@ class LoginScreen extends ConsumerWidget {
           ),
         ),
         data: (summary) => FeaturePlaceholder(
+          // Brand: stacked logo above the form.
+          header: const AppLogo(variant: AppLogoVariant.stacked, size: 72),
+
           title: 'Log in',
           owner: 'Mogith',
           description:

@@ -1,4 +1,5 @@
 import 'package:brainbox_core/brainbox_core.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../domain/settings_models.dart';
@@ -24,6 +25,12 @@ class SettingsRepository {
       title: 'Settings',
       message: 'Placeholder data - API not connected yet.',
     );
+  }
+
+  /// The installed app version for Settings > About, e.g. "0.1.0 (1)".
+  Future<String> appVersion() async {
+    final info = await PackageInfo.fromPlatform();
+    return '${info.version} (${info.buildNumber})';
   }
 
   // TODO(samni): add one method per endpoint, e.g.

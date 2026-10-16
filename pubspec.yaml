@@ -15,7 +15,8 @@ workspace:
   - apps/admin
 
 dev_dependencies:
-  melos: ^8.9.0
+  # 7.8.x: flutter_launcher_icons 0.14 needs cli_util 0.4, which melos 8 no longer allows.
+  melos: ^7.8.1
 
 melos:
   name: brainbox
@@ -26,19 +27,18 @@ melos:
       enabled: false
 
   command:
-    run:
-      # Scripts run in every matching package without asking which one.
-      noSelect: true
     bootstrap:
       hooks:
         # Creates lib/firebase_options.dart from the .example stub in each app
         # if it does not exist yet, so the apps compile before Firebase is set up.
         post: dart run tool/ensure_firebase_options.dart
 
+  # Scripts use `melos exec` with filters (not `packageFilters`) so they never
+  # stop to ask "which package?" - that prompt breaks CI.
   scripts:
     analyze:
       description: Analyze every package (fails on any error, warning or info).
-      exec: flutter analyze --fatal-infos .
+      run: melos exec -- flutter analyze --fatal-infos .
 
     format:
       description: Format all Dart code in the repo.
@@ -50,30 +50,24 @@ melos:
 
     gen:
       description: Generate freezed / json_serializable / riverpod code.
-      exec: dart run build_runner build
-      packageFilters:
-        dependsOn: build_runner
+      run: melos exec --depends-on=build_runner -- dart run build_runner build
 
     gen:watch:
-      description: Same as gen, but keeps watching for changes (pick one package).
-      exec: dart run build_runner watch
-      packageFilters:
-        dependsOn: build_runner
+      description: Same as gen, but keeps watching for changes.
+      run: melos exec --depends-on=build_runner -- dart run build_runner watch
 
     test:
       description: Run unit and widget tests in every package that has a test/ folder.
-      exec: flutter test
-      packageFilters:
-        dirExists: test
+      run: melos exec --dir-exists=test -- flutter test
 
     build:apk:
       description: Build the student Android app (debug APK).
-      exec: flutter build apk --debug
-      packageFilters:
-        scope: brainbox_mobile
+      run: melos exec --scope=brainbox_mobile -- flutter build apk --debug
 
     build:web:
-      description: Build the admin web portal.
-      exec: flutter build web
-      packageFilters:
-        scope: brainbox_admin
+      description: Build the admin portal for the web.
+      run: melos exec --scope=brainbox_admin -- flutter build web
+
+    brand:generate:
+      description: Regenerate the Android launcher icon and native splash from apps/mobile/assets/brand (commit the result).
+      run: melos exec --scope=brainbox_mobile -- "dart run flutter_launcher_icons && dart run flutter_native_splash:create"

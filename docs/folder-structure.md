@@ -14,27 +14,30 @@ brainbox-mobile/
 │   ├── workflows/flutter-ci.yml   CI: format, analyze, test, build web (+ APK on main)
 │   ├── pull_request_template.md   PR checklist
 │   └── CODEOWNERS                 folder -> reviewer
-├── docs/                          architecture, this file, API contract
-├── design/                        Figma exports and logo SVGs
+├── docs/                          architecture, this file, API contract, brand guide
+├── design/
+│   └── brand/                     original brand pack (SVG + PNG); see docs/brand.md
 │
 ├── packages/
 │   └── brainbox_core/             shared by both apps
-│       ├── assets/logo/           logo SVG used by AppLogo
+│       ├── assets/brand/          brand SVGs (AppLogo uses icon + mark only)
 │       ├── lib/
 │       │   ├── brainbox_core.dart exports everything below (import only this)
 │       │   ├── config/            Env (--dart-define), FirebaseSetup
 │       │   ├── api/               ApiClient (Dio), AuthInterceptor, ApiException, JobPoller
 │       │   ├── auth/              currentUserProvider (signed-in AppUser)
 │       │   ├── models/            shared freezed models (Unit, Topic, Question...)
-│       │   ├── theme/             AppColors, AppTypography, AppSpacing, AppTheme
-│       │   ├── widgets/           UI kit (AppButton, AppTextField, AiBadge, MasteryRing...)
+│       │   ├── theme/             AppColors, AppTypography, AppSpacing, AppTheme, BrandAssets
+│       │   ├── widgets/           UI kit (AppLogo, AppButton, AppTextField, AiBadge, MasteryRing...)
 │       │   └── utils/             validators, Firebase error messages, formatters
 │       └── test/                  core tests
 │
 └── apps/
     ├── mobile/                    ANDROID STUDENT APP (package id lk.ac.sab.brainbox)
     │   ├── android/               Android project (cleartext HTTP allowed in debug only)
-    │   ├── assets/                images/, icons/, logo/, illustrations/
+    │   ├── assets/                images/, icons/, logo/, illustrations/, brand/ (icon + splash sources)
+    │   ├── flutter_launcher_icons.yaml   launcher icon config (melos run brand:generate)
+    │   ├── flutter_native_splash.yaml    native splash config (melos run brand:generate)
     │   ├── lib/
     │   │   ├── main.dart          Firebase + Hive init, ProviderScope
     │   │   ├── firebase_options.dart.example   stub copied to firebase_options.dart
@@ -44,7 +47,8 @@ brainbox-mobile/
     │   └── integration_test/      app_smoke_test.dart (runs on a device)
     │
     └── admin/                     ADMIN WEB PORTAL
-        ├── web/                   index.html, manifest.json, icons ("BrAInBox Admin")
+        ├── assets/brand/          favicon sources
+        ├── web/                   index.html (+ loading screen), manifest.json, favicon, icons, brand/
         ├── lib/
         │   ├── main.dart
         │   ├── firebase_options.dart.example

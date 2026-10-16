@@ -14,6 +14,7 @@ class FeaturePlaceholder extends StatelessWidget {
     super.key,
     required this.title,
     required this.owner,
+    this.header,
     this.description,
     this.actionLabel,
     this.onAction,
@@ -21,6 +22,9 @@ class FeaturePlaceholder extends StatelessWidget {
 
   final String title;
   final String owner;
+
+  /// Shown at the top instead of the construction icon (e.g. the logo).
+  final Widget? header;
   final String? description;
   final String? actionLabel;
   final VoidCallback? onAction;
@@ -36,11 +40,12 @@ class FeaturePlaceholder extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(
-                Icons.construction_rounded,
-                size: 56,
-                color: AppColors.primary,
-              ),
+              header ??
+                  const Icon(
+                    Icons.construction_rounded,
+                    size: 56,
+                    color: AppColors.primary,
+                  ),
               const SizedBox(height: AppSpacing.lg),
               Text(
                 title,

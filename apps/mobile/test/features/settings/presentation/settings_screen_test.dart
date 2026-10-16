@@ -1,3 +1,4 @@
+import 'package:brainbox_core/brainbox_core.dart';
 import 'package:brainbox_mobile/features/settings/data/settings_repository.dart';
 import 'package:brainbox_mobile/features/settings/domain/settings_models.dart';
 import 'package:brainbox_mobile/features/settings/presentation/settings_screen.dart';
@@ -15,6 +16,7 @@ void main() {
     when(
       () => repository.fetchSummary(),
     ).thenAnswer((_) async => const SettingsSummary(title: 'Test'));
+    when(() => repository.appVersion()).thenAnswer((_) async => '1.2.3 (4)');
 
     await tester.pumpWidget(
       ProviderScope(
@@ -25,6 +27,9 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Coming soon'), findsOneWidget);
+    // Settings > About shows the logo and the version.
+    expect(find.byType(AppLogo), findsOneWidget);
+    expect(find.text('Version 1.2.3 (4)'), findsOneWidget);
     verify(() => repository.fetchSummary()).called(1);
   });
 }

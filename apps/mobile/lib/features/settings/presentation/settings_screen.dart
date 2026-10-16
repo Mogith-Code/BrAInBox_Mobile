@@ -20,22 +20,65 @@ class SettingsScreen extends ConsumerWidget {
     final state = ref.watch(settingsControllerProvider);
     return Scaffold(
       appBar: AppBar(title: const Text('Settings')),
-      body: state.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, _) => Center(
-          child: ErrorBanner(
-            message: '$error',
-            onRetry: () => ref.invalidate(settingsControllerProvider),
+      body: Column(
+        children: [
+          Expanded(
+            child: state.when(
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (error, _) => Center(
+                child: ErrorBanner(
+                  message: '$error',
+                  onRetry: () => ref.invalidate(settingsControllerProvider),
+                ),
+              ),
+              data: (summary) => FeaturePlaceholder(
+                title: 'Settings',
+                owner: 'Samni',
+                description:
+                    'Account, theme, notifications, privacy, about, sign out.\n${summary.message}',
+                actionLabel: 'Back',
+                onAction: () => context.canPop()
+                    ? context.pop()
+                    : context.go(AppRoutes.home),
+              ),
+            ),
           ),
-        ),
-        data: (summary) => FeaturePlaceholder(
-          title: 'Settings',
-          owner: 'Samni',
-          description:
-              'Account, theme, notifications, privacy, about, sign out.\n${summary.message}',
-          actionLabel: 'Back',
-          onAction: () =>
-              context.canPop() ? context.pop() : context.go(AppRoutes.home),
+          const _AboutSection(),
+        ],
+      ),
+    );
+  }
+}
+
+/// Settings > About: the logo, tagline and app version.
+class _AboutSection extends ConsumerWidget {
+  const _AboutSection();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final version = ref.watch(appVersionProvider);
+    final versionText = version.when(
+      data: (v) => 'Version $v',
+      loading: () => 'Version ...',
+      error: (_, _) => 'Version unknown',
+    );
+    return SafeArea(
+      top: false,
+      child: Padding(
+        padding: const EdgeInsets.all(AppSpacing.xl),
+        child: Column(
+          children: [
+            const Divider(),
+            const SizedBox(height: AppSpacing.lg),
+            const AppLogo(variant: AppLogoVariant.stacked, showTagline: true),
+            const SizedBox(height: AppSpacing.md),
+            Text(
+              versionText,
+              style: Theme.of(
+                context,
+              ).textTheme.bodySmall?.copyWith(color: AppColors.muted),
+            ),
+          ],
         ),
       ),
     );

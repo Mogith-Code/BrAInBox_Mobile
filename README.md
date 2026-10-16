@@ -1,3 +1,5 @@
+<p align="center"><img src="docs/logo_horizontal_1200.png" width="420" alt="BrAInBox - Study smarter. Fix what matters."></p>
+
 # BrAInBox – frontend (`brainbox-mobile`)
 
 BrAInBox is an AI study app for Sri Lankan **G.C.E. A/L Biology** students
@@ -25,8 +27,10 @@ The backend (FastAPI) is in a separate repo, **`brainbox-backend`**. Its
 - **Chrome** (for the admin portal).
 - **Melos**, which manages the workspace:
   ```bash
-  dart pub global activate melos
+  dart pub global activate melos 7.8.1
   ```
+  Use **7.8.1**, the version pinned in the root `pubspec.yaml`. Melos 8 can't be
+  used yet because `flutter_launcher_icons` needs an older `cli_util`.
   Make sure the pub cache `bin` folder is on your `PATH`
   (Windows: `%LOCALAPPDATA%\Pub\Cache\bin`). Without it, use `dart run melos ...`.
 
@@ -78,6 +82,7 @@ in the browser's address bar or use the sidebar.
 | `melos run test` | Unit and widget tests in every package |
 | `melos run build:apk` | Debug APK of the student app |
 | `melos run build:web` | Web build of the admin portal |
+| `melos run brand:generate` | Regenerate the Android launcher icon and native splash (see [docs/brand.md](docs/brand.md)) |
 
 Melos 7 and newer read their config from the root `pubspec.yaml` (the `melos:`
 section), so there is no `melos.yaml`. The repo is a
@@ -138,7 +143,7 @@ brainbox-mobile/
 ├── packages/brainbox_core/lib/
 │   ├── config/   api/   auth/   models/   theme/   widgets/   utils/
 ├── docs/        architecture, folder structure, API contract
-├── design/      Figma exports and logo SVGs
+├── design/      Figma exports; brand/ = the original brand pack
 └── .github/     CI, PR template, CODEOWNERS
 ```
 
@@ -175,6 +180,7 @@ More in [docs/architecture.md](docs/architecture.md).
 - Use the theme tokens (`AppColors`, `AppSpacing`, `Theme.of(context).textTheme`)
   and the widgets in `brainbox_core` (`AppButton`, `AppTextField`...). No hard-coded colors.
 - Show `AiBadge` on **every** piece of AI-generated content.
+- Use the `AppLogo` widget for the logo. Never render the wordmark SVGs in Flutter (see [docs/brand.md](docs/brand.md)).
 - Use the route constants in `AppRoutes` / `AdminRoutes`. Don't type paths.
 - No secrets in the repo, ever.
 - Mark unfinished work with `// TODO(<your-handle>): ...`.

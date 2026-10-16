@@ -1,3 +1,4 @@
+import 'package:brainbox_core/brainbox_core.dart';
 import 'package:brainbox_mobile/features/splash/data/splash_repository.dart';
 import 'package:brainbox_mobile/features/splash/domain/splash_models.dart';
 import 'package:brainbox_mobile/features/splash/presentation/splash_screen.dart';
@@ -9,7 +10,7 @@ import 'package:mocktail/mocktail.dart';
 class _MockRepository extends Mock implements SplashRepository {}
 
 void main() {
-  testWidgets('SplashScreen shows data from the repository', (tester) async {
+  testWidgets('SplashScreen shows the logo, then Get started', (tester) async {
     // Fake the data layer so the test never touches the network.
     final repository = _MockRepository();
     when(
@@ -24,7 +25,8 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Coming soon'), findsOneWidget);
+    expect(find.byType(AppLogo), findsOneWidget);
+    expect(find.text('Get started'), findsOneWidget);
     verify(() => repository.fetchSummary()).called(1);
   });
 }

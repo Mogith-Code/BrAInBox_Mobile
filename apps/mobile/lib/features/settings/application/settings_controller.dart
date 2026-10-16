@@ -33,3 +33,8 @@ class SettingsController extends _$SettingsController {
   // TODO(samni): add one method per user action (submit, delete, generate...).
   // Each one calls the repository and updates `state`.
 }
+
+/// The app version shown in Settings > About.
+@riverpod
+Future<String> appVersion(Ref ref) =>
+    ref.watch(settingsRepositoryProvider).appVersion();

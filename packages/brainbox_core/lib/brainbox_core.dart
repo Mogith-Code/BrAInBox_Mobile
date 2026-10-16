@@ -38,6 +38,7 @@ export 'theme/app_colors.dart';
 export 'theme/app_spacing.dart';
 export 'theme/app_theme.dart';
 export 'theme/app_typography.dart';
+export 'theme/brand_assets.dart';
 
 // Widgets
 export 'widgets/ai_badge.dart';
@@ -45,6 +46,7 @@ export 'widgets/ai_generating_loader.dart';
 export 'widgets/app_button.dart';
 export 'widgets/app_logo.dart';
 export 'widgets/app_text_field.dart';
+export 'widgets/brand_app_bar_title.dart';
 export 'widgets/empty_state.dart';
 export 'widgets/error_banner.dart';
 export 'widgets/feature_placeholder.dart';

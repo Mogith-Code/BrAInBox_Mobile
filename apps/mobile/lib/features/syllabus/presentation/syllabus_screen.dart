@@ -19,7 +19,7 @@ class SyllabusScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(syllabusControllerProvider);
     return Scaffold(
-      appBar: AppBar(title: const Text('Learn')),
+      appBar: AppBar(title: const BrandAppBarTitle('Learn')),
       body: state.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, _) => Center(

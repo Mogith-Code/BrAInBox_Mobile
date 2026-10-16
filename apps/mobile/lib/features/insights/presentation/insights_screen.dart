@@ -19,7 +19,7 @@ class InsightsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(insightsControllerProvider);
     return Scaffold(
-      appBar: AppBar(title: const Text('Insights')),
+      appBar: AppBar(title: const BrandAppBarTitle('Insights')),
       body: state.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, _) => Center(

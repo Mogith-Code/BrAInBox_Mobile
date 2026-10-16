@@ -17,6 +17,12 @@ abstract final class AppColors {
   static const Color error = Color(0xFFEF4444);
   static const Color white = Color(0xFFFFFFFF);
 
+  // Logo colours on dark / gradient backgrounds (from the brand pack).
+  static const Color aiHighlightOnDark = Color(
+    0xFFA5F3FC,
+  ); // "AI" in the wordmark
+  static const Color taglineOnDark = Color(0xFFE0E7FF);
+
   // Dark mode surfaces. Not in the brand sheet yet.
   // TODO(samni): replace with the Figma dark palette when it exists.
   static const Color darkBackground = Color(0xFF0F0E24);

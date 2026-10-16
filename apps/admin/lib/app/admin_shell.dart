@@ -11,8 +11,10 @@ typedef AdminNavItem = ({String label, IconData icon, String path});
 
 /// Layout for every admin page: a left sidebar and a top bar.
 ///
-/// - Wide screens (>= 1000 px): the sidebar is always visible.
-/// - Narrow screens: the sidebar moves into a drawer (hamburger menu).
+/// - Wide screens (>= 1000 px): expanded sidebar with the horizontal logo.
+/// - Medium screens (700 - 1000 px): collapsed sidebar (icons + logo icon).
+/// - Small screens: the sidebar moves into a drawer; the top bar shows the
+///   logo icon next to the page title.
 ///
 // TODO(samni): match the admin layout in Figma.
 class AdminShell extends ConsumerWidget {
@@ -81,6 +83,7 @@ class AdminShell extends ConsumerWidget {
   ];
 
   static const double _wideBreakpoint = 1000;
+  static const double _mediumBreakpoint = 700;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -96,24 +99,28 @@ class AdminShell extends ConsumerWidget {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        final isWide = constraints.maxWidth >= _wideBreakpoint;
-        final sidebar = _Sidebar(
-          selectedIndex: selected,
-          closeDrawerOnTap: !isWide,
-        );
+        final width = constraints.maxWidth;
 
-        if (!isWide) {
+        // Small: drawer + app bar with the logo icon.
+        if (width < _mediumBreakpoint) {
           return Scaffold(
-            appBar: AppBar(title: Text(title), actions: [signOut]),
-            drawer: Drawer(child: sidebar),
+            appBar: AppBar(title: BrandAppBarTitle(title), actions: [signOut]),
+            drawer: Drawer(
+              child: _Sidebar(selectedIndex: selected, closeDrawerOnTap: true),
+            ),
             body: child,
           );
         }
 
+        // Medium: collapsed sidebar. Wide: expanded sidebar.
+        final collapsed = width < _wideBreakpoint;
         return Scaffold(
           body: Row(
             children: [
-              SizedBox(width: 260, child: sidebar),
+              SizedBox(
+                width: collapsed ? 80 : 260,
+                child: _Sidebar(selectedIndex: selected, collapsed: collapsed),
+              ),
               const VerticalDivider(width: 1),
               Expanded(
                 child: Column(
@@ -133,10 +140,24 @@ class AdminShell extends ConsumerWidget {
 }
 
 class _Sidebar extends StatelessWidget {
-  const _Sidebar({required this.selectedIndex, required this.closeDrawerOnTap});
+  const _Sidebar({
+    required this.selectedIndex,
+    this.collapsed = false,
+    this.closeDrawerOnTap = false,
+  });
 
   final int selectedIndex;
+
+  /// Icons only, with the logo icon at the top.
+  final bool collapsed;
+
+  /// Close the drawer after a tap (small screens).
   final bool closeDrawerOnTap;
+
+  void _open(BuildContext context, String path) {
+    if (closeDrawerOnTap) Scaffold.of(context).closeDrawer();
+    context.go(path);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -147,37 +168,48 @@ class _Sidebar extends StatelessWidget {
         child: ListView(
           padding: const EdgeInsets.all(AppSpacing.md),
           children: [
+            // Brand: horizontal logo when expanded, icon when collapsed.
             Padding(
               padding: const EdgeInsets.all(AppSpacing.sm),
-              child: Row(
-                children: [
-                  const AppLogo(size: 36),
-                  const SizedBox(width: AppSpacing.md),
-                  Flexible(
-                    child: Text(
-                      'BrAInBox Admin',
-                      style: Theme.of(context).textTheme.titleMedium,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ],
+              child: Align(
+                alignment: collapsed ? Alignment.center : Alignment.centerLeft,
+                child: collapsed
+                    ? const AppLogo(size: 32)
+                    : const AppLogo(
+                        variant: AppLogoVariant.horizontal,
+                        size: 32,
+                      ),
               ),
             ),
             const SizedBox(height: AppSpacing.lg),
             for (var i = 0; i < items.length; i++)
-              ListTile(
-                leading: Icon(items[i].icon),
-                title: Text(items[i].label),
-                selected: i == selectedIndex,
-                selectedTileColor: AppColors.primary.withValues(alpha: 0.08),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(AppSpacing.radiusSm),
+              if (collapsed)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: AppSpacing.xs),
+                  child: IconButton(
+                    tooltip: items[i].label,
+                    isSelected: i == selectedIndex,
+                    icon: Icon(items[i].icon),
+                    color: i == selectedIndex ? AppColors.primary : null,
+                    style: IconButton.styleFrom(
+                      backgroundColor: i == selectedIndex
+                          ? AppColors.primary.withValues(alpha: 0.08)
+                          : null,
+                    ),
+                    onPressed: () => _open(context, items[i].path),
+                  ),
+                )
+              else
+                ListTile(
+                  leading: Icon(items[i].icon),
+                  title: Text(items[i].label),
+                  selected: i == selectedIndex,
+                  selectedTileColor: AppColors.primary.withValues(alpha: 0.08),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(AppSpacing.radiusSm),
+                  ),
+                  onTap: () => _open(context, items[i].path),
                 ),
-                onTap: () {
-                  if (closeDrawerOnTap) Scaffold.of(context).closeDrawer();
-                  context.go(items[i].path);
-                },
-              ),
           ],
         ),
       ),

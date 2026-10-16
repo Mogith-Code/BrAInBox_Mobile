@@ -19,7 +19,10 @@ class OnboardingScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(onboardingControllerProvider);
     return Scaffold(
-      appBar: AppBar(title: const Text('Onboarding')),
+      appBar: AppBar(
+        // Brand: small horizontal logo at the top of the welcome carousel.
+        title: const AppLogo(variant: AppLogoVariant.horizontal, size: 32),
+      ),
       body: state.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, _) => Center(

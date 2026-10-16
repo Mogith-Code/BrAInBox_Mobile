@@ -18,6 +18,9 @@ class ForgotPasswordScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Forgot password')),
       body: FeaturePlaceholder(
+        // Brand: stacked logo above the form.
+        header: const AppLogo(variant: AppLogoVariant.stacked, size: 72),
+
         title: 'Forgot password',
         owner: 'Mogith',
         description: 'Send a password reset email.',

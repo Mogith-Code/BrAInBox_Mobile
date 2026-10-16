@@ -19,7 +19,7 @@ class GroupsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(communityControllerProvider);
     return Scaffold(
-      appBar: AppBar(title: const Text('Community')),
+      appBar: AppBar(title: const BrandAppBarTitle('Community')),
       body: state.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, _) => Center(

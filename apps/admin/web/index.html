@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -18,7 +18,9 @@
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="BrAInBox Admin - content and moderation portal.">
+  <meta name="theme-color" content="#4F46E5">
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
@@ -26,13 +28,56 @@
   <meta name="apple-mobile-web-app-title" content="BrAInBox Admin">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+  <!-- Favicon (from design/brand/png/favicon_32.png and favicon_192.png) -->
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png"/>
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/Icon-192.png"/>
 
   <title>BrAInBox Admin</title>
   <link rel="manifest" href="manifest.json">
+
+  <style>
+    /* Loading screen shown until Flutter draws its first frame. */
+    html, body { margin: 0; height: 100%; background: #F8FAFC; }
+    #brand-loading {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #F8FAFC;
+      transition: opacity 200ms ease-out;
+    }
+    #brand-loading img {
+      width: 240px;
+      max-width: 60vw;
+      height: auto;
+      animation: brand-pulse 1.6s ease-in-out infinite;
+    }
+    #brand-loading.hidden { opacity: 0; pointer-events: none; }
+    @keyframes brand-pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #brand-loading, #brand-loading img { animation: none; transition: none; }
+    }
+  </style>
 </head>
 <body>
+  <div id="brand-loading" role="progressbar" aria-label="Loading BrAInBox Admin">
+    <img src="brand/logo_stacked_640.png" alt="BrAInBox - Study smarter. Fix what matters.">
+  </div>
+
+  <script>
+    // Remove the loading screen when Flutter has drawn its first frame.
+    window.addEventListener('flutter-first-frame', function () {
+      var loading = document.getElementById('brand-loading');
+      if (!loading) return;
+      loading.classList.add('hidden');
+      setTimeout(function () { loading.remove(); }, 250);
+    });
+  </script>
+
   <!--
     You can customize the "flutter_bootstrap.js" script.
     This is useful to provide a custom configuration to the Flutter loader

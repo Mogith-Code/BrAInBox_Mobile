@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
 import '../theme/app_spacing.dart';
+import 'app_logo.dart';
 
-/// A pulsing sparkle with a message. Show it while the AI is working
+/// The pulsing BrAInBox mark with a message. Show it while the AI is working
 /// (generating notes, visuals, papers, evaluating an answer...).
 ///
 /// Pass [progress] (0.0 - 1.0) if the backend reports it, e.g. from
@@ -47,19 +48,7 @@ class _AiGeneratingLoaderState extends State<AiGeneratingLoader>
             scale: Tween<double>(begin: 0.85, end: 1.1).animate(
               CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
             ),
-            child: Container(
-              width: 72,
-              height: 72,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: AppColors.brandGradient,
-              ),
-              child: const Icon(
-                Icons.auto_awesome,
-                color: AppColors.white,
-                size: 36,
-              ),
-            ),
+            child: const AppLogo(variant: AppLogoVariant.mark, size: 72),
           ),
           const SizedBox(height: AppSpacing.lg),
           Text(widget.message, style: Theme.of(context).textTheme.titleMedium),

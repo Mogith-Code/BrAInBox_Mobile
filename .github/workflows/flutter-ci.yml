@@ -33,7 +33,7 @@ jobs:
           cache: true
 
       - name: Install Melos
-        run: dart pub global activate melos
+        run: dart pub global activate melos 7.8.1
 
       # Also creates the stub firebase_options.dart in each app (no secrets).
       - name: melos bootstrap
