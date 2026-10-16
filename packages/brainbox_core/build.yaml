@@ -1,0 +1,10 @@
+# Code generation settings (used by `melos run gen`).
+targets:
+  $default:
+    builders:
+      json_serializable:
+        options:
+          # The FastAPI backend uses snake_case JSON keys: `topic_id` <-> `topicId`.
+          field_rename: snake
+          # Needed so nested freezed models (e.g. List<McqOption>) are encoded too.
+          explicit_to_json: true

@@ -1,0 +1,79 @@
+# Workspace root for the BrAInBox frontend.
+#
+# This file only lists the packages in the workspace and holds the Melos
+# config (Melos 7+ reads its config from here; there is no melos.yaml).
+# App dependencies live in each package's own pubspec.yaml.
+name: brainbox_workspace
+publish_to: none
+
+environment:
+  sdk: ^3.12.0
+
+workspace:
+  - packages/brainbox_core
+  - apps/mobile
+  - apps/admin
+
+dev_dependencies:
+  melos: ^8.9.0
+
+melos:
+  name: brainbox
+
+  # Melos would otherwise generate IntelliJ run configs; we don't commit those.
+  ide:
+    intellij:
+      enabled: false
+
+  command:
+    run:
+      # Scripts run in every matching package without asking which one.
+      noSelect: true
+    bootstrap:
+      hooks:
+        # Creates lib/firebase_options.dart from the .example stub in each app
+        # if it does not exist yet, so the apps compile before Firebase is set up.
+        post: dart run tool/ensure_firebase_options.dart
+
+  scripts:
+    analyze:
+      description: Analyze every package (fails on any error, warning or info).
+      exec: flutter analyze --fatal-infos .
+
+    format:
+      description: Format all Dart code in the repo.
+      run: dart format .
+
+    format:check:
+      description: Fail if any Dart file is not formatted (used by CI).
+      run: dart format --set-exit-if-changed .
+
+    gen:
+      description: Generate freezed / json_serializable / riverpod code.
+      exec: dart run build_runner build
+      packageFilters:
+        dependsOn: build_runner
+
+    gen:watch:
+      description: Same as gen, but keeps watching for changes (pick one package).
+      exec: dart run build_runner watch
+      packageFilters:
+        dependsOn: build_runner
+
+    test:
+      description: Run unit and widget tests in every package that has a test/ folder.
+      exec: flutter test
+      packageFilters:
+        dirExists: test
+
+    build:apk:
+      description: Build the student Android app (debug APK).
+      exec: flutter build apk --debug
+      packageFilters:
+        scope: brainbox_mobile
+
+    build:web:
+      description: Build the admin web portal.
+      exec: flutter build web
+      packageFilters:
+        scope: brainbox_admin

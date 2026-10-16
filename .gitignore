@@ -1,0 +1,51 @@
+# ---------- Dart / Flutter ----------
+.dart_tool/
+.packages
+.pub-cache/
+.pub/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+*.iml
+pubspec_overrides.yaml
+
+# Generated code (run `melos run gen` after pulling)
+*.g.dart
+*.freezed.dart
+*.mocks.dart
+
+# Coverage
+coverage/
+
+# ---------- Secrets / Firebase (NEVER commit) ----------
+google-services.json
+GoogleService-Info.plist
+firebase_options.dart
+firebase.json
+.firebaserc
+.env
+.env.*
+!.env.example
+*.keystore
+*.jks
+key.properties
+
+# ---------- Android ----------
+**/android/.gradle/
+**/android/captures/
+**/android/local.properties
+**/android/app/debug/
+**/android/app/profile/
+**/android/app/release/
+**/android/.kotlin/
+
+# ---------- IDE ----------
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+.DS_Store
+Thumbs.db
+
+# ---------- Logs ----------
+*.log

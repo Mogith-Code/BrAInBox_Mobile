@@ -1,0 +1,85 @@
+# Code owners: GitHub asks these people to review PRs that touch their folders.
+# TODO: replace the placeholder handles with real GitHub usernames.
+#   @mogith      -> Mogith (22CSE0394)
+#   @samni       -> Samni (22CSE0391)
+#   @udith       -> Udith (22CSE0358)
+#   @keshomigha  -> Keshomigha (22CSE0392)
+# Later rules win, so the specific folders come after the default.
+
+# Default: anyone on the team can review files not listed below.
+*                                   @mogith @samni @udith @keshomigha
+
+# Repo tooling and CI
+/.github/                           @mogith
+
+# Shared package (theme, widgets, models, API client)
+/packages/brainbox_core/            @samni
+
+# App shells, routers, entry points
+/apps/mobile/lib/app/               @samni
+/apps/admin/lib/app/                @samni
+
+# Mobile features
+/apps/mobile/lib/features/splash/                   @mogith
+/apps/mobile/test/features/splash/                  @mogith
+/apps/mobile/lib/features/onboarding/               @mogith
+/apps/mobile/test/features/onboarding/              @mogith
+/apps/mobile/lib/features/auth/                     @mogith
+/apps/mobile/test/features/auth/                    @mogith
+/apps/mobile/lib/features/profile/                  @mogith
+/apps/mobile/test/features/profile/                 @mogith
+/apps/mobile/lib/features/home/                     @samni
+/apps/mobile/test/features/home/                    @samni
+/apps/mobile/lib/features/syllabus/                 @keshomigha
+/apps/mobile/test/features/syllabus/                @keshomigha
+/apps/mobile/lib/features/notes/                    @samni
+/apps/mobile/test/features/notes/                   @samni
+/apps/mobile/lib/features/upload/                   @samni
+/apps/mobile/test/features/upload/                  @samni
+/apps/mobile/lib/features/visuals/                  @mogith
+/apps/mobile/test/features/visuals/                 @mogith
+/apps/mobile/lib/features/practice/                 @udith
+/apps/mobile/test/features/practice/                @udith
+/apps/mobile/lib/features/exams/                    @udith
+/apps/mobile/test/features/exams/                   @udith
+/apps/mobile/lib/features/evaluation/               @keshomigha
+/apps/mobile/test/features/evaluation/              @keshomigha
+/apps/mobile/lib/features/insights/                 @keshomigha
+/apps/mobile/test/features/insights/                @keshomigha
+/apps/mobile/lib/features/recommendations/          @udith
+/apps/mobile/test/features/recommendations/         @udith
+/apps/mobile/lib/features/community/                @mogith
+/apps/mobile/test/features/community/               @mogith
+/apps/mobile/lib/features/notifications/            @samni
+/apps/mobile/test/features/notifications/           @samni
+/apps/mobile/lib/features/settings/                 @samni
+/apps/mobile/test/features/settings/                @samni
+
+# Admin features
+/apps/admin/lib/features/auth/                      @mogith
+/apps/admin/test/features/auth/                     @mogith
+/apps/admin/lib/features/dashboard/                 @samni
+/apps/admin/test/features/dashboard/                @samni
+/apps/admin/lib/features/syllabus_manager/          @keshomigha
+/apps/admin/test/features/syllabus_manager/         @keshomigha
+/apps/admin/lib/features/content_review/            @samni
+/apps/admin/test/features/content_review/           @samni
+/apps/admin/lib/features/question_bank/             @udith
+/apps/admin/test/features/question_bank/            @udith
+/apps/admin/lib/features/mcq_mapping/               @udith
+/apps/admin/test/features/mcq_mapping/              @udith
+/apps/admin/lib/features/quality_review/            @udith
+/apps/admin/test/features/quality_review/           @udith
+/apps/admin/lib/features/past_papers/               @udith
+/apps/admin/test/features/past_papers/              @udith
+/apps/admin/lib/features/knowledge_base/            @keshomigha
+/apps/admin/test/features/knowledge_base/           @keshomigha
+/apps/admin/lib/features/rag_sources/               @samni
+/apps/admin/test/features/rag_sources/              @samni
+/apps/admin/lib/features/moderation/                @mogith
+/apps/admin/test/features/moderation/               @mogith
+/apps/admin/lib/features/users/                     @mogith
+/apps/admin/test/features/users/                    @mogith
+/apps/admin/lib/features/analytics/                 @keshomigha
+/apps/admin/test/features/analytics/                @keshomigha
+

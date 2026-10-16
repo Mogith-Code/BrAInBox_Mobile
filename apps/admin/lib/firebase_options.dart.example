@@ -1,0 +1,22 @@
+// STUB - contains NO Firebase keys.
+//
+// `melos bootstrap` copies this file to `firebase_options.dart` (which is
+// git-ignored) so the portal compiles before Firebase is set up. With this
+// stub the portal starts with sign-in disabled.
+//
+// To use real Firebase, run from apps/admin:
+//   flutterfire configure --project=<firebase-project-id> --platforms=web
+// It overwrites firebase_options.dart with the real one. Never commit it.
+// See README.md > Firebase setup.
+
+// ignore_for_file: type=lint
+import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
+
+class DefaultFirebaseOptions {
+  static FirebaseOptions get currentPlatform {
+    throw UnsupportedError(
+      'Firebase is not configured for BrAInBox Admin yet. '
+      'Run `flutterfire configure` in apps/admin (see README.md).',
+    );
+  }
+}
