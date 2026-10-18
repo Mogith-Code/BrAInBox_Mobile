@@ -42,6 +42,8 @@ class LabeledSlider extends StatelessWidget {
             thumbShape: const _RingThumbShape(),
             overlayColor: AppColors.primary.withValues(alpha: 0.12),
             overlayShape: const RoundSliderOverlayShape(overlayRadius: 24),
+            // Figma's track runs (almost) edge to edge.
+            padding: const EdgeInsets.symmetric(horizontal: 17),
             tickMarkShape: SliderTickMarkShape.noTickMark,
             showValueIndicator: ShowValueIndicator.never,
           ),
@@ -130,7 +132,7 @@ class GradientSliderTrackShape extends RoundedRectSliderTrackShape {
 class _RingThumbShape extends SliderComponentShape {
   const _RingThumbShape();
 
-  static const double _radius = 15;
+  static const double _radius = 17;
 
   @override
   Size getPreferredSize(bool isEnabled, bool isDiscrete) =>

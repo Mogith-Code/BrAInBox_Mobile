@@ -48,7 +48,7 @@ class SelectableCard extends StatelessWidget {
       enabled: enabled,
       label: semanticLabel,
       child: Opacity(
-        opacity: enabled ? 1 : 0.75,
+        opacity: enabled ? 1 : 0.9,
         child: Material(
           color: background,
           shape: RoundedRectangleBorder(

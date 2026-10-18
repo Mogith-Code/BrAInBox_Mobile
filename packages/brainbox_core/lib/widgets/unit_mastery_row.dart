@@ -15,6 +15,7 @@ class UnitMasteryRow extends StatelessWidget {
     required this.title,
     required this.mastery,
     required this.status,
+    this.emphasised,
   });
 
   /// 1-based row number.
@@ -24,6 +25,10 @@ class UnitMasteryRow extends StatelessWidget {
   /// 0.0 - 1.0
   final double mastery;
   final MasteryStatus status;
+
+  /// Bold title (e.g. the strongest / needs-work units). Defaults to any
+  /// unit that isn't "ok".
+  final bool? emphasised;
 
   static Color colorFor(MasteryStatus status) => switch (status) {
     MasteryStatus.strong => AppColors.success,
@@ -36,7 +41,7 @@ class UnitMasteryRow extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final value = mastery.clamp(0.0, 1.0);
     final percent = '${(value * 100).round()}%';
-    final emphasise = status != MasteryStatus.ok;
+    final emphasise = emphasised ?? status != MasteryStatus.ok;
     final statusText = switch (status) {
       MasteryStatus.strong => 'strong',
       MasteryStatus.ok => '',
@@ -110,7 +115,7 @@ class UnitMasteryRow extends StatelessWidget {
                   MasteryStatus.needsWork => const Icon(
                     Icons.warning_amber_rounded,
                     size: 18,
-                    color: AppColors.warning,
+                    color: Color(0xFFEA580C), // orange-600, as in Figma
                   ),
                   MasteryStatus.ok => null,
                 },

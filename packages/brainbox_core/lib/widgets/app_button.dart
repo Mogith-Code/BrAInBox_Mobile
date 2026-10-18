@@ -148,6 +148,7 @@ class _GradientButton extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: AppColors.brandGradient,
           borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
+          boxShadow: onPressed == null ? null : AppButton._glow,
         ),
         child: FilledButton(
           onPressed: onPressed,
@@ -159,6 +160,7 @@ class _GradientButton extends StatelessWidget {
             shadowColor: Colors.transparent,
             minimumSize: AppButton._minSize,
             shape: shape,
+            textStyle: AppButton._labelStyle,
           ),
           child: child,
         ),

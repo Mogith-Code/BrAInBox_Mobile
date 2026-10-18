@@ -63,9 +63,8 @@ class PasswordStrengthMeter extends StatelessWidget {
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                const Spacer(),
-                Flexible(
-                  flex: 6,
+                const SizedBox(width: AppSpacing.sm),
+                Expanded(
                   child: Text(
                     hint,
                     textAlign: TextAlign.end,

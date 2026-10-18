@@ -48,7 +48,11 @@ class PhoneField extends StatelessWidget {
       prefix: Semantics(
         label: 'Sri Lanka, plus 94',
         child: const ExcludeSemantics(
-          child: Text('🇱🇰  +94', style: TextStyle(fontSize: 16)),
+          child: Text(
+            '🇱🇰  +94',
+            // height 1 keeps the flag from pushing "+94" above the text line.
+            style: TextStyle(fontSize: 16, height: 1),
+          ),
         ),
       ),
     );

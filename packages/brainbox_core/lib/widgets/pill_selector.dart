@@ -68,7 +68,7 @@ class PillSelector<T> extends StatelessWidget {
             customBorder: const StadiumBorder(),
             onTap: () => onChanged(option),
             child: SizedBox(
-              height: 54,
+              height: 56,
               child: ExcludeSemantics(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -79,7 +79,7 @@ class PillSelector<T> extends StatelessWidget {
                     ],
                     Text(
                       label,
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         color: selected ? AppColors.white : AppColors.ink,
                         fontWeight: FontWeight.w700,
                       ),
