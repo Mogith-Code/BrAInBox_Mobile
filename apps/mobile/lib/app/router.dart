@@ -116,7 +116,7 @@ GoRouter router(Ref ref) {
       ),
       GoRoute(
         path: AppRoutes.profileSetup,
-        builder: (context, state) => const ProfileScreen(),
+        builder: (context, state) => const ProfileSetupScreen(),
       ),
       GoRoute(
         path: AppRoutes.topicNotes,
