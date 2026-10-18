@@ -140,6 +140,10 @@ class _ResultBody extends StatelessWidget {
                           title: unit.unitTitle,
                           mastery: unit.fraction,
                           status: _status(unit.status),
+                          // Figma: only the strongest / needs-work unit is bold.
+                          emphasised:
+                              unit.unitCode == strongest?.unitCode ||
+                              unit.unitCode == needsWork?.unitCode,
                         ),
                       if (result.summary.isNotEmpty) ...[
                         const SizedBox(height: AppSpacing.md),
