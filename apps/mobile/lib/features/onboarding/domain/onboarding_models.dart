@@ -1,20 +1,33 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+/// Which illustration a welcome slide shows.
+enum WelcomeIllustration { cell, feedback, path }
 
-part 'onboarding_models.freezed.dart';
-part 'onboarding_models.g.dart';
+/// One page of the welcome carousel. The text comes straight from Figma.
+class WelcomeSlide {
+  const WelcomeSlide({
+    required this.title,
+    required this.body,
+    required this.illustration,
+  });
 
-/// Placeholder model for the Onboarding feature.
-///
-// TODO(mogith): replace these fields with what this feature needs
-// (see the backend OpenAPI /docs), or delete this class and use the shared
-// models from brainbox_core. Run `melos run gen` after editing.
-@freezed
-abstract class OnboardingSummary with _$OnboardingSummary {
-  const factory OnboardingSummary({
-    required String title,
-    @Default('') String message,
-  }) = _OnboardingSummary;
+  final String title;
+  final String body;
+  final WelcomeIllustration illustration;
 
-  factory OnboardingSummary.fromJson(Map<String, dynamic> json) =>
-      _$OnboardingSummaryFromJson(json);
+  static const all = [
+    WelcomeSlide(
+      title: 'Learn smarter',
+      body: 'AI notes, short notes and diagrams for every syllabus topic.',
+      illustration: WelcomeIllustration.cell,
+    ),
+    WelcomeSlide(
+      title: 'Know exactly what went wrong',
+      body: 'AI checks your answers and finds your mistakes.',
+      illustration: WelcomeIllustration.feedback,
+    ),
+    WelcomeSlide(
+      title: "Always know what's next",
+      body: 'Personalised next steps to improve, every single day.',
+      illustration: WelcomeIllustration.path,
+    ),
+  ];
 }
