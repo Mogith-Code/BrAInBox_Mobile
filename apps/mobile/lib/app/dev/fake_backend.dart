@@ -193,6 +193,9 @@ class FakeAccount {
   /// Saved profile fields (snake_case, as sent by `PATCH /profile`).
   final Map<String, dynamic> profile = {};
 
+  /// Today's plan ticks: plan item id -> done.
+  final Map<String, bool> planDone = {'plan-1': true};
+
   /// The `UserOut` JSON the real backend would return.
   AppUser toUser() => AppUser(
     id: uid,

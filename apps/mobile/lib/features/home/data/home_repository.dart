@@ -1,32 +1,42 @@
 import 'package:brainbox_core/brainbox_core.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../app/dev/fake_backend.dart';
 import '../domain/home_models.dart';
+import 'fake_home_repository.dart';
 
 part 'home_repository.g.dart';
 
-/// Data layer for the Home feature.
-///
-/// The ONLY place in this feature that calls the backend (through
-/// [ApiClient]). Controllers call this; screens never do.
-class HomeRepository {
-  HomeRepository(this.api);
+/// Home dashboard data. Only this layer calls the API.
+abstract interface class HomeRepository {
+  /// `GET /home/summary`
+  Future<HomeSummary> summary();
+
+  /// `PATCH /home/plan/{item_id}` with `{done}` - returns the updated item.
+  Future<PlanItem> setPlanItemDone(String itemId, {required bool done});
+}
+
+class ApiHomeRepository implements HomeRepository {
+  ApiHomeRepository(this.api);
 
   final ApiClient api;
 
-  /// Loads the data for the main Home screen.
-  Future<HomeSummary> fetchSummary() async {
-    // TODO(samni): call the backend instead of returning placeholder data.
-    // Real version (uncomment when the endpoint exists):
-    // final json = await api.get<Map<String, dynamic>>('/home/summary');
-    // return HomeSummary.fromJson(json);
-    return const HomeSummary(
-      title: 'Home',
-      message: 'Placeholder data - API not connected yet.',
-    );
-  }
+  @override
+  Future<HomeSummary> summary() async => HomeSummary.fromJson(
+    await api.get<Map<String, dynamic>>('/home/summary'),
+  );
+
+  @override
+  Future<PlanItem> setPlanItemDone(String itemId, {required bool done}) async =>
+      PlanItem.fromJson(
+        await api.patch<Map<String, dynamic>>(
+          '/home/plan/$itemId',
+          data: {'done': done},
+        ),
+      );
 }
 
-@riverpod
-HomeRepository homeRepository(Ref ref) =>
-    HomeRepository(ref.watch(apiClientProvider));
+@Riverpod(keepAlive: true)
+HomeRepository homeRepository(Ref ref) => Env.useFakeApi
+    ? FakeHomeRepository(ref.watch(fakeBackendProvider))
+    : ApiHomeRepository(ref.watch(apiClientProvider));

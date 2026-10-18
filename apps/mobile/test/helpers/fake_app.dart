@@ -2,6 +2,8 @@ import 'package:brainbox_mobile/app/dev/fake_backend.dart';
 import 'package:brainbox_mobile/features/auth/application/session_controller.dart';
 import 'package:brainbox_mobile/features/auth/data/auth_repository.dart';
 import 'package:brainbox_mobile/features/auth/data/fake_auth_repository.dart';
+import 'package:brainbox_mobile/features/home/data/fake_home_repository.dart';
+import 'package:brainbox_mobile/features/home/data/home_repository.dart';
 import 'package:brainbox_mobile/features/practice/data/diagnostic_repository.dart';
 import 'package:brainbox_mobile/features/practice/data/fake_diagnostic_repository.dart';
 import 'package:brainbox_mobile/features/profile/data/fake_profile_repository.dart';
@@ -21,6 +23,7 @@ List<Override> fakeOverrides(FakeBackend backend) => [
   diagnosticRepositoryProvider.overrideWithValue(
     FakeDiagnosticRepository(backend),
   ),
+  homeRepositoryProvider.overrideWithValue(FakeHomeRepository(backend)),
   authGuardEnabledProvider.overrideWithValue(true),
 ];
 
