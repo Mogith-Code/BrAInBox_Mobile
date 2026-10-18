@@ -359,8 +359,8 @@ class MasteryCard extends StatelessWidget {
         children: [
           MasteryRing(
             value: mastery,
-            size: 84,
-            strokeWidth: 9,
+            size: 76,
+            strokeWidth: 8,
             color: AppColors.primary,
             labelStyle: textTheme.titleLarge?.copyWith(
               color: AppColors.ink,

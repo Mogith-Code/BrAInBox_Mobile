@@ -115,8 +115,9 @@ class _Dashboard extends ConsumerWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                // Figma: the plan takes about two thirds of the row.
                 Expanded(
-                  flex: 3,
+                  flex: 2,
                   child: TodaysPlanCard(
                     plan: summary.todaysPlan,
                     onToggle: (item) => unawaited(toggle(item)),
@@ -124,7 +125,6 @@ class _Dashboard extends ConsumerWidget {
                 ),
                 const SizedBox(width: AppSpacing.sm),
                 Expanded(
-                  flex: 2,
                   child: MasteryCard(
                     mastery: asFraction(summary.overallMastery),
                     changeWeek: summary.masteryChangeWeek,

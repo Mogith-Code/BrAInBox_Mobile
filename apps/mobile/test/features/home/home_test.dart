@@ -157,12 +157,12 @@ void main() {
 
       // Below the fold: scroll to it like a student would.
       await tester.scrollUntilVisible(
-        find.text('Continue learning'),
+        find.text('Nephron & osmoregulation'),
         200,
         scrollable: find.byType(Scrollable).first,
       );
+      expect(find.text('Continue learning'), findsOneWidget);
       expect(find.text('See all'), findsOneWidget);
-      expect(find.text('Nephron & osmoregulation'), findsOneWidget);
       await tester.scrollUntilVisible(
         find.text('Good evening, Nethmi 👋'),
         -200,
