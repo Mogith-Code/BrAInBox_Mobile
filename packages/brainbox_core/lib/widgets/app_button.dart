@@ -34,6 +34,7 @@ class AppButton extends StatelessWidget {
     this.icon,
     this.isLoading = false,
     this.expand = true,
+    this.trailingIcon,
   });
 
   final String label;
@@ -44,6 +45,9 @@ class AppButton extends StatelessWidget {
 
   /// Fill the available width (default). Set to false for inline buttons.
   final bool expand;
+
+  /// Icon after the label, e.g. `Icons.arrow_forward` for "Continue →".
+  final IconData? trailingIcon;
 
   static const Size _minSize = Size(64, 52);
 
@@ -70,6 +74,7 @@ class AppButton extends StatelessWidget {
       label: label,
       icon: icon,
       isLoading: isLoading,
+      trailingIcon: trailingIcon,
     );
 
     final Widget button = switch (variant) {
@@ -168,11 +173,13 @@ class _ButtonContent extends StatelessWidget {
     required this.label,
     required this.icon,
     required this.isLoading,
+    this.trailingIcon,
   });
 
   final String label;
   final IconData? icon;
   final bool isLoading;
+  final IconData? trailingIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -190,6 +197,10 @@ class _ButtonContent extends StatelessWidget {
           Icon(icon, size: 20),
         if (isLoading || icon != null) const SizedBox(width: AppSpacing.sm),
         Flexible(child: Text(label, overflow: TextOverflow.ellipsis)),
+        if (trailingIcon != null && !isLoading) ...[
+          const SizedBox(width: AppSpacing.sm),
+          Icon(trailingIcon, size: 20),
+        ],
       ],
     );
   }
