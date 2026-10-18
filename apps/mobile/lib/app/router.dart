@@ -31,6 +31,8 @@ import '../features/notes/presentation/topic_notes_screen.dart';
 import '../features/notifications/presentation/notifications_screen.dart';
 import '../features/onboarding/presentation/onboarding_screen.dart';
 import '../features/practice/presentation/answer_feedback_screen.dart';
+import '../features/practice/presentation/diagnostic_question_screen.dart';
+import '../features/practice/presentation/diagnostic_result_screen.dart';
 import '../features/practice/presentation/diagnostic_screen.dart';
 import '../features/practice/presentation/mcq_question_screen.dart';
 import '../features/practice/presentation/practice_hub_screen.dart';
@@ -150,6 +152,18 @@ GoRouter router(Ref ref) {
         builder: (context, state) => const GenerateVisualScreen(),
       ),
       GoRoute(
+        path: AppRoutes.diagnostic,
+        builder: (context, state) => const DiagnosticIntroScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.diagnosticQuestions,
+        builder: (context, state) => const DiagnosticQuestionScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.diagnosticResult,
+        builder: (context, state) => const DiagnosticResultScreen(),
+      ),
+      GoRoute(
         path: AppRoutes.pastPapers,
         builder: (context, state) => const PastPapersScreen(),
       ),
@@ -263,10 +277,6 @@ GoRouter router(Ref ref) {
               GoRoute(
                 path: AppRoutes.quizResult,
                 builder: (context, state) => const QuizResultScreen(),
-              ),
-              GoRoute(
-                path: AppRoutes.diagnostic,
-                builder: (context, state) => const DiagnosticScreen(),
               ),
             ],
           ),

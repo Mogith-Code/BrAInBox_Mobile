@@ -65,7 +65,11 @@ abstract final class AppRoutes {
   static const mcqQuestion = '/practice/quiz';
   static const answerFeedback = '/practice/feedback';
   static const quizResult = '/practice/result';
-  static const diagnostic = '/practice/diagnostic';
+
+  // Diagnostic (Udith) - full screen, outside the bottom nav.
+  static const diagnostic = '/diagnostic';
+  static const diagnosticQuestions = '/diagnostic/questions';
+  static const diagnosticResult = '/diagnostic/result';
 
   // Exams (Udith)
   static const pastPapers = '/exams';
@@ -120,7 +124,11 @@ abstract final class AppRoutes {
   };
 
   /// The diagnostic screens (open while the diagnostic isn't done yet).
-  static const diagnosticRoutes = {diagnostic};
+  static const diagnosticRoutes = {
+    diagnostic,
+    diagnosticQuestions,
+    diagnosticResult,
+  };
 
   /// Every screen with a sample path. Used by the dev menu and router test.
   static final List<({String title, String owner, String path})> catalog = [
@@ -149,7 +157,9 @@ abstract final class AppRoutes {
     (title: 'MCQ question', owner: 'Udith', path: mcqQuestion),
     (title: 'Answer feedback', owner: 'Udith', path: answerFeedback),
     (title: 'Quiz result', owner: 'Udith', path: quizResult),
-    (title: 'Diagnostic test', owner: 'Udith', path: diagnostic),
+    (title: "Let's find your starting point", owner: 'Udith', path: diagnostic),
+    (title: 'Diagnostic question', owner: 'Udith', path: diagnosticQuestions),
+    (title: 'Your starting point', owner: 'Udith', path: diagnosticResult),
     (title: 'Past papers', owner: 'Udith', path: pastPapers),
     (title: 'Generate model paper', owner: 'Udith', path: generatePaper),
     (title: 'Exam mode', owner: 'Udith', path: examAttemptPath('demo')),
