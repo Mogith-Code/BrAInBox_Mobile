@@ -379,7 +379,7 @@ class AvailabilityStep extends StatelessWidget {
                       const SizedBox(height: AppSpacing.sm),
                       Text(
                         time.label,
-                        style: textTheme.titleSmall?.copyWith(
+                        style: textTheme.titleMedium?.copyWith(
                           color: AppColors.ink,
                           fontWeight: FontWeight.w600,
                         ),
