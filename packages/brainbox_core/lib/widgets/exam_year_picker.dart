@@ -63,25 +63,34 @@ class ExamYearPicker extends StatelessWidget {
             icon: const Icon(Icons.chevron_left),
             color: AppColors.ink,
           ),
-          const Spacer(),
-          neighbour(prev),
-          const SizedBox(width: AppSpacing.sm),
-          Semantics(
-            label: 'A/L exam year $value',
-            liveRegion: true,
-            child: ExcludeSemantics(
-              child: Text(
-                '$value',
-                style: textTheme.headlineMedium?.copyWith(
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.w700,
-                ),
+          // Scales down instead of overflowing on narrow screens / big text.
+          Expanded(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  neighbour(prev),
+                  const SizedBox(width: AppSpacing.sm),
+                  Semantics(
+                    label: 'A/L exam year $value',
+                    liveRegion: true,
+                    child: ExcludeSemantics(
+                      child: Text(
+                        '$value',
+                        style: textTheme.headlineMedium?.copyWith(
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.sm),
+                  neighbour(next),
+                ],
               ),
             ),
           ),
-          const SizedBox(width: AppSpacing.sm),
-          neighbour(next),
-          const Spacer(),
           IconButton(
             tooltip: 'Later year',
             onPressed: next == null ? null : () => onChanged(next),
