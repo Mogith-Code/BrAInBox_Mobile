@@ -91,11 +91,14 @@ class ComingSoonChip extends StatelessWidget {
         children: [
           const Icon(Icons.schedule, size: 13, color: AppColors.muted),
           const SizedBox(width: AppSpacing.xs),
-          Text(
-            label,
-            style: Theme.of(context).textTheme.labelSmall?.copyWith(
-              color: AppColors.muted,
-              fontWeight: FontWeight.w600,
+          Flexible(
+            child: Text(
+              label,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                color: AppColors.muted,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         ],
