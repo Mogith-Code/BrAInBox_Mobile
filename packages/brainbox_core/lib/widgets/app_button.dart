@@ -47,6 +47,19 @@ class AppButton extends StatelessWidget {
 
   static const Size _minSize = Size(64, 52);
 
+  static const TextStyle _labelStyle = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+  );
+
+  static final List<BoxShadow> _glow = [
+    BoxShadow(
+      color: AppColors.primary.withValues(alpha: 0.28),
+      blurRadius: 18,
+      offset: const Offset(0, 6),
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     final onTap = isLoading ? null : onPressed;
@@ -60,15 +73,25 @@ class AppButton extends StatelessWidget {
     );
 
     final Widget button = switch (variant) {
-      AppButtonVariant.primary => FilledButton(
-        onPressed: onTap,
-        style: FilledButton.styleFrom(
-          backgroundColor: AppColors.primary,
-          foregroundColor: AppColors.white,
-          minimumSize: _minSize,
-          shape: shape,
+      AppButtonVariant.primary => DecoratedBox(
+        // Soft indigo glow under enabled primary buttons (as in Figma).
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
+          boxShadow: onTap == null ? null : _glow,
         ),
-        child: content,
+        child: FilledButton(
+          onPressed: onTap,
+          style: FilledButton.styleFrom(
+            backgroundColor: AppColors.primary,
+            foregroundColor: AppColors.white,
+            disabledBackgroundColor: AppColors.surfaceMuted,
+            disabledForegroundColor: AppColors.muted,
+            minimumSize: _minSize,
+            shape: shape,
+            textStyle: _labelStyle,
+          ),
+          child: content,
+        ),
       ),
       AppButtonVariant.secondary => OutlinedButton(
         onPressed: onTap,

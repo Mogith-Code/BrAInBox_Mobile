@@ -15,6 +15,8 @@ abstract final class Env {
     'DISABLE_AUTH_GUARD',
   );
 
+  static const bool _useFakeApiDefine = bool.fromEnvironment('USE_FAKE_API');
+
   /// Base URL of the FastAPI backend, including the `/api/v1` prefix.
   ///
   /// When `API_BASE_URL` is not passed:
@@ -31,4 +33,9 @@ abstract final class Env {
   /// Debug helper: `--dart-define=DISABLE_AUTH_GUARD=true` lets you open any
   /// route without signing in. Always `false` in release builds.
   static bool get disableAuthGuard => kDebugMode && _disableAuthGuardDefine;
+
+  /// Debug helper: `--dart-define=USE_FAKE_API=true` swaps every repository
+  /// for an in-memory fake (no backend, no Firebase needed), with the data
+  /// from the Figma designs. Always `false` in release builds.
+  static bool get useFakeApi => kDebugMode && _useFakeApiDefine;
 }
