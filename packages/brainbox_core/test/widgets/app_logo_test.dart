@@ -43,8 +43,7 @@ void main() {
           expect(find.bySemanticsLabel('BrAInBox logo'), findsOneWidget);
 
           final hasWordmark =
-              variant == AppLogoVariant.horizontal ||
-              variant == AppLogoVariant.stacked;
+              variant != AppLogoVariant.icon && variant != AppLogoVariant.mark;
           expect(
             find.text('BrAInBox', findRichText: true),
             hasWordmark ? findsOneWidget : findsNothing,
