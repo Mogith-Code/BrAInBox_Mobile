@@ -22,5 +22,7 @@ Future<void> main() async {
   await Hive.initFlutter();
 
   // 3. ProviderScope holds every Riverpod provider.
-  runApp(const ProviderScope(child: BrainBoxApp()));
+  // retry: null -> a failing request shows its error (with a Retry button)
+  // instead of Riverpod silently retrying it in the background.
+  runApp(ProviderScope(retry: (_, _) => null, child: const BrainBoxApp()));
 }

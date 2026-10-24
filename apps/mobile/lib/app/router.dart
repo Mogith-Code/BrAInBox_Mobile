@@ -1,12 +1,15 @@
-import 'package:brainbox_core/brainbox_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../features/auth/application/session_controller.dart';
+import '../features/auth/application/session_redirect.dart';
+import '../features/auth/domain/auth_models.dart';
+import '../features/auth/presentation/check_inbox_screen.dart';
 import '../features/auth/presentation/forgot_password_screen.dart';
 import '../features/auth/presentation/login_screen.dart';
+import '../features/auth/presentation/new_password_screen.dart';
 import '../features/auth/presentation/signup_screen.dart';
-import '../features/auth/presentation/verify_email_screen.dart';
 import '../features/community/presentation/create_post_screen.dart';
 import '../features/community/presentation/group_feed_screen.dart';
 import '../features/community/presentation/groups_screen.dart';
@@ -56,18 +59,26 @@ part 'router.g.dart';
 ///
 /// - Screens inside the [StatefulShellRoute] show the bottom navigation bar.
 /// - Other screens open full-screen on top of it.
-/// - The auth guard (see [_authRedirect]) sends signed-out users to login.
+/// - The onboarding redirect (see `sessionRedirect`) sends the student to
+///   the right first-run screen: welcome, log in, inbox, setup, diagnostic
+///   or home.
 @Riverpod(keepAlive: true)
 GoRouter router(Ref ref) {
-  // Tells GoRouter to re-run the redirect when the user signs in or out.
+  // Tells GoRouter to re-run the redirect when the session changes
+  // (sign in / out, email verified, profile finished...).
   final authChanges = ValueNotifier<int>(0);
-  ref.listen(currentUserProvider, (_, _) => authChanges.value++);
+  ref.listen(sessionProvider, (_, _) => authChanges.value++);
 
   final router = GoRouter(
     initialLocation: AppRoutes.splash,
     debugLogDiagnostics: kDebugMode,
     refreshListenable: authChanges,
-    redirect: (context, state) => _authRedirect(ref, state),
+    redirect: (context, state) {
+      // Off when sign-in can't work (no Firebase, no fake API) or with
+      // --dart-define=DISABLE_AUTH_GUARD=true, so any screen can be opened.
+      if (!ref.read(authGuardEnabledProvider)) return null;
+      return sessionRedirect(ref.read(sessionProvider), state.matchedLocation);
+    },
     routes: [
       GoRoute(
         path: AppRoutes.splash,
@@ -91,7 +102,17 @@ GoRouter router(Ref ref) {
       ),
       GoRoute(
         path: AppRoutes.verifyEmail,
-        builder: (context, state) => const VerifyEmailScreen(),
+        builder: (context, state) =>
+            const CheckInboxScreen(mode: InboxMode.verifyEmail),
+      ),
+      GoRoute(
+        path: AppRoutes.resetCode,
+        builder: (context, state) =>
+            const CheckInboxScreen(mode: InboxMode.resetPassword),
+      ),
+      GoRoute(
+        path: AppRoutes.newPassword,
+        builder: (context, state) => const NewPasswordScreen(),
       ),
       GoRoute(
         path: AppRoutes.profileSetup,
@@ -299,27 +320,4 @@ GoRouter router(Ref ref) {
     authChanges.dispose();
   });
   return router;
-}
-
-/// Returns a path to redirect to, or `null` to stay.
-String? _authRedirect(Ref ref, GoRouterState state) {
-  // The guard is OFF when Firebase is not configured (nobody could sign in)
-  // or when running with --dart-define=DISABLE_AUTH_GUARD=true (debug only).
-  if (!FirebaseSetup.isReady || Env.disableAuthGuard) return null;
-
-  final user = ref.read(currentUserProvider);
-  if (user.isLoading) return null; // still checking - stay where we are
-
-  final signedIn = user.value != null;
-  final location = state.matchedLocation;
-  final isPublic = AppRoutes.publicRoutes.contains(location);
-
-  if (!signedIn && !isPublic) return AppRoutes.login;
-  if (signedIn &&
-      (location == AppRoutes.login || location == AppRoutes.signup)) {
-    return AppRoutes.home;
-  }
-  // TODO(mogith): send unverified users to AppRoutes.verifyEmail and users
-  // without a profile to AppRoutes.profileSetup.
-  return null;
 }
