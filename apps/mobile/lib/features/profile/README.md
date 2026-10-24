@@ -12,19 +12,27 @@
 
 | Screen | File | Route |
 |---|---|---|
-| Profile setup | `presentation/profile_screen.dart` | `/profile/setup` |
+| Setup 1/3 What are you studying? (A9) | `presentation/profile_screen.dart` + `widgets/setup_steps.dart` (`StreamStep`) | `/profile/setup` |
+| Setup 2/3 Set your goal (A10) | same screen (`GoalStep`) | `/profile/setup` |
+| Setup 3/3 When can you study? (A11) | same screen (`AvailabilityStep`) | `/profile/setup` |
 
-## API endpoints it will use
+One route, three steps. `application/profile_setup_controller.dart` keeps the
+draft values (so the back arrow never loses them), resumes at the first
+unsaved step, sends each step with `PATCH /profile` and finishes with
+`POST /profile/complete` (then the session refresh moves the student to the
+diagnostic). "Coming soon" subjects can't be picked.
 
-> Planned paths only. The backend's `/docs` (OpenAPI) is the real contract -
-> update this table when the backend publishes the endpoints.
+Confidence labels: 0-20 Not at all, 21-40 A little, 41-60 Okay-ish,
+61-80 Fairly, 81-100 Very (`domain/profile_models.dart`).
+
+## API endpoints it uses
 
 | Method | Path | Purpose |
 |---|---|---|
-| `GET` | `/me` | Current profile |
-| `PUT` | `/me/profile` | Save stream, exam year, goals, study time |
-
-Shared models used: `AppUser` (from `brainbox_core`, re-exported in `domain/`).
+| `GET` | `/profile/options` | Streams, subjects, exam years, grades, preferred times |
+| `GET` | `/profile` | Saved answers (resume) |
+| `PATCH` | `/profile` | Save one step |
+| `POST` | `/profile/complete` | Finish setup (`PROFILE_INCOMPLETE` if a step is missing) |
 
 ## Folders
 

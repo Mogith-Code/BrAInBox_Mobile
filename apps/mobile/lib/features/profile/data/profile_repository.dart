@@ -1,35 +1,54 @@
 import 'package:brainbox_core/brainbox_core.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../app/dev/fake_backend.dart';
 import '../domain/profile_models.dart';
+import 'fake_profile_repository.dart';
 
 part 'profile_repository.g.dart';
 
-/// Data layer for the Profile feature.
-///
-/// The ONLY place in this feature that calls the backend (through
-/// [ApiClient]). Controllers call this; screens never do.
-class ProfileRepository {
-  ProfileRepository(this.api);
+/// Profile setup data. Only this layer calls the API.
+abstract interface class ProfileRepository {
+  /// `GET /profile/options`
+  Future<ProfileOptions> options();
+
+  /// `GET /profile` (to resume where the student left off)
+  Future<Profile> profile();
+
+  /// `PATCH /profile` with only the fields of one step (snake_case keys).
+  Future<Profile> update(Map<String, dynamic> fields);
+
+  /// `POST /profile/complete` (throws `PROFILE_INCOMPLETE` if a step is
+  /// missing).
+  Future<Profile> complete();
+}
+
+class ApiProfileRepository implements ProfileRepository {
+  ApiProfileRepository(this.api);
 
   final ApiClient api;
 
-  /// Loads the data for the main Profile screen.
-  Future<ProfileSummary> fetchSummary() async {
-    // TODO(mogith): call the backend instead of returning placeholder data.
-    // Real version (uncomment when the endpoint exists):
-    // final json = await api.get<Map<String, dynamic>>('/me');
-    // return ProfileSummary.fromJson(json);
-    return const ProfileSummary(
-      title: 'Profile setup',
-      message: 'Placeholder data - API not connected yet.',
-    );
-  }
+  @override
+  Future<ProfileOptions> options() async => ProfileOptions.fromJson(
+    await api.get<Map<String, dynamic>>('/profile/options'),
+  );
 
-  // TODO(mogith): add one method per endpoint, e.g.
-  //   PUT /me/profile  ->  Save stream, exam year, goals, study time
+  @override
+  Future<Profile> profile() async =>
+      Profile.fromJson(await api.get<Map<String, dynamic>>('/profile'));
+
+  @override
+  Future<Profile> update(Map<String, dynamic> fields) async => Profile.fromJson(
+    await api.patch<Map<String, dynamic>>('/profile', data: fields),
+  );
+
+  @override
+  Future<Profile> complete() async => Profile.fromJson(
+    await api.post<Map<String, dynamic>>('/profile/complete'),
+  );
 }
 
-@riverpod
-ProfileRepository profileRepository(Ref ref) =>
-    ProfileRepository(ref.watch(apiClientProvider));
+@Riverpod(keepAlive: true)
+ProfileRepository profileRepository(Ref ref) => Env.useFakeApi
+    ? FakeProfileRepository(ref.watch(fakeBackendProvider))
+    : ApiProfileRepository(ref.watch(apiClientProvider));

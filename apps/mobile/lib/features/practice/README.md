@@ -12,12 +12,25 @@
 
 | Screen | File | Route |
 |---|---|---|
-| Practice | `presentation/practice_hub_screen.dart` | `/practice` |
-| Quiz setup | `presentation/quiz_setup_screen.dart` | `/practice/setup` |
-| MCQ question | `presentation/mcq_question_screen.dart` | `/practice/quiz` |
-| Answer feedback | `presentation/answer_feedback_screen.dart` | `/practice/feedback` |
-| Quiz result | `presentation/quiz_result_screen.dart` | `/practice/result` |
-| Diagnostic test | `presentation/diagnostic_screen.dart` | `/practice/diagnostic` |
+| Let's find your starting point (Figma A12) | `presentation/diagnostic_screen.dart` | `/diagnostic` |
+| Diagnostic question (not in Figma) | `presentation/diagnostic_question_screen.dart` | `/diagnostic/questions` |
+| Your starting point (Figma A13) | `presentation/diagnostic_result_screen.dart` | `/diagnostic/result` |
+| Practice hub, quiz setup, MCQ, feedback, result | placeholders | `/practice/...` |
+
+The diagnostic is outside the bottom nav. `application/diagnostic_controller.dart`
+resumes at the first unanswered question, saves each answer
+(`POST /diagnostic/{id}/answer`) before moving on, submits after the last one,
+and handles Skip for now and `NOT_ENOUGH_QUESTIONS`.
+
+### Diagnostic endpoints
+
+| Method | Path | Purpose |
+|---|---|---|
+| `POST` | `/diagnostic/start` | Start or resume the attempt |
+| `POST` | `/diagnostic/{attempt_id}/answer` | Save one answer |
+| `POST` | `/diagnostic/{attempt_id}/submit` | Finish -> result |
+| `POST` | `/diagnostic/skip` | Skip for now |
+| `GET` | `/diagnostic/result` | Result after a restart |
 
 ## API endpoints it will use
 
