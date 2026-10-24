@@ -29,10 +29,12 @@ Future<AppUser?> _toAppUser(User? user) async {
   final token = await user.getIdTokenResult();
   final role = token.claims?['role'] as String? ?? 'student';
 
+  // The backend profile (onboarding flags, phone) comes from GET /auth/me;
+  // this provider only knows what Firebase knows.
   return AppUser(
-    uid: user.uid,
+    id: user.uid,
     email: user.email ?? '',
-    displayName: user.displayName,
+    fullName: user.displayName ?? '',
     emailVerified: user.emailVerified,
     role: role,
   );

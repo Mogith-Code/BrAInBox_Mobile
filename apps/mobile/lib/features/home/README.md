@@ -12,18 +12,25 @@
 
 | Screen | File | Route |
 |---|---|---|
-| Home | `presentation/home_screen.dart` | `/home` |
+| Home dashboard (Figma B1) | `presentation/home_screen.dart` + `widgets/home_cards.dart` | `/home` |
 
-## API endpoints it will use
+- Greeting by local time: Good morning (5-11), Good afternoon (12-16),
+  Good evening (17-4); date like "Tuesday, 7 Oct".
+- Chips: "N-day streak", "N days to A/L" (hidden when `days_to_exam` is null).
+- Next best action: `type == diagnostic` opens the diagnostic intro; other
+  types open the topic placeholder for now (TODO).
+- Today's plan: tapping a circle ticks it right away (optimistic) and rolls
+  back if `PATCH /home/plan/{id}` fails.
+- Mastery ring + "+N% wk" (red when negative). Continue learning cards ->
+  topic; See all -> Learn tab. Avatar -> Settings.
+- Pull to refresh, skeleton while loading, error banner with Retry.
 
-> Planned paths only. The backend's `/docs` (OpenAPI) is the real contract -
-> update this table when the backend publishes the endpoints.
+## API endpoints it uses
 
 | Method | Path | Purpose |
 |---|---|---|
-| `GET` | `/home/summary` | Greeting, streak, next best action, today's plan |
-
-Shared models used: `Recommendation` (from `brainbox_core`, re-exported in `domain/`).
+| `GET` | `/home/summary` | Everything on the dashboard |
+| `PATCH` | `/home/plan/{item_id}` | Tick / untick a plan item (`{done}`) |
 
 ## Folders
 

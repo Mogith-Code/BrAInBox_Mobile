@@ -32,6 +32,49 @@ abstract final class Validators {
     return null;
   }
 
+  /// A person's name: at least 2 letters.
+  static String? fullName(String? value) {
+    final text = value?.trim() ?? '';
+    if (text.isEmpty) return 'Full name is required';
+    if (text.replaceAll(RegExp(r'[^A-Za-z]'), '').length < 2) {
+      return 'Enter your full name';
+    }
+    return null;
+  }
+
+  /// OPTIONAL Sri Lankan mobile number, typed after the fixed "+94".
+  /// Accepts "77 123 4567", "0771234567", "771234567", "+94771234567".
+  /// Empty is valid (the phone is optional).
+  static String? sriLankanMobile(String? value) {
+    final text = value?.trim() ?? '';
+    if (text.isEmpty) return null;
+    if (normalizeSriLankanMobile(text) == null) {
+      return 'Enter a Sri Lankan mobile number, e.g. 77 123 4567';
+    }
+    return null;
+  }
+
+  /// "077 123 4567" -> "+94771234567". Returns null if it is not a valid
+  /// Sri Lankan mobile number (9 digits starting with 7 after +94 / 0).
+  static String? normalizeSriLankanMobile(String value) {
+    var digits = value.replaceAll(RegExp(r'[^0-9]'), '');
+    if (digits.startsWith('94')) {
+      digits = digits.substring(2);
+    } else if (digits.startsWith('0')) {
+      digits = digits.substring(1);
+    }
+    if (!RegExp(r'^7[0-9]{8}$').hasMatch(digits)) return null;
+    return '+94$digits';
+  }
+
+  /// Exactly 6 digits.
+  static String? otpCode(String? value) {
+    if (!RegExp(r'^[0-9]{6}$').hasMatch(value ?? '')) {
+      return 'Enter the 6-digit code';
+    }
+    return null;
+  }
+
   /// Same as [original]. Use as `(v) => Validators.confirmPassword(v, pass)`.
   static String? confirmPassword(String? value, String original) {
     if (value == null || value.isEmpty) return 'Please confirm your password';

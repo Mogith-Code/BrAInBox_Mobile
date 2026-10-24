@@ -17,6 +17,26 @@ abstract final class AppColors {
   static const Color error = Color(0xFFEF4444);
   static const Color white = Color(0xFFFFFFFF);
 
+  // Supporting UI colours used by the Figma screens (Tailwind-style scale).
+  static const Color primarySoft = Color(0xFFEEF2FF); // selected card / chip bg
+  static const Color primaryLight = Color(0xFFC7D2FE); // filled OTP box border
+  static const Color secondaryDark = Color(0xFF0F766E); // teal text on light bg
+  static const Color secondarySoft = Color(0xFFF0FDFA); // teal icon bubble
+  static const Color success = Color(0xFF10B981); // strong / done
+  static const Color successSoft = Color(0xFFD1FAE5); // "Your strongest" card
+  static const Color successDark = Color(0xFF047857); // "+4% wk", success text
+  static const Color warning = Color(0xFFF59E0B); // needs-work bars / icons
+  static const Color warningSoft = Color(0xFFFFFBEB); // "Needs work" card
+  static const Color warningBorder = Color(0xFFFDE68A);
+  static const Color warningDark = Color(0xFFB45309); // amber text
+  static const Color streakSoft = Color(0xFFFEF3C7); // streak chip bg
+  static const Color streakDark = Color(0xFF92400E); // streak chip text
+  static const Color surfaceMuted = Color(0xFFF1F5F9); // disabled bg
+  static const Color mutedLight = Color(
+    0xFF94A3B8,
+  ); // placeholder / disabled text
+  static const Color errorSoft = Color(0xFFFEF2F2);
+
   // Logo colours on dark / gradient backgrounds (from the brand pack).
   static const Color aiHighlightOnDark = Color(
     0xFFA5F3FC,

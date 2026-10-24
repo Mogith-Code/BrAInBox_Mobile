@@ -1,24 +1,102 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-// Shared models this feature uses live in brainbox_core.
-// Re-exported so feature code can import just this file.
-export 'package:brainbox_core/brainbox_core.dart' show Recommendation;
-
 part 'home_models.freezed.dart';
 part 'home_models.g.dart';
 
-/// Placeholder model for the Home feature.
-///
-// TODO(samni): replace these fields with the response of `GET /home/summary`
-// (see the backend OpenAPI /docs), or delete this class and use the shared
-// models from brainbox_core. Run `melos run gen` after editing.
+/// Where a Next best action leads.
+@freezed
+abstract class ActionTarget with _$ActionTarget {
+  const factory ActionTarget({String? unitCode, String? topicId}) =
+      _ActionTarget;
+
+  factory ActionTarget.fromJson(Map<String, dynamic> json) =>
+      _$ActionTargetFromJson(json);
+}
+
+/// The gradient "NEXT BEST ACTION" card.
+@freezed
+abstract class NextBestAction with _$NextBestAction {
+  const factory NextBestAction({
+    required String type, // "diagnostic", "revision", "practice", ...
+    required String title,
+    @Default('') String reason,
+    @Default('Start') String buttonLabel,
+    int? minutes,
+    ActionTarget? target,
+    @Default(false) bool aiGenerated,
+  }) = _NextBestAction;
+
+  factory NextBestAction.fromJson(Map<String, dynamic> json) =>
+      _$NextBestActionFromJson(json);
+}
+
+/// One row of "Today's plan".
+@freezed
+abstract class PlanItem with _$PlanItem {
+  const factory PlanItem({
+    required String id,
+    required String title,
+    @Default(0) int minutes,
+    @Default('') String unitLabel, // "Unit 6"
+    @Default(false) bool done,
+  }) = _PlanItem;
+
+  factory PlanItem.fromJson(Map<String, dynamic> json) =>
+      _$PlanItemFromJson(json);
+}
+
+@freezed
+abstract class TodaysPlan with _$TodaysPlan {
+  const factory TodaysPlan({
+    @Default(0) int done,
+    @Default(0) int total,
+    @Default(<PlanItem>[]) List<PlanItem> items,
+  }) = _TodaysPlan;
+
+  factory TodaysPlan.fromJson(Map<String, dynamic> json) =>
+      _$TodaysPlanFromJson(json);
+}
+
+/// A "Continue learning" card.
+@freezed
+abstract class ContinueItem with _$ContinueItem {
+  const factory ContinueItem({
+    required String topicId,
+    required String title,
+    @Default('') String unitCode,
+    @Default(0) double progress, // 0-1 or 0-100
+  }) = _ContinueItem;
+
+  factory ContinueItem.fromJson(Map<String, dynamic> json) =>
+      _$ContinueItemFromJson(json);
+}
+
+/// `GET /home/summary`
 @freezed
 abstract class HomeSummary with _$HomeSummary {
   const factory HomeSummary({
-    required String title,
-    @Default('') String message,
+    @Default('') String greetingName,
+    @Default('') String initials,
+    @Default(0) int streakDays,
+    int? daysToExam, // null hides the chip
+    NextBestAction? nextBestAction,
+    @Default(TodaysPlan()) TodaysPlan todaysPlan,
+    @Default(0) double overallMastery, // 0-1 or 0-100
+    @Default(0) double masteryChangeWeek, // percentage points, e.g. 4 or -2
+    @Default(<ContinueItem>[]) List<ContinueItem> continueLearning,
   }) = _HomeSummary;
 
   factory HomeSummary.fromJson(Map<String, dynamic> json) =>
       _$HomeSummaryFromJson(json);
+}
+
+/// 62 or 0.62 -> 0.62
+double asFraction(double value) => value > 1 ? value / 100 : value;
+
+/// Good morning (5-11), Good afternoon (12-16), Good evening (17-4).
+String greetingFor(DateTime time) {
+  final h = time.hour;
+  if (h >= 5 && h < 12) return 'Good morning';
+  if (h >= 12 && h < 17) return 'Good afternoon';
+  return 'Good evening';
 }
