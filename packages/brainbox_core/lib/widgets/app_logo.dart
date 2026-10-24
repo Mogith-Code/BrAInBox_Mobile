@@ -18,6 +18,11 @@ enum AppLogoVariant {
 
   /// Icon with the wordmark below it.
   stacked,
+
+  /// The wordmark (and optional tagline) only, sized as in [stacked] for an
+  /// icon of height `size`. Use it when the icon is drawn separately, e.g.
+  /// inside the frosted tile on the splash screen.
+  wordmark,
 }
 
 /// The BrAInBox logo.
@@ -90,6 +95,11 @@ class AppLogo extends StatelessWidget {
             align: CrossAxisAlignment.center,
           ),
         ],
+      ),
+      AppLogoVariant.wordmark => _wordmarkBlock(
+        wordmarkSize: size * _stackedWordmark,
+        taglineSize: size * _stackedTagline,
+        align: CrossAxisAlignment.center,
       ),
     };
 

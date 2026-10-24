@@ -13,6 +13,8 @@ class MasteryRing extends StatelessWidget {
     this.size = 56,
     this.strokeWidth = 6,
     this.label,
+    this.color,
+    this.labelStyle,
   });
 
   final double value;
@@ -21,6 +23,12 @@ class MasteryRing extends StatelessWidget {
 
   /// Text in the middle. Defaults to the percentage, e.g. "72%".
   final String? label;
+
+  /// Fixed ring colour. Null = red / amber / teal by value.
+  final Color? color;
+
+  /// Style of the text in the middle (defaults to a small bold label).
+  final TextStyle? labelStyle;
 
   static Color colorFor(double value) {
     if (value < 0.4) return AppColors.error;
@@ -44,14 +52,16 @@ class MasteryRing extends StatelessWidget {
               strokeWidth: strokeWidth,
               strokeCap: StrokeCap.round,
               backgroundColor: AppColors.border,
-              color: colorFor(clamped),
+              color: color ?? colorFor(clamped),
             ),
             Center(
               child: Text(
                 text,
-                style: Theme.of(
-                  context,
-                ).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.w700),
+                style:
+                    labelStyle ??
+                    Theme.of(context).textTheme.labelMedium?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
               ),
             ),
           ],
