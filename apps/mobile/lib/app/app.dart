@@ -19,9 +19,20 @@ class BrainBoxApp extends ConsumerWidget {
       // TODO(samni): read the theme mode from the settings feature.
       themeMode: ThemeMode.light,
       routerConfig: router,
-      // Shows "Firebase not configured" at the top in debug builds.
-      builder: (context, child) =>
-          FirebaseStatusBanner(child: child ?? const SizedBox.shrink()),
+      // Debug builds: a "FAKE API" corner ribbon with USE_FAKE_API=true,
+      // otherwise "Firebase not configured" at the top if it isn't.
+      builder: (context, child) {
+        final app = child ?? const SizedBox.shrink();
+        if (Env.useFakeApi) {
+          return Banner(
+            message: 'FAKE API',
+            location: BannerLocation.topEnd,
+            color: AppColors.primary,
+            child: app,
+          );
+        }
+        return FirebaseStatusBanner(child: app);
+      },
     );
   }
 }
