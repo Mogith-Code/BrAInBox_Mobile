@@ -1,35 +1,20 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../data/onboarding_repository.dart';
-import '../domain/onboarding_models.dart';
 
 part 'onboarding_controller.g.dart';
 
-/// State for the Onboarding feature.
-///
-/// The state is an `AsyncValue<OnboardingSummary>`, so the screen gets loading,
-/// error and data cases for free:
-/// ```dart
-/// final state = ref.watch(onboardingControllerProvider);
-/// state.when(loading: ..., error: ..., data: ...);
-/// ```
-@riverpod
-class OnboardingController extends _$OnboardingController {
+/// `true` once the student has tapped Get Started, Skip or Log in on the
+/// welcome carousel. The router's onboarding redirect watches this.
+@Riverpod(keepAlive: true)
+class WelcomeSeen extends _$WelcomeSeen {
   @override
-  Future<OnboardingSummary> build() {
-    // TODO(mogith): load what the screen needs on open.
-    return ref.watch(onboardingRepositoryProvider).fetchSummary();
-  }
+  Future<bool> build() =>
+      ref.watch(onboardingRepositoryProvider).isWelcomeSeen();
 
-  /// Reloads the data (pull-to-refresh, Retry button...).
-  Future<void> refresh() async {
-    state = const AsyncLoading();
-    final next = await AsyncValue.guard(
-      () => ref.read(onboardingRepositoryProvider).fetchSummary(),
-    );
-    if (ref.mounted) state = next;
+  /// Saves the flag so the carousel is not shown again.
+  Future<void> markSeen() async {
+    await ref.read(onboardingRepositoryProvider).markWelcomeSeen();
+    state = const AsyncData(true);
   }
-
-  // TODO(mogith): add one method per user action (submit, delete, generate...).
-  // Each one calls the repository and updates `state`.
 }

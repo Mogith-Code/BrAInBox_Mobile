@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../theme/app_spacing.dart';
 
@@ -30,6 +31,10 @@ class AppTextField extends StatefulWidget {
     this.maxLines = 1,
     this.enabled = true,
     this.autofillHints,
+    this.inputFormatters,
+    this.focusNode,
+    this.textCapitalization = TextCapitalization.none,
+    this.prefix,
   });
 
   final String label;
@@ -52,6 +57,12 @@ class AppTextField extends StatefulWidget {
   final int maxLines;
   final bool enabled;
   final Iterable<String>? autofillHints;
+  final List<TextInputFormatter>? inputFormatters;
+  final FocusNode? focusNode;
+  final TextCapitalization textCapitalization;
+
+  /// A widget shown before the text (e.g. "🇱🇰 +94" in `PhoneField`).
+  final Widget? prefix;
 
   @override
   State<AppTextField> createState() => _AppTextFieldState();
@@ -66,7 +77,12 @@ class _AppTextFieldState extends State<AppTextField> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(widget.label, style: Theme.of(context).textTheme.labelLarge),
+        Text(
+          widget.label,
+          style: Theme.of(
+            context,
+          ).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w600),
+        ),
         const SizedBox(height: AppSpacing.sm),
         TextFormField(
           controller: widget.controller,
@@ -79,12 +95,26 @@ class _AppTextFieldState extends State<AppTextField> {
           onFieldSubmitted: widget.onSubmitted,
           enabled: widget.enabled,
           autofillHints: widget.autofillHints,
+          inputFormatters: widget.inputFormatters,
+          focusNode: widget.focusNode,
+          textCapitalization: widget.textCapitalization,
           decoration: InputDecoration(
             hintText: widget.hint,
             errorText: widget.errorText,
-            prefixIcon: widget.prefixIcon == null
+            prefixIcon: widget.prefix != null
+                ? Padding(
+                    padding: const EdgeInsetsDirectional.only(
+                      start: AppSpacing.lg,
+                      end: AppSpacing.sm,
+                    ),
+                    child: widget.prefix,
+                  )
+                : widget.prefixIcon == null
                 ? null
                 : Icon(widget.prefixIcon),
+            prefixIconConstraints: widget.prefix != null
+                ? const BoxConstraints(minWidth: 0, minHeight: 48)
+                : null,
             suffixIcon: widget.obscureText
                 ? IconButton(
                     tooltip: _obscured ? 'Show password' : 'Hide password',

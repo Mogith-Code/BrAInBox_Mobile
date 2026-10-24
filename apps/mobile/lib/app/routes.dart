@@ -21,7 +21,13 @@ abstract final class AppRoutes {
   static const login = '/auth/login';
   static const signup = '/auth/signup';
   static const forgotPassword = '/auth/forgot-password';
+
+  /// "Check your inbox" after sign up (verify-email mode).
   static const verifyEmail = '/auth/verify-email';
+
+  /// "Check your inbox" after "Forgot password" (reset mode).
+  static const resetCode = '/auth/reset-code';
+  static const newPassword = '/auth/new-password';
 
   // Profile (Mogith)
   static const profileSetup = '/profile/setup';
@@ -103,15 +109,18 @@ abstract final class AppRoutes {
   // Settings (Samni)
   static const settings = '/settings';
 
-  /// Routes you can open without signing in.
-  static const publicRoutes = {
-    splash,
+  /// Routes a signed-OUT student may stay on (used by the redirect).
+  static const signedOutRoutes = {
     onboarding,
     login,
     signup,
     forgotPassword,
-    verifyEmail,
+    resetCode,
+    newPassword,
   };
+
+  /// The diagnostic screens (open while the diagnostic isn't done yet).
+  static const diagnosticRoutes = {diagnostic};
 
   /// Every screen with a sample path. Used by the dev menu and router test.
   static final List<({String title, String owner, String path})> catalog = [
@@ -120,7 +129,9 @@ abstract final class AppRoutes {
     (title: 'Log in', owner: 'Mogith', path: login),
     (title: 'Sign up', owner: 'Mogith', path: signup),
     (title: 'Forgot password', owner: 'Mogith', path: forgotPassword),
-    (title: 'Verify email', owner: 'Mogith', path: verifyEmail),
+    (title: 'Check your inbox', owner: 'Mogith', path: verifyEmail),
+    (title: 'Check your inbox (reset)', owner: 'Mogith', path: resetCode),
+    (title: 'Set a new password', owner: 'Mogith', path: newPassword),
     (title: 'Profile setup', owner: 'Mogith', path: profileSetup),
     (title: 'Home', owner: 'Samni', path: home),
     (title: 'Learn', owner: 'Keshomigha', path: learn),
