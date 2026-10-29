@@ -11,9 +11,7 @@ abstract final class AppColors {
   static const Color mint = Color(0xFF6EE7B7); // success / mastered
   static const Color amber = Color(0xFFFCD34D); // AI badge / warning
 
-  /// Darker amber for warning icons, lines and bars on white. [amber] is too
-  /// light there (contrast below 3:1).
-  static const Color warning = Color(0xFFD97706);
+  static const Color warning = Color(0xFFF59E0B);
   static const Color ink = Color(0xFF1E1B4B); // main text
   static const Color muted = Color(0xFF64748B); // secondary text
   static const Color border = Color(0xFFE2E8F0);
