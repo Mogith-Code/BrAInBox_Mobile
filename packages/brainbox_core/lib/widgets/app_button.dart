@@ -34,6 +34,7 @@ class AppButton extends StatelessWidget {
     this.icon,
     this.isLoading = false,
     this.expand = true,
+    this.trailingIcon,
   });
 
   final String label;
@@ -45,7 +46,23 @@ class AppButton extends StatelessWidget {
   /// Fill the available width (default). Set to false for inline buttons.
   final bool expand;
 
+  /// Icon after the label, e.g. `Icons.arrow_forward` for "Continue →".
+  final IconData? trailingIcon;
+
   static const Size _minSize = Size(64, 52);
+
+  static const TextStyle _labelStyle = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+  );
+
+  static final List<BoxShadow> _glow = [
+    BoxShadow(
+      color: AppColors.primary.withValues(alpha: 0.28),
+      blurRadius: 18,
+      offset: const Offset(0, 6),
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -57,18 +74,29 @@ class AppButton extends StatelessWidget {
       label: label,
       icon: icon,
       isLoading: isLoading,
+      trailingIcon: trailingIcon,
     );
 
     final Widget button = switch (variant) {
-      AppButtonVariant.primary => FilledButton(
-        onPressed: onTap,
-        style: FilledButton.styleFrom(
-          backgroundColor: AppColors.primary,
-          foregroundColor: AppColors.white,
-          minimumSize: _minSize,
-          shape: shape,
+      AppButtonVariant.primary => DecoratedBox(
+        // Soft indigo glow under enabled primary buttons (as in Figma).
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
+          boxShadow: onTap == null ? null : _glow,
         ),
-        child: content,
+        child: FilledButton(
+          onPressed: onTap,
+          style: FilledButton.styleFrom(
+            backgroundColor: AppColors.primary,
+            foregroundColor: AppColors.white,
+            disabledBackgroundColor: AppColors.surfaceMuted,
+            disabledForegroundColor: AppColors.muted,
+            minimumSize: _minSize,
+            shape: shape,
+            textStyle: _labelStyle,
+          ),
+          child: content,
+        ),
       ),
       AppButtonVariant.secondary => OutlinedButton(
         onPressed: onTap,
@@ -120,6 +148,7 @@ class _GradientButton extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: AppColors.brandGradient,
           borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
+          boxShadow: onPressed == null ? null : AppButton._glow,
         ),
         child: FilledButton(
           onPressed: onPressed,
@@ -131,6 +160,7 @@ class _GradientButton extends StatelessWidget {
             shadowColor: Colors.transparent,
             minimumSize: AppButton._minSize,
             shape: shape,
+            textStyle: AppButton._labelStyle,
           ),
           child: child,
         ),
@@ -145,11 +175,13 @@ class _ButtonContent extends StatelessWidget {
     required this.label,
     required this.icon,
     required this.isLoading,
+    this.trailingIcon,
   });
 
   final String label;
   final IconData? icon;
   final bool isLoading;
+  final IconData? trailingIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -167,6 +199,10 @@ class _ButtonContent extends StatelessWidget {
           Icon(icon, size: 20),
         if (isLoading || icon != null) const SizedBox(width: AppSpacing.sm),
         Flexible(child: Text(label, overflow: TextOverflow.ellipsis)),
+        if (trailingIcon != null && !isLoading) ...[
+          const SizedBox(width: AppSpacing.sm),
+          Icon(trailingIcon, size: 20),
+        ],
       ],
     );
   }
