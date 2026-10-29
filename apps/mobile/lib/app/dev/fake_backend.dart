@@ -32,6 +32,16 @@ class FakeBackend {
         diagnosticCompleted: true,
       ),
     );
+    nethmi.profile.addAll({
+      'stream': 'biological_science',
+      'subject': 'biology',
+      'exam_year': 2027,
+      'target_grade': 'A',
+      'confidence': 50,
+      'study_days': ['mon', 'tue', 'thu', 'sat', 'sun'],
+      'hours_per_day': 2,
+      'preferred_time': 'evening',
+    });
     accounts[nethmi.email] = nethmi;
   }
 
@@ -179,6 +189,9 @@ class FakeAccount {
   /// `POST /auth/register` was called (backend user exists).
   bool registered;
   OnboardingStatus onboarding;
+
+  /// Saved profile fields (snake_case, as sent by `PATCH /profile`).
+  final Map<String, dynamic> profile = {};
 
   /// The `UserOut` JSON the real backend would return.
   AppUser toUser() => AppUser(

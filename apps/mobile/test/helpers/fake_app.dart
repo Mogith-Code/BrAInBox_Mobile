@@ -2,6 +2,8 @@ import 'package:brainbox_mobile/app/dev/fake_backend.dart';
 import 'package:brainbox_mobile/features/auth/application/session_controller.dart';
 import 'package:brainbox_mobile/features/auth/data/auth_repository.dart';
 import 'package:brainbox_mobile/features/auth/data/fake_auth_repository.dart';
+import 'package:brainbox_mobile/features/profile/data/fake_profile_repository.dart';
+import 'package:brainbox_mobile/features/profile/data/profile_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,6 +15,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 List<Override> fakeOverrides(FakeBackend backend) => [
   fakeBackendProvider.overrideWithValue(backend),
   authRepositoryProvider.overrideWithValue(FakeAuthRepository(backend)),
+  profileRepositoryProvider.overrideWithValue(FakeProfileRepository(backend)),
   authGuardEnabledProvider.overrideWithValue(true),
 ];
 
