@@ -17,6 +17,7 @@ analyzer:
   errors:
     # freezed puts @JsonKey on constructor parameters, which is fine.
     invalid_annotation_target: ignore
+    todo: ignore
 
 linter:
   rules:
