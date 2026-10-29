@@ -365,7 +365,7 @@ class _SidebarFooter extends ConsumerWidget {
 
     final user = ref.watch(currentUserProvider).value;
     final textTheme = Theme.of(context).textTheme;
-    final name = user?.displayName?.trim() ?? '';
+    final name = user?.fullName.trim() ?? '';
     final primaryText = user == null
         ? 'Not signed in'
         : (name.isNotEmpty ? name : user.email);

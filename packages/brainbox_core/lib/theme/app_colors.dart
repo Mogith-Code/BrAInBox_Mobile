@@ -29,7 +29,6 @@ abstract final class AppColors {
   static const Color success = Color(0xFF10B981); // strong / done
   static const Color successSoft = Color(0xFFD1FAE5); // "Your strongest" card
   static const Color successDark = Color(0xFF047857); // "+4% wk", success text
-  static const Color warning = Color(0xFFF59E0B); // needs-work bars / icons
   static const Color warningSoft = Color(0xFFFFFBEB); // "Needs work" card
   static const Color warningBorder = Color(0xFFFDE68A);
   static const Color warningDark = Color(0xFFB45309); // amber text
