@@ -1,7 +1,4 @@
 /// Small text formatting helpers for the UI.
-///
-import 'package:intl/intl.dart';
-
 abstract final class Formatters {
   static const _months = [
     'Jan',
@@ -17,8 +14,50 @@ abstract final class Formatters {
     'Nov',
     'Dec',
   ];
-  static String thousands(num value) =>
-      NumberFormat.decimalPattern().format(value);
+
+  static const _weekdays = [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday',
+  ];
+
+  /// 2026-10-07 -> "Tuesday, 7 Oct"
+  static String weekdayDayMonth(DateTime date) =>
+      '${_weekdays[date.weekday - 1]}, ${date.day} ${_months[date.month - 1]}';
+
+  /// 42 -> "0:42", 75 -> "1:15"
+  static String countdown(int seconds) {
+    final s = seconds < 0 ? 0 : seconds;
+    return '${s ~/ 60}:${(s % 60).toString().padLeft(2, '0')}';
+  }
+
+  /// "Nethmi Perera" -> "NP", "Nethmi" -> "N"
+  static String initials(String name) {
+    final parts = name
+        .trim()
+        .split(RegExp(r'\s+'))
+        .where((p) => p.isNotEmpty)
+        .toList();
+    if (parts.isEmpty) return '';
+    final first = parts.first[0];
+    final last = parts.length > 1 ? parts.last[0] : '';
+    return (first + last).toUpperCase();
+  }
+
+  /// 2418 -> "2,418", -1500 -> "-1,500"
+  static String thousands(int value) {
+    final digits = value.abs().toString();
+    final buffer = StringBuffer(value < 0 ? '-' : '');
+    for (var i = 0; i < digits.length; i++) {
+      if (i > 0 && (digits.length - i) % 3 == 0) buffer.write(',');
+      buffer.write(digits[i]);
+    }
+    return buffer.toString();
+  }
 
   /// 0.724 -> "72%"
   static String percent(double value) => '${(value * 100).round()}%';
