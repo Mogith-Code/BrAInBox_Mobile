@@ -5,31 +5,51 @@ import '../domain/home_models.dart';
 
 part 'home_controller.g.dart';
 
-/// State for the Home feature.
-///
-/// The state is an `AsyncValue<HomeSummary>`, so the screen gets loading,
-/// error and data cases for free:
-/// ```dart
-/// final state = ref.watch(homeControllerProvider);
-/// state.when(loading: ..., error: ..., data: ...);
-/// ```
+/// The Home dashboard (`GET /home/summary`).
 @riverpod
 class HomeController extends _$HomeController {
   @override
-  Future<HomeSummary> build() {
-    // TODO(samni): load what the screen needs on open.
-    return ref.watch(homeRepositoryProvider).fetchSummary();
-  }
+  Future<HomeSummary> build() => ref.watch(homeRepositoryProvider).summary();
 
-  /// Reloads the data (pull-to-refresh, Retry button...).
+  /// Pull-to-refresh: reloads but keeps showing the old data meanwhile.
   Future<void> refresh() async {
-    state = const AsyncLoading();
-    final next = await AsyncValue.guard(
-      () => ref.read(homeRepositoryProvider).fetchSummary(),
-    );
+    final repo = ref.read(homeRepositoryProvider);
+    final next = await AsyncValue.guard(repo.summary);
     if (ref.mounted) state = next;
   }
 
-  // TODO(samni): add one method per user action (submit, delete, generate...).
-  // Each one calls the repository and updates `state`.
+  /// Ticks / unticks a "Today's plan" item. Updates the screen right away
+  /// (optimistic) and rolls back if `PATCH /home/plan/{id}` fails.
+  /// Returns false when it had to roll back (the screen shows a message).
+  Future<bool> togglePlanItem(String itemId) async {
+    final before = state.value;
+    if (before == null) return false;
+    final item = before.todaysPlan.items
+        .where((i) => i.id == itemId)
+        .firstOrNull;
+    if (item == null) return false;
+
+    final repo = ref.read(homeRepositoryProvider);
+    state = AsyncData(_withItemDone(before, itemId, !item.done));
+    try {
+      await repo.setPlanItemDone(itemId, done: !item.done);
+      return true;
+    } catch (_) {
+      if (ref.mounted) state = AsyncData(before); // roll back
+      return false;
+    }
+  }
+
+  static HomeSummary _withItemDone(HomeSummary s, String id, bool done) {
+    final items = [
+      for (final i in s.todaysPlan.items)
+        i.id == id ? i.copyWith(done: done) : i,
+    ];
+    return s.copyWith(
+      todaysPlan: s.todaysPlan.copyWith(
+        items: items,
+        done: items.where((i) => i.done).length,
+      ),
+    );
+  }
 }
