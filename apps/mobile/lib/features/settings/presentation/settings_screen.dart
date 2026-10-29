@@ -43,7 +43,46 @@ class SettingsScreen extends ConsumerWidget {
               ),
             ),
           ),
+          const _LogoutButton(),
           const _AboutSection(),
+        ],
+      ),
+    );
+  }
+}
+
+/// "Log out" - signs out and goes back to the Log in screen.
+class _LogoutButton extends ConsumerWidget {
+  const _LogoutButton();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(logoutControllerProvider);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
+      child: Column(
+        children: [
+          if (state.hasError)
+            Padding(
+              padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+              child: Text(
+                ErrorMessages.of(state.error),
+                style: const TextStyle(color: AppColors.error),
+              ),
+            ),
+          AppButton(
+            label: 'Log out',
+            icon: Icons.logout,
+            variant: AppButtonVariant.secondary,
+            isLoading: state.isLoading,
+            onPressed: () async {
+              await ref.read(logoutControllerProvider.notifier).logout();
+              if (context.mounted &&
+                  !ref.read(logoutControllerProvider).hasError) {
+                context.go(AppRoutes.login);
+              }
+            },
+          ),
         ],
       ),
     );
