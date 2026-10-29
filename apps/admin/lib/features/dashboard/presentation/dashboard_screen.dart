@@ -56,8 +56,9 @@ class _DashboardBody extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(currentUserProvider).value;
-    final firstName =
-        (user == null || user.firstName.isEmpty) ? null : user.firstName;
+    final firstName = (user == null || user.firstName.isEmpty)
+        ? null
+        : user.firstName;
 
     final header = DashboardHeader(
       now: DateTime.now(),

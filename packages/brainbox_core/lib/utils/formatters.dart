@@ -1,5 +1,5 @@
 /// Small text formatting helpers for the UI.
-/// 
+///
 import 'package:intl/intl.dart';
 
 abstract final class Formatters {
@@ -17,8 +17,8 @@ abstract final class Formatters {
     'Nov',
     'Dec',
   ];
-static String thousands(num value) =>
-    NumberFormat.decimalPattern().format(value);
+  static String thousands(num value) =>
+      NumberFormat.decimalPattern().format(value);
 
   /// 0.724 -> "72%"
   static String percent(double value) => '${(value * 100).round()}%';
