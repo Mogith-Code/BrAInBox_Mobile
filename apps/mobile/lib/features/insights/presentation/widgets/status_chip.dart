@@ -46,7 +46,7 @@ class StatusChip extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.labelMedium?.copyWith(
                   fontWeight: FontWeight.w600,
-                  color: InsightsColors.text(context),
+                  color: style.text(context),
                 ),
               ),
             ),
