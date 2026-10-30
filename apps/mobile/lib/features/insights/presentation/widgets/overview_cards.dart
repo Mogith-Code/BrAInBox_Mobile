@@ -210,7 +210,10 @@ class _HighlightTile extends StatelessWidget {
                     Expanded(
                       child: Text(
                         '${InsightsText.percent(topic.percent)} · ${style.label}',
-                        style: textTheme.bodySmall,
+                        style: textTheme.bodySmall?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: style.text(context),
+                        ),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
