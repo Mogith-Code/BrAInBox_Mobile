@@ -1,13 +1,11 @@
+import 'package:brainbox_core/brainbox_core.dart';
 import 'package:flutter/material.dart';
 
 import 'insights_style.dart';
 
-/// A progress ring coloured by the Insights percent rule
-/// (see [InsightsColors.forPercent]).
-///
-// TODO(keshomigha): replace with `MasteryRing(color: ...)` once PR #7 adds
-// the colour override to brainbox_core. Today's MasteryRing uses different
-// thresholds (40 / 70 %) and can't be recoloured.
+/// The shared [MasteryRing], coloured by the Insights colour code
+/// (see [InsightsColors.forPercent]), with "—" for not attempted and a faded
+/// look for results that are not reliable yet.
 class InsightsRing extends StatelessWidget {
   const InsightsRing({
     super.key,
@@ -29,8 +27,6 @@ class InsightsRing extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final value = percent == null ? 0.0 : (percent! / 100).clamp(0.0, 1.0);
-    final label = percent == null ? '—' : '${percent!.round()}%';
     final textStyle =
         labelStyle ??
         Theme.of(
@@ -42,28 +38,13 @@ class InsightsRing extends StatelessWidget {
       excludeSemantics: true,
       child: Opacity(
         opacity: faded ? 0.45 : 1,
-        child: SizedBox.square(
-          dimension: size,
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              CircularProgressIndicator(
-                value: value,
-                strokeWidth: strokeWidth,
-                strokeCap: StrokeCap.round,
-                backgroundColor: InsightsColors.line(context),
-                color: InsightsColors.forPercent(percent),
-              ),
-              Center(
-                child: Text(
-                  label,
-                  style: textStyle?.copyWith(
-                    color: InsightsColors.text(context),
-                  ),
-                ),
-              ),
-            ],
-          ),
+        child: MasteryRing(
+          value: percent == null ? 0 : percent! / 100,
+          size: size,
+          strokeWidth: strokeWidth,
+          label: percent == null ? '—' : '${percent!.round()}%',
+          color: InsightsColors.forPercent(percent),
+          labelStyle: textStyle?.copyWith(color: InsightsColors.text(context)),
         ),
       ),
     );
