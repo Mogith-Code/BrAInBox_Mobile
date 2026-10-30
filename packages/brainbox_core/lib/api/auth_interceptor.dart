@@ -8,9 +8,10 @@ typedef IdTokenGetter = Future<String?> Function({bool forceRefresh});
 
 /// Adds `Authorization: Bearer <Firebase ID token>` to every request.
 ///
-/// The backend verifies this token. If the backend answers 401 (token
-/// expired), we refresh the token ONCE and retry the request. A second 401
-/// is passed on to the caller as an error.
+/// The backend verifies this token. If the backend answers 401
+/// `INVALID_TOKEN` (token expired), we refresh the token ONCE and retry the
+/// request. Other 401s (e.g. `USER_NOT_REGISTERED`) and a second 401 are
+/// passed on to the caller as an error.
 class AuthInterceptor extends Interceptor {
   AuthInterceptor({required this.dio, IdTokenGetter? getIdToken})
     : _getIdToken = getIdToken ?? firebaseIdToken;
@@ -37,10 +38,9 @@ class AuthInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
     final request = err.requestOptions;
-    final isUnauthorized = err.response?.statusCode == 401;
     final alreadyRetried = request.extra[_retriedKey] == true;
 
-    if (!isUnauthorized || alreadyRetried) {
+    if (!isExpiredToken(err.response) || alreadyRetried) {
       handler.next(err);
       return;
     }
@@ -60,6 +60,15 @@ class AuthInterceptor extends Interceptor {
     } on DioException catch (retryError) {
       handler.next(retryError);
     }
+  }
+
+  /// A 401 that a fresh token can fix: `INVALID_TOKEN` (expired, revoked).
+  /// A 401 without our error body counts too (e.g. from a proxy).
+  static bool isExpiredToken(Response<dynamic>? response) {
+    if (response?.statusCode != 401) return false;
+    final data = response?.data;
+    final error = data is Map ? data['error'] : null;
+    return error is! Map || error['code'] == 'INVALID_TOKEN';
   }
 
   /// Getting a token can fail (offline, etc.). Then we send no token and let

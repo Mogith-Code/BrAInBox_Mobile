@@ -12,14 +12,19 @@
 
 | Screen | File | Route |
 |---|---|---|
-| Splash | `presentation/splash_screen.dart` | `/` |
+| Splash (Figma A1) | `presentation/splash_screen.dart` | `/` |
 
-## API endpoints it will use
+The splash has no data layer of its own. It watches `sessionProvider`
+(auth feature): dots while loading, the error + Retry if loading fails, and
+the router's onboarding redirect moves on as soon as the session is known.
+With the redirect off (no Firebase / fake API, or `DISABLE_AUTH_GUARD`) it
+shows "Get started" and the Dev menu button instead.
 
-> Planned paths only. The backend's `/docs` (OpenAPI) is the real contract -
-> update this table when the backend publishes the endpoints.
+Decorations are drawn in `presentation/widgets/splash_decorations.dart`.
 
-None - this feature only uses local state (shared_preferences / auth state).
+## API endpoints it uses
+
+None directly (the session calls `GET /auth/me`).
 
 ## Folders
 

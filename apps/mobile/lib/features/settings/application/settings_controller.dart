@@ -1,5 +1,10 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../auth/application/auth_flow_controllers.dart';
+import '../../auth/application/session_controller.dart';
+import '../../home/application/home_controller.dart';
+import '../../practice/application/diagnostic_controller.dart';
+
 import '../data/settings_repository.dart';
 import '../domain/settings_models.dart';
 
@@ -32,6 +37,29 @@ class SettingsController extends _$SettingsController {
 
   // TODO(samni): add one method per user action (submit, delete, generate...).
   // Each one calls the repository and updates `state`.
+}
+
+/// Log out: Firebase sign out, then forget everything kept in memory for
+/// this student. The router's redirect then shows Log in.
+@riverpod
+class LogoutController extends _$LogoutController {
+  @override
+  FutureOr<void> build() {}
+
+  Future<void> logout() async {
+    final session = ref.read(sessionProvider.notifier);
+    state = const AsyncLoading();
+    final result = await AsyncValue.guard(() async {
+      // Clear cached data first so nothing of this student stays around.
+      ref
+        ..invalidate(diagnosticControllerProvider)
+        ..invalidate(resetFlowProvider)
+        ..invalidate(homeControllerProvider);
+      // TODO(samni): also clear the Hive boxes once the app opens any.
+      await session.signOut();
+    });
+    if (ref.mounted) state = result;
+  }
 }
 
 /// The app version shown in Settings > About.

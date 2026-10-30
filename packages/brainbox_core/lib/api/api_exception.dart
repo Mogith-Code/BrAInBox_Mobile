@@ -12,6 +12,8 @@ class ApiException implements Exception {
     required this.code,
     required this.message,
     this.statusCode,
+    this.retryAfter,
+    this.details = const {},
   });
 
   /// Converts a Dio error into an [ApiException].
@@ -21,11 +23,13 @@ class ApiException implements Exception {
 
     // 1. The backend's own error format.
     if (data is Map && data['error'] is Map) {
-      final error = data['error'] as Map;
+      final error = Map<String, dynamic>.from(data['error'] as Map);
       return ApiException(
         code: '${error['code'] ?? 'unknown'}',
         message: '${error['message'] ?? _genericMessage}',
         statusCode: status,
+        retryAfter: _readRetryAfter(error, e.response?.headers),
+        details: error,
       );
     }
 
@@ -56,6 +60,18 @@ class ApiException implements Exception {
 
   static const _genericMessage = 'Something went wrong. Please try again.';
 
+  /// `retry_after` (seconds) can be in the error body, in `error.details`,
+  /// or in the `Retry-After` header. Returns null when none is given.
+  static int? _readRetryAfter(Map<String, dynamic> error, Headers? headers) {
+    final details = error['details'];
+    final value =
+        error['retry_after'] ??
+        (details is Map ? details['retry_after'] : null) ??
+        headers?.value('retry-after');
+    if (value is int) return value;
+    return int.tryParse('${value ?? ''}');
+  }
+
   /// Machine-readable code from the backend, e.g. `topic_not_found`.
   final String code;
 
@@ -64,6 +80,41 @@ class ApiException implements Exception {
 
   /// HTTP status code, if the server answered.
   final int? statusCode;
+
+  /// Seconds to wait before trying again (429 responses), if the server said.
+  final int? retryAfter;
+
+  /// The raw `error` object from the backend (extra fields live here).
+  final Map<String, dynamic> details;
+
+  /// `CODE_INVALID` only: how many wrong tries are left before the code dies.
+  int? get attemptsLeft {
+    final value = details['attempts_left'];
+    return value is int ? value : null;
+  }
+
+  /// Which form field each problem belongs to, e.g. `{'phone': '...'}`.
+  ///
+  /// From the error code (`INVALID_PHONE` -> phone, `WEAK_PASSWORD` ->
+  /// password, `CONSENT_REQUIRED` -> consent, `EMAIL_IN_USE` -> email) or,
+  /// for `VALIDATION_ERROR`, from `details: [{field: "body.phone", ...}]`.
+  Map<String, String> get fieldErrors {
+    final byCode = switch (code) {
+      'INVALID_PHONE' => 'phone',
+      'WEAK_PASSWORD' => 'password',
+      'CONSENT_REQUIRED' => 'consent',
+      'EMAIL_IN_USE' => 'email',
+      _ => null,
+    };
+    if (byCode != null) return {byCode: message};
+
+    final list = details['details'];
+    if (code != 'VALIDATION_ERROR' || list is! List) return const {};
+    return {
+      for (final item in list.whereType<Map<dynamic, dynamic>>())
+        '${item['field']}'.split('.').last: '${item['message']}',
+    };
+  }
 
   bool get isUnauthorized => statusCode == 401;
   bool get isNotFound => statusCode == 404;

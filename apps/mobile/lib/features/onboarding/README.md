@@ -12,14 +12,16 @@
 
 | Screen | File | Route |
 |---|---|---|
-| Onboarding | `presentation/onboarding_screen.dart` | `/onboarding` |
+| Welcome carousel (Figma A2-A4: Learn smarter / Know exactly what went wrong / Always know what's next) | `presentation/onboarding_screen.dart` | `/onboarding` |
+
+Illustrations are drawn in Flutter (`presentation/widgets/welcome_illustrations.dart`).
+TODO(mogith): replace them with the designer's SVG exports.
 
 ## API endpoints it will use
 
-> Planned paths only. The backend's `/docs` (OpenAPI) is the real contract -
-> update this table when the backend publishes the endpoints.
-
-None - this feature only uses local state (shared_preferences / auth state).
+None. The only state is the **"welcome seen"** flag in shared_preferences
+(`data/onboarding_repository.dart`), exposed as `welcomeSeenProvider`.
+Get Started / Skip -> Create account, Log in -> Log in; all three save the flag.
 
 ## Folders
 
