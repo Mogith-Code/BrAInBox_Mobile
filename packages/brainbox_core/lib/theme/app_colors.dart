@@ -10,6 +10,8 @@ abstract final class AppColors {
   static const Color secondary = Color(0xFF0EA5A4); // teal
   static const Color mint = Color(0xFF6EE7B7); // success / mastered
   static const Color amber = Color(0xFFFCD34D); // AI badge / warning
+
+  static const Color warning = Color(0xFFF59E0B);
   static const Color ink = Color(0xFF1E1B4B); // main text
   static const Color muted = Color(0xFF64748B); // secondary text
   static const Color border = Color(0xFFE2E8F0);
@@ -25,7 +27,6 @@ abstract final class AppColors {
   static const Color success = Color(0xFF10B981); // strong / done
   static const Color successSoft = Color(0xFFD1FAE5); // "Your strongest" card
   static const Color successDark = Color(0xFF047857); // "+4% wk", success text
-  static const Color warning = Color(0xFFF59E0B); // needs-work bars / icons
   static const Color warningSoft = Color(0xFFFFFBEB); // "Needs work" card
   static const Color warningBorder = Color(0xFFFDE68A);
   static const Color warningDark = Color(0xFFB45309); // amber text

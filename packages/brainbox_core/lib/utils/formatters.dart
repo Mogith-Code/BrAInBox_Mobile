@@ -48,6 +48,17 @@ abstract final class Formatters {
     return (first + last).toUpperCase();
   }
 
+  /// 2418 -> "2,418", -1500 -> "-1,500"
+  static String thousands(int value) {
+    final digits = value.abs().toString();
+    final buffer = StringBuffer(value < 0 ? '-' : '');
+    for (var i = 0; i < digits.length; i++) {
+      if (i > 0 && (digits.length - i) % 3 == 0) buffer.write(',');
+      buffer.write(digits[i]);
+    }
+    return buffer.toString();
+  }
+
   /// 0.724 -> "72%"
   static String percent(double value) => '${(value * 100).round()}%';
 
