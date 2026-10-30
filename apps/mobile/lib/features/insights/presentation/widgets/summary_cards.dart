@@ -459,11 +459,7 @@ class AccuracyTrendCard extends StatelessWidget {
 
   Widget _change(BuildContext context, AccuracyTrend trend) {
     final change = trend.changePoints!;
-    final color = change > 0
-        ? InsightsPalette.positive
-        : change < 0
-        ? InsightsPalette.negative
-        : InsightsColors.mutedText(context);
+    final color = InsightsPalette.forChange(context, change);
     final window = trend.windowLabel.isEmpty ? '' : ' in ${trend.windowLabel}';
     return Row(
       mainAxisSize: MainAxisSize.min,
