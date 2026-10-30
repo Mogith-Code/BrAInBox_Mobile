@@ -11,10 +11,19 @@ part 'session_controller.g.dart';
 
 /// Everything the router needs to decide where the student belongs.
 class SessionState {
-  const SessionState({required this.welcomeSeen, this.account, this.user});
+  const SessionState({
+    required this.welcomeSeen,
+    this.account,
+    this.user,
+    this.signedOutReason,
+  });
 
   /// The welcome carousel was already seen on this device.
   final bool welcomeSeen;
+
+  /// Why the app signed the student out by itself (e.g. `USER_DISABLED`).
+  /// Log in shows it; null normally.
+  final ApiException? signedOutReason;
 
   /// Firebase account (null = signed out).
   final AuthAccount? account;
@@ -59,8 +68,19 @@ class Session extends _$Session {
 
     if (account == null) return SessionState(welcomeSeen: welcomeSeen);
 
-    final user = await _loadUser(repo, account);
-    return SessionState(welcomeSeen: welcomeSeen, account: account, user: user);
+    try {
+      final user = await _loadUser(repo, account);
+      return SessionState(
+        welcomeSeen: welcomeSeen,
+        account: account,
+        user: user,
+      );
+    } on ApiException catch (e) {
+      if (e.code != 'USER_DISABLED') rethrow;
+      // The backend blocked this account: sign out and say why on Log in.
+      await repo.signOut();
+      return SessionState(welcomeSeen: welcomeSeen, signedOutReason: e);
+    }
   }
 
   static Future<AppUser> _loadUser(
@@ -70,17 +90,36 @@ class Session extends _$Session {
     try {
       return await repo.me();
     } on ApiException catch (e) {
-      if (e.code != 'USER_NOT_FOUND') rethrow;
+      if (e.code != 'USER_NOT_FOUND' && e.code != 'USER_NOT_REGISTERED') {
+        rethrow;
+      }
       // Signed in to Firebase but unknown to the backend (e.g. the app was
       // closed during sign up): register now. Safe to repeat.
-      return repo.register(fullName: account.displayName ?? '', consent: true);
+      return repo.register(fullName: nameFor(account), consent: true);
     }
+  }
+
+  /// The name for `POST /auth/register` (it must not be empty): the
+  /// Firebase display name, else the part of the email before the "@".
+  static String nameFor(AuthAccount account) {
+    final name = account.displayName?.trim() ?? '';
+    if (name.isNotEmpty) return name;
+    final local = account.email.split('@').first.trim();
+    return local.isEmpty ? 'Student' : local;
   }
 
   /// Reloads the session and waits for it.
   Future<void> refresh() async {
     ref.invalidateSelf();
     await future;
+  }
+
+  /// Like [refresh], but throws when the session signed the student out by
+  /// itself (e.g. `USER_DISABLED`), so the form that called it shows why.
+  Future<void> refreshOrThrow() async {
+    await refresh();
+    final reason = state.value?.signedOutReason;
+    if (reason != null) throw reason;
   }
 
   /// Signs out and clears the session (the router then shows Log in).

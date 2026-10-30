@@ -17,6 +17,7 @@ class PhoneField extends StatelessWidget {
     this.required = false,
     this.textInputAction,
     this.onChanged,
+    this.errorText,
   });
 
   final String label;
@@ -25,12 +26,16 @@ class PhoneField extends StatelessWidget {
   final TextInputAction? textInputAction;
   final ValueChanged<String>? onChanged;
 
+  /// An error from outside the form (e.g. the backend's `INVALID_PHONE`).
+  final String? errorText;
+
   @override
   Widget build(BuildContext context) {
     return AppTextField(
       label: label,
       controller: controller,
       hint: '77 123 4567',
+      errorText: errorText,
       keyboardType: TextInputType.phone,
       textInputAction: textInputAction,
       autofillHints: const [AutofillHints.telephoneNumberNational],

@@ -124,8 +124,9 @@ disabled, the router's auth guard is off, and debug builds show an amber
    (`DefaultFirebaseOptions`), so the Google Services Gradle plugin is not needed.
 5. Enable **Email/Password** sign-in in the Firebase console.
 6. Admin role: the admin portal only lets in users whose role is `admin`.
-   For now we assume the backend sets a Firebase **custom claim** `role: "admin"`.
-   See the `TODO(mogith)` in `packages/brainbox_core/lib/auth/current_user_provider.dart`.
+   The role comes from the backend (`GET /auth/me` → `role`), see
+   `packages/brainbox_core/lib/auth/current_user_provider.dart`. Make someone
+   an admin with the backend's `scripts/seed_admin.py --uid <firebase-uid>`.
 
 ## 6. Project structure
 
