@@ -41,7 +41,15 @@ context.push(InsightsNav.attemptLocation(attemptId));
 - `reliable: false`: percent faded and "Needs N more questions" (N = `min_questions_per_topic - attempted`).
 - Grade legend comes from `grade_bands`; `note` is always shown in the Formative-feedback box.
 - Unknown `status` and `resource_type` values fall back to `unknown` (generic icon), so new backend values never crash the app.
-- Every status is shown with colour + icon + label. All colours are chosen in `presentation/widgets/insights_style.dart`.
+- Every status is shown with colour + icon + label. All colours are chosen in `presentation/widgets/insights_style.dart`, using `AppColors` tokens only:
+
+  | Level | Colour | Soft background | Text on soft |
+  |---|---|---|---|
+  | Strong / Mastered (75 %+) | `success` | `successSoft` | `successDark` |
+  | Good / Strong (55–75 %) | `secondary` | `secondarySoft` | `secondaryDark` |
+  | Developing / Improving (35–55 %) | `warning` | `warningSoft` | `warningDark` |
+  | Weak / Very weak (below 35 %) | `error` | `errorSoft` | `error` |
+  | Not enough data / not attempted | `mutedLight` | `surfaceMuted` | `muted` |
 - Results are calculated, not AI-generated, so there is no `AiBadge`.
 
 ### `GET /insights/summary` (contract for the backend)
@@ -86,7 +94,6 @@ A failed pull-to-refresh keeps the old data on screen with an `ErrorBanner` abov
 ## Still to do
 
 - **Routes (Samni):** add `AppRoutes.insightsTopic` (`/insights/topics/:topicKey`) and `AppRoutes.insightsAttempt` (`/insights/attempts/:attemptId`), then replace the Navigator pushes and the `attempt_id` query in `presentation/insights_navigation.dart`.
-- **Colour tokens:** when PR #7 is in `develop`, switch `insights_style.dart` to `AppColors.success / successSoft / warning / warningDark / errorSoft`, and replace `InsightsRing` with `MasteryRing(color: ...)`.
 - **Practice button** on the mastery-map sheet opens the Practice tab; it should open practice for that topic once Udith's practice feature accepts a topic id.
 - **Mistake journal:** needs `GET /mistakes`.
 - **Backend:** build `GET /insights/summary` (contract above).
