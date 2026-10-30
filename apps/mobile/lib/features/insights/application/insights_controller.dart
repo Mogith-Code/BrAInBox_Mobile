@@ -2,34 +2,67 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../data/insights_repository.dart';
 import '../domain/insights_models.dart';
+import '../domain/insights_summary.dart';
 
 part 'insights_controller.g.dart';
 
-/// State for the Insights feature.
+/// Insights failures are not retried automatically: a missing profile or a
+/// forbidden attempt will not fix itself. The student taps Retry instead.
+Duration? _noAutoRetry(int retryCount, Object error) => null;
+
+/// Topic results for the Insights screens.
 ///
-/// The state is an `AsyncValue<InsightsSummary>`, so the screen gets loading,
-/// error and data cases for free:
+/// Pass [attemptId] to analyse a single attempt ("This attempt"); leave it
+/// null to analyse every finished attempt.
 /// ```dart
-/// final state = ref.watch(insightsControllerProvider);
-/// state.when(loading: ..., error: ..., data: ...);
+/// final state = ref.watch(insightsControllerProvider());
+/// final one = ref.watch(insightsControllerProvider(attemptId: id));
 /// ```
-@riverpod
+@Riverpod(retry: _noAutoRetry)
 class InsightsController extends _$InsightsController {
   @override
-  Future<InsightsSummary> build() {
-    // TODO(keshomigha): load what the screen needs on open.
-    return ref.watch(insightsRepositoryProvider).fetchSummary();
+  Future<TopicInsights> build({String? attemptId}) {
+    return ref
+        .watch(insightsRepositoryProvider)
+        .fetchTopicInsights(attemptId: attemptId);
   }
 
-  /// Reloads the data (pull-to-refresh, Retry button...).
+  /// Reloads the data (pull-to-refresh, Retry button).
+  ///
+  /// Keeps the current data on screen while reloading (Riverpod keeps the
+  /// previous value). If the reload fails, the error is in `state`, still
+  /// together with the previous data, so this never throws.
   Future<void> refresh() async {
-    state = const AsyncLoading();
-    final next = await AsyncValue.guard(
-      () => ref.read(insightsRepositoryProvider).fetchSummary(),
-    );
-    if (ref.mounted) state = next;
+    ref.invalidateSelf();
+    try {
+      await future;
+    } on Object {
+      // Already in `state`; the screen shows it.
+    }
+  }
+}
+
+/// Mastery ring, study time, accuracy trend and unit mastery for one
+/// [period] (`GET /insights/summary`).
+/// ```dart
+/// final state = ref.watch(
+///   insightsSummaryControllerProvider(period: InsightsPeriod.week),
+/// );
+/// ```
+@Riverpod(retry: _noAutoRetry)
+class InsightsSummaryController extends _$InsightsSummaryController {
+  @override
+  Future<InsightsSummary> build({required InsightsPeriod period}) {
+    return ref.watch(insightsRepositoryProvider).fetchSummary(period: period);
   }
 
-  // TODO(keshomigha): add one method per user action (submit, delete, generate...).
-  // Each one calls the repository and updates `state`.
+  /// Reloads the data. Never throws; see [InsightsController.refresh].
+  Future<void> refresh() async {
+    ref.invalidateSelf();
+    try {
+      await future;
+    } on Object {
+      // Already in `state`; the cards show it.
+    }
+  }
 }
