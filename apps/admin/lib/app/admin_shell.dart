@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../features/auth/application/auth_controller.dart';
+import '../widgets/admin_logo.dart';
 import 'router.dart';
 
 /// One entry in the sidebar.
@@ -15,6 +16,9 @@ typedef AdminNavItem = ({String label, IconData icon, String path});
 /// - Medium screens (700 - 1000 px): collapsed sidebar (icons + logo icon).
 /// - Small screens: the sidebar moves into a drawer; the top bar shows the
 ///   logo icon next to the page title.
+///
+/// The page itself is padded and limited to [maxContentWidth], so screens
+/// should not add their own outer padding.
 ///
 // TODO(samni): match the admin layout in Figma.
 class AdminShell extends ConsumerWidget {
@@ -82,8 +86,14 @@ class AdminShell extends ConsumerWidget {
     ),
   ];
 
+  /// The widest a page's content gets on large monitors.
+  static const double maxContentWidth = 1280;
+
   static const double _wideBreakpoint = 1000;
   static const double _mediumBreakpoint = 700;
+
+  /// Height of the logo header above the sidebar items.
+  static const double _logoHeight = 72;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -91,11 +101,7 @@ class AdminShell extends ConsumerWidget {
       (item) => location.startsWith(item.path),
     );
     final title = selected >= 0 ? navItems[selected].label : 'BrAInBox Admin';
-    final signOut = IconButton(
-      tooltip: 'Sign out',
-      icon: const Icon(Icons.logout),
-      onPressed: () => ref.read(authControllerProvider.notifier).signOut(),
-    );
+    void signOut() => ref.read(authControllerProvider.notifier).signOut();
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -104,32 +110,36 @@ class AdminShell extends ConsumerWidget {
         // Small: drawer + app bar with the logo icon.
         if (width < _mediumBreakpoint) {
           return Scaffold(
-            appBar: AppBar(title: BrandAppBarTitle(title), actions: [signOut]),
+            appBar: AppBar(title: BrandAppBarTitle(title)),
             drawer: Drawer(
-              child: _Sidebar(selectedIndex: selected, closeDrawerOnTap: true),
+              child: _Sidebar(
+                selectedIndex: selected,
+                onSignOut: signOut,
+                closeDrawerOnTap: true,
+              ),
             ),
-            body: child,
+            body: _PageBody(padding: AppSpacing.lg, child: child),
           );
         }
 
         // Medium: collapsed sidebar. Wide: expanded sidebar.
+        // No top bar: each page shows its own header, and sign-out is at the
+        // bottom of the sidebar.
         final collapsed = width < _wideBreakpoint;
         return Scaffold(
           body: Row(
             children: [
               SizedBox(
                 width: collapsed ? 80 : 260,
-                child: _Sidebar(selectedIndex: selected, collapsed: collapsed),
+                child: _Sidebar(
+                  selectedIndex: selected,
+                  onSignOut: signOut,
+                  collapsed: collapsed,
+                ),
               ),
               const VerticalDivider(width: 1),
               Expanded(
-                child: Column(
-                  children: [
-                    _TopBar(title: title, trailing: signOut),
-                    const Divider(height: 1),
-                    Expanded(child: child),
-                  ],
-                ),
+                child: _PageBody(padding: AppSpacing.xl, child: child),
               ),
             ],
           ),
@@ -139,14 +149,40 @@ class AdminShell extends ConsumerWidget {
   }
 }
 
+/// Pads the page and keeps it at most [AdminShell.maxContentWidth] wide,
+/// centred at the top.
+class _PageBody extends StatelessWidget {
+  const _PageBody({required this.padding, required this.child});
+
+  final double padding;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.topCenter,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: AdminShell.maxContentWidth),
+        // Fill the available width and height, so pages that use Center or
+        // ListView behave the same as without the max width.
+        child: SizedBox.expand(
+          child: Padding(padding: EdgeInsets.all(padding), child: child),
+        ),
+      ),
+    );
+  }
+}
+
 class _Sidebar extends StatelessWidget {
   const _Sidebar({
     required this.selectedIndex,
+    required this.onSignOut,
     this.collapsed = false,
     this.closeDrawerOnTap = false,
   });
 
   final int selectedIndex;
+  final VoidCallback onSignOut;
 
   /// Icons only, with the logo icon at the top.
   final bool collapsed;
@@ -165,51 +201,61 @@ class _Sidebar extends StatelessWidget {
     return Material(
       color: Theme.of(context).colorScheme.surface,
       child: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(AppSpacing.md),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Brand: horizontal logo when expanded, icon when collapsed.
-            Padding(
-              padding: const EdgeInsets.all(AppSpacing.sm),
-              child: Align(
-                alignment: collapsed ? Alignment.center : Alignment.centerLeft,
-                child: collapsed
-                    ? const AppLogo(size: 32)
-                    : const AppLogo(
-                        variant: AppLogoVariant.horizontal,
-                        size: 32,
-                      ),
+            // Brand: logo + "ADMIN" when expanded, icon when collapsed.
+            SizedBox(
+              height: AdminShell._logoHeight,
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: collapsed ? 0 : AppSpacing.xl,
+                ),
+                child: Align(
+                  alignment: collapsed
+                      ? Alignment.center
+                      : Alignment.centerLeft,
+                  child: collapsed
+                      ? const AppLogo(size: 32)
+                      // Shrinks instead of overflowing with larger fonts.
+                      : const FittedBox(
+                          fit: BoxFit.scaleDown,
+                          alignment: Alignment.centerLeft,
+                          child: AdminLogo(),
+                        ),
+                ),
               ),
             ),
-            const SizedBox(height: AppSpacing.lg),
-            for (var i = 0; i < items.length; i++)
-              if (collapsed)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: AppSpacing.xs),
-                  child: IconButton(
-                    tooltip: items[i].label,
-                    isSelected: i == selectedIndex,
-                    icon: Icon(items[i].icon),
-                    color: i == selectedIndex ? AppColors.primary : null,
-                    style: IconButton.styleFrom(
-                      backgroundColor: i == selectedIndex
-                          ? AppColors.primary.withValues(alpha: 0.08)
-                          : null,
-                    ),
-                    onPressed: () => _open(context, items[i].path),
+            Expanded(
+              child: Semantics(
+                container: true,
+                label: 'Admin navigation',
+                child: ListView(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.md,
+                    vertical: AppSpacing.lg,
                   ),
-                )
-              else
-                ListTile(
-                  leading: Icon(items[i].icon),
-                  title: Text(items[i].label),
-                  selected: i == selectedIndex,
-                  selectedTileColor: AppColors.primary.withValues(alpha: 0.08),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(AppSpacing.radiusSm),
-                  ),
-                  onTap: () => _open(context, items[i].path),
+                  children: [
+                    for (var i = 0; i < items.length; i++)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: AppSpacing.xs),
+                        child: collapsed
+                            ? _NavIconButton(
+                                item: items[i],
+                                selected: i == selectedIndex,
+                                onTap: () => _open(context, items[i].path),
+                              )
+                            : _NavTile(
+                                item: items[i],
+                                selected: i == selectedIndex,
+                                onTap: () => _open(context, items[i].path),
+                              ),
+                      ),
+                  ],
                 ),
+              ),
+            ),
+            _SidebarFooter(collapsed: collapsed, onSignOut: onSignOut),
           ],
         ),
       ),
@@ -217,27 +263,175 @@ class _Sidebar extends StatelessWidget {
   }
 }
 
-class _TopBar extends StatelessWidget {
-  const _TopBar({required this.title, required this.trailing});
+/// Light indigo fill behind the selected sidebar item.
+final Color _selectedFill = AppColors.primary.withValues(alpha: 0.08);
 
-  final String title;
-  final Widget trailing;
+/// One sidebar item with an icon and a label (expanded sidebar and drawer).
+class _NavTile extends StatelessWidget {
+  const _NavTile({
+    required this.item,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final AdminNavItem item;
+  final bool selected;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 64,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
+    final textTheme = Theme.of(context).textTheme;
+    return ListTile(
+      leading: Icon(item.icon, size: 22),
+      title: Text(item.label, maxLines: 1, overflow: TextOverflow.ellipsis),
+      selected: selected,
+      onTap: onTap,
+      minTileHeight: 44,
+      horizontalTitleGap: AppSpacing.md,
+      contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+      iconColor: AppColors.muted,
+      textColor: Theme.of(context).colorScheme.onSurface,
+      selectedColor: AppColors.primary,
+      selectedTileColor: _selectedFill,
+      titleTextStyle: textTheme.labelLarge?.copyWith(
+        fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
+      ),
+    );
+  }
+}
+
+/// One sidebar item as an icon only (collapsed sidebar). The label is shown
+/// as a tooltip and read by screen readers.
+class _NavIconButton extends StatelessWidget {
+  const _NavIconButton({
+    required this.item,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final AdminNavItem item;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: IconButton(
+        tooltip: item.label,
+        isSelected: selected,
+        icon: Icon(item.icon),
+        color: selected ? AppColors.primary : AppColors.muted,
+        style: IconButton.styleFrom(
+          fixedSize: const Size.square(48),
+          backgroundColor: selected ? _selectedFill : null,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
+          ),
+        ),
+        onPressed: onTap,
+      ),
+    );
+  }
+}
+
+/// Bottom of the sidebar: the signed-in admin and the sign-out button.
+///
+/// Collapsed: only the sign-out icon. When nobody is signed in (Firebase not
+/// configured, or the auth guard disabled) no user is shown - never a made-up
+/// one.
+class _SidebarFooter extends ConsumerWidget {
+  const _SidebarFooter({required this.collapsed, required this.onSignOut});
+
+  final bool collapsed;
+  final VoidCallback onSignOut;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final signOut = IconButton(
+      tooltip: 'Sign out',
+      icon: const Icon(Icons.logout),
+      color: AppColors.muted,
+      onPressed: onSignOut,
+    );
+    if (collapsed) {
+      return Padding(
+        padding: const EdgeInsets.all(AppSpacing.md),
+        child: Center(child: signOut),
+      );
+    }
+
+    final user = ref.watch(currentUserProvider).value;
+    final textTheme = Theme.of(context).textTheme;
+    final name = user?.fullName.trim() ?? '';
+    final primaryText = user == null
+        ? 'Not signed in'
+        : (name.isNotEmpty ? name : user.email);
+    final initials = _initials(name.isNotEmpty ? name : user?.email ?? '');
+
+    return Padding(
+      padding: const EdgeInsets.all(AppSpacing.md),
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(
+          AppSpacing.md,
+          AppSpacing.sm,
+          AppSpacing.xs,
+          AppSpacing.sm,
+        ),
+        decoration: BoxDecoration(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
+        ),
         child: Row(
           children: [
+            if (user != null) ...[
+              ExcludeSemantics(
+                child: CircleAvatar(
+                  radius: 18,
+                  backgroundColor: AppColors.secondary.withValues(alpha: 0.18),
+                  child: Text(
+                    initials,
+                    style: textTheme.labelLarge?.copyWith(color: AppColors.ink),
+                  ),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.md),
+            ],
             Expanded(
-              child: Text(title, style: Theme.of(context).textTheme.titleLarge),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    primaryText,
+                    style: textTheme.labelLarge,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  if (user != null)
+                    Text(
+                      name.isNotEmpty ? user.email : user.role,
+                      style: textTheme.bodySmall?.copyWith(
+                        color: AppColors.muted,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                ],
+              ),
             ),
-            trailing,
+            signOut,
           ],
         ),
       ),
     );
+  }
+
+  /// "Tharushi Silva" -> "TS", "a@b.lk" -> "A".
+  static String _initials(String text) {
+    final words = text.trim().split(RegExp(r'\s+')).where((w) => w.isNotEmpty);
+    if (words.isEmpty) return '?';
+    return words.take(2).map((w) => w[0].toUpperCase()).join();
   }
 }
