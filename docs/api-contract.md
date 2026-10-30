@@ -37,5 +37,5 @@ All app endpoints are under `/api/v1` (for example `GET /api/v1/units`).
 | Base path | `/api/v1` | `brainbox_core/lib/config/env.dart` |
 | JSON naming | snake_case | `build.yaml` in each package |
 | Error body | `{"error": {"code", "message"}}` | `api/api_exception.dart` |
-| User role | Firebase custom claim `role` (`student` / `admin`) | `auth/current_user_provider.dart` |
+| User role | `GET /auth/me` → `role` (`student` / `admin`) | `auth/current_user_provider.dart` |
 | Job polling | `GET /jobs/{id}` → `{id, status, progress, result, error}` | `api/job_poller.dart`, `models/ai_job.dart` |

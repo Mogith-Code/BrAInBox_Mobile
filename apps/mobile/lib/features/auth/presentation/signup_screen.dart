@@ -71,11 +71,18 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     final state = ref.watch(signupControllerProvider);
     final google = ref.watch(googleSignInControllerProvider);
     final busy = state.isLoading || google.isLoading;
-    final error = state.hasError
-        ? ErrorMessages.of(state.error)
+    // Field problems (bad phone, email in use, weak password...) show under
+    // the field; anything else above the button.
+    final formError = state.hasError ? state.error : null;
+    String? fieldError(String field) =>
+        ErrorMessages.forField(formError, field);
+    final error =
+        formError != null && !ErrorMessages.isOnlyFieldError(formError)
+        ? ErrorMessages.of(formError)
         : google.hasError
         ? ErrorMessages.of(google.error)
         : null;
+    final consentError = _showConsentError || fieldError('consent') != null;
     final textTheme = Theme.of(context).textTheme;
 
     return AuthLayout(
@@ -107,6 +114,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                   textInputAction: TextInputAction.next,
                   autofillHints: const [AutofillHints.name],
                   validator: Validators.fullName,
+                  errorText: fieldError('full_name'),
                 ),
                 kFieldGap,
                 AppTextField(
@@ -117,16 +125,19 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                   textInputAction: TextInputAction.next,
                   autofillHints: const [AutofillHints.email],
                   validator: Validators.email,
+                  errorText: fieldError('email'),
                 ),
                 kFieldGap,
                 PhoneField(
                   controller: _phone,
                   textInputAction: TextInputAction.next,
+                  errorText: fieldError('phone'),
                 ),
                 kFieldGap,
                 AppTextField(
                   label: 'Password',
                   controller: _password,
+                  errorText: fieldError('password'),
                   obscureText: true,
                   textInputAction: TextInputAction.done,
                   autofillHints: const [AutofillHints.newPassword],
@@ -143,7 +154,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
         const SizedBox(height: AppSpacing.lg),
         _ConsentRow(
           value: _consent,
-          showError: _showConsentError,
+          showError: consentError,
           onChanged: (v) => setState(() {
             _consent = v;
             if (v) _showConsentError = false;

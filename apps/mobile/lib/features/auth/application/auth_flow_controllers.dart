@@ -1,4 +1,5 @@
 import 'package:brainbox_core/brainbox_core.dart';
+import 'package:firebase_auth/firebase_auth.dart' show FirebaseAuthException;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../data/auth_repository.dart';
@@ -27,6 +28,23 @@ class PendingCode extends _$PendingCode {
 
   void set(CodeSent code) => state = (code: code, sentAt: DateTime.now());
 }
+
+/// Codes from `email-code/send` after which "Check your inbox" still opens.
+const _continueToInbox = {
+  'RESEND_TOO_SOON',
+  'EMAIL_SEND_FAILED',
+  'EMAIL_NOT_CONFIGURED',
+};
+
+/// Firebase codes for "the student closed the Google window".
+const _googleCancelled = {
+  'canceled',
+  'cancelled',
+  'web-context-canceled',
+  'web-context-cancelled',
+  'popup-closed-by-user',
+  'cancelled-popup-request',
+};
 
 /// Create account: Firebase account -> display name -> POST /auth/register
 /// -> POST /auth/email-code/send -> (router) Check your inbox.
@@ -57,8 +75,10 @@ class SignupController extends _$SignupController {
       try {
         pending.set(await repo.sendEmailCode());
       } on ApiException catch (e) {
-        // A recent code is still valid - "Check your inbox" shows the wait.
-        if (e.code != 'RESEND_TOO_SOON') rethrow;
+        // RESEND_TOO_SOON: a recent code is still valid, the inbox shows the
+        // wait. Email not sent: the account exists, so go on anyway - the
+        // inbox tries again and offers "Resend code".
+        if (!_continueToInbox.contains(e.code)) rethrow;
       }
       await session.refresh();
     });
@@ -79,8 +99,10 @@ class LoginController extends _$LoginController {
     state = const AsyncLoading();
     final result = await AsyncValue.guard(() async {
       await repo.signIn(email: email, password: password);
-      // Session loads GET /auth/me (and registers on 404).
-      await session.refresh();
+      // Session loads GET /auth/me (and registers on 404). If the email is
+      // not verified yet, the router opens "Check your inbox", which sends
+      // a code.
+      await session.refreshOrThrow();
     });
     if (ref.mounted) state = result;
     return !result.hasError;
@@ -97,17 +119,33 @@ class GoogleSignInController extends _$GoogleSignInController {
     final repo = ref.read(authRepositoryProvider);
     final session = ref.read(sessionProvider.notifier);
     state = const AsyncLoading();
+    var cancelled = false;
     final result = await AsyncValue.guard(() async {
-      await repo.signInWithGoogle();
-      // Tapping Google means agreeing to the data notice shown under it.
-      await repo.register(
-        fullName: repo.currentAccount?.displayName ?? '',
-        consent: true,
-      );
-      await session.refresh();
+      try {
+        await repo.signInWithGoogle();
+      } on FirebaseAuthException catch (e) {
+        if (!_googleCancelled.contains(e.code)) rethrow;
+      }
+      final account = repo.currentAccount;
+      if (account == null) {
+        // Closed the Google window: stay on this screen, no error.
+        cancelled = true;
+        return;
+      }
+      try {
+        // Tapping Google means agreeing to the data notice shown under it.
+        // Google emails are already verified, so the router skips "Check
+        // your inbox".
+        await repo.register(fullName: Session.nameFor(account), consent: true);
+      } on ApiException catch (e) {
+        // Don't leave a blocked account signed in to Firebase.
+        if (e.code == 'USER_DISABLED') await repo.signOut();
+        rethrow;
+      }
+      await session.refreshOrThrow();
     });
     if (ref.mounted) state = result;
-    return !result.hasError;
+    return !result.hasError && !cancelled;
   }
 }
 
@@ -184,7 +222,7 @@ class NewPasswordController extends _$NewPasswordController {
       await repo.completeReset(resetToken: token, newPassword: newPassword);
       await repo.signIn(email: flow.email, password: newPassword);
       flowNotifier.clear();
-      await session.refresh();
+      await session.refreshOrThrow();
     });
     if (ref.mounted) state = result;
     return !result.hasError;

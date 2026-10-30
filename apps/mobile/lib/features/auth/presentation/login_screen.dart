@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/routes.dart';
 import '../application/auth_flow_controllers.dart';
+import '../application/session_controller.dart';
 import 'widgets/auth_layout.dart';
 
 /// Welcome back / log in (Figma A6).
@@ -50,10 +51,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final state = ref.watch(loginControllerProvider);
     final google = ref.watch(googleSignInControllerProvider);
     final busy = state.isLoading || google.isLoading;
+    // Signed out by the app itself (e.g. the account was disabled).
+    final reason = ref.watch(sessionProvider).value?.signedOutReason;
     final error = state.hasError
         ? ErrorMessages.of(state.error)
         : google.hasError
         ? ErrorMessages.of(google.error)
+        : reason != null
+        ? ErrorMessages.of(reason)
         : null;
 
     return AuthLayout(

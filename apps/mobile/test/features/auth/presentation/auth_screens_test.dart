@@ -246,7 +246,7 @@ void main() {
     await tester.tap(find.text('Save'));
     await tester.pumpAndSettle();
     expect(
-      find.text('This reset link has expired. Please start again.'),
+      find.text('This reset has expired. Start again from Forgot password.'),
       findsOneWidget,
     );
     await tester.tap(find.text('Start again'));

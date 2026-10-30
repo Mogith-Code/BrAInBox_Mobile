@@ -13,7 +13,9 @@ abstract class AppUser with _$AppUser {
 
   const factory AppUser({
     required String id,
-    required String email,
+    // The backend sends null for accounts without an email (rare). '' keeps
+    // the rest of the app simple.
+    @Default('') String email,
     @Default('') String fullName,
     String? phone, // +94XXXXXXXXX
     @Default('student') String role, // 'student' or 'admin'
