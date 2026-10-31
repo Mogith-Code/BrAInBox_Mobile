@@ -50,7 +50,9 @@ melos:
 
     gen:
       description: Generate freezed / json_serializable / riverpod code.
-      run: melos exec --depends-on=build_runner -- dart run build_runner build
+      # --order-dependents: finish brainbox_core first, because app models
+      # can contain core models (e.g. List<Visual>) and need their toJson.
+      run: melos exec --order-dependents --depends-on=build_runner -- dart run build_runner build
 
     gen:watch:
       description: Same as gen, but keeps watching for changes.
