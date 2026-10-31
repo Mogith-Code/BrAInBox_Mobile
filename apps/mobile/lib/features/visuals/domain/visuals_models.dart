@@ -15,7 +15,7 @@ abstract class TopicVisuals with _$TopicVisuals {
   const factory TopicVisuals({
     required String topicId,
     required String topicTitle,
-    String? unitCode, // "U6"
+    String? unitCode, // "6" (show it with Formatters.unitLabel)
     String? unitTitle, // "Genetics"
     @Default([]) List<Visual> visuals,
   }) = _TopicVisuals;

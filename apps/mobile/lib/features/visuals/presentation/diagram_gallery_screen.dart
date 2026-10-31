@@ -152,8 +152,8 @@ class _Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final unit = topic?.unitCode?.replaceFirst('U', 'Unit ');
-    final crumbs = ['Biology', ?unit, ?topic?.topicTitle];
+    final unit = Formatters.unitLabel(topic?.unitCode);
+    final crumbs = ['Biology', if (unit.isNotEmpty) unit, ?topic?.topicTitle];
     return Padding(
       padding: const EdgeInsets.fromLTRB(
         AppSpacing.xs,

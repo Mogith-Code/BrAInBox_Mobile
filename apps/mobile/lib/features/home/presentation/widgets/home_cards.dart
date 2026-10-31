@@ -444,7 +444,7 @@ class ContinueCard extends StatelessWidget {
                 ),
                 if (item.unitCode.isNotEmpty)
                   Text(
-                    item.unitCode.replaceFirst('U', 'Unit '),
+                    Formatters.unitLabel(item.unitCode),
                     style: textTheme.labelSmall?.copyWith(
                       color: AppColors.muted,
                     ),

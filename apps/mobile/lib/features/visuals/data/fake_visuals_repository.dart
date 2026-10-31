@@ -32,7 +32,7 @@ class FakeVisualsRepository implements VisualsRepository {
     return TopicVisuals(
       topicId: topicId,
       topicTitle: 'Mendelian inheritance',
-      unitCode: 'U6',
+      unitCode: '6',
       unitTitle: 'Genetics',
       // Newest generated first, then the shared ones.
       visuals: [
