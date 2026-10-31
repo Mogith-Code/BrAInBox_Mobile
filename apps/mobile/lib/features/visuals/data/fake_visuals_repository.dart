@@ -3,12 +3,16 @@ import 'package:brainbox_core/brainbox_core.dart';
 import '../domain/visuals_models.dart';
 import 'visuals_repository.dart';
 
-/// DEBUG ONLY: [VisualsRepository] in memory, with the Figma B8 topic
-/// (Unit 6 > Mendelian inheritance). Images are Mermaid diagrams rendered by
-/// Kroki, so they need internet on the device.
+/// DEBUG ONLY: [VisualsRepository] in memory. Used ONLY with
+/// `--dart-define=USE_FAKE_API=true` and in tests; the real app always uses
+/// [ApiVisualsRepository].
 ///
-/// Generating a visual takes ~2 s. A prompt containing "fail" makes the job
-/// fail, so the error screen can be tried.
+/// Every topic shows the Figma B8 sample (Unit 6 > Mendelian inheritance).
+/// Images are Mermaid diagrams rendered by Kroki (needs internet).
+///
+/// Jobs behave like the backend: queued -> running -> succeeded, with
+/// progress 0 then 1. A prompt containing "fail" is refused like a
+/// non-Biology prompt (`error_code: NOT_BIOLOGY`).
 class FakeVisualsRepository implements VisualsRepository {
   FakeVisualsRepository({this.step = const Duration(milliseconds: 500)});
 
@@ -45,10 +49,10 @@ class FakeVisualsRepository implements VisualsRepository {
   @override
   Future<Visual> visual(String visualId) async {
     await _delay();
-    final found = _visuals[visualId] ?? (visualId == 'demo' ? _seed[2] : null);
+    final found = _visuals[visualId];
     if (found == null) {
       throw const ApiException(
-        code: 'NOT_FOUND',
+        code: 'VISUAL_NOT_FOUND',
         message: 'Visual not found.',
         statusCode: 404,
       );
@@ -67,15 +71,18 @@ class FakeVisualsRepository implements VisualsRepository {
   @override
   Stream<AiJob> watchJob(String jobId) async* {
     final request = _jobs[jobId];
-    for (final progress in const [0.15, 0.45, 0.75]) {
-      yield AiJob(id: jobId, status: AiJobStatus.running, progress: progress);
+    yield AiJob(id: jobId);
+    await _delay();
+    for (var i = 0; i < 2; i++) {
+      yield AiJob(id: jobId, status: AiJobStatus.running);
       await _delay();
     }
     if (request == null || request.prompt.toLowerCase().contains('fail')) {
       yield AiJob(
         id: jobId,
         status: AiJobStatus.failed,
-        error: 'The AI could not draw this one. Try rewording it.',
+        error: 'I can only draw Biology visuals.',
+        errorCode: 'NOT_BIOLOGY',
       );
       return;
     }

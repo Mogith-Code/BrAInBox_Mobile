@@ -110,7 +110,7 @@ void main() {
 
       final state = sub.read();
       expect(state.phase, GeneratePhase.done);
-      expect(state.progress, 1);
+      expect(state.jobStatus, AiJobStatus.succeeded);
       expect(state.visual?.kind, VisualKind.table);
       expect(state.visual?.isAiGenerated, isTrue);
 
@@ -129,8 +129,104 @@ void main() {
           .generate(prompt: 'please fail');
 
       expect(sub.read().phase, GeneratePhase.failed);
-      expect(sub.read().error, contains('could not draw'));
+      // The backend's sentence is shown as it is.
+      expect(sub.read().error, 'I can only draw Biology visuals.');
+      expect(sub.read().errorCode, 'NOT_BIOLOGY');
     });
+
+    test('follows queued -> running (no fake % progress)', () async {
+      final repo = _ScriptedRepo([
+        const AiJob(id: 'j'),
+        const AiJob(id: 'j', status: AiJobStatus.running),
+        const AiJob(
+          id: 'j',
+          status: AiJobStatus.succeeded,
+          progress: 1,
+          result: {'visual_id': 'v-nephron'},
+        ),
+      ]);
+      final c = _container(repo);
+      final seen = <AiJobStatus>[];
+      final sub = c.listen(
+        generateVisualControllerProvider,
+        (_, next) => seen.add(next.jobStatus),
+      );
+      addTearDown(sub.close);
+
+      await c
+          .read(generateVisualControllerProvider.notifier)
+          .generate(prompt: 'nephron structure');
+
+      expect(
+        seen,
+        containsAllInOrder([
+          AiJobStatus.queued,
+          AiJobStatus.running,
+          AiJobStatus.succeeded,
+        ]),
+      );
+      expect(sub.read().visual?.id, 'v-nephron');
+    });
+
+    test('a failed job without text uses its error_code', () async {
+      final c = _container(
+        _ScriptedRepo([
+          const AiJob(
+            id: 'j',
+            status: AiJobStatus.failed,
+            errorCode: 'AI_DAILY_LIMIT',
+          ),
+        ]),
+      );
+      final sub = c.listen(generateVisualControllerProvider, (_, _) {});
+      addTearDown(sub.close);
+
+      await c
+          .read(generateVisualControllerProvider.notifier)
+          .generate(prompt: 'nephron structure');
+
+      expect(sub.read().error, contains('free AI requests are used up'));
+    });
+
+    test('a cancelled job says so', () async {
+      final c = _container(
+        _ScriptedRepo([const AiJob(id: 'j', status: AiJobStatus.cancelled)]),
+      );
+      final sub = c.listen(generateVisualControllerProvider, (_, _) {});
+      addTearDown(sub.close);
+
+      await c
+          .read(generateVisualControllerProvider.notifier)
+          .generate(prompt: 'nephron structure');
+
+      expect(sub.read().phase, GeneratePhase.failed);
+      expect(sub.read().error, contains('cancelled'));
+    });
+
+    test(
+      'errors when starting use ErrorMessages (e.g. the daily limit)',
+      () async {
+        final c = _container(
+          _ScriptedRepo(
+            const [],
+            startError: const ApiException(
+              code: 'VISUAL_LIMIT_REACHED',
+              message: 'raw',
+              statusCode: 429,
+              retryAfter: 7200,
+            ),
+          ),
+        );
+        final sub = c.listen(generateVisualControllerProvider, (_, _) {});
+        addTearDown(sub.close);
+
+        await c
+            .read(generateVisualControllerProvider.notifier)
+            .generate(prompt: 'nephron structure');
+
+        expect(sub.read().error, contains('Try again in 2 hours'));
+      },
+    );
 
     test('ignores an empty prompt and can be cancelled', () async {
       final c = _container(
@@ -157,13 +253,51 @@ void main() {
     final sub = c.listen(visualReportControllerProvider, (_, _) {});
     addTearDown(sub.close);
 
-    final ok = await c
+    final thanks = await c
         .read(visualReportControllerProvider.notifier)
         .submit('v-nephron', reason: VisualReportReason.wrongLabel);
 
-    expect(ok, isTrue);
+    expect(thanks, contains('Thanks'));
     expect(repo.reports, [VisualReportReason.wrongLabel]);
     expect(VisualReportReason.wrongLabel.apiValue, 'wrong_label');
+  });
+
+  test('ALREADY_REPORTED counts as sent', () async {
+    final c = _container(
+      _ScriptedRepo(
+        const [],
+        reportError: const ApiException(
+          code: 'ALREADY_REPORTED',
+          message: 'raw',
+          statusCode: 409,
+        ),
+      ),
+    );
+    final sub = c.listen(visualReportControllerProvider, (_, _) {});
+    addTearDown(sub.close);
+
+    final thanks = await c
+        .read(visualReportControllerProvider.notifier)
+        .submit('v-nephron', reason: VisualReportReason.unclear);
+
+    expect(thanks, contains('already reported'));
+    expect(sub.read().hasError, isFalse);
+  });
+
+  test('AiJob reads the backend job JSON', () {
+    final job = AiJob.fromJson({
+      'id': 'j1',
+      'job_type': 'generate_visual',
+      'status': 'cancelled',
+      'progress': 0.0,
+      'error': null,
+      'error_code': 'NOT_BIOLOGY',
+      'created_at': '2026-11-01T10:00:00Z',
+    });
+    expect(job.status, AiJobStatus.cancelled);
+    expect(job.isDone, isTrue);
+    expect(job.errorCode, 'NOT_BIOLOGY');
+    expect(job.jobType, 'generate_visual');
   });
 
   group('ApiVisualsRepository', () {
@@ -242,3 +376,32 @@ void main() {
 }
 
 class _MockApi extends Mock implements ApiClient {}
+
+/// Plays back fixed job updates (like the backend's polls) and can fail
+/// the start or the report call.
+class _ScriptedRepo extends FakeVisualsRepository {
+  _ScriptedRepo(this.jobs, {this.startError, this.reportError})
+    : super(step: Duration.zero);
+
+  final List<AiJob> jobs;
+  final ApiException? startError;
+  final ApiException? reportError;
+
+  @override
+  Future<String> startGeneration(GenerateVisualRequest request) async {
+    if (startError != null) throw startError!;
+    return 'j';
+  }
+
+  @override
+  Stream<AiJob> watchJob(String jobId) => Stream.fromIterable(jobs);
+
+  @override
+  Future<void> report(
+    String visualId, {
+    required VisualReportReason reason,
+    String? details,
+  }) async {
+    if (reportError != null) throw reportError!;
+  }
+}

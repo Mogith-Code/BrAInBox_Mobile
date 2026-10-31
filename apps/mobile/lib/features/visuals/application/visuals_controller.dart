@@ -40,16 +40,20 @@ abstract class GenerateVisualState with _$GenerateVisualState {
     @Default(GeneratePhase.editing) GeneratePhase phase,
     @Default(VisualType.process) VisualType visualType,
     @Default(VisualStyle.flatColour) VisualStyle style,
-    @Default(0) double progress, // 0.0 - 1.0 from the job
+    // Where the backend job is. The backend only sends progress 0 then 1,
+    // so the screen shows a moving (indeterminate) loader, not a % bar.
+    @Default(AiJobStatus.queued) AiJobStatus jobStatus,
     Visual? visual, // set when phase == done
-    String? error, // set when phase == failed
+    String? error, // set when phase == failed: a sentence for the student
+    String? errorCode, // e.g. NOT_BIOLOGY, AI_DAILY_LIMIT
   }) = _GenerateVisualState;
 
   bool get isGenerating => phase == GeneratePhase.generating;
 }
 
-/// Generate a visual (Figma B10): start the GENERATE_VISUAL job, follow its
-/// progress, then hand the new visual to the screen (which opens the viewer).
+/// Generate a visual (Figma B10): start the GENERATE_VISUAL job, poll it
+/// (every 2 s, see JobPoller) and hand the new visual to the screen, which
+/// opens the viewer. A real visual takes about 10-60 seconds.
 @riverpod
 class GenerateVisualController extends _$GenerateVisualController {
   /// Bumped by [cancel] so a running job's updates are ignored.
@@ -72,7 +76,7 @@ class GenerateVisualController extends _$GenerateVisualController {
   /// then shows up in the topic gallery).
   void cancel() {
     _run++;
-    state = state.copyWith(phase: GeneratePhase.editing, progress: 0);
+    state = state.copyWith(phase: GeneratePhase.editing);
   }
 
   Future<void> generate({required String prompt, String? topicId}) async {
@@ -80,9 +84,10 @@ class GenerateVisualController extends _$GenerateVisualController {
     final run = ++_run;
     state = state.copyWith(
       phase: GeneratePhase.generating,
-      progress: 0,
+      jobStatus: AiJobStatus.queued,
       visual: null,
       error: null,
+      errorCode: null,
     );
     final repo = ref.read(visualsRepositoryProvider);
     try {
@@ -98,32 +103,43 @@ class GenerateVisualController extends _$GenerateVisualController {
       await for (final job in repo.watchJob(jobId)) {
         if (!ref.mounted || run != _run) return;
         last = job;
-        state = state.copyWith(progress: job.progress);
+        state = state.copyWith(jobStatus: job.status);
       }
       if (last == null || last.status != AiJobStatus.succeeded) {
-        throw ApiException(
-          code: 'job_failed',
-          message: last?.error ?? 'The visual could not be made.',
+        if (!ref.mounted || run != _run) return;
+        state = state.copyWith(
+          phase: GeneratePhase.failed,
+          error: _jobError(last),
+          errorCode: last?.errorCode,
         );
+        return;
       }
       final visual = await repo.visualFromJob(last);
       if (!ref.mounted || run != _run) return;
-      state = state.copyWith(
-        phase: GeneratePhase.done,
-        progress: 1,
-        visual: visual,
-      );
+      state = state.copyWith(phase: GeneratePhase.done, visual: visual);
       // The new visual should show up in the topic's gallery.
       if (topicId != null) ref.invalidate(topicVisualsControllerProvider);
     } catch (e) {
       if (!ref.mounted || run != _run) return;
       state = state.copyWith(
         phase: GeneratePhase.failed,
-        error: e is ApiException && e.code == 'job_failed'
-            ? e.message
-            : ErrorMessages.of(e),
+        error: ErrorMessages.of(e),
+        errorCode: e is ApiException ? e.code : null,
       );
     }
+  }
+
+  /// The backend's `error` is already written for the student, so it is
+  /// shown as it is. Without one, the `error_code` picks the message.
+  static String _jobError(AiJob? job) {
+    if (job?.status == AiJobStatus.cancelled) {
+      return 'This request was cancelled. Please try again.';
+    }
+    final text = job?.error;
+    if (text != null && text.trim().isNotEmpty) return text;
+    final code = job?.errorCode;
+    return (code == null ? null : ErrorMessages.fromCode(code)) ??
+        ErrorMessages.generic;
   }
 }
 
@@ -133,19 +149,32 @@ class VisualReportController extends _$VisualReportController {
   @override
   AsyncValue<void> build() => const AsyncData(null);
 
-  /// Returns true when the report was sent.
-  Future<bool> submit(
+  /// Sends the report. Returns the thank-you text to show, or null when it
+  /// failed (the error is then in `state`).
+  ///
+  /// ALREADY_REPORTED (409) counts as success: the admin has it already.
+  Future<String?> submit(
     String visualId, {
     required VisualReportReason reason,
     String? details,
   }) async {
     state = const AsyncLoading();
-    final next = await AsyncValue.guard(
-      () => ref
+    try {
+      await ref
           .read(visualsRepositoryProvider)
-          .report(visualId, reason: reason, details: details),
-    );
-    if (ref.mounted) state = next;
-    return !next.hasError;
+          .report(visualId, reason: reason, details: details);
+      if (ref.mounted) state = const AsyncData(null);
+      return 'Thanks! An admin will check this visual.';
+    } on ApiException catch (e) {
+      if (e.code == 'ALREADY_REPORTED') {
+        if (ref.mounted) state = const AsyncData(null);
+        return ErrorMessages.fromApi(e);
+      }
+      if (ref.mounted) state = AsyncError(e, StackTrace.current);
+      return null;
+    } catch (e, stack) {
+      if (ref.mounted) state = AsyncError(e, stack);
+      return null;
+    }
   }
 }

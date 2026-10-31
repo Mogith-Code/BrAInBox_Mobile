@@ -461,12 +461,12 @@ class _NumberDot extends StatelessWidget {
 }
 
 /// Opens the "Report inaccuracy" sheet. Shows a thank-you snack bar when
-/// the report is sent.
+/// the report is sent (or was already sent before).
 Future<void> showReportVisualSheet(
   BuildContext context,
   String visualId,
 ) async {
-  final sent = await showModalBottomSheet<bool>(
+  final thanks = await showModalBottomSheet<String>(
     context: context,
     isScrollControlled: true,
     backgroundColor: AppColors.white,
@@ -477,12 +477,8 @@ Future<void> showReportVisualSheet(
     ),
     builder: (_) => _ReportSheet(visualId: visualId),
   );
-  if (sent == true && context.mounted) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Thanks! A teacher will check this visual.'),
-      ),
-    );
+  if (thanks != null && context.mounted) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(thanks)));
   }
 }
 
@@ -508,10 +504,10 @@ class _ReportSheetState extends ConsumerState<_ReportSheet> {
   Future<void> _send() async {
     final reason = _reason;
     if (reason == null) return;
-    final ok = await ref
+    final thanks = await ref
         .read(visualReportControllerProvider.notifier)
         .submit(widget.visualId, reason: reason, details: _details.text);
-    if (ok && mounted) Navigator.of(context).pop(true);
+    if (thanks != null && mounted) Navigator.of(context).pop(thanks);
   }
 
   @override

@@ -38,18 +38,22 @@ const _placed = Visual(
 );
 
 class _Repo extends FakeVisualsRepository {
-  _Repo() : super(step: Duration.zero);
+  _Repo({super.step = Duration.zero});
 
   @override
   Future<Visual> visual(String visualId) async =>
       visualId == _placed.id ? _placed : super.visual(visualId);
 }
 
-Future<_Repo> _pump(WidgetTester tester, String location) async {
+Future<_Repo> _pump(
+  WidgetTester tester,
+  String location, {
+  Duration step = Duration.zero,
+}) async {
   tester.view.physicalSize = const Size(400, 900);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
-  final repo = _Repo();
+  final repo = _Repo(step: step);
   final router = GoRouter(
     initialLocation: location,
     routes: [
@@ -147,7 +151,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(repo.reports, isNotEmpty);
-      expect(find.textContaining('A teacher will check'), findsOneWidget);
+      expect(find.textContaining('An admin will check'), findsOneWidget);
     });
 
     testWidgets('an unknown id shows an error with Retry', (tester) async {
@@ -185,6 +189,34 @@ void main() {
       expect(find.text('Report inaccuracy'), findsOneWidget);
     });
 
+    testWidgets('while the job runs the loader moves (no % bar)', (
+      tester,
+    ) async {
+      await _pump(
+        tester,
+        AppRoutes.generateVisualPath(),
+        step: const Duration(milliseconds: 200),
+      );
+
+      await tester.enterText(find.byType(TextField), 'nephron structure');
+      await tester.pump();
+      await tester.tap(find.text('Generate visual'));
+      await tester.pump(const Duration(milliseconds: 500)); // job is running
+
+      expect(find.text('Drawing your visual...'), findsOneWidget);
+      final bar = tester.widget<LinearProgressIndicator>(
+        find.byType(LinearProgressIndicator),
+      );
+      expect(bar.value, isNull); // indeterminate
+
+      // Let the job finish so no timers are left.
+      for (var i = 0; i < 20; i++) {
+        await tester.pump(const Duration(milliseconds: 200));
+      }
+      await tester.pumpAndSettle();
+      expect(find.text('Report inaccuracy'), findsOneWidget);
+    });
+
     testWidgets('shows the error when the AI fails', (tester) async {
       await _pump(tester, AppRoutes.generateVisualPath());
 
@@ -196,7 +228,7 @@ void main() {
       }
 
       expect(find.byType(ErrorBanner), findsOneWidget);
-      expect(find.textContaining('could not draw'), findsOneWidget);
+      expect(find.text('I can only draw Biology visuals.'), findsOneWidget);
     });
   });
 }

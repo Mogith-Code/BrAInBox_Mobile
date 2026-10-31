@@ -10,8 +10,8 @@ import 'widgets/generate_widgets.dart';
 import 'widgets/visual_widgets.dart';
 
 /// Generate a visual (Figma B10): describe what you want, pick a type and a
-/// style, then the AI makes it. While it works the pulsing loader shows the
-/// job progress; when it's done the viewer opens on the new visual.
+/// style, then the AI makes it. While it works a moving loader shows
+/// "Drawing your visual..."; when it's done the viewer opens on it.
 ///
 /// Route: `/visuals/generate?topicId=...` (the topic is optional).
 class GenerateVisualScreen extends ConsumerStatefulWidget {
@@ -69,7 +69,7 @@ class _GenerateVisualScreenState extends ConsumerState<GenerateVisualScreen> {
         backgroundColor: AppColors.background,
         body: SafeArea(
           child: _Generating(
-            progress: state.progress,
+            status: state.jobStatus,
             onCancel: controller.cancel,
           ),
         ),
@@ -222,18 +222,14 @@ class _GenerateVisualScreenState extends ConsumerState<GenerateVisualScreen> {
   }
 }
 
-/// The waiting screen while the GENERATE_VISUAL job runs.
+/// The waiting screen while the GENERATE_VISUAL job runs. The backend
+/// doesn't report real progress (only 0, then 1 when done), so the bar
+/// just keeps moving (`progress: null`).
 class _Generating extends StatelessWidget {
-  const _Generating({required this.progress, required this.onCancel});
+  const _Generating({required this.status, required this.onCancel});
 
-  final double progress;
+  final AiJobStatus status;
   final VoidCallback onCancel;
-
-  static String messageFor(double progress) => switch (progress) {
-    < 0.3 => 'Reading the syllabus...',
-    < 0.6 => 'Drawing your visual...',
-    _ => 'Adding the labels...',
-  };
 
   @override
   Widget build(BuildContext context) {
@@ -244,13 +240,14 @@ class _Generating extends StatelessWidget {
           Expanded(
             child: Center(
               child: AiGeneratingLoader(
-                message: messageFor(progress),
-                progress: progress > 0 ? progress : null,
+                message: status == AiJobStatus.queued
+                    ? 'Getting your visual ready...'
+                    : 'Drawing your visual...',
               ),
             ),
           ),
           Text(
-            'This usually takes under a minute.',
+            'This usually takes 10 to 60 seconds.',
             style: Theme.of(
               context,
             ).textTheme.bodySmall?.copyWith(color: AppColors.muted),
