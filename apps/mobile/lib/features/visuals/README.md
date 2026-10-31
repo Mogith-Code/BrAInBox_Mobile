@@ -4,42 +4,57 @@
 |---|---|
 | **Owner** | Mogith (`@mogith`) |
 | **App** | student app (`apps/mobile`) |
-| **Purpose** | Diagram gallery, zoomable viewer and generate-visual flow. |
-| **Jira epic** | `BRN-??` *(TODO: add the epic key)* |
-| **Git branch** | `feature/visuals` (tickets: `feature/visuals/BRN-xx-short-name`) |
+| **Purpose** | Diagram gallery, zoomable viewer with numbered labels, and the generate-visual flow. |
+| **Jira epic** | `BRN-E05` Visual Learning *(placeholder key)* |
+| **Git branch** | `feature/visuals-generation` |
 
-## Screens
+## Screens (Figma B8 - B10)
 
 | Screen | File | Route |
 |---|---|---|
-| Diagrams | `presentation/diagram_gallery_screen.dart` | `/visuals` |
-| Diagram viewer | `presentation/diagram_viewer_screen.dart` | `/visuals/view/:visualId` |
-| Generate visual | `presentation/generate_visual_screen.dart` | `/visuals/generate` |
+| Diagrams gallery (B8) | `presentation/diagram_gallery_screen.dart` | `/visuals/topics/:topicId` |
+| Diagram viewer (B9) | `presentation/diagram_viewer_screen.dart` | `/visuals/view/:visualId` |
+| Generate a visual (B10) | `presentation/generate_visual_screen.dart` | `/visuals/generate?topicId=...` |
 
-## API endpoints it will use
+The topic page's **Diagrams** tab can reuse the grid without the header:
+`DiagramGallery(topicId: topicId, showHeader: false)`.
 
-> Planned paths only. The backend's `/docs` (OpenAPI) is the real contract -
-> update this table when the backend publishes the endpoints.
+## How visuals are drawn
+
+| Kind | Made by | Shown by |
+|---|---|---|
+| `diagram`, `flowchart`, `table` | The LLM writes **Mermaid** text (labels always spelled right) | `image_url` if the backend rendered it, else the app renders `mermaid_code` with **Kroki** (`data/diagram_renderer.dart`) |
+| `illustration` | An image model (no text inside the picture) | `image_url` (PNG) |
+
+Labels are never drawn into the picture. They come as a list
+(`labels: [{number, name, description, x, y}]`); the app puts numbered
+markers at `x, y` (0-1 of the image size) and shows the name and
+description in the bottom panel. Labels without `x, y` are listed only.
+
+Kroki is free and open source. Use your own server with
+`--dart-define=DIAGRAM_RENDER_URL=http://10.0.2.2:8001`.
+
+## API endpoints
 
 | Method | Path | Purpose |
 |---|---|---|
-| `GET` | `/topics/{topic_id}/visuals` | Diagrams for a topic |
-| `GET` | `/visuals/{visual_id}` | One diagram |
-| `POST` | `/visuals/generate` | Start AI visual generation (returns a job id) |
+| `GET` | `/topics/{topic_id}/visuals` | `{topic_id, topic_title, unit_code, unit_title, visuals: [VisualOut]}` |
+| `GET` | `/visuals/{visual_id}` | One `VisualOut` |
+| `POST` | `/visuals/generate` | `{prompt, visual_type, style, topic_id?}` -> `{job_id}` (GENERATE_VISUAL) |
+| `GET` | `/jobs/{job_id}` | Poll; on success `result` = `{visual_id}` or `{visual: VisualOut}` |
+| `POST` | `/visuals/{visual_id}/report` | `{reason, details?}` (reason = `VisualReportReason`) |
 
-Shared models used: `Visual`, `AiJob` (from `brainbox_core`, re-exported in `domain/`).
+`VisualOut`: `id, title, topic_id, concept_id, kind, image_url, mermaid_code,
+alt_text, labels, style, width, height, is_ai_generated, is_verified,
+created_at`. Shared model: `Visual` in `brainbox_core`.
 
-## Folders
+`visual_type`: `process` | `structure` | `comparison`.
+`style`: `flat_colour` | `textbook_line` | `cross_section`.
 
-```
-visuals/
-├── domain/visuals_models.dart              freezed models
-├── data/visuals_repository.dart            calls ApiClient (the only place that does)
-├── application/visuals_controller.dart     Riverpod controller (loading / error / data)
-└── presentation/                       screens + widgets/ (UI only)
-```
+## Fake API
 
-**Flow:** screen → controller → repository → `ApiClient`. Screens never call
-Dio or Firebase directly.
+`--dart-define=USE_FAKE_API=true` uses `data/fake_visuals_repository.dart`
+(the Figma "Mendelian inheritance" topic). A prompt containing **fail**
+makes the job fail, to try the error state.
 
-Tests live in `test/features/visuals/` (same structure as this folder).
+Tests: `test/features/visuals/`.

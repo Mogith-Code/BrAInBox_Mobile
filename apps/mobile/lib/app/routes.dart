@@ -54,10 +54,19 @@ abstract final class AppRoutes {
   static const upload = '/upload';
 
   // Visuals (Mogith)
-  static const visuals = '/visuals';
+  static const visuals = '/visuals/topics/:topicId';
+  static String visualsPath(String topicId) => '/visuals/topics/$topicId';
   static const diagramViewer = '/visuals/view/:visualId';
   static String diagramViewerPath(String visualId) => '/visuals/view/$visualId';
+
+  /// Optional `?topicId=` so the new visual is saved under that topic.
   static const generateVisual = '/visuals/generate';
+  static String generateVisualPath({String? topicId}) => topicId == null
+      ? generateVisual
+      : Uri(
+          path: generateVisual,
+          queryParameters: {'topicId': topicId},
+        ).toString();
 
   // Practice (Udith)
   static const practice = '/practice';
@@ -149,9 +158,9 @@ abstract final class AppRoutes {
     (title: 'Short notes', owner: 'Samni', path: shortNotesPath('demo')),
     (title: 'Notes library', owner: 'Samni', path: notesLibrary),
     (title: 'Upload notes', owner: 'Samni', path: upload),
-    (title: 'Diagrams', owner: 'Mogith', path: visuals),
+    (title: 'Diagrams', owner: 'Mogith', path: visualsPath('demo')),
     (title: 'Diagram viewer', owner: 'Mogith', path: diagramViewerPath('demo')),
-    (title: 'Generate visual', owner: 'Mogith', path: generateVisual),
+    (title: 'Generate a visual', owner: 'Mogith', path: generateVisual),
     (title: 'Practice', owner: 'Udith', path: practice),
     (title: 'Quiz setup', owner: 'Udith', path: quizSetup),
     (title: 'MCQ question', owner: 'Udith', path: mcqQuestion),
