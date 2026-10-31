@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import '../api/api_exception.dart';
 import 'firebase_error_mapper.dart';
+import 'formatters.dart';
 
 /// Turns ANY error into one friendly sentence for the student.
 ///
@@ -103,6 +104,23 @@ abstract final class ErrorMessages {
     'NOT_ENOUGH_QUESTIONS' =>
       'We\'re still adding questions. You can start learning now.',
     'DIAGNOSTIC_NOT_FOUND' => 'We couldn\'t find your diagnostic result.',
+    // Visuals and AI jobs
+    'VISUAL_NOT_FOUND' => 'This visual isn\'t available.',
+    'TOPIC_NOT_FOUND' => 'We couldn\'t find this topic.',
+    'JOB_NOT_FOUND' => 'We lost track of this request. Please try again.',
+    'ALREADY_REPORTED' =>
+      'You already reported this visual. An admin will check it soon.',
+    'VISUAL_LIMIT_REACHED' =>
+      retryAfter == null
+          ? 'You\'ve made today\'s visuals. Try again tomorrow.'
+          : 'You\'ve made today\'s visuals. '
+                'Try again in ${Formatters.waitTime(retryAfter)}.',
+    'NOT_BIOLOGY' => 'I can only draw Biology visuals.',
+    'AI_DAILY_LIMIT' =>
+      'Today\'s free AI requests are used up. Please try again tomorrow.',
+    'AI_SERVICE_UNAVAILABLE' =>
+      'The AI is busy right now. Please try again in a few minutes.',
+    'FILE_NOT_FOUND' => 'This picture couldn\'t be loaded.',
     _ => null,
   };
 }
