@@ -74,7 +74,12 @@ class _Dashboard extends ConsumerWidget {
         return;
       }
       // TODO(samni): open the real revision / practice screen per type.
-      context.push(AppRoutes.topicPath(a.target?.topicId ?? 'demo'));
+      final topicId = a.target?.topicId;
+      if (topicId == null) {
+        context.go(AppRoutes.learn);
+      } else {
+        context.push(AppRoutes.topicPath(topicId));
+      }
     }
 
     Future<void> toggle(PlanItem item) async {

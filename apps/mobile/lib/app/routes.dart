@@ -158,8 +158,8 @@ abstract final class AppRoutes {
     (title: 'Short notes', owner: 'Samni', path: shortNotesPath('demo')),
     (title: 'Notes library', owner: 'Samni', path: notesLibrary),
     (title: 'Upload notes', owner: 'Samni', path: upload),
-    (title: 'Diagrams', owner: 'Mogith', path: visualsPath('demo')),
-    (title: 'Diagram viewer', owner: 'Mogith', path: diagramViewerPath('demo')),
+    // The Diagrams gallery and viewer need real ids: open them from Home
+    // (Continue learning -> topic -> Open diagrams).
     (title: 'Generate a visual', owner: 'Mogith', path: generateVisual),
     (title: 'Practice', owner: 'Udith', path: practice),
     (title: 'Quiz setup', owner: 'Udith', path: quizSetup),
