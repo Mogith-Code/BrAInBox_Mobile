@@ -6,10 +6,13 @@ import '../../../app/routes.dart';
 
 /// Topic screen - Topic page with tabs: Notes, Visuals, Practice.
 ///
-/// Route: `/learn/topics/:topicId`
+/// Route: `/learn/topics/:topicId`. Opened from Home with a real topic id
+/// (Next best action / Continue learning).
 ///
 // TODO(keshomigha): build the real UI from Figma. Keep this file UI-only: read state
 // from the controller and call its methods. Never call Dio / Firebase here.
+// The Diagrams tab can show `DiagramGallery(topicId: topicId, showHeader: false)`
+// from features/visuals.
 class TopicScreen extends StatelessWidget {
   const TopicScreen({super.key, required this.topicId});
 
@@ -24,8 +27,8 @@ class TopicScreen extends StatelessWidget {
         owner: 'Keshomigha',
         description:
             'Topic page with tabs: Notes, Visuals, Practice. (topicId: $topicId)',
-        actionLabel: 'Open notes',
-        onAction: () => context.push(AppRoutes.topicNotesPath('demo')),
+        actionLabel: 'Open diagrams',
+        onAction: () => context.push(AppRoutes.visualsPath(topicId)),
       ),
     );
   }

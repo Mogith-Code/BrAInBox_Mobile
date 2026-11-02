@@ -140,7 +140,8 @@ GoRouter router(Ref ref) {
       ),
       GoRoute(
         path: AppRoutes.visuals,
-        builder: (context, state) => const DiagramGalleryScreen(),
+        builder: (context, state) =>
+            DiagramGalleryScreen(topicId: state.pathParameters['topicId']!),
       ),
       GoRoute(
         path: AppRoutes.diagramViewer,
@@ -149,7 +150,8 @@ GoRouter router(Ref ref) {
       ),
       GoRoute(
         path: AppRoutes.generateVisual,
-        builder: (context, state) => const GenerateVisualScreen(),
+        builder: (context, state) =>
+            GenerateVisualScreen(topicId: state.uri.queryParameters['topicId']),
       ),
       GoRoute(
         path: AppRoutes.diagnostic,
