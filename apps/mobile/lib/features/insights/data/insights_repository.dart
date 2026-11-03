@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../domain/insights_models.dart';
-import '../domain/insights_summary.dart';
 
 part 'insights_repository.g.dart';
 
@@ -27,12 +26,6 @@ final class InsightsNotRegistered extends InsightsFailure {
 /// 403 / 404: the attempt belongs to someone else or does not exist.
 final class InsightsUnavailable extends InsightsFailure {
   const InsightsUnavailable() : super("This result isn't available.");
-}
-
-/// 404 on an endpoint the backend has not shipped yet (e.g.
-/// `/insights/summary`). The card shows "Coming soon".
-final class InsightsNotAvailableYet extends InsightsFailure {
-  const InsightsNotAvailableYet() : super('Coming soon');
 }
 
 /// No connection or a timeout.
@@ -69,23 +62,6 @@ class InsightsRepository {
       return TopicInsights.fromJson(json);
     } on ApiException catch (e) {
       throw _mapError(e, attemptId);
-    }
-  }
-
-  /// `GET /insights/summary?period=`: mastery ring, study time, accuracy
-  /// trend and unit mastery for [period].
-  ///
-  /// Throws an [InsightsFailure]; a 404 is [InsightsNotAvailableYet].
-  Future<InsightsSummary> fetchSummary({required InsightsPeriod period}) async {
-    try {
-      final json = await api.get<Map<String, dynamic>>(
-        '/insights/summary',
-        query: {'period': period.apiValue},
-      );
-      return InsightsSummary.fromJson(json);
-    } on ApiException catch (e) {
-      if (e.statusCode == 404) throw const InsightsNotAvailableYet();
-      throw _mapError(e, null);
     }
   }
 

@@ -2,7 +2,6 @@ import 'package:brainbox_core/brainbox_core.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/insights_models.dart';
-import '../../domain/insights_summary.dart';
 
 // Every colour decision for the Insights screens lives in this file, so the
 // palette can be changed in one place. Only `AppColors` tokens are used.
@@ -25,6 +24,7 @@ class StatusStyle {
     required this.soft,
     required this.onSoft,
     this.darkFillAlpha = 0.26,
+    this.heatAlpha = 0.3,
     this.neutral = false,
   });
 
@@ -43,6 +43,9 @@ class StatusStyle {
   /// Strength of the [accent] tint used as background in the dark theme.
   final double darkFillAlpha;
 
+  /// Strength of the [accent] tint on a mastery map cell (light theme).
+  final double heatAlpha;
+
   /// Not-enough-data / not-attempted / unknown: outlined, muted.
   final bool neutral;
 
@@ -53,6 +56,7 @@ class StatusStyle {
       accent: AppColors.success,
       soft: AppColors.successSoft,
       onSoft: AppColors.successDark,
+      heatAlpha: 0.45,
     ),
     TopicStatus.good => const StatusStyle(
       label: 'Good',
@@ -60,6 +64,7 @@ class StatusStyle {
       accent: AppColors.secondary,
       soft: AppColors.secondarySoft,
       onSoft: AppColors.secondaryDark,
+      heatAlpha: 0.28,
     ),
     TopicStatus.developing => const StatusStyle(
       label: 'Developing',
@@ -67,6 +72,7 @@ class StatusStyle {
       accent: AppColors.warning,
       soft: AppColors.warningSoft,
       onSoft: AppColors.warningDark,
+      heatAlpha: 0.32,
     ),
     TopicStatus.weak => const StatusStyle(
       label: 'Weak',
@@ -75,6 +81,7 @@ class StatusStyle {
       soft: AppColors.errorSoft,
       onSoft: AppColors.error,
       darkFillAlpha: 0.18,
+      heatAlpha: 0.2,
     ),
     TopicStatus.veryWeak => const StatusStyle(
       label: 'Very weak',
@@ -83,6 +90,7 @@ class StatusStyle {
       soft: AppColors.errorSoft,
       onSoft: AppColors.error,
       darkFillAlpha: 0.32,
+      heatAlpha: 0.4,
     ),
     TopicStatus.insufficientData => const StatusStyle(
       label: 'Not enough data',
@@ -123,44 +131,17 @@ class StatusStyle {
   Color border(BuildContext context) =>
       neutral ? InsightsColors.line(context) : accent.withValues(alpha: 0.6);
 
+  /// Mastery map cell colour: a tint of [accent] (stronger for the extremes),
+  /// muted for topics without a result.
+  Color heatFill(BuildContext context) {
+    final dark = InsightsColors.isDark(context);
+    if (neutral) return dark ? Colors.transparent : AppColors.surfaceMuted;
+    return accent.withValues(alpha: dark ? heatAlpha + 0.12 : heatAlpha);
+  }
+
   /// Text on [fill]: [onSoft] in light, the normal text colour in dark.
   Color text(BuildContext context) =>
       InsightsColors.isDark(context) ? InsightsColors.text(context) : onSoft;
-}
-
-/// Colours of the overview cards (mastery ring, study time, accuracy trend,
-/// unit mastery). Same colour code as [StatusStyle].
-abstract final class InsightsPalette {
-  /// Legend dot / bar colour for a mastery band.
-  static Color forBand(MasteryBandKey key) => switch (key) {
-    MasteryBandKey.mastered => AppColors.success,
-    MasteryBandKey.strong => AppColors.secondary,
-    MasteryBandKey.improving => AppColors.warning,
-    MasteryBandKey.weak => AppColors.error,
-    MasteryBandKey.unknown => AppColors.mutedLight,
-  };
-
-  /// Unit mastery bar colour, from the backend's status.
-  static Color forStatus(TopicStatus status) => StatusStyle.of(status).accent;
-
-  /// Accuracy change text: up is successDark, down is error.
-  static Color forChange(BuildContext context, double change) {
-    if (change > 0) {
-      return InsightsColors.isDark(context)
-          ? AppColors.success
-          : AppColors.successDark;
-    }
-    if (change < 0) return AppColors.error;
-    return InsightsColors.mutedText(context);
-  }
-
-  /// Study time bars that are not highlighted.
-  static Color barSoft(BuildContext context) => InsightsColors.isDark(context)
-      ? AppColors.primary.withValues(alpha: 0.4)
-      : AppColors.primaryLight;
-
-  /// Ring track, unit bar track.
-  static Color track(BuildContext context) => InsightsColors.line(context);
 }
 
 /// Shared colours and text helpers for the Insights screens.
@@ -222,21 +203,6 @@ abstract final class InsightsText {
   /// "Needs 3 more questions" / "Needs 1 more question".
   static String needsMore(int count) =>
       'Needs $count more question${count == 1 ? '' : 's'}';
-
-  /// Minutes as hours with one decimal: 90 -> "1.5h", 822 -> "13.7h".
-  static String hours(int minutes) {
-    final value = minutes / 60;
-    return '${value >= 100 ? value.round() : number(_oneDecimal(value))}h';
-  }
-
-  static double _oneDecimal(double value) => (value * 10).round() / 10;
-
-  /// Accuracy change: 22.0 -> "+22%", -4.5 -> "-4.5%", 0 -> "±0%".
-  static String change(double points) {
-    final rounded = _oneDecimal(points);
-    if (rounded == 0) return '±0%';
-    return '${rounded > 0 ? '+' : '-'}${number(rounded.abs())}%';
-  }
 
   /// "6.2 · Genetics", "Genetics" or "".
   static String topicSubtitle(TopicResult topic) => [

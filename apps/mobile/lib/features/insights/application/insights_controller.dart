@@ -2,7 +2,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../data/insights_repository.dart';
 import '../domain/insights_models.dart';
-import '../domain/insights_summary.dart';
 
 part 'insights_controller.g.dart';
 
@@ -38,31 +37,6 @@ class InsightsController extends _$InsightsController {
       await future;
     } on Object {
       // Already in `state`; the screen shows it.
-    }
-  }
-}
-
-/// Mastery ring, study time, accuracy trend and unit mastery for one
-/// [period] (`GET /insights/summary`).
-/// ```dart
-/// final state = ref.watch(
-///   insightsSummaryControllerProvider(period: InsightsPeriod.week),
-/// );
-/// ```
-@Riverpod(retry: _noAutoRetry)
-class InsightsSummaryController extends _$InsightsSummaryController {
-  @override
-  Future<InsightsSummary> build({required InsightsPeriod period}) {
-    return ref.watch(insightsRepositoryProvider).fetchSummary(period: period);
-  }
-
-  /// Reloads the data. Never throws; see [InsightsController.refresh].
-  Future<void> refresh() async {
-    ref.invalidateSelf();
-    try {
-      await future;
-    } on Object {
-      // Already in `state`; the cards show it.
     }
   }
 }
