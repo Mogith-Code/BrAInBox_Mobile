@@ -2,42 +2,9 @@ import 'package:brainbox_core/brainbox_core.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/syllabus_models.dart';
+import 'status_pill.dart';
 
-/// Colours, icon and label for each [UnitStatus] pill and ring.
-extension UnitStatusStyle on UnitStatus {
-  String get label => switch (this) {
-    UnitStatus.mastered => 'Mastered',
-    UnitStatus.strong => 'Strong',
-    UnitStatus.improving => 'Improving',
-    UnitStatus.weak => 'Weak',
-  };
-
-  IconData get icon => switch (this) {
-    UnitStatus.mastered => Icons.verified_outlined,
-    UnitStatus.strong || UnitStatus.improving => Icons.trending_up,
-    UnitStatus.weak => Icons.warning_amber_rounded,
-  };
-
-  Color get background => switch (this) {
-    UnitStatus.mastered || UnitStatus.strong => AppColors.successSoft,
-    UnitStatus.improving => AppColors.streakSoft,
-    UnitStatus.weak => AppColors.errorSoft,
-  };
-
-  Color get foreground => switch (this) {
-    UnitStatus.mastered || UnitStatus.strong => AppColors.successDark,
-    UnitStatus.improving => AppColors.warningDark,
-    UnitStatus.weak => const Color(
-      0xFFB91C1C,
-    ), // red-700, readable on errorSoft
-  };
-
-  Color get ringColor => switch (this) {
-    UnitStatus.mastered || UnitStatus.strong => AppColors.success,
-    UnitStatus.improving => AppColors.warning,
-    UnitStatus.weak => const Color(0xFFEA580C), // orange-600, as in Figma
-  };
-}
+export 'status_pill.dart';
 
 /// The icon in the teal tile, by unit number (A/L Biology has 10 units).
 IconData unitIcon(int order) => switch (order) {
@@ -119,13 +86,13 @@ class UnitCard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: textTheme.titleSmall?.copyWith(
                             color: AppColors.ink,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                         const SizedBox(height: AppSpacing.xs + 2),
                         Row(
                           children: [
-                            UnitStatusPill(status: unit.status),
+                            StatusPill.unit(unit.status),
                             const SizedBox(width: AppSpacing.sm),
                             Flexible(
                               child: Text(
@@ -149,7 +116,7 @@ class UnitCard extends StatelessWidget {
                     color: unit.status.ringColor,
                     labelStyle: textTheme.labelSmall?.copyWith(
                       color: AppColors.ink,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ],
@@ -157,41 +124,6 @@ class UnitCard extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-/// The small "✓ Mastered" / "↗ Improving" / "⚠ Weak" pill.
-class UnitStatusPill extends StatelessWidget {
-  const UnitStatusPill({super.key, required this.status});
-
-  final UnitStatus status;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.sm,
-        vertical: 2,
-      ),
-      decoration: BoxDecoration(
-        color: status.background,
-        borderRadius: BorderRadius.circular(AppSpacing.radiusPill),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(status.icon, size: 12, color: status.foreground),
-          const SizedBox(width: AppSpacing.xs),
-          Text(
-            status.label,
-            style: Theme.of(context).textTheme.labelSmall?.copyWith(
-              color: status.foreground,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ],
       ),
     );
   }
