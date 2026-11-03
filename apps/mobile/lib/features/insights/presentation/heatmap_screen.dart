@@ -6,65 +6,76 @@ import 'insights_navigation.dart';
 import 'widgets/heatmap_widgets.dart';
 import 'widgets/insights_states.dart';
 
-/// Mastery map: one row per unit, one cell per topic.
+/// Mastery map: one row per unit, one coloured square per topic.
 ///
 /// Route: `/insights/heatmap`. Opened with [attemptId] from the
 /// single-attempt overview.
 ///
 /// Data: `GET /insights/topics` (same as the overview).
-class HeatmapScreen extends StatelessWidget {
+class HeatmapScreen extends StatefulWidget {
   const HeatmapScreen({super.key, this.attemptId});
 
   final String? attemptId;
+
+  @override
+  State<HeatmapScreen> createState() => _HeatmapScreenState();
+}
+
+class _HeatmapScreenState extends State<HeatmapScreen> {
+  /// The topic whose sheet is open (outlined on the map).
+  String? _selectedKey;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          attemptId == null ? 'Mastery map' : 'Mastery map · This attempt',
+          widget.attemptId == null
+              ? 'Mastery map'
+              : 'Mastery map · This attempt',
         ),
       ),
       body: InsightsAsyncBody(
-        attemptId: attemptId,
-        builder: (context, data) => [
-          if (data.gradeBands.isNotEmpty) ...[
+        attemptId: widget.attemptId,
+        builder: (context, data) {
+          final rows = masteryMapRows(data);
+          return [
             const SizedBox(height: AppSpacing.sm),
-            HeatmapKey(bands: data.gradeBands),
-          ],
-          for (final unit in data.unitsInOrder) ...[
-            InsightsSectionTitle(unit),
-            Wrap(
-              spacing: AppSpacing.sm,
-              runSpacing: AppSpacing.sm,
-              children: [
-                for (final topic in data.topicsInUnit(unit))
-                  HeatmapCell(
-                    topic: topic,
-                    onTap: () => _showTopic(context, data, topic),
-                  ),
-              ],
-            ),
-          ],
-        ],
+            const MasteryMapKey(),
+            const SizedBox(height: AppSpacing.lg),
+            for (final row in rows)
+              MasteryMapRowView(
+                row: row,
+                selectedKey: _selectedKey,
+                onTap: (topic) => _showTopic(context, data, row, topic),
+              ),
+          ];
+        },
       ),
     );
   }
 
-  void _showTopic(BuildContext context, TopicInsights data, TopicResult topic) {
-    showModalBottomSheet<void>(
+  Future<void> _showTopic(
+    BuildContext context,
+    TopicInsights data,
+    MasteryMapRow row,
+    TopicResult topic,
+  ) async {
+    setState(() => _selectedKey = topic.key);
+    await showModalBottomSheet<void>(
       context: context,
       showDragHandle: true,
       isScrollControlled: true,
       builder: (sheetContext) => TopicSheet(
         topic: topic,
+        unitLabel: row.label == row.unit ? row.unit : 'Unit ${row.label}',
         minQuestionsPerTopic: data.minQuestionsPerTopic,
         onOpenTopic: () {
           Navigator.of(sheetContext).pop();
           InsightsNav.openTopic(
             context,
             topicKey: topic.key,
-            attemptId: attemptId,
+            attemptId: widget.attemptId,
           );
         },
         onPractice: () {
@@ -75,5 +86,6 @@ class HeatmapScreen extends StatelessWidget {
         },
       ),
     );
+    if (mounted) setState(() => _selectedKey = null);
   }
 }

@@ -30,7 +30,6 @@ context.push(InsightsNav.attemptLocation(attemptId));
 |---|---|---|
 | `GET` | `/insights/topics` | Overview, mastery map and topic detail (one request, shared through `insightsControllerProvider`) |
 | `GET` | `/insights/topics?attempt_id=<uuid>` | "This attempt" mode |
-| `GET` | `/insights/summary?period=week\|month\|all` | Overview cards: mastery ring, study time, accuracy trend, unit mastery. **Backend not built yet** (see below). |
 | `GET` | `/mistakes` | Mistake journal. **Backend not built yet.** |
 
 ### Rules the screens follow
@@ -52,32 +51,11 @@ context.push(InsightsNav.attemptLocation(attemptId));
   | Not enough data / not attempted | `mutedLight` | `surfaceMuted` | `muted` |
 - Results are calculated, not AI-generated, so there is no `AiBadge`.
 
-### `GET /insights/summary` (contract for the backend)
+### What the screens show (MCQ results only)
 
-Response (snake_case, every section may be `null`):
-
-```json
-{
-  "period": "week", "period_start": "2026-10-26", "period_end": "2026-11-01",
-  "mastery": { "percent": 62.0, "bands": [
-    { "key": "mastered", "label": "Mastered", "topic_count": 11 },
-    { "key": "strong", "label": "Strong", "topic_count": 24 },
-    { "key": "improving", "label": "Improving", "topic_count": 38 },
-    { "key": "weak", "label": "Weak", "topic_count": 19 } ] },
-  "study_time": { "total_minutes": 822, "bars": [
-    { "label": "M", "date": "2026-10-26", "minutes": 90, "highlight": false } ] },
-  "accuracy_trend": { "change_points": 22.0, "window_label": "8 wks", "points": [
-    { "label": "W1", "period_start": "2026-09-07", "percent": 52.0 } ] },
-  "units": [ { "unit_id": "…", "unit_number": 1, "name": "Introduction to biology",
-               "percent": 88.0, "status": "strong" } ]
-}
-```
-
-- The app only displays these values; it never computes percent, change or totals.
-- `bars`: 7 days for `week`, weeks for `month`, months for `all`; `highlight` marks today / the current bar.
-- `points[].percent` can be `null` (a week with no answers is drawn as a gap).
-- `units[].status` uses the same values as topic `status`.
-- Until the endpoint exists the backend answers 404: study time, trend and units show "Coming soon", and the mastery ring falls back to `/insights/topics` (overall percent; strong → Mastered, good → Strong, developing → Improving, weak + very weak → Weak).
+- **Overview:** mastery ring = `overall.percent`; legend = counts of the backend's topic statuses (strong → Mastered, good → Strong, developing → Improving, weak + very weak → Weak). Then strongest / weakest, weak topics, not-enough-data topics, mastery map button, grade bands, note.
+- **Mastery map:** one row per unit ("6 Genetics", unit number taken from the topic numbers), one square per topic with its percent, coloured by the backend's `status` (`StatusStyle.heatFill`). Rows are in unit-number order and squares in topic-number order; topics without a number go to the "Other" row, last. Tapping a square outlines it and opens a sheet (ring, unit, topic, status, questions tried, Open topic / Practice).
+- **Not shown until the backend has data:** study time, accuracy trend, unit mastery, the This week / This month selector, the mistake journal and recurring mistakes. They are left out, not faked.
 
 ### Errors
 
@@ -96,7 +74,7 @@ A failed pull-to-refresh keeps the old data on screen with an `ErrorBanner` abov
 - **Routes (Samni):** add `AppRoutes.insightsTopic` (`/insights/topics/:topicKey`) and `AppRoutes.insightsAttempt` (`/insights/attempts/:attemptId`), then replace the Navigator pushes and the `attempt_id` query in `presentation/insights_navigation.dart`.
 - **Practice button** on the mastery-map sheet opens the Practice tab; it should open practice for that topic once Udith's practice feature accepts a topic id.
 - **Mistake journal:** needs `GET /mistakes`.
-- **Backend:** build `GET /insights/summary` (contract above).
+- **Backend (overview cards in Figma):** study time, accuracy trend and unit mastery need endpoints first (the backend README plans `/insights/summary` and `/insights/units`). Add the cards back when they exist.
 - Not in this version (no backend data yet): weekly plan, recommendations, reassessment.
 
 ## Folders
@@ -104,7 +82,6 @@ A failed pull-to-refresh keeps the old data on screen with an `ErrorBanner` abov
 ```
 insights/
 ├── domain/insights_models.dart              freezed models for GET /insights/topics
-├── domain/insights_summary.dart             freezed models for GET /insights/summary
 ├── data/insights_repository.dart            calls ApiClient (the only place that does), maps errors
 ├── application/insights_controller.dart     Riverpod controller, family by attemptId
 └── presentation/
@@ -113,7 +90,7 @@ insights/
     ├── topic_insight_screen.dart            topic detail
     ├── mistake_journal_screen.dart          placeholder
     ├── insights_navigation.dart             InsightsNav (temporary routes)
-    └── widgets/                             style, chips, ring, cards, summary cards, states
+    └── widgets/                             style, chips, ring, mastery card, map, cards, states
 ```
 
 **Flow:** screen → controller → repository → `ApiClient`. Screens never call

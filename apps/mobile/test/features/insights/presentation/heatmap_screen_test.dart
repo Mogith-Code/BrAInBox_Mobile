@@ -19,13 +19,30 @@ void main() {
       );
 
       expect(find.text('Mastery map'), findsOneWidget);
-      for (final unit in ['Genetics', 'Plant biology', 'Other']) {
-        expect(find.text(unit), findsOneWidget);
-      }
+      expect(find.text('Weak'), findsOneWidget);
+      expect(find.text('Mastered'), findsOneWidget);
       expect(find.byType(HeatmapCell), findsNWidgets(7));
-      // Not attempted shows a dash, never 0 %.
+      // Percent only in the cells, as the backend sent it (rounded).
+      expect(find.text('22'), findsOneWidget);
+      expect(find.text('88'), findsOneWidget);
+      // Not attempted shows a dash, never 0.
       expect(find.text('—'), findsOneWidget);
-      expect(find.text('0%'), findsNothing);
+      expect(find.text('0'), findsNothing);
+
+      // Rows in syllabus order, labelled with the unit number from the
+      // topic numbers; topics without a number go to "Other", last.
+      final labels = [
+        for (final view in tester.widgetList<MasteryMapRowView>(
+          find.byType(MasteryMapRowView),
+        ))
+          view.row.label,
+      ];
+      expect(labels, [
+        '1 Cell biology',
+        '3 Plant biology',
+        '6 Genetics',
+        'Other',
+      ]);
     });
 
     testWidgets('cells have a spoken label', (tester) async {
@@ -60,7 +77,13 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byType(TopicSheet), findsOneWidget);
+      expect(find.text('Unit 6 Genetics'), findsOneWidget);
       expect(find.text('9 questions tried'), findsOneWidget);
+      // The tapped cell is outlined while its sheet is open.
+      final cell = tester.widget<HeatmapCell>(
+        find.ancestor(of: find.text('22'), matching: find.byType(HeatmapCell)),
+      );
+      expect(cell.selected, isTrue);
       expect(find.text('Practice'), findsOneWidget);
 
       await tester.tap(find.text('Open topic'));
