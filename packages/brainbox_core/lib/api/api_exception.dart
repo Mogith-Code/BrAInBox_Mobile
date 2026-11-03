@@ -87,6 +87,35 @@ class ApiException implements Exception {
   /// The raw `error` object from the backend (extra fields live here).
   final Map<String, dynamic> details;
 
+  /// `CODE_INVALID` only: how many wrong tries are left before the code dies.
+  int? get attemptsLeft {
+    final value = details['attempts_left'];
+    return value is int ? value : null;
+  }
+
+  /// Which form field each problem belongs to, e.g. `{'phone': '...'}`.
+  ///
+  /// From the error code (`INVALID_PHONE` -> phone, `WEAK_PASSWORD` ->
+  /// password, `CONSENT_REQUIRED` -> consent, `EMAIL_IN_USE` -> email) or,
+  /// for `VALIDATION_ERROR`, from `details: [{field: "body.phone", ...}]`.
+  Map<String, String> get fieldErrors {
+    final byCode = switch (code) {
+      'INVALID_PHONE' => 'phone',
+      'WEAK_PASSWORD' => 'password',
+      'CONSENT_REQUIRED' => 'consent',
+      'EMAIL_IN_USE' => 'email',
+      _ => null,
+    };
+    if (byCode != null) return {byCode: message};
+
+    final list = details['details'];
+    if (code != 'VALIDATION_ERROR' || list is! List) return const {};
+    return {
+      for (final item in list.whereType<Map<dynamic, dynamic>>())
+        '${item['field']}'.split('.').last: '${item['message']}',
+    };
+  }
+
   bool get isUnauthorized => statusCode == 401;
   bool get isNotFound => statusCode == 404;
 

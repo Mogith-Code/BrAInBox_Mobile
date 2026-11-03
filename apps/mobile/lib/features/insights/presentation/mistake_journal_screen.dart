@@ -8,8 +8,8 @@ import '../../../app/routes.dart';
 ///
 /// Route: `/insights/mistakes`
 ///
-// TODO(keshomigha): build the real UI from Figma. Keep this file UI-only: read state
-// from the controller and call its methods. Never call Dio / Firebase here.
+// TODO(keshomigha): needs GET /mistakes (backend not built yet). Then build
+// the real UI from Figma; keep this file UI-only.
 class MistakeJournalScreen extends StatelessWidget {
   const MistakeJournalScreen({super.key});
 

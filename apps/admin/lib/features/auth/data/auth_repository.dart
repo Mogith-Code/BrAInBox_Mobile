@@ -27,8 +27,10 @@ class AuthRepository {
     );
   }
 
-  // TODO(mogith): add signIn / signUp / sendPasswordReset / sendEmailVerification
-  // here using FirebaseAuth.instance. Map errors with FirebaseErrorMapper.
+  // TODO(mogith): add signIn(email, password) here with FirebaseAuth.instance
+  // (after Samni's login screen PR is merged). The guard reads the role from
+  // GET /auth/me. Password reset uses the backend's 6-digit codes
+  // (/auth/password-reset/*), never Firebase's reset emails.
 
   /// Signs the user out of Firebase (no-op if Firebase is not configured).
   Future<void> signOut() async {

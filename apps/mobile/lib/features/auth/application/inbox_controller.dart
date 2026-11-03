@@ -120,6 +120,7 @@ class InboxController extends _$InboxController {
       if (!ref.mounted) return;
       if (e.code == 'ALREADY_VERIFIED') {
         state = state.copyWith(sending: false);
+        await repo.reloadAccount();
         await session.refresh();
         return;
       }
@@ -148,7 +149,12 @@ class InboxController extends _$InboxController {
     state = state.copyWith(verifying: true, clearError: true);
     try {
       if (mode == InboxMode.verifyEmail) {
-        await repo.verifyEmailCode(code);
+        try {
+          await repo.verifyEmailCode(code);
+        } on ApiException catch (e) {
+          // Verified already (e.g. on another phone): just move on.
+          if (e.code != 'ALREADY_VERIFIED') rethrow;
+        }
         await repo.reloadAccount();
         await session.refresh();
       } else {

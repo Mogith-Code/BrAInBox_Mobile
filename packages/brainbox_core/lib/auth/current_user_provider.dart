@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../api/api_client.dart';
+import '../api/api_exception.dart';
 import '../config/firebase_setup.dart';
 import '../models/app_user.dart';
 
@@ -16,26 +18,31 @@ part 'current_user_provider.g.dart';
 @Riverpod(keepAlive: true)
 Stream<AppUser?> currentUser(Ref ref) {
   if (!FirebaseSetup.isReady) return Stream.value(null);
-  // idTokenChanges also fires when the token (and its claims) refresh.
-  return FirebaseAuth.instance.idTokenChanges().asyncMap(_toAppUser);
+  final api = ref.watch(apiClientProvider);
+  return FirebaseAuth.instance.authStateChanges().asyncMap(
+    (user) => _toAppUser(api, user),
+  );
 }
 
-Future<AppUser?> _toAppUser(User? user) async {
+Future<AppUser?> _toAppUser(ApiClient api, User? user) async {
   if (user == null) return null;
 
-  // TODO(mogith): confirm with the backend where the role comes from.
-  // Assumption: the backend sets a Firebase custom claim `role`
-  // ("student" | "admin"). Alternative: call GET /me and read `role`.
-  final token = await user.getIdTokenResult();
-  final role = token.claims?['role'] as String? ?? 'student';
-
-  // The backend profile (onboarding flags, phone) comes from GET /auth/me;
-  // this provider only knows what Firebase knows.
-  return AppUser(
-    id: user.uid,
-    email: user.email ?? '',
-    fullName: user.displayName ?? '',
-    emailVerified: user.emailVerified,
-    role: role,
-  );
+  // The role ("student" | "admin") and the onboarding flags live in the
+  // backend database, so ask GET /auth/me.
+  try {
+    return AppUser.fromJson(await api.get<Map<String, dynamic>>('/auth/me'));
+  } on ApiException catch (e) {
+    final notRegistered =
+        e.isNotFound ||
+        e.code == 'USER_NOT_FOUND' ||
+        e.code == 'USER_NOT_REGISTERED';
+    if (!notRegistered) rethrow;
+    // Signed in to Firebase but unknown to the backend: never an admin.
+    return AppUser(
+      id: user.uid,
+      email: user.email ?? '',
+      fullName: user.displayName ?? '',
+      emailVerified: user.emailVerified,
+    );
+  }
 }

@@ -25,12 +25,12 @@ void main() {
 
     router.go(AdminRoutes.login);
     await tester.pumpAndSettle();
-    expect(find.text('Admin login'), findsWidgets);
+    expect(find.text('Sign in'), findsOneWidget);
 
     for (final item in AdminShell.navItems) {
       router.go(item.path);
       await tester.pumpAndSettle();
-      expect(find.text('Coming soon'), findsOneWidget, reason: item.path);
+      expect(tester.takeException(), isNull, reason: item.path);
       expect(find.text(item.label), findsWidgets, reason: item.path);
     }
   });

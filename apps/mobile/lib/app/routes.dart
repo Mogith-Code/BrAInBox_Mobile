@@ -66,10 +66,19 @@ abstract final class AppRoutes {
   static String summaryPath(String summaryId) => '/learn/summary/$summaryId';
 
   // Visuals (Mogith)
-  static const visuals = '/visuals';
+  static const visuals = '/visuals/topics/:topicId';
+  static String visualsPath(String topicId) => '/visuals/topics/$topicId';
   static const diagramViewer = '/visuals/view/:visualId';
   static String diagramViewerPath(String visualId) => '/visuals/view/$visualId';
+
+  /// Optional `?topicId=` so the new visual is saved under that topic.
   static const generateVisual = '/visuals/generate';
+  static String generateVisualPath({String? topicId}) => topicId == null
+      ? generateVisual
+      : Uri(
+          path: generateVisual,
+          queryParameters: {'topicId': topicId},
+        ).toString();
 
   // Visuals opened from the Learn tab - full screen.
   // `new` is registered before `:visualId` so it isn't read as an id.
@@ -185,6 +194,7 @@ abstract final class AppRoutes {
     (title: 'Short notes', owner: 'Samni', path: shortNotesPath('demo')),
     (title: 'Notes library', owner: 'Samni', path: notesLibrary),
     (title: 'Upload notes', owner: 'Samni', path: upload),
+<<<<<<< HEAD
     (title: 'Processing notes', owner: 'Samni', path: uploadJobPath('demo')),
     (title: 'Notes summary', owner: 'Samni', path: summaryPath('demo')),
     (title: 'Diagrams', owner: 'Mogith', path: visuals),
@@ -193,6 +203,11 @@ abstract final class AppRoutes {
     (title: 'New visual (Learn)', owner: 'Mogith', path: learnVisualNew),
     (title: 'Visual (Learn)', owner: 'Mogith', path: learnVisualPath('demo')),
     (title: 'Ask BrAInBox', owner: 'TBD', path: ask),
+=======
+    // The Diagrams gallery and viewer need real ids: open them from Home
+    // (Continue learning -> topic -> Open diagrams).
+    (title: 'Generate a visual', owner: 'Mogith', path: generateVisual),
+>>>>>>> origin/develop
     (title: 'Practice', owner: 'Udith', path: practice),
     (title: 'Quiz setup', owner: 'Udith', path: quizSetup),
     (title: 'MCQ question', owner: 'Udith', path: mcqQuestion),

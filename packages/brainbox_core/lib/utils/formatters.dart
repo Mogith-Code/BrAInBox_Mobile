@@ -48,6 +48,17 @@ abstract final class Formatters {
     return (first + last).toUpperCase();
   }
 
+  /// 2418 -> "2,418", -1500 -> "-1,500"
+  static String thousands(int value) {
+    final digits = value.abs().toString();
+    final buffer = StringBuffer(value < 0 ? '-' : '');
+    for (var i = 0; i < digits.length; i++) {
+      if (i > 0 && (digits.length - i) % 3 == 0) buffer.write(',');
+      buffer.write(digits[i]);
+    }
+    return buffer.toString();
+  }
+
   /// 0.724 -> "72%"
   static String percent(double value) => '${(value * 100).round()}%';
 
@@ -63,6 +74,30 @@ abstract final class Formatters {
     if (diff.inDays < 1) return '${diff.inHours} h ago';
     if (diff.inDays < 7) return '${diff.inDays} d ago';
     return shortDate(time);
+  }
+
+  /// The backend sends unit codes as "6"; older data used "U6".
+  /// Both -> "Unit 6". Empty / null -> "".
+  static String unitLabel(String? unitCode) {
+    final code = (unitCode ?? '').trim();
+    if (code.isEmpty) return '';
+    final number = code.toUpperCase().startsWith('U')
+        ? code.substring(1).trim()
+        : code;
+    return 'Unit $number';
+  }
+
+  /// A wait in seconds as words, rounded up to the minute:
+  /// 45 -> "1 minute", 600 -> "10 minutes", 3600 -> "1 hour",
+  /// 5400 -> "1 hour 30 minutes", 86400 -> "24 hours".
+  static String waitTime(int seconds) {
+    final totalMinutes = seconds <= 0 ? 0 : (seconds / 60).ceil();
+    final hours = totalMinutes ~/ 60;
+    final minutes = totalMinutes % 60;
+    String plural(int n, String word) => n == 1 ? '1 $word' : '$n ${word}s';
+    if (hours == 0) return plural(minutes < 1 ? 1 : minutes, 'minute');
+    if (minutes == 0) return plural(hours, 'hour');
+    return '${plural(hours, 'hour')} ${plural(minutes, 'minute')}';
   }
 
   /// 80 minutes -> "1h 20m", 45 minutes -> "45m"
