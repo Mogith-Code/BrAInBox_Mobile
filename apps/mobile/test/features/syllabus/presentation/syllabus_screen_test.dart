@@ -38,7 +38,11 @@ Future<void> _pump(WidgetTester tester, SyllabusRepository repository) async {
     initialLocation: AppRoutes.learn,
     routes: [
       GoRoute(path: AppRoutes.learn, builder: (_, _) => const SyllabusScreen()),
-      for (final path in [AppRoutes.unitDetail, AppRoutes.notesLibrary])
+      for (final path in [
+        AppRoutes.unitDetail,
+        AppRoutes.notesLibrary,
+        AppRoutes.upload,
+      ])
         GoRoute(
           path: path,
           builder: (_, state) => Scaffold(body: Text('AT ${state.uri.path}')),
@@ -117,6 +121,51 @@ void main() {
       find.text('AT ${AppRoutes.unitDetailPath('unit-6')}'),
       findsOneWidget,
     );
+  });
+
+  testWidgets('the upload button in the header opens upload', (tester) async {
+    await _pump(tester, repository);
+
+    await tester.tap(find.byTooltip('Upload notes'));
+    await tester.pumpAndSettle();
+    expect(find.text('AT ${AppRoutes.upload}'), findsOneWidget);
+  });
+
+  testWidgets('the bookmark button in the header opens My library', (
+    tester,
+  ) async {
+    await _pump(tester, repository);
+
+    await tester.tap(find.byTooltip('My library'));
+    await tester.pumpAndSettle();
+    expect(find.text('AT ${AppRoutes.notesLibrary}'), findsOneWidget);
+  });
+
+  testWidgets('the dashed card opens upload; hidden while searching', (
+    tester,
+  ) async {
+    await _pump(tester, repository);
+
+    await tester.enterText(find.byType(TextField), 'genetics');
+    await tester.pump();
+    expect(find.text('Upload your tuition notes'), findsNothing);
+
+    await tester.enterText(find.byType(TextField), '');
+    await tester.pump();
+    await tester.tap(find.text('Upload your tuition notes'));
+    await tester.pumpAndSettle();
+    expect(find.text('AT ${AppRoutes.upload}'), findsOneWidget);
+  });
+
+  testWidgets('only Biology is active; other subjects say coming soon', (
+    tester,
+  ) async {
+    await _pump(tester, repository);
+
+    await tester.tap(find.text('Chemistry'));
+    await tester.pump();
+    expect(find.text('Chemistry is coming soon.'), findsOneWidget);
+    expect(find.text('Genetics'), findsOneWidget);
   });
 
   testWidgets('shows an error with Retry when loading fails', (tester) async {
