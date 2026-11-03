@@ -6,7 +6,9 @@ import 'package:go_router/go_router.dart';
 import '../../../app/routes.dart';
 import '../application/syllabus_controller.dart';
 import '../domain/syllabus_models.dart';
+import 'widgets/ask_brainbox_button.dart';
 import 'widgets/unit_card.dart';
+import 'widgets/upload_notes_card.dart';
 
 /// Learn screen (Figma B2) - all syllabus units with mastery.
 ///
@@ -50,7 +52,7 @@ class _SyllabusScreenState extends ConsumerState<SyllabusScreen> {
               padding: const EdgeInsets.fromLTRB(
                 AppSpacing.lg,
                 AppSpacing.md,
-                AppSpacing.xs,
+                AppSpacing.lg,
                 0,
               ),
               child: Row(
@@ -60,17 +62,21 @@ class _SyllabusScreenState extends ConsumerState<SyllabusScreen> {
                       header: true,
                       child: Text(
                         'Learn',
-                        style: textTheme.titleLarge?.copyWith(
+                        style: textTheme.headlineSmall?.copyWith(
                           color: AppColors.ink,
-                          fontWeight: FontWeight.w700,
                         ),
                       ),
                     ),
                   ),
-                  IconButton(
-                    tooltip: 'Saved notes',
-                    icon: const Icon(Icons.bookmark_border),
-                    color: AppColors.ink,
+                  SoftIconButton(
+                    tooltip: 'Upload notes',
+                    icon: Icons.upload_file_outlined,
+                    onPressed: () => context.push(AppRoutes.upload),
+                  ),
+                  const SizedBox(width: AppSpacing.sm),
+                  SoftIconButton(
+                    tooltip: 'My library',
+                    icon: Icons.bookmark_border,
                     onPressed: () => context.push(AppRoutes.notesLibrary),
                   ),
                 ],
@@ -79,7 +85,7 @@ class _SyllabusScreenState extends ConsumerState<SyllabusScreen> {
             Padding(
               padding: const EdgeInsets.fromLTRB(
                 AppSpacing.lg,
-                AppSpacing.sm,
+                AppSpacing.md,
                 AppSpacing.lg,
                 AppSpacing.md,
               ),
@@ -97,12 +103,21 @@ class _SyllabusScreenState extends ConsumerState<SyllabusScreen> {
                           icon: const Icon(Icons.close),
                           onPressed: _clearSearch,
                         ),
-                  border: _pillBorder(AppColors.border),
-                  enabledBorder: _pillBorder(AppColors.border),
-                  focusedBorder: _pillBorder(AppColors.primary, 2),
+                  // 14 + 20 (line) + 14 = the 48px field from Figma.
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.lg,
+                    vertical: AppSpacing.md + 2,
+                  ),
+                  isDense: true,
+                  fillColor: AppColors.white,
+                  border: _fieldBorder(AppColors.border),
+                  enabledBorder: _fieldBorder(AppColors.border),
+                  focusedBorder: _fieldBorder(AppColors.primary, 2),
                 ),
               ),
             ),
+            const _SubjectPills(),
+            const SizedBox(height: AppSpacing.md),
             Expanded(
               child: switch (state) {
                 AsyncData(:final value) => _UnitList(
@@ -127,15 +142,68 @@ class _SyllabusScreenState extends ConsumerState<SyllabusScreen> {
           ],
         ),
       ),
-      floatingActionButton: const _AiTutorButton(),
+      floatingActionButton: const AskBrainBoxButton(extended: false),
     );
   }
 
-  static OutlineInputBorder _pillBorder(Color color, [double width = 1]) =>
+  static OutlineInputBorder _fieldBorder(Color color, [double width = 1]) =>
       OutlineInputBorder(
-        borderRadius: BorderRadius.circular(AppSpacing.radiusPill),
+        borderRadius: BorderRadius.circular(AppSpacing.radiusMd + 2),
         borderSide: BorderSide(color: color, width: width),
       );
+}
+
+/// Biology / Chemistry / Physics. Only Biology has content for now.
+class _SubjectPills extends StatelessWidget {
+  const _SubjectPills();
+
+  static const _subjects = ['Biology', 'Chemistry', 'Physics'];
+  static const _active = 'Biology';
+
+  @override
+  Widget build(BuildContext context) {
+    final labelStyle = Theme.of(context).textTheme.labelLarge;
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+      child: Row(
+        children: [
+          for (final subject in _subjects) ...[
+            if (subject != _subjects.first)
+              const SizedBox(width: AppSpacing.sm),
+            ChoiceChip(
+              label: Text(subject),
+              selected: subject == _active,
+              showCheckmark: false,
+              selectedColor: AppColors.primary,
+              backgroundColor: AppColors.white,
+              labelStyle: labelStyle?.copyWith(
+                color: subject == _active ? AppColors.white : AppColors.ink,
+                fontWeight: subject == _active
+                    ? FontWeight.w600
+                    : FontWeight.w500,
+              ),
+              shape: StadiumBorder(
+                side: BorderSide(
+                  color: subject == _active
+                      ? AppColors.primary
+                      : AppColors.border,
+                ),
+              ),
+              onSelected: (_) {
+                if (subject == _active) return;
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(
+                    SnackBar(content: Text('$subject is coming soon.')),
+                  );
+              },
+            ),
+          ],
+        ],
+      ),
+    );
+  }
 }
 
 class _UnitList extends ConsumerWidget {
@@ -167,52 +235,28 @@ class _UnitList extends ConsumerWidget {
             );
     }
 
+    // The upload card sits above the units, except while searching.
+    final showUpload = !searching;
+    final offset = showUpload ? 1 : 0;
+
     return RefreshIndicator(
       onRefresh: ref.read(syllabusControllerProvider.notifier).refresh,
       child: ListView.separated(
         physics: const AlwaysScrollableScrollPhysics(),
         // Bottom padding keeps the last card clear of the floating button.
         padding: const EdgeInsets.fromLTRB(AppSpacing.lg, 0, AppSpacing.lg, 88),
-        itemCount: units.length,
+        itemCount: units.length + offset,
         separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.md),
         itemBuilder: (context, i) {
-          final unit = units[i];
+          if (showUpload && i == 0) {
+            return UploadNotesCard(onTap: () => context.push(AppRoutes.upload));
+          }
+          final unit = units[i - offset];
           return UnitCard(
             unit: unit,
             onTap: () => context.push(AppRoutes.unitDetailPath(unit.id)),
           );
         },
-      ),
-    );
-  }
-}
-
-/// The round brand-gradient ✦ button (bottom right in Figma).
-class _AiTutorButton extends StatelessWidget {
-  const _AiTutorButton();
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      button: true,
-      label: 'Ask the AI tutor',
-      child: Material(
-        shape: const CircleBorder(),
-        elevation: 4,
-        shadowColor: AppColors.primary.withValues(alpha: 0.4),
-        clipBehavior: Clip.antiAlias,
-        child: Ink(
-          width: 56,
-          height: 56,
-          decoration: const BoxDecoration(gradient: AppColors.brandGradient),
-          child: InkWell(
-            // TODO(keshomigha): open the AI tutor when its screen exists.
-            onTap: () => ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('AI tutor is coming soon.')),
-            ),
-            child: const Icon(Icons.auto_awesome, color: AppColors.white),
-          ),
-        ),
       ),
     );
   }
