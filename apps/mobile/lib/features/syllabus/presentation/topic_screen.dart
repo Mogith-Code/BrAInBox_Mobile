@@ -12,27 +12,15 @@ import 'widgets/status_pill.dart';
 
 /// Topic screen (Figma B4) - breadcrumb, title and the topic tabs.
 ///
-<<<<<<< HEAD
 /// Routes (inside the Learn tab): `/learn/unit/:unitId/topic/:topicId`,
 /// and `/learn/topic/:topicId` when only the topic id is known.
 /// The tab bodies come from other features (see `topic_tabs.dart`).
 class TopicScreen extends ConsumerWidget {
-=======
-/// Route: `/learn/topics/:topicId`. Opened from Home with a real topic id
-/// (Next best action / Continue learning).
-///
-// TODO(keshomigha): build the real UI from Figma. Keep this file UI-only: read state
-// from the controller and call its methods. Never call Dio / Firebase here.
-// The Diagrams tab can show `DiagramGallery(topicId: topicId, showHeader: false)`
-// from features/visuals.
-class TopicScreen extends StatelessWidget {
->>>>>>> origin/develop
   const TopicScreen({super.key, required this.topicId});
 
   final String topicId;
 
   @override
-<<<<<<< HEAD
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(topicControllerProvider(topicId));
 
@@ -46,18 +34,6 @@ class TopicScreen extends StatelessWidget {
             onRetry: () => ref.invalidate(topicControllerProvider(topicId)),
           ),
         ),
-=======
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Topic')),
-      body: FeaturePlaceholder(
-        title: 'Topic',
-        owner: 'Keshomigha',
-        description:
-            'Topic page with tabs: Notes, Visuals, Practice. (topicId: $topicId)',
-        actionLabel: 'Open diagrams',
-        onAction: () => context.push(AppRoutes.visualsPath(topicId)),
->>>>>>> origin/develop
       ),
       _ => Scaffold(
         appBar: AppBar(leading: const _BackButton()),

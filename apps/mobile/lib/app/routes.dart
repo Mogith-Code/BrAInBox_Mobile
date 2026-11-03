@@ -194,20 +194,13 @@ abstract final class AppRoutes {
     (title: 'Short notes', owner: 'Samni', path: shortNotesPath('demo')),
     (title: 'Notes library', owner: 'Samni', path: notesLibrary),
     (title: 'Upload notes', owner: 'Samni', path: upload),
-<<<<<<< HEAD
     (title: 'Processing notes', owner: 'Samni', path: uploadJobPath('demo')),
     (title: 'Notes summary', owner: 'Samni', path: summaryPath('demo')),
-    (title: 'Diagrams', owner: 'Mogith', path: visuals),
-    (title: 'Diagram viewer', owner: 'Mogith', path: diagramViewerPath('demo')),
-    (title: 'Generate visual', owner: 'Mogith', path: generateVisual),
-    (title: 'New visual (Learn)', owner: 'Mogith', path: learnVisualNew),
-    (title: 'Visual (Learn)', owner: 'Mogith', path: learnVisualPath('demo')),
-    (title: 'Ask BrAInBox', owner: 'TBD', path: ask),
-=======
-    // The Diagrams gallery and viewer need real ids: open them from Home
-    // (Continue learning -> topic -> Open diagrams).
+    // The Diagrams gallery and viewers need real ids: open them from a topic
+    // (Learn -> unit -> topic -> Diagrams).
     (title: 'Generate a visual', owner: 'Mogith', path: generateVisual),
->>>>>>> origin/develop
+    (title: 'New visual (Learn)', owner: 'Mogith', path: learnVisualNew),
+    (title: 'Ask BrAInBox', owner: 'TBD', path: ask),
     (title: 'Practice', owner: 'Udith', path: practice),
     (title: 'Quiz setup', owner: 'Udith', path: quizSetup),
     (title: 'MCQ question', owner: 'Udith', path: mcqQuestion),
