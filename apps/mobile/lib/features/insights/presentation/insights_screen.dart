@@ -1,24 +1,22 @@
 import 'package:brainbox_core/brainbox_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../application/insights_controller.dart';
 import '../domain/insights_models.dart';
-import '../domain/insights_summary.dart';
 import 'insights_navigation.dart';
 import 'widgets/insights_states.dart';
+import 'widgets/mastery_card.dart';
 import 'widgets/overview_cards.dart';
-import 'widgets/summary_cards.dart';
 
-/// Insights overview: mastery ring, study time, accuracy trend, unit
-/// mastery, then strongest / weak topics.
+/// Insights overview: mastery ring, strongest / weakest, weak topics,
+/// mastery map, grade bands.
 ///
 /// Route: `/insights` (bottom-nav tab). With `?attempt_id=<id>` (see
 /// [InsightsNav.attemptLocation]) it shows one attempt, titled
-/// "This attempt", with the per-attempt result instead of the summary cards.
+/// "This attempt", with the per-attempt result instead of the mastery ring.
 ///
-/// Data: `GET /insights/topics` and `GET /insights/summary?period=`.
-class InsightsScreen extends ConsumerStatefulWidget {
+/// Data: `GET /insights/topics` (MCQ results). Study time, accuracy trend and
+/// unit mastery come later, when the backend has endpoints for them.
+class InsightsScreen extends StatelessWidget {
   const InsightsScreen({super.key, this.attemptId});
 
   /// Analyse only this attempt. When null, the route's `attempt_id` query is
@@ -26,42 +24,19 @@ class InsightsScreen extends ConsumerStatefulWidget {
   final String? attemptId;
 
   @override
-  ConsumerState<InsightsScreen> createState() => _InsightsScreenState();
-}
-
-class _InsightsScreenState extends ConsumerState<InsightsScreen> {
-  InsightsPeriod _period = InsightsPeriod.week;
-
-  @override
   Widget build(BuildContext context) {
-    final id = widget.attemptId ?? InsightsNav.attemptIdFromRoute(context);
-    final summaryProvider = insightsSummaryControllerProvider(period: _period);
-    // Only the overview uses the summary; "This attempt" never requests it.
-    final summary = id == null ? ref.watch(summaryProvider) : null;
-    Future<void> refreshSummary() =>
-        ref.read(summaryProvider.notifier).refresh();
+    final id = attemptId ?? InsightsNav.attemptIdFromRoute(context);
     return Scaffold(
       appBar: AppBar(
         title: id == null
             ? const BrandAppBarTitle('Insights')
             : const Text('This attempt'),
-        actions: [
-          if (id == null)
-            Padding(
-              padding: const EdgeInsets.only(right: AppSpacing.lg),
-              child: InsightsPeriodSelector(
-                period: _period,
-                onChanged: (period) => setState(() => _period = period),
-              ),
-            ),
-        ],
       ),
       body: InsightsAsyncBody(
         attemptId: id,
-        onRefresh: id == null ? refreshSummary : null,
         builder: (context, data) => [
-          if (summary != null)
-            ..._summary(data, summary, refreshSummary)
+          if (id == null)
+            MasteryCard(data: data)
           else
             OverallHeroCard(
               overall: data.overall,
@@ -72,19 +47,6 @@ class _InsightsScreenState extends ConsumerState<InsightsScreen> {
         ],
       ),
     );
-  }
-
-  List<Widget> _summary(
-    TopicInsights data,
-    AsyncValue<InsightsSummary> summary,
-    VoidCallback retry,
-  ) {
-    return [
-      MasteryCard(summary: summary, fallback: MasteryCard.fromTopics(data)),
-      StudyTimeCard(summary: summary, period: _period, onRetry: retry),
-      AccuracyTrendCard(summary: summary, onRetry: retry),
-      UnitMasteryCard(summary: summary, onRetry: retry),
-    ];
   }
 
   List<Widget> _topics(
