@@ -35,12 +35,18 @@ abstract final class AppRoutes {
   // Home (Samni)
   static const home = '/home';
 
-  // Syllabus (Keshomigha)
+  // Syllabus (Keshomigha) - Learn tab navigation (Samni)
   static const learn = '/learn';
-  static const unitDetail = '/learn/units/:unitId';
-  static String unitDetailPath(String unitId) => '/learn/units/$unitId';
-  static const topic = '/learn/topics/:topicId';
-  static String topicPath(String topicId) => '/learn/topics/$topicId';
+  static const unitDetail = '/learn/unit/:unitId';
+  static String unitDetailPath(String unitId) => '/learn/unit/$unitId';
+  static const unitTopic = '/learn/unit/:unitId/topic/:topicId';
+  static String unitTopicPath(String unitId, String topicId) =>
+      '/learn/unit/$unitId/topic/$topicId';
+
+  /// A topic when only its id is known (e.g. links from Home).
+  /// Same screen as [unitTopic].
+  static const topic = '/learn/topic/:topicId';
+  static String topicPath(String topicId) => '/learn/topic/$topicId';
 
   // Notes (Samni)
   static const topicNotes = '/notes/topics/:topicId';
@@ -48,10 +54,16 @@ abstract final class AppRoutes {
   static const shortNotes = '/notes/topics/:topicId/short';
   static String shortNotesPath(String topicId) =>
       '/notes/topics/$topicId/short';
-  static const notesLibrary = '/notes/library';
 
-  // Upload (Samni)
-  static const upload = '/upload';
+  /// "My library" (B14), inside the Learn tab.
+  static const notesLibrary = '/learn/library';
+
+  // Upload (Samni) - full screen, outside the bottom nav.
+  static const upload = '/learn/upload';
+  static const uploadJob = '/learn/upload/job/:jobId';
+  static String uploadJobPath(String jobId) => '/learn/upload/job/$jobId';
+  static const summary = '/learn/summary/:summaryId';
+  static String summaryPath(String summaryId) => '/learn/summary/$summaryId';
 
   // Visuals (Mogith)
   static const visuals = '/visuals/topics/:topicId';
@@ -67,6 +79,21 @@ abstract final class AppRoutes {
           path: generateVisual,
           queryParameters: {'topicId': topicId},
         ).toString();
+
+  // Visuals opened from the Learn tab - full screen.
+  // `new` is registered before `:visualId` so it isn't read as an id.
+  static const learnVisualNew = '/learn/visual/new';
+  static const learnVisual = '/learn/visual/:visualId';
+  static String learnVisualPath(String visualId) => '/learn/visual/$visualId';
+
+  // Ask BrAInBox (AI tutor) - full screen.
+  static const ask = '/ask';
+
+  /// `/ask` or `/ask?topicId=...`
+  static String askPath({String? topicId}) => Uri(
+    path: ask,
+    queryParameters: topicId == null ? null : {'topicId': topicId},
+  ).toString();
 
   // Practice (Udith)
   static const practice = '/practice';
@@ -152,15 +179,28 @@ abstract final class AppRoutes {
     (title: 'Profile setup', owner: 'Mogith', path: profileSetup),
     (title: 'Home', owner: 'Samni', path: home),
     (title: 'Learn', owner: 'Keshomigha', path: learn),
-    (title: 'Unit detail', owner: 'Keshomigha', path: unitDetailPath('demo')),
-    (title: 'Topic', owner: 'Keshomigha', path: topicPath('demo')),
+    (title: 'Unit detail', owner: 'Keshomigha', path: unitDetailPath('unit-6')),
+    (
+      title: 'Topic',
+      owner: 'Keshomigha',
+      path: unitTopicPath('unit-6', 't-mendelian'),
+    ),
+    (
+      title: 'Topic (by id)',
+      owner: 'Keshomigha',
+      path: topicPath('t-dihybrid'),
+    ),
     (title: 'Topic notes', owner: 'Samni', path: topicNotesPath('demo')),
     (title: 'Short notes', owner: 'Samni', path: shortNotesPath('demo')),
     (title: 'Notes library', owner: 'Samni', path: notesLibrary),
     (title: 'Upload notes', owner: 'Samni', path: upload),
-    // The Diagrams gallery and viewer need real ids: open them from Home
-    // (Continue learning -> topic -> Open diagrams).
+    (title: 'Processing notes', owner: 'Samni', path: uploadJobPath('demo')),
+    (title: 'Notes summary', owner: 'Samni', path: summaryPath('demo')),
+    // The Diagrams gallery and viewers need real ids: open them from a topic
+    // (Learn -> unit -> topic -> Diagrams).
     (title: 'Generate a visual', owner: 'Mogith', path: generateVisual),
+    (title: 'New visual (Learn)', owner: 'Mogith', path: learnVisualNew),
+    (title: 'Ask BrAInBox', owner: 'TBD', path: ask),
     (title: 'Practice', owner: 'Udith', path: practice),
     (title: 'Quiz setup', owner: 'Udith', path: quizSetup),
     (title: 'MCQ question', owner: 'Udith', path: mcqQuestion),

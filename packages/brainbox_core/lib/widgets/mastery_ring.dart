@@ -15,6 +15,7 @@ class MasteryRing extends StatelessWidget {
     this.label,
     this.color,
     this.labelStyle,
+    this.trackColor,
   });
 
   final double value;
@@ -29,6 +30,9 @@ class MasteryRing extends StatelessWidget {
 
   /// Style of the text in the middle (defaults to a small bold label).
   final TextStyle? labelStyle;
+
+  /// Colour of the unfilled part (defaults to [AppColors.border]).
+  final Color? trackColor;
 
   static Color colorFor(double value) {
     if (value < 0.4) return AppColors.error;
@@ -51,7 +55,7 @@ class MasteryRing extends StatelessWidget {
               value: clamped,
               strokeWidth: strokeWidth,
               strokeCap: StrokeCap.round,
-              backgroundColor: AppColors.border,
+              backgroundColor: trackColor ?? AppColors.border,
               color: color ?? colorFor(clamped),
             ),
             Center(

@@ -22,6 +22,7 @@ abstract final class AppColors {
   // Supporting UI colours used by the Figma screens (Tailwind-style scale).
   static const Color primarySoft = Color(0xFFEEF2FF); // selected card / chip bg
   static const Color primaryLight = Color(0xFFC7D2FE); // filled OTP box border
+  static const Color primaryDark = Color(0xFF4338CA); // unit header, Ask FAB
   static const Color secondaryDark = Color(0xFF0F766E); // teal text on light bg
   static const Color secondarySoft = Color(0xFFF0FDFA); // teal icon bubble
   static const Color success = Color(0xFF10B981); // strong / done
@@ -37,6 +38,7 @@ abstract final class AppColors {
     0xFF94A3B8,
   ); // placeholder / disabled text
   static const Color errorSoft = Color(0xFFFEF2F2);
+  static const Color errorDark = Color(0xFFB42318); // "Weak" pill text
 
   // Logo colours on dark / gradient backgrounds (from the brand pack).
   static const Color aiHighlightOnDark = Color(
