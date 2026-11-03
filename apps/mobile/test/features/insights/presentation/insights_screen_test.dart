@@ -4,7 +4,6 @@ import 'package:brainbox_core/brainbox_core.dart';
 import 'package:brainbox_mobile/app/routes.dart';
 import 'package:brainbox_mobile/features/insights/data/insights_repository.dart';
 import 'package:brainbox_mobile/features/insights/domain/insights_models.dart';
-import 'package:brainbox_mobile/features/insights/domain/insights_summary.dart';
 import 'package:brainbox_mobile/features/insights/presentation/insights_screen.dart';
 import 'package:brainbox_mobile/features/insights/presentation/widgets/insights_states.dart';
 import 'package:flutter/material.dart';
@@ -18,39 +17,32 @@ import '../insights_test_app.dart';
 
 void main() {
   group('InsightsScreen', () {
-    testWidgets('shows the loaded overview', (tester) async {
+    testWidgets('shows the loaded overview from GET /insights/topics', (
+      tester,
+    ) async {
       await pumpInsights(
         tester,
         const InsightsScreen(),
         fakeRepository(json: sampleInsightsJson()),
       );
 
-      // Mastery ring and legend (from /insights/summary).
+      // Mastery ring: the backend's overall percent.
       expect(find.text('62%'), findsOneWidget);
       expect(find.text('mastery'), findsOneWidget);
-      expect(find.text('Mastered'), findsOneWidget);
-      expect(find.text('11 topics'), findsOneWidget);
-      expect(find.text('19 topics'), findsOneWidget);
 
-      // Study time.
-      expect(find.text('Study time'), findsOneWidget);
-      expect(find.text('13.7h this week'), findsOneWidget);
-      expect(find.text('3.1h'), findsOneWidget);
-      expect(find.bySemanticsLabel('W: 0.5h'), findsOneWidget);
+      // Legend: counts of the backend's statuses (strong -> Mastered,
+      // good -> Strong, developing -> Improving, weak + very weak -> Weak).
+      expect(find.bySemanticsLabel('Mastered: 1 topic'), findsOneWidget);
+      expect(find.bySemanticsLabel('Strong: 0 topics'), findsOneWidget);
+      expect(find.bySemanticsLabel('Improving: 1 topic'), findsOneWidget);
+      expect(find.bySemanticsLabel('Weak: 2 topics'), findsOneWidget);
 
-      // Accuracy trend: the null week is a gap, the change is the backend's.
-      expect(find.text('Accuracy trend'), findsOneWidget);
-      expect(find.text('+22% in 8 wks'), findsOneWidget);
-      expect(
-        find.bySemanticsLabel(RegExp('W3: not attempted')),
-        findsOneWidget,
-      );
-
-      // Unit mastery: "—" for a unit with nothing attempted, never 0 %.
-      expect(find.text('1. Introduction to biology'), findsOneWidget);
-      expect(find.text('88%'), findsOneWidget);
-      expect(find.text('7. Molecular biology'), findsOneWidget);
-      expect(find.text('—'), findsOneWidget);
+      // No cards without backend data, no period selector, no placeholders.
+      expect(find.text('Study time'), findsNothing);
+      expect(find.text('Accuracy trend'), findsNothing);
+      expect(find.text('Unit mastery'), findsNothing);
+      expect(find.text('This week'), findsNothing);
+      expect(find.text('Coming soon'), findsNothing);
 
       // The per-attempt hero card is not on the overview.
       expect(find.text('21 correct of 34 attempted'), findsNothing);
@@ -68,7 +60,6 @@ void main() {
       expect(find.text('75% and above'), findsOneWidget);
       expect(find.text('Formative feedback'), findsOneWidget);
       expect(find.textContaining('not official examination'), findsOneWidget);
-      expect(find.text('Coming soon'), findsNothing);
     });
 
     testWidgets('renders in the dark theme', (tester) async {
@@ -79,97 +70,21 @@ void main() {
         themeMode: ThemeMode.dark,
       );
 
-      expect(find.text('Unit mastery'), findsOneWidget);
+      expect(find.text('mastery'), findsOneWidget);
       expect(tester.takeException(), isNull);
     });
 
-    testWidgets('summary cards say "Coming soon" until the backend has '
-        '/insights/summary; the ring falls back to topic statuses', (
+    testWidgets('single-attempt mode shows the attempt result, no ring', (
       tester,
     ) async {
-      await pumpInsights(
-        tester,
-        const InsightsScreen(),
-        fakeRepository(
-          json: sampleInsightsJson(),
-          summaryError: const InsightsNotAvailableYet(),
-        ),
-      );
-
-      // Ring: overall percent and status counts from /insights/topics.
-      expect(find.text('62%'), findsOneWidget);
-      expect(find.bySemanticsLabel('Mastered: 1 topic'), findsOneWidget);
-      expect(find.bySemanticsLabel('Improving: 1 topic'), findsOneWidget);
-      expect(find.bySemanticsLabel('Weak: 2 topics'), findsOneWidget);
-
-      // Study time, trend and units: no invented numbers.
-      expect(find.text('Coming soon'), findsNWidgets(3));
-      expect(find.textContaining('this week'), findsNothing);
-      expect(tester.takeException(), isNull);
-    });
-
-    testWidgets('summary cards show empty states without data', (tester) async {
-      await pumpInsights(
-        tester,
-        const InsightsScreen(),
-        fakeRepository(
-          json: sampleInsightsJson(),
-          summaryJson: quietSummaryJson(),
-        ),
-      );
-
-      expect(find.text('No study time recorded this week.'), findsOneWidget);
-      expect(find.textContaining('to see a trend'), findsOneWidget);
-      expect(find.text('No units attempted yet.'), findsOneWidget);
-      expect(find.text('Coming soon'), findsNothing);
-    });
-
-    testWidgets('a summary server error shows Retry inside the cards', (
-      tester,
-    ) async {
-      final repository = fakeRepository(
-        json: sampleInsightsJson(),
-        summaryError: const InsightsServerError('Server error'),
-      );
-      await pumpInsights(tester, const InsightsScreen(), repository);
-
-      expect(find.text("Couldn't load this"), findsNWidgets(3));
-      await tester.tap(find.text('Retry').first);
-      await tester.pumpAndSettle();
-
-      verify(
-        () => repository.fetchSummary(period: InsightsPeriod.week),
-      ).called(2);
-    });
-
-    testWidgets('changing the period loads that period', (tester) async {
-      final repository = fakeRepository(json: sampleInsightsJson());
-      await pumpInsights(tester, const InsightsScreen(), repository);
-
-      await tester.tap(find.text('This week'));
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('This month').last);
-      await tester.pumpAndSettle();
-
-      verify(
-        () => repository.fetchSummary(period: InsightsPeriod.month),
-      ).called(1);
-      expect(find.text('This month'), findsOneWidget);
-    });
-
-    testWidgets('single-attempt mode never requests the summary', (
-      tester,
-    ) async {
-      final repository = fakeRepository(json: sampleInsightsJson());
       await pumpInsights(
         tester,
         const InsightsScreen(attemptId: 'a-1'),
-        repository,
+        fakeRepository(json: sampleInsightsJson()),
       );
 
       expect(find.text('21 correct of 34 attempted'), findsOneWidget);
-      expect(find.text('This week'), findsNothing);
-      verifyNever(() => repository.fetchSummary(period: any(named: 'period')));
+      expect(find.text('mastery'), findsNothing);
     });
 
     testWidgets('shows skeleton cards while loading', (tester) async {
@@ -178,7 +93,6 @@ void main() {
       when(
         () => repository.fetchTopicInsights(attemptId: any(named: 'attemptId')),
       ).thenAnswer((_) => pending.future);
-      stubSummary(repository);
 
       await pumpInsights(
         tester,

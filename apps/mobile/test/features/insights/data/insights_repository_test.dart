@@ -1,7 +1,5 @@
 import 'package:brainbox_core/brainbox_core.dart';
 import 'package:brainbox_mobile/features/insights/data/insights_repository.dart';
-import 'package:brainbox_mobile/features/insights/domain/insights_models.dart';
-import 'package:brainbox_mobile/features/insights/domain/insights_summary.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -49,65 +47,6 @@ void main() {
         query: {'attempt_id': 'a-1'},
       ),
     ).called(1);
-  });
-
-  group('GET /insights/summary', () {
-    test('sends the period and parses every card', () async {
-      answerWith(() async => sampleSummaryJson());
-
-      final summary = await repository.fetchSummary(
-        period: InsightsPeriod.month,
-      );
-
-      expect(summary.mastery!.bands, hasLength(4));
-      expect(summary.studyTime!.totalMinutes, 822);
-      expect(summary.accuracyTrend!.points[2].percent, isNull);
-      expect(summary.units.last.status, TopicStatus.notAttempted);
-      verify(
-        () => api.get<Map<String, dynamic>>(
-          '/insights/summary',
-          query: {'period': 'month'},
-        ),
-      ).called(1);
-    });
-
-    test('404 (endpoint not built yet) -> InsightsNotAvailableYet', () {
-      failWith(
-        const ApiException(
-          code: 'NOT_FOUND',
-          message: 'Not Found',
-          statusCode: 404,
-        ),
-      );
-      expect(
-        repository.fetchSummary(period: InsightsPeriod.week),
-        throwsA(isA<InsightsNotAvailableYet>()),
-      );
-    });
-
-    test('unknown band keys and statuses do not crash', () async {
-      answerWith(
-        () async => {
-          ...sampleSummaryJson(),
-          'mastery': {
-            'percent': 50.0,
-            'bands': [
-              {'key': 'legendary', 'label': 'Legendary', 'topic_count': 1},
-            ],
-          },
-          'units': [
-            {'name': 'New unit', 'status': 'brand_new_status'},
-          ],
-        },
-      );
-
-      final summary = await repository.fetchSummary(
-        period: InsightsPeriod.week,
-      );
-
-      expect(summary.mastery!.bands.single.key, MasteryBandKey.unknown);
-      expect(summary.units.single.status, TopicStatus.unknown);
-    });
   });
 
   group('error mapping', () {
