@@ -47,6 +47,9 @@ import '../features/splash/presentation/splash_screen.dart';
 import '../features/syllabus/presentation/syllabus_screen.dart';
 import '../features/syllabus/presentation/topic_screen.dart';
 import '../features/syllabus/presentation/unit_detail_screen.dart';
+import '../features/tutor/presentation/ask_screen.dart';
+import '../features/upload/presentation/summary_screen.dart';
+import '../features/upload/presentation/upload_job_screen.dart';
 import '../features/upload/presentation/upload_screen.dart';
 import '../features/visuals/presentation/diagram_gallery_screen.dart';
 import '../features/visuals/presentation/diagram_viewer_screen.dart';
@@ -130,13 +133,35 @@ GoRouter router(Ref ref) {
         builder: (context, state) =>
             ShortNotesScreen(topicId: state.pathParameters['topicId']!),
       ),
-      GoRoute(
-        path: AppRoutes.notesLibrary,
-        builder: (context, state) => const LibraryScreen(),
-      ),
+      // Learn tab, full screen (bottom nav hidden).
       GoRoute(
         path: AppRoutes.upload,
         builder: (context, state) => const UploadScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.uploadJob,
+        builder: (context, state) =>
+            UploadJobScreen(jobId: state.pathParameters['jobId']!),
+      ),
+      GoRoute(
+        path: AppRoutes.summary,
+        builder: (context, state) =>
+            SummaryScreen(summaryId: state.pathParameters['summaryId']!),
+      ),
+      // `new` must come before `:visualId`.
+      GoRoute(
+        path: AppRoutes.learnVisualNew,
+        builder: (context, state) => const GenerateVisualScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.learnVisual,
+        builder: (context, state) =>
+            DiagramViewerScreen(visualId: state.pathParameters['visualId']!),
+      ),
+      GoRoute(
+        path: AppRoutes.ask,
+        builder: (context, state) =>
+            AskScreen(topicId: state.uri.queryParameters['topicId']),
       ),
       GoRoute(
         path: AppRoutes.visuals,
@@ -249,9 +274,18 @@ GoRouter router(Ref ref) {
                     UnitDetailScreen(unitId: state.pathParameters['unitId']!),
               ),
               GoRoute(
+                path: AppRoutes.unitTopic,
+                builder: (context, state) =>
+                    TopicScreen(topicId: state.pathParameters['topicId']!),
+              ),
+              GoRoute(
                 path: AppRoutes.topic,
                 builder: (context, state) =>
                     TopicScreen(topicId: state.pathParameters['topicId']!),
+              ),
+              GoRoute(
+                path: AppRoutes.notesLibrary,
+                builder: (context, state) => const LibraryScreen(),
               ),
             ],
           ),
