@@ -19,6 +19,22 @@ enum UnitStatus {
   weak,
 }
 
+/// How the student is doing in a topic (the pill on each topic row, B3).
+enum TopicStatus {
+  @JsonValue('mastered')
+  mastered,
+  @JsonValue('strong')
+  strong,
+  @JsonValue('improving')
+  improving,
+  @JsonValue('weak')
+  weak,
+  @JsonValue('in_progress')
+  inProgress,
+  @JsonValue('not_started')
+  notStarted,
+}
+
 /// One card on the Learn screen (Figma B2): a unit with the student's mastery.
 ///
 /// One item of `GET /units`.
@@ -38,6 +54,58 @@ abstract class UnitProgress with _$UnitProgress {
 
   factory UnitProgress.fromJson(Map<String, dynamic> json) =>
       _$UnitProgressFromJson(json);
+}
+
+/// One topic row on the Unit detail screen (Figma B3).
+@freezed
+abstract class TopicProgress with _$TopicProgress {
+  const factory TopicProgress({
+    required String id,
+    required String unitId,
+    required String title,
+    @Default(0) int order, // 1-based position in the unit
+    @JsonKey(unknownEnumValue: TopicStatus.notStarted)
+    @Default(TopicStatus.notStarted)
+    TopicStatus status,
+    @Default(0) double progress, // 0-1, shown as a bar while in progress
+  }) = _TopicProgress;
+
+  factory TopicProgress.fromJson(Map<String, dynamic> json) =>
+      _$TopicProgressFromJson(json);
+}
+
+/// A unit with its topics (Figma B3). `GET /units/{unit_id}`.
+@freezed
+abstract class UnitDetail with _$UnitDetail {
+  const UnitDetail._();
+
+  const factory UnitDetail({
+    required UnitProgress unit,
+    @Default(<TopicProgress>[]) List<TopicProgress> topics,
+  }) = _UnitDetail;
+
+  factory UnitDetail.fromJson(Map<String, dynamic> json) =>
+      _$UnitDetailFromJson(json);
+
+  int get masteredCount =>
+      topics.where((t) => t.status == TopicStatus.mastered).length;
+
+  int get weakCount => topics.where((t) => t.status == TopicStatus.weak).length;
+}
+
+/// One topic with the unit it belongs to (Figma B4). `GET /topics/{topic_id}`.
+@freezed
+abstract class TopicDetail with _$TopicDetail {
+  const factory TopicDetail({
+    required TopicProgress topic,
+    required UnitProgress unit,
+
+    /// Bookmarked into "My library".
+    @Default(false) bool saved,
+  }) = _TopicDetail;
+
+  factory TopicDetail.fromJson(Map<String, dynamic> json) =>
+      _$TopicDetailFromJson(json);
 }
 
 /// 88 or 0.88 -> 0.88
