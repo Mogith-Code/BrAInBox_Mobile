@@ -4,29 +4,65 @@ import 'package:brainbox_admin/features/past_papers/presentation/past_papers_scr
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
 
-class _MockRepository extends Mock implements PastPapersRepository {}
+Future<FakePastPapersRepository> _pump(WidgetTester tester) async {
+  tester.view.physicalSize = const Size(1600, 1200);
+  tester.view.devicePixelRatio = 1;
+  addTearDown(tester.view.reset);
+  final repo = FakePastPapersRepository();
+  await tester.pumpWidget(
+    ProviderScope(
+      overrides: [pastPapersRepositoryProvider.overrideWithValue(repo)],
+      child: const MaterialApp(
+        home: Scaffold(
+          body: Padding(padding: EdgeInsets.all(16), child: PastPapersScreen()),
+        ),
+      ),
+    ),
+  );
+  await tester.pumpAndSettle();
+  return repo;
+}
 
 void main() {
-  testWidgets('PastPapersScreen shows data from the repository', (
-    tester,
-  ) async {
-    // Fake the data layer so the test never touches the network.
-    final repository = _MockRepository();
-    when(
-      () => repository.fetchSummary(),
-    ).thenAnswer((_) async => const PastPapersSummary(title: 'Test'));
+  test('reads the paper type and extraction status', () {
+    final paper = PastPaper.fromJson({
+      'id': 'p',
+      'year': 2019,
+      'paper_type': 'paper_2_structured',
+      'extraction': 'lowConfidence',
+      'low_confidence': 3,
+    });
+    expect(paper.paperType, PaperType.paper2Structured);
+    expect(paper.extraction, ExtractionStatus.lowConfidence);
+  });
 
-    await tester.pumpWidget(
-      ProviderScope(
-        overrides: [pastPapersRepositoryProvider.overrideWithValue(repository)],
-        child: const MaterialApp(home: Scaffold(body: PastPapersScreen())),
-      ),
-    );
+  testWidgets('shows papers with their extraction state', (tester) async {
+    await _pump(tester);
+
+    expect(find.text('Past papers & marking schemes'), findsOneWidget);
+    expect(find.text('✓ 48 questions extracted'), findsNWidgets(4));
+    expect(find.text('Extracting · 68%'), findsOneWidget);
+    expect(find.text('⚠ 3 low-confidence'), findsOneWidget);
+    expect(find.text('+ Link scheme'), findsOneWidget);
+    expect(find.text('Outdated syllabus'), findsOneWidget);
+  });
+
+  testWidgets('open a paper, add a suggested keyword and save', (tester) async {
+    final repo = await _pump(tester);
+
+    await tester.tap(find.text('Open').at(4)); // 2019 Paper II
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Q3 (b)'), findsOneWidget);
+    expect(find.textContaining('OCR 94%'), findsOneWidget);
+
+    await tester.tap(find.widgetWithText(ActionChip, 'osmoreceptors'));
+    await tester.pump();
+    await tester.tap(find.text('Save & next question'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Coming soon'), findsOneWidget);
-    verify(() => repository.fetchSummary()).called(1);
+    final saved = (await repo.questions('p5')).first;
+    expect(saved.keywords, contains('osmoreceptors'));
+    expect(find.textContaining('Q3 (c)'), findsOneWidget); // moved on
   });
 }
