@@ -2,6 +2,8 @@ import 'package:brainbox_mobile/app/routes.dart';
 import 'package:brainbox_mobile/features/syllabus/presentation/syllabus_screen.dart';
 import 'package:brainbox_mobile/features/syllabus/presentation/topic_screen.dart';
 import 'package:brainbox_mobile/features/syllabus/presentation/unit_detail_screen.dart';
+import 'package:brainbox_mobile/features/visuals/data/fake_visuals_repository.dart';
+import 'package:brainbox_mobile/features/visuals/data/visuals_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -43,6 +45,12 @@ Future<void> _pump(
   await tester.pumpWidget(
     ProviderScope(
       retry: (_, _) => null,
+      // The Diagrams tab shows the visuals gallery: keep it off the network.
+      overrides: [
+        visualsRepositoryProvider.overrideWithValue(
+          FakeVisualsRepository(step: Duration.zero),
+        ),
+      ],
       child: MaterialApp.router(routerConfig: router),
     ),
   );
@@ -113,6 +121,8 @@ void main() {
     await tester.tap(find.widgetWithText(Tab, 'Diagrams'));
     await tester.pumpAndSettle();
     expect(find.text('Ask BrAInBox'), findsOneWidget);
+    // The real diagram gallery for this topic.
+    expect(find.text('Monohybrid cross'), findsOneWidget);
 
     await tester.tap(find.text('Ask BrAInBox'));
     await tester.pumpAndSettle();
