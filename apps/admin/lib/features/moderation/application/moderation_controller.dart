@@ -5,31 +5,46 @@ import '../domain/moderation_models.dart';
 
 part 'moderation_controller.g.dart';
 
-/// State for the Moderation feature.
-///
-/// The state is an `AsyncValue<ModerationSummary>`, so the screen gets loading,
-/// error and data cases for free:
-/// ```dart
-/// final state = ref.watch(moderationControllerProvider);
-/// state.when(loading: ..., error: ..., data: ...);
-/// ```
+/// The reports queue. Resolving a report removes it from the list at once
+/// and puts it back if the request fails.
 @riverpod
 class ModerationController extends _$ModerationController {
   @override
-  Future<ModerationSummary> build() {
-    // TODO(mogith): load what the screen needs on open.
-    return ref.watch(moderationRepositoryProvider).fetchSummary();
-  }
+  Future<List<ModerationItem>> build() =>
+      ref.watch(moderationRepositoryProvider).reports();
 
-  /// Reloads the data (pull-to-refresh, Retry button...).
-  Future<void> refresh() async {
-    state = const AsyncLoading();
-    final next = await AsyncValue.guard(
-      () => ref.read(moderationRepositoryProvider).fetchSummary(),
-    );
-    if (ref.mounted) state = next;
+  /// Returns false when it failed (the screen shows a message).
+  Future<bool> resolve(String id, ModerationAction action) async {
+    final before = state.value;
+    if (before == null) return false;
+    state = AsyncData([...before.where((r) => r.id != id)]);
+    try {
+      await ref.read(moderationRepositoryProvider).resolve(id, action);
+      return true;
+    } catch (_) {
+      if (ref.mounted) state = AsyncData(before);
+      return false;
+    }
   }
+}
 
-  // TODO(mogith): add one method per user action (submit, delete, generate...).
-  // Each one calls the repository and updates `state`.
+/// The study groups list.
+@riverpod
+class StudyGroupsController extends _$StudyGroupsController {
+  @override
+  Future<List<StudyGroup>> build() =>
+      ref.watch(moderationRepositoryProvider).groups();
+
+  Future<bool> create(String name) async {
+    try {
+      final group = await ref
+          .read(moderationRepositoryProvider)
+          .createGroup(name.trim());
+      final now = state.value ?? const [];
+      if (ref.mounted) state = AsyncData([...now, group]);
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
 }
