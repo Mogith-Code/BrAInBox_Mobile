@@ -165,6 +165,7 @@ abstract final class AppRoutes {
 
   // Settings (Samni)
   static const settings = '/settings';
+  static const privacy = '/settings/privacy';
 
   /// Routes a signed-OUT student may stay on (used by the redirect).
   static const signedOutRoutes = {
@@ -255,5 +256,6 @@ abstract final class AppRoutes {
     (title: 'Create post', owner: 'Mogith', path: createPost),
     (title: 'Notifications', owner: 'Samni', path: notifications),
     (title: 'Settings', owner: 'Samni', path: settings),
+    (title: 'Data & privacy', owner: 'Samni', path: privacy),
   ];
 }
