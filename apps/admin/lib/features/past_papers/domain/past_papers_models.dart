@@ -19,7 +19,14 @@ enum PaperType {
   };
 }
 
-enum ExtractionStatus { done, running, lowConfidence, failed }
+/// Backend values: done | running | low_confidence | failed.
+enum ExtractionStatus {
+  done,
+  running,
+  @JsonValue('low_confidence')
+  lowConfidence,
+  failed,
+}
 
 /// One uploaded past paper (`GET /admin/questions/past-papers`).
 @freezed

@@ -30,7 +30,7 @@ void main() {
       'id': 'p',
       'year': 2019,
       'paper_type': 'paper_2_structured',
-      'extraction': 'lowConfidence',
+      'extraction': 'low_confidence',
       'low_confidence': 3,
     });
     expect(paper.paperType, PaperType.paper2Structured);
