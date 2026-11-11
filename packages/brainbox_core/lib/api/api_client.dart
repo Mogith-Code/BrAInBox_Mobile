@@ -5,6 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../config/env.dart';
 import 'api_exception.dart';
 import 'auth_interceptor.dart';
+import 'network_status.dart';
 
 part 'api_client.g.dart';
 
@@ -15,21 +16,27 @@ part 'api_client.g.dart';
 ///
 /// Every method throws [ApiException] on failure.
 class ApiClient {
-  ApiClient({Dio? dio, IdTokenGetter? getIdToken})
-    : dio =
-          dio ??
-          Dio(
-            BaseOptions(
-              baseUrl: Env.apiBaseUrl,
-              connectTimeout: const Duration(seconds: 15),
-              sendTimeout: const Duration(seconds: 60), // uploads can be big
-              receiveTimeout: const Duration(seconds: 30),
-              headers: {'Accept': 'application/json'},
-            ),
-          ) {
+  ApiClient({
+    Dio? dio,
+    IdTokenGetter? getIdToken,
+    void Function(bool online)? onNetworkStatus,
+  }) : dio =
+           dio ??
+           Dio(
+             BaseOptions(
+               baseUrl: Env.apiBaseUrl,
+               connectTimeout: const Duration(seconds: 15),
+               sendTimeout: const Duration(seconds: 60), // uploads can be big
+               receiveTimeout: const Duration(seconds: 30),
+               headers: {'Accept': 'application/json'},
+             ),
+           ) {
     this.dio.interceptors.add(
       AuthInterceptor(dio: this.dio, getIdToken: getIdToken),
     );
+    if (onNetworkStatus != null) {
+      this.dio.interceptors.add(NetworkStatusInterceptor(onNetworkStatus));
+    }
     if (kDebugMode) {
       // Logs requests/responses in the debug console.
       // requestHeader is off so the ID token is never printed.
@@ -116,4 +123,7 @@ class ApiClient {
 
 /// One [ApiClient] for the whole app.
 @Riverpod(keepAlive: true)
-ApiClient apiClient(Ref ref) => ApiClient();
+ApiClient apiClient(Ref ref) => ApiClient(
+  onNetworkStatus: (online) =>
+      ref.read(networkStatusProvider.notifier).report(online: online),
+);
