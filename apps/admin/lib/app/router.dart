@@ -136,7 +136,8 @@ String? _adminGuard(Ref ref, GoRouterState state) {
   final onLogin = state.matchedLocation == AdminRoutes.login;
 
   // Signed out, or signed in WITHOUT the admin role -> login page.
-  // TODO(mogith): show "This account is not an admin" on the login page.
+  // (The login form itself refuses non-admins: "This account is not an
+  // admin", see AuthRepository.signIn.)
   if (!isAdmin) return onLogin ? null : AdminRoutes.login;
   if (onLogin) return AdminRoutes.dashboard;
   return null;

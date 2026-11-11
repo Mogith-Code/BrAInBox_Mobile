@@ -6,16 +6,14 @@ import '../../../widgets/admin_logo.dart';
 import '../application/auth_controller.dart';
 import 'widgets/login_brand_panel.dart';
 
-/// Admin login screen - Email + password sign-in. Non-admin accounts are refused.
+/// Admin login screen - Email + password sign-in. Non-admin accounts are refused
+/// ("This account is not an admin").
 ///
 /// Route: `/login`
 ///
 /// Wide screens (>= [_splitBreakpoint]) show the gradient brand panel on the
 /// left and the form on the right; narrow screens show only the form.
-///
-// TODO(mogith): wire the form to a real sign-in. Keep this file UI-only: read
-// state from the controller and call its methods. Never call Dio / Firebase
-// here.
+/// After a good sign-in the router guard opens the dashboard.
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
@@ -39,56 +37,62 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   void _submit() {
+    if (ref.read(authControllerProvider).isLoading) return;
     if (!(_formKey.currentState?.validate() ?? false)) return;
-    // TODO(mogith): call a signIn(email, password, keepSignedIn) method on
-    // AuthController once the repository has one. The router guard then
-    // opens the dashboard for admins.
-    _showNotConnected('Sign-in is not connected yet.');
+    ref
+        .read(authControllerProvider.notifier)
+        .signIn(
+          email: _email.text,
+          password: _password.text,
+          keepSignedIn: _keepSignedIn,
+        );
   }
 
+  /// Admins use the same account as the app, so the app's 6-digit reset
+  /// flow works for them too.
   void _forgotPassword() {
-    // TODO(mogith): open the password reset flow once it exists.
-    _showNotConnected('Password reset is not connected yet.');
-  }
-
-  void _showNotConnected(String message) {
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(SnackBar(content: Text(message)));
+    showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Reset your password'),
+        content: const Text(
+          'Open the BrAInBox app, tap "Forgot password?" on the log in '
+          'screen and use the 6-digit code we email you. Then sign in here '
+          'with the new password.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(authControllerProvider);
     return Scaffold(
-      body: state.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, _) => Center(
-          child: ErrorBanner(
-            message: '$error',
-            onRetry: () => ref.invalidate(authControllerProvider),
-          ),
-        ),
-        data: (_) => LayoutBuilder(
-          builder: (context, constraints) {
-            final split = constraints.maxWidth >= LoginScreen._splitBreakpoint;
-            final form = _buildForm(context, showLogo: !split);
-            if (!split) return form;
-            return Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const Expanded(flex: 9, child: LoginBrandPanel()),
-                Expanded(flex: 11, child: form),
-              ],
-            );
-          },
-        ),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          final split = constraints.maxWidth >= LoginScreen._splitBreakpoint;
+          final form = _buildForm(context, showLogo: !split);
+          if (!split) return form;
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const Expanded(flex: 9, child: LoginBrandPanel()),
+              Expanded(flex: 11, child: form),
+            ],
+          );
+        },
       ),
     );
   }
 
   Widget _buildForm(BuildContext context, {required bool showLogo}) {
     final textTheme = Theme.of(context).textTheme;
+    final state = ref.watch(authControllerProvider);
     return ColoredBox(
       color: AppColors.background,
       child: Center(
@@ -191,8 +195,18 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         ),
                       ],
                     ),
+                    if (state.hasError) ...[
+                      const SizedBox(height: AppSpacing.md),
+                      ErrorBanner(
+                        message: AuthController.messageFor(state.error!),
+                      ),
+                    ],
                     const SizedBox(height: AppSpacing.lg),
-                    AppButton(label: 'Sign in to console', onPressed: _submit),
+                    AppButton(
+                      label: 'Sign in to console',
+                      isLoading: state.isLoading,
+                      onPressed: _submit,
+                    ),
                   ],
                 ),
               ),
