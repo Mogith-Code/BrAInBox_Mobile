@@ -83,6 +83,27 @@ class ApiClient {
     () => dio.post<T>(path, data: formData, onSendProgress: onSendProgress),
   );
 
+  /// Uploads one file from memory (e.g. picked with file_picker on web)
+  /// plus form [fields], so apps don't need to import Dio.
+  ///
+  /// ```dart
+  /// await api.uploadBytes('/admin/questions/past-papers',
+  ///     bytes: file.bytes!, fileName: file.name, fields: {'year': 2024});
+  /// ```
+  Future<T> uploadBytes<T>(
+    String path, {
+    required List<int> bytes,
+    required String fileName,
+    String fileField = 'file',
+    Map<String, dynamic> fields = const {},
+  }) => upload<T>(
+    path,
+    formData: FormData.fromMap({
+      ...fields,
+      fileField: MultipartFile.fromBytes(bytes, filename: fileName),
+    }),
+  );
+
   Future<T> _send<T>(Future<Response<T>> Function() request) async {
     try {
       final response = await request();
