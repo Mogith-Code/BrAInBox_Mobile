@@ -1,35 +1,66 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../data/content_review_repository.dart';
 import '../domain/content_review_models.dart';
 
+part 'content_review_controller.freezed.dart';
 part 'content_review_controller.g.dart';
 
-/// State for the ContentReview feature.
-///
-/// The state is an `AsyncValue<ContentReviewSummary>`, so the screen gets loading,
-/// error and data cases for free:
-/// ```dart
-/// final state = ref.watch(contentReviewControllerProvider);
-/// state.when(loading: ..., error: ..., data: ...);
-/// ```
+/// The tab and the filters above the table.
+@freezed
+abstract class ContentFilter with _$ContentFilter {
+  const factory ContentFilter({
+    ContentType? type, // null = All
+    String? status, // null = Any
+    int? unit, // null = All
+  }) = _ContentFilter;
+}
+
+@riverpod
+class ContentFilterController extends _$ContentFilterController {
+  @override
+  ContentFilter build() => const ContentFilter();
+
+  void set(ContentFilter filter) => state = filter;
+}
+
+/// The Content library rows for the current filter.
 @riverpod
 class ContentReviewController extends _$ContentReviewController {
   @override
-  Future<ContentReviewSummary> build() {
-    // TODO(samni): load what the screen needs on open.
-    return ref.watch(contentReviewRepositoryProvider).fetchSummary();
+  Future<List<ContentItem>> build() {
+    final f = ref.watch(contentFilterControllerProvider);
+    return ref
+        .watch(contentReviewRepositoryProvider)
+        .items(type: f.type, status: f.status, unit: f.unit);
   }
 
-  /// Reloads the data (pull-to-refresh, Retry button...).
-  Future<void> refresh() async {
-    state = const AsyncLoading();
-    final next = await AsyncValue.guard(
-      () => ref.read(contentReviewRepositoryProvider).fetchSummary(),
-    );
-    if (ref.mounted) state = next;
-  }
+  /// Approve / Reject, then show the new status in the row.
+  Future<ContentItem?> review(
+    String id, {
+    required bool approve,
+    String? note,
+  }) => _update(
+    () => ref
+        .read(contentReviewRepositoryProvider)
+        .review(id, approve: approve, note: note),
+  );
 
-  // TODO(samni): add one method per user action (submit, delete, generate...).
-  // Each one calls the repository and updates `state`.
+  /// Saves an edited note body.
+  Future<ContentItem?> edit(String id, String body) =>
+      _update(() => ref.read(contentReviewRepositoryProvider).edit(id, body));
+
+  Future<ContentItem?> _update(Future<ContentItem> Function() call) async {
+    try {
+      final saved = await call();
+      final now = state.value;
+      if (ref.mounted && now != null) {
+        state = AsyncData([for (final i in now) i.id == saved.id ? saved : i]);
+      }
+      return saved;
+    } catch (_) {
+      return null;
+    }
+  }
 }
