@@ -372,12 +372,9 @@ class _MappingPanel extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.md),
-          dropdown(
-            'Topic',
-            q.topicId,
-            [for (final t in topics) (t.id, '${t.number} ${t.title}')],
-            (id) => onChanged(q.copyWith(topicId: id, conceptId: null)),
-          ),
+          dropdown('Topic', q.topicId, [
+            for (final t in topics) (t.id, '${t.number} ${t.title}'),
+          ], (id) => onChanged(q.copyWith(topicId: id, conceptId: null))),
           const SizedBox(height: AppSpacing.md),
           dropdown('Concept', q.conceptId, [
             for (final c in concepts) (c.id, c.name),
