@@ -238,8 +238,15 @@ void main() {
         await tester.pump(const Duration(milliseconds: 50));
       }
 
-      expect(find.byType(ErrorBanner), findsOneWidget);
+      // Figma F7 error state with the code; "not Biology" can't be retried.
+      expect(find.byType(AiErrorState), findsOneWidget);
       expect(find.text('I can only draw Biology visuals.'), findsOneWidget);
+      expect(find.text('Error code: NOT_BIOLOGY'), findsOneWidget);
+
+      await tester.tap(find.text('Change my description'));
+      await tester.pumpAndSettle();
+      final field = tester.widget<TextField>(find.byType(TextField));
+      expect(field.controller!.text, 'this will fail'); // text kept
     });
   });
 }

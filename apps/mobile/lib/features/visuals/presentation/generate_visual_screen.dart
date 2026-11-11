@@ -80,6 +80,36 @@ class _GenerateVisualScreenState extends ConsumerState<GenerateVisualScreen> {
       );
     }
 
+    // Figma F7: the AI couldn't do it. "Not Biology" can't be fixed by
+    // retrying, so that one sends the student back to change the text.
+    if (state.phase == GeneratePhase.failed) {
+      final notBiology = state.errorCode == 'NOT_BIOLOGY';
+      return Scaffold(
+        backgroundColor: AppColors.background,
+        appBar: AppBar(
+          backgroundColor: AppColors.background,
+          leading: IconButton(
+            tooltip: 'Back',
+            icon: const Icon(Icons.arrow_back_ios_new, size: 20),
+            onPressed: controller.cancel, // back to the form, text kept
+          ),
+        ),
+        body: SafeArea(
+          child: AiErrorState(
+            title: notBiology
+                ? 'That one is outside Biology'
+                : "We couldn't draw your visual",
+            message: state.error ?? ErrorMessages.generic,
+            errorCode: state.errorCode,
+            retryLabel: notBiology ? 'Change my description' : 'Try again',
+            onRetry: notBiology || !_canGenerate
+                ? controller.cancel
+                : _generate,
+          ),
+        ),
+      );
+    }
+
     final textTheme = Theme.of(context).textTheme;
     final section = textTheme.titleSmall?.copyWith(
       color: AppColors.ink,
@@ -110,13 +140,6 @@ class _GenerateVisualScreenState extends ConsumerState<GenerateVisualScreen> {
                   AppSpacing.lg,
                 ),
                 children: [
-                  if (state.phase == GeneratePhase.failed) ...[
-                    ErrorBanner(
-                      message: state.error ?? 'Something went wrong.',
-                      onRetry: _canGenerate ? _generate : null,
-                    ),
-                    const SizedBox(height: AppSpacing.lg),
-                  ],
                   AppTextField(
                     label: 'What do you want to see?',
                     hint:
