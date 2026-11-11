@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/routes.dart';
+import '../../visuals/presentation/widgets/visualise_anything_card.dart';
 import '../application/home_controller.dart';
 import '../domain/home_models.dart';
 import 'widgets/home_cards.dart';
@@ -138,6 +139,9 @@ class _Dashboard extends ConsumerWidget {
               ],
             ),
           ),
+          const SizedBox(height: AppSpacing.md),
+          // AI visuals for any idea, not only the topic being studied.
+          const VisualiseAnythingCard(),
           if (summary.continueLearning.isNotEmpty) ...[
             const SizedBox(height: AppSpacing.xl),
             Row(

@@ -162,6 +162,8 @@ void main() {
         scrollable: find.byType(Scrollable).first,
       );
       expect(find.text('Continue learning'), findsOneWidget);
+      // AI visuals for any idea, right on Home.
+      expect(find.text('Visualise anything'), findsOneWidget);
       expect(find.text('See all'), findsOneWidget);
       await tester.scrollUntilVisible(
         find.text('Good evening, Nethmi 👋'),

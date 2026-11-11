@@ -10,6 +10,7 @@ import 'package:brainbox_mobile/features/visuals/domain/visuals_models.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 ProviderContainer _container(FakeVisualsRepository repo) {
   final c = ProviderContainer(
@@ -20,6 +21,8 @@ ProviderContainer _container(FakeVisualsRepository repo) {
 }
 
 void main() {
+  setUp(() => SharedPreferences.setMockInitialValues({}));
+
   group('DiagramRenderer', () {
     test('puts zlib + base64url Mermaid in a Kroki PNG url', () {
       const code = 'flowchart LR\n  A --> B';

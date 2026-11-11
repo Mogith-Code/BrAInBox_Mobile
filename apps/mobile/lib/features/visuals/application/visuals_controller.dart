@@ -2,6 +2,7 @@ import 'package:brainbox_core/brainbox_core.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../data/recent_visuals_store.dart';
 import '../data/visuals_repository.dart';
 import '../domain/visuals_models.dart';
 
@@ -27,6 +28,38 @@ class TopicVisualsController extends _$TopicVisualsController {
 @riverpod
 Future<Visual> visualDetail(Ref ref, String visualId) =>
     ref.watch(visualsRepositoryProvider).visual(visualId);
+
+/// "My visuals": the visuals made on this phone, newest first, with or
+/// without a topic. Ids the backend no longer has (404) are forgotten.
+@riverpod
+class MyVisualsController extends _$MyVisualsController {
+  @override
+  Future<List<Visual>> build() async {
+    final store = ref.watch(recentVisualsStoreProvider);
+    final repo = ref.watch(visualsRepositoryProvider);
+    final visuals = <Visual>[];
+    final gone = <String>[];
+    for (final id in await store.ids()) {
+      try {
+        visuals.add(await repo.visual(id));
+      } on ApiException catch (e) {
+        if (e.statusCode != 404) rethrow; // offline etc.: show the error
+        gone.add(id);
+      }
+    }
+    if (gone.isNotEmpty) await store.remove(gone);
+    return visuals;
+  }
+
+  Future<void> refresh() async {
+    ref.invalidateSelf();
+    try {
+      await future;
+    } on Object {
+      // Already in `state`; the screen shows it.
+    }
+  }
+}
 
 enum GeneratePhase { editing, generating, done, failed }
 
@@ -116,7 +149,11 @@ class GenerateVisualController extends _$GenerateVisualController {
       }
       final visual = await repo.visualFromJob(last);
       if (!ref.mounted || run != _run) return;
+      // Remember it for "My visuals" (also when it has no topic).
+      await ref.read(recentVisualsStoreProvider).add(visual.id);
+      if (!ref.mounted || run != _run) return;
       state = state.copyWith(phase: GeneratePhase.done, visual: visual);
+      ref.invalidate(myVisualsControllerProvider);
       // The new visual should show up in the topic's gallery.
       if (topicId != null) ref.invalidate(topicVisualsControllerProvider);
     } catch (e) {

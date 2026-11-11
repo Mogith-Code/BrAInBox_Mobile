@@ -54,6 +54,7 @@ import '../features/upload/presentation/upload_screen.dart';
 import '../features/visuals/presentation/diagram_gallery_screen.dart';
 import '../features/visuals/presentation/diagram_viewer_screen.dart';
 import '../features/visuals/presentation/generate_visual_screen.dart';
+import '../features/visuals/presentation/my_visuals_screen.dart';
 import 'dev_menu_screen.dart';
 import 'routes.dart';
 import 'shell_scaffold.dart';
@@ -151,7 +152,10 @@ GoRouter router(Ref ref) {
       // `new` must come before `:visualId`.
       GoRoute(
         path: AppRoutes.learnVisualNew,
-        builder: (context, state) => const GenerateVisualScreen(),
+        builder: (context, state) => GenerateVisualScreen(
+          topicId: state.uri.queryParameters['topicId'],
+          initialPrompt: state.uri.queryParameters['prompt'],
+        ),
       ),
       GoRoute(
         path: AppRoutes.learnVisual,
@@ -162,6 +166,10 @@ GoRouter router(Ref ref) {
         path: AppRoutes.ask,
         builder: (context, state) =>
             AskScreen(topicId: state.uri.queryParameters['topicId']),
+      ),
+      GoRoute(
+        path: AppRoutes.myVisuals,
+        builder: (context, state) => const MyVisualsScreen(),
       ),
       GoRoute(
         path: AppRoutes.visuals,
@@ -175,8 +183,10 @@ GoRouter router(Ref ref) {
       ),
       GoRoute(
         path: AppRoutes.generateVisual,
-        builder: (context, state) =>
-            GenerateVisualScreen(topicId: state.uri.queryParameters['topicId']),
+        builder: (context, state) => GenerateVisualScreen(
+          topicId: state.uri.queryParameters['topicId'],
+          initialPrompt: state.uri.queryParameters['prompt'],
+        ),
       ),
       GoRoute(
         path: AppRoutes.diagnostic,
