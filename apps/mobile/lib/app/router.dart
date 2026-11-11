@@ -38,6 +38,7 @@ import '../features/practice/presentation/mcq_question_screen.dart';
 import '../features/practice/presentation/practice_hub_screen.dart';
 import '../features/practice/presentation/quiz_result_screen.dart';
 import '../features/practice/presentation/quiz_setup_screen.dart';
+import '../features/profile/presentation/profile_overview_screen.dart';
 import '../features/profile/presentation/profile_screen.dart';
 import '../features/recommendations/presentation/next_steps_screen.dart';
 import '../features/recommendations/presentation/reassessment_screen.dart';
@@ -123,6 +124,10 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: AppRoutes.profileSetup,
         builder: (context, state) => const ProfileSetupScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.myProfile,
+        builder: (context, state) => const ProfileOverviewScreen(),
       ),
       GoRoute(
         path: AppRoutes.topicNotes,

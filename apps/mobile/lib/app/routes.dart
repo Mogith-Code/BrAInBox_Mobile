@@ -32,6 +32,9 @@ abstract final class AppRoutes {
   // Profile (Mogith)
   static const profileSetup = '/profile/setup';
 
+  /// My profile: stats, achievements and goal (Figma F1).
+  static const myProfile = '/profile';
+
   // Home (Samni)
   static const home = '/home';
 
@@ -191,6 +194,7 @@ abstract final class AppRoutes {
     (title: 'Check your inbox (reset)', owner: 'Mogith', path: resetCode),
     (title: 'Set a new password', owner: 'Mogith', path: newPassword),
     (title: 'Profile setup', owner: 'Mogith', path: profileSetup),
+    (title: 'My profile', owner: 'Mogith', path: myProfile),
     (title: 'Home', owner: 'Samni', path: home),
     (title: 'Learn', owner: 'Keshomigha', path: learn),
     (title: 'Unit detail', owner: 'Keshomigha', path: unitDetailPath('unit-6')),

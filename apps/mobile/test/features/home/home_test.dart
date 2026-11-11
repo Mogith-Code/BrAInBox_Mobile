@@ -8,6 +8,8 @@ import 'package:brainbox_mobile/features/home/data/fake_home_repository.dart';
 import 'package:brainbox_mobile/features/home/data/home_repository.dart';
 import 'package:brainbox_mobile/features/home/domain/home_models.dart';
 import 'package:brainbox_mobile/features/home/presentation/home_screen.dart';
+import 'package:brainbox_mobile/features/profile/data/profile_overview_repository.dart';
+import 'package:brainbox_mobile/features/profile/domain/profile_overview_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -37,6 +39,7 @@ Future<void> _pump(WidgetTester tester, ProviderContainer c) async {
       ),
       for (final path in [
         AppRoutes.settings,
+        AppRoutes.myProfile,
         AppRoutes.diagnostic,
         AppRoutes.learn,
         AppRoutes.topic,
@@ -84,7 +87,10 @@ void main() {
       when(() => repo.summary()).thenAnswer((_) async => summary);
       c = ProviderContainer(
         retry: (_, _) => null,
-        overrides: [homeRepositoryProvider.overrideWithValue(repo)],
+        overrides: [
+          homeRepositoryProvider.overrideWithValue(repo),
+          profileOverviewRepositoryProvider.overrideWithValue(_NoBadges()),
+        ],
       );
       addTearDown(c.dispose);
       final sub = c.listen(homeControllerProvider, (_, _) {});
@@ -128,7 +134,10 @@ void main() {
   group('Home screen', () {
     testWidgets('data state matches the Figma dashboard', (tester) async {
       final c = ProviderContainer(
-        overrides: [homeRepositoryProvider.overrideWithValue(_figmaRepo())],
+        overrides: [
+          homeRepositoryProvider.overrideWithValue(_figmaRepo()),
+          profileOverviewRepositoryProvider.overrideWithValue(_NoBadges()),
+        ],
       );
       addTearDown(c.dispose);
       await _pump(tester, c);
@@ -176,10 +185,10 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text('2/3'), findsOneWidget);
 
-      // The avatar opens Settings.
+      // The avatar opens the Profile.
       await tester.tap(find.text('NP'));
       await tester.pumpAndSettle();
-      expect(find.text('AT ${AppRoutes.settings}'), findsOneWidget);
+      expect(find.text('AT ${AppRoutes.myProfile}'), findsOneWidget);
     });
 
     testWidgets('loading state shows the skeleton', (tester) async {
@@ -188,7 +197,10 @@ void main() {
         () => repo.summary(),
       ).thenAnswer((_) => Completer<HomeSummary>().future);
       final c = ProviderContainer(
-        overrides: [homeRepositoryProvider.overrideWithValue(repo)],
+        overrides: [
+          homeRepositoryProvider.overrideWithValue(repo),
+          profileOverviewRepositoryProvider.overrideWithValue(_NoBadges()),
+        ],
       );
       addTearDown(c.dispose);
       await _pump(tester, c);
@@ -203,7 +215,10 @@ void main() {
       ).thenThrow(const ApiException(code: 'network', message: 'offline'));
       final c = ProviderContainer(
         retry: (_, _) => null,
-        overrides: [homeRepositoryProvider.overrideWithValue(repo)],
+        overrides: [
+          homeRepositoryProvider.overrideWithValue(repo),
+          profileOverviewRepositoryProvider.overrideWithValue(_NoBadges()),
+        ],
       );
       addTearDown(c.dispose);
       await _pump(tester, c);
@@ -228,6 +243,7 @@ void main() {
       final c = ProviderContainer(
         overrides: [
           homeRepositoryProvider.overrideWithValue(FakeHomeRepository(backend)),
+          profileOverviewRepositoryProvider.overrideWithValue(_NoBadges()),
         ],
       );
       addTearDown(c.dispose);
@@ -248,7 +264,10 @@ void main() {
             const HomeSummary(overallMastery: 0.5, masteryChangeWeek: -3),
       );
       final c = ProviderContainer(
-        overrides: [homeRepositoryProvider.overrideWithValue(repo)],
+        overrides: [
+          homeRepositoryProvider.overrideWithValue(repo),
+          profileOverviewRepositoryProvider.overrideWithValue(_NoBadges()),
+        ],
       );
       addTearDown(c.dispose);
       await _pump(tester, c);
@@ -258,4 +277,13 @@ void main() {
       expect(find.text('days to A/L', findRichText: true), findsNothing);
     });
   });
+}
+
+/// Home also loads the profile (for the achievement pop-up); no new badge.
+class _NoBadges implements ProfileOverviewRepository {
+  @override
+  Future<ProfileOverview> overview() async => const ProfileOverview();
+
+  @override
+  Future<void> markSeen(String achievementId) async {}
 }
