@@ -5,31 +5,36 @@ import '../domain/quality_review_models.dart';
 
 part 'quality_review_controller.g.dart';
 
-/// State for the QualityReview feature.
-///
-/// The state is an `AsyncValue<QualityReviewSummary>`, so the screen gets loading,
-/// error and data cases for free:
-/// ```dart
-/// final state = ref.watch(qualityReviewControllerProvider);
-/// state.when(loading: ..., error: ..., data: ...);
-/// ```
+/// The quality queue. Approving / rejecting reloads it (the numbers at the
+/// top change too).
 @riverpod
 class QualityReviewController extends _$QualityReviewController {
   @override
-  Future<QualityReviewSummary> build() {
-    // TODO(udith): load what the screen needs on open.
-    return ref.watch(qualityReviewRepositoryProvider).fetchSummary();
+  Future<QualityQueue> build() =>
+      ref.watch(qualityReviewRepositoryProvider).queue();
+
+  Future<bool> review(String id, {required bool approve}) =>
+      reviewMany([id], approve: approve);
+
+  /// "Approve all passing": every item whose checks all passed.
+  Future<bool> approveAllPassing() {
+    final ids = [
+      for (final i in state.value?.items ?? const <QualityItem>[])
+        if (i.allPass) i.id,
+    ];
+    return reviewMany(ids, approve: true);
   }
 
-  /// Reloads the data (pull-to-refresh, Retry button...).
-  Future<void> refresh() async {
-    state = const AsyncLoading();
-    final next = await AsyncValue.guard(
-      () => ref.read(qualityReviewRepositoryProvider).fetchSummary(),
-    );
-    if (ref.mounted) state = next;
+  Future<bool> reviewMany(List<String> ids, {required bool approve}) async {
+    try {
+      final repo = ref.read(qualityReviewRepositoryProvider);
+      for (final id in ids) {
+        await repo.review(id, approve: approve);
+      }
+      ref.invalidateSelf();
+      return true;
+    } catch (_) {
+      return false;
+    }
   }
-
-  // TODO(udith): add one method per user action (submit, delete, generate...).
-  // Each one calls the repository and updates `state`.
 }
