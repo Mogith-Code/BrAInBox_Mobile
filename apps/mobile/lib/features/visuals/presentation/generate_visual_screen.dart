@@ -13,11 +13,15 @@ import 'widgets/visual_widgets.dart';
 /// style, then the AI makes it. While it works a moving loader shows
 /// "Drawing your visual..."; when it's done the viewer opens on it.
 ///
-/// Route: `/visuals/generate?topicId=...` (the topic is optional).
+/// Route: `/visuals/generate?topicId=...&prompt=...`. Both are optional:
+/// students can draw anything, not only the topic they are on.
 class GenerateVisualScreen extends ConsumerStatefulWidget {
-  const GenerateVisualScreen({super.key, this.topicId});
+  const GenerateVisualScreen({super.key, this.topicId, this.initialPrompt});
 
   final String? topicId;
+
+  /// Fills in "What do you want to see?" (e.g. from a Home idea chip).
+  final String? initialPrompt;
 
   @override
   ConsumerState<GenerateVisualScreen> createState() =>
@@ -25,7 +29,7 @@ class GenerateVisualScreen extends ConsumerStatefulWidget {
 }
 
 class _GenerateVisualScreenState extends ConsumerState<GenerateVisualScreen> {
-  final _prompt = TextEditingController();
+  late final _prompt = TextEditingController(text: widget.initialPrompt);
 
   /// Shortest description we send (the backend also checks).
   static const minPromptLength = 5;
@@ -122,6 +126,29 @@ class _GenerateVisualScreenState extends ConsumerState<GenerateVisualScreen> {
                     maxLines: 3,
                     textCapitalization: TextCapitalization.sentences,
                     onChanged: (_) => setState(() {}),
+                  ),
+                  const SizedBox(height: AppSpacing.sm),
+                  Row(
+                    children: [
+                      Icon(
+                        widget.topicId == null
+                            ? Icons.collections_outlined
+                            : Icons.menu_book_outlined,
+                        size: 16,
+                        color: AppColors.muted,
+                      ),
+                      const SizedBox(width: AppSpacing.xs),
+                      Expanded(
+                        child: Text(
+                          widget.topicId == null
+                              ? 'Any Biology idea works. It is saved in My visuals.'
+                              : 'Saved under this topic and in My visuals.',
+                          style: textTheme.bodySmall?.copyWith(
+                            color: AppColors.muted,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: AppSpacing.lg),
                   Wrap(

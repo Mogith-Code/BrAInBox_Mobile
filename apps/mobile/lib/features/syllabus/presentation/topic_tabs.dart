@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/routes.dart';
+import '../../visuals/presentation/diagram_gallery_screen.dart';
 import '../domain/syllabus_models.dart';
 
 /// The tabs on the Topic page (Figma B4), in order.
@@ -53,14 +54,9 @@ class TopicTabBody extends StatelessWidget {
         actionLabel: 'Open short notes',
         onAction: () => context.push(AppRoutes.shortNotesPath(topicId)),
       ),
-      // TODO(mogith): plug in the diagram gallery for this topic.
-      TopicTab.diagrams => FeaturePlaceholder(
-        title: 'Diagrams',
-        owner: 'Mogith',
-        description: 'Diagrams and AI visuals for this topic.',
-        actionLabel: 'Generate a visual',
-        onAction: () => context.push(AppRoutes.learnVisualNew),
-      ),
+      // Mogith's diagram gallery; its last card generates a visual for this
+      // topic (students can also draw anything from Home > My visuals).
+      TopicTab.diagrams => DiagramGallery(topicId: topicId, showHeader: false),
       TopicTab.videos => const FeaturePlaceholder(
         title: 'Videos',
         owner: 'TBD',

@@ -5,11 +5,13 @@ import 'package:brainbox_mobile/features/visuals/data/visuals_repository.dart';
 import 'package:brainbox_mobile/features/visuals/presentation/diagram_gallery_screen.dart';
 import 'package:brainbox_mobile/features/visuals/presentation/diagram_viewer_screen.dart';
 import 'package:brainbox_mobile/features/visuals/presentation/generate_visual_screen.dart';
+import 'package:brainbox_mobile/features/visuals/presentation/my_visuals_screen.dart';
 import 'package:brainbox_mobile/features/visuals/presentation/widgets/visual_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// A visual whose labels have x / y, so the markers are drawn on it.
 const _placed = Visual(
@@ -58,6 +60,10 @@ Future<_Repo> _pump(
     initialLocation: location,
     routes: [
       GoRoute(
+        path: AppRoutes.myVisuals,
+        builder: (_, _) => const MyVisualsScreen(),
+      ),
+      GoRoute(
         path: AppRoutes.visuals,
         builder: (_, s) =>
             DiagramGalleryScreen(topicId: s.pathParameters['topicId']!),
@@ -69,8 +75,10 @@ Future<_Repo> _pump(
       ),
       GoRoute(
         path: AppRoutes.generateVisual,
-        builder: (_, s) =>
-            GenerateVisualScreen(topicId: s.uri.queryParameters['topicId']),
+        builder: (_, s) => GenerateVisualScreen(
+          topicId: s.uri.queryParameters['topicId'],
+          initialPrompt: s.uri.queryParameters['prompt'],
+        ),
       ),
       GoRoute(
         path: AppRoutes.home,
@@ -89,6 +97,9 @@ Future<_Repo> _pump(
 }
 
 void main() {
+  // Generated visuals are remembered on the phone (My visuals).
+  setUp(() => SharedPreferences.setMockInitialValues({}));
+
   group('Diagrams gallery', () {
     testWidgets('shows the topic, filters and opens a diagram', (tester) async {
       await _pump(tester, AppRoutes.visualsPath('t-mendel'));

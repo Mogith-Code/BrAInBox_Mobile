@@ -3,11 +3,14 @@ import 'package:brainbox_mobile/app/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// Opens every route in [AppRoutes.catalog] and checks that a screen shows.
 /// If you add a route to the catalog but forget the router, this fails.
 void main() {
   testWidgets('every route in the catalog opens a screen', (tester) async {
+    // Some screens read phone storage (e.g. My visuals).
+    SharedPreferences.setMockInitialValues({});
     final container = ProviderContainer();
     addTearDown(container.dispose);
     final router = container.read(routerProvider);

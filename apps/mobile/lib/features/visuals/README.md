@@ -6,28 +6,36 @@
 | **App** | student app (`apps/mobile`) |
 | **Purpose** | Diagram gallery, zoomable viewer with numbered labels, and the generate-visual flow. |
 | **Jira epic** | `BRN-E05` Visual Learning *(placeholder key)* |
-| **Git branch** | `feature/visuals-generation` |
+| **Git branch** | `feature/visuals-anywhere` |
 
-## Screens (Figma B8 - B10)
+## Screens (Figma B8 - B10, plus My visuals)
 
 | Screen | File | Route |
 |---|---|---|
-| Diagrams gallery (B8) | `presentation/diagram_gallery_screen.dart` | `/visuals/topics/:topicId` |
+| Diagrams gallery (B8) | `presentation/diagram_gallery_screen.dart` | `/visuals/topics/:topicId` (and the topic page's **Diagrams** tab) |
 | Diagram viewer (B9) | `presentation/diagram_viewer_screen.dart` | `/visuals/view/:visualId` |
-| Generate a visual (B10) | `presentation/generate_visual_screen.dart` | `/visuals/generate?topicId=...` (topic optional) |
+| Generate a visual (B10) | `presentation/generate_visual_screen.dart` | `/visuals/generate?topicId=...&prompt=...` (both optional) |
+| My visuals | `presentation/my_visuals_screen.dart` | `/visuals` |
 
-### How to reach them (real ids only)
+### Visuals about anything, from anywhere
 
-The backend has no `/units` or `/topics` list yet, so real topic ids come
-from `GET /home/summary`:
+Students can draw **any Biology idea**, not only the topic they are on:
 
-- **Gallery:** Home -> a *Continue learning* card (or the *Next best action*)
-  -> topic page -> **Open diagrams**. The topic page's Diagrams tab can later
-  show `DiagramGallery(topicId: topicId, showHeader: false)`.
-- **Viewer:** tap a diagram in the gallery, or it opens by itself after
-  generating.
-- **Generate:** the gallery's last card / the viewer's **New visual** (with
-  the topic), or Dev menu -> *Generate a visual* (no topic, `topic_id: null`).
+- **Home:** the *Visualise anything* card (`widgets/visualise_anything_card.dart`).
+  Its idea chips open the generator with the idea filled in; **Draw something**
+  opens *My visuals*.
+- **My visuals** (`/visuals`): generate with no topic, and see the visuals made
+  on this phone (`data/recent_visuals_store.dart`, newest 20). The backend has
+  no "my visuals" list yet, so each id is loaded with `GET /visuals/{id}`; ids
+  that now give 404 are forgotten.
+- **Topic page:** the Diagrams tab shows that topic's gallery; its last card
+  generates a visual saved under the topic.
+- **Any other screen** can open the generator with its own question:
+  ```dart
+  context.push(AppRoutes.generateVisualPath(prompt: 'Krebs cycle step by step'));
+  context.push(AppRoutes.generateVisualPath(topicId: topic.id)); // under a topic
+  ```
+- **Viewer:** opens by itself after generating; **New visual** starts another.
 
 ## How visuals are drawn (backend)
 

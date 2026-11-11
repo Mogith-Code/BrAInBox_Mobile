@@ -66,25 +66,39 @@ abstract final class AppRoutes {
   static String summaryPath(String summaryId) => '/learn/summary/$summaryId';
 
   // Visuals (Mogith)
+  /// "My visuals": generate a visual about anything (no topic needed) and
+  /// see the ones made on this phone.
+  static const myVisuals = '/visuals';
   static const visuals = '/visuals/topics/:topicId';
   static String visualsPath(String topicId) => '/visuals/topics/$topicId';
   static const diagramViewer = '/visuals/view/:visualId';
   static String diagramViewerPath(String visualId) => '/visuals/view/$visualId';
 
-  /// Optional `?topicId=` so the new visual is saved under that topic.
+  /// Generate a visual from ANY screen. Both parts are optional:
+  /// `topicId` saves it under that topic, `prompt` fills in the question,
+  /// e.g. `context.push(AppRoutes.generateVisualPath(prompt: 'Krebs cycle'))`.
   static const generateVisual = '/visuals/generate';
-  static String generateVisualPath({String? topicId}) => topicId == null
-      ? generateVisual
-      : Uri(
-          path: generateVisual,
-          queryParameters: {'topicId': topicId},
-        ).toString();
+  static String generateVisualPath({String? topicId, String? prompt}) =>
+      _withQuery(generateVisual, {'topicId': topicId, 'prompt': prompt});
 
   // Visuals opened from the Learn tab - full screen.
   // `new` is registered before `:visualId` so it isn't read as an id.
   static const learnVisualNew = '/learn/visual/new';
+  static String learnVisualNewPath({String? topicId}) =>
+      _withQuery(learnVisualNew, {'topicId': topicId});
   static const learnVisual = '/learn/visual/:visualId';
   static String learnVisualPath(String visualId) => '/learn/visual/$visualId';
+
+  /// [path] plus the non-empty [query] values (none -> just [path]).
+  static String _withQuery(String path, Map<String, String?> query) {
+    final params = {
+      for (final e in query.entries)
+        if (e.value != null && e.value!.trim().isNotEmpty) e.key: e.value!,
+    };
+    return params.isEmpty
+        ? path
+        : Uri(path: path, queryParameters: params).toString();
+  }
 
   // Ask BrAInBox (AI tutor) - full screen.
   static const ask = '/ask';
@@ -198,6 +212,7 @@ abstract final class AppRoutes {
     (title: 'Notes summary', owner: 'Samni', path: summaryPath('demo')),
     // The Diagrams gallery and viewers need real ids: open them from a topic
     // (Learn -> unit -> topic -> Diagrams).
+    (title: 'My visuals', owner: 'Mogith', path: myVisuals),
     (title: 'Generate a visual', owner: 'Mogith', path: generateVisual),
     (title: 'New visual (Learn)', owner: 'Mogith', path: learnVisualNew),
     (title: 'Ask BrAInBox', owner: 'TBD', path: ask),
