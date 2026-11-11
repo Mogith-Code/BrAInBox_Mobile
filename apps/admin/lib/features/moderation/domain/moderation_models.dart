@@ -1,24 +1,64 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-// Shared models this feature uses live in brainbox_core.
-// Re-exported so feature code can import just this file.
-export 'package:brainbox_core/brainbox_core.dart' show CommunityPost;
-
 part 'moderation_models.freezed.dart';
 part 'moderation_models.g.dart';
 
-/// Placeholder model for the Moderation feature.
-///
-// TODO(mogith): replace these fields with the response of `GET /admin/reports`
-// (see the backend OpenAPI /docs), or delete this class and use the shared
-// models from brainbox_core. Run `melos run gen` after editing.
-@freezed
-abstract class ModerationSummary with _$ModerationSummary {
-  const factory ModerationSummary({
-    required String title,
-    @Default('') String message,
-  }) = _ModerationSummary;
+/// What a report is about. The backend sends visuals today; posts and
+/// replies come with the community module.
+enum ReportTarget { post, reply, visual }
 
-  factory ModerationSummary.fromJson(Map<String, dynamic> json) =>
-      _$ModerationSummaryFromJson(json);
+/// What an admin does with a report
+/// (`POST /admin/moderation/reports/{id}/resolve` with `{action}`).
+enum ModerationAction {
+  keep('Keep'),
+  warn('Warn'),
+  remove('Remove');
+
+  const ModerationAction(this.label);
+
+  final String label;
+}
+
+/// One item in the moderation queue (`GET /admin/moderation/reports`).
+///
+/// Works with today's visual reports (`visual_title`, `image_url`) and the
+/// planned post / reply reports (`author_handle`, `group_name`, `text`,
+/// `ai_flag_label`, `ai_flag_score`).
+@freezed
+abstract class ModerationItem with _$ModerationItem {
+  const factory ModerationItem({
+    required String id,
+    @JsonKey(unknownEnumValue: ReportTarget.post)
+    @Default(ReportTarget.visual)
+    ReportTarget targetType,
+    @Default('other') String reason, // e.g. spam, offensive, wrong_label
+    String? details,
+    String? authorHandle, // "kavindu_22"
+    String? groupName, // "Unit 6 · Genetics"
+    String? text, // the post / reply text
+    String? visualTitle,
+    String? imageUrl,
+    String? aiFlagLabel, // "Spam / external link"
+    double? aiFlagScore, // 0.0 - 1.0
+    @Default(1) int reportCount,
+    DateTime? createdAt,
+  }) = _ModerationItem;
+
+  factory ModerationItem.fromJson(Map<String, dynamic> json) =>
+      _$ModerationItemFromJson(json);
+}
+
+/// A study group in the right-hand list (`GET /admin/community/groups`).
+@freezed
+abstract class StudyGroup with _$StudyGroup {
+  const factory StudyGroup({
+    required String id,
+    required String name,
+    @Default(0) int members,
+    String? moderatorName, // null = no moderator yet
+    @Default(true) bool isOpen,
+  }) = _StudyGroup;
+
+  factory StudyGroup.fromJson(Map<String, dynamic> json) =>
+      _$StudyGroupFromJson(json);
 }

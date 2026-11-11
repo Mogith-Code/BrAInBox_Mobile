@@ -2,6 +2,7 @@ import 'package:brainbox_core/brainbox_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../features/settings/application/settings_controller.dart';
 import 'router.dart';
 
 /// The root widget of the student app.
@@ -16,8 +17,8 @@ class BrainBoxApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
-      // TODO(samni): read the theme mode from the settings feature.
-      themeMode: ThemeMode.light,
+      // Settings > Dark mode (saved on the phone).
+      themeMode: ref.watch(appThemeModeProvider),
       routerConfig: router,
       // Debug builds: a "FAKE API" corner ribbon with USE_FAKE_API=true,
       // otherwise "Firebase not configured" at the top if it isn't.

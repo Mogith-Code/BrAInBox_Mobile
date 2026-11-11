@@ -1,19 +1,28 @@
+import 'package:brainbox_core/brainbox_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 /// The bottom navigation bar around the five main tabs.
 ///
 /// The order of the tabs must match the order of the branches in
 /// `router.dart`: Home, Learn, Practice, Insights, Community.
-class ShellScaffold extends StatelessWidget {
+///
+/// While the backend can't be reached, "You're offline" shows above every
+/// tab (Figma F6).
+class ShellScaffold extends ConsumerWidget {
   const ShellScaffold({super.key, required this.navigationShell});
 
   final StatefulNavigationShell navigationShell;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      body: navigationShell,
+      body: OfflineBanner(
+        // Any reply from the server switches the banner off again.
+        onRetry: () => ref.read(apiClientProvider).get<Object?>('/auth/me'),
+        child: navigationShell,
+      ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: navigationShell.currentIndex,
         // Tapping the current tab again goes back to that tab's first screen.

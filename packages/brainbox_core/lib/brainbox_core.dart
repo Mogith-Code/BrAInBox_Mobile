@@ -15,6 +15,7 @@ export 'api/api_client.dart';
 export 'api/api_exception.dart';
 export 'api/auth_interceptor.dart';
 export 'api/job_poller.dart';
+export 'api/network_status.dart';
 
 // Auth
 export 'auth/current_user_provider.dart';
@@ -42,6 +43,7 @@ export 'theme/brand_assets.dart';
 
 // Widgets
 export 'widgets/ai_badge.dart';
+export 'widgets/ai_error_state.dart';
 export 'widgets/ai_generating_loader.dart';
 export 'widgets/app_chip.dart';
 export 'widgets/app_button.dart';
@@ -71,6 +73,7 @@ export 'widgets/step_progress_header.dart';
 export 'widgets/topic_card.dart';
 export 'widgets/unit_mastery_row.dart';
 export 'widgets/exam_year_picker.dart';
+export 'widgets/offline_banner.dart';
 
 // Utils
 export 'utils/error_messages.dart';

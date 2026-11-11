@@ -5,31 +5,50 @@ import '../domain/past_papers_models.dart';
 
 part 'past_papers_controller.g.dart';
 
-/// State for the PastPapers feature.
-///
-/// The state is an `AsyncValue<PastPapersSummary>`, so the screen gets loading,
-/// error and data cases for free:
-/// ```dart
-/// final state = ref.watch(pastPapersControllerProvider);
-/// state.when(loading: ..., error: ..., data: ...);
-/// ```
+/// The papers table. Uploading adds the new paper at the top.
 @riverpod
 class PastPapersController extends _$PastPapersController {
   @override
-  Future<PastPapersSummary> build() {
-    // TODO(udith): load what the screen needs on open.
-    return ref.watch(pastPapersRepositoryProvider).fetchSummary();
-  }
+  Future<List<PastPaper>> build() =>
+      ref.watch(pastPapersRepositoryProvider).papers();
 
-  /// Reloads the data (pull-to-refresh, Retry button...).
-  Future<void> refresh() async {
+  Future<bool> upload({
+    required List<int> bytes,
+    required String fileName,
+    required int year,
+    required PaperType type,
+  }) async {
+    try {
+      final paper = await ref
+          .read(pastPapersRepositoryProvider)
+          .upload(bytes: bytes, fileName: fileName, year: year, type: type);
+      if (ref.mounted) state = AsyncData([paper, ...?state.value]);
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+}
+
+/// The extracted questions of one paper.
+@riverpod
+Future<List<PaperQuestion>> paperQuestions(Ref ref, String paperId) =>
+    ref.watch(pastPapersRepositoryProvider).questions(paperId);
+
+/// Saving a model answer + keywords.
+@riverpod
+class AnswerEditor extends _$AnswerEditor {
+  @override
+  AsyncValue<void> build() => const AsyncData(null);
+
+  Future<bool> save(String paperId, PaperQuestion q) async {
     state = const AsyncLoading();
     final next = await AsyncValue.guard(
-      () => ref.read(pastPapersRepositoryProvider).fetchSummary(),
+      () => ref.read(pastPapersRepositoryProvider).saveAnswer(q),
     );
-    if (ref.mounted) state = next;
+    if (!ref.mounted) return false;
+    state = next.whenData((_) {});
+    if (next.hasValue) ref.invalidate(paperQuestionsProvider(paperId));
+    return next.hasValue;
   }
-
-  // TODO(udith): add one method per user action (submit, delete, generate...).
-  // Each one calls the repository and updates `state`.
 }

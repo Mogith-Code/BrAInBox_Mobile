@@ -7,6 +7,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/routes.dart';
+import '../../profile/application/profile_overview_controller.dart';
+import '../../profile/presentation/widgets/achievement_dialog.dart';
 import '../../visuals/presentation/widgets/visualise_anything_card.dart';
 import '../application/home_controller.dart';
 import '../domain/home_models.dart';
@@ -15,7 +17,8 @@ import 'widgets/home_cards.dart';
 /// Home dashboard (Figma B1).
 ///
 /// Route: `/home` (first tab). Pull to refresh; skeleton while loading;
-/// error banner with Retry. The avatar opens Settings.
+/// error banner with Retry. The avatar opens the Profile; a newly
+/// unlocked achievement pops up once (Figma F8).
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key, this.clock});
 
@@ -26,6 +29,14 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(homeControllerProvider);
     final now = (clock ?? DateTime.now)();
+
+    // Figma F8: show a newly unlocked badge once, then mark it seen.
+    ref.listen(profileOverviewControllerProvider, (previous, next) {
+      final badge = next.value?.unseen;
+      if (badge == null || previous?.value?.unseen?.id == badge.id) return;
+      ref.read(profileOverviewControllerProvider.notifier).markSeen(badge.id);
+      showAchievementUnlocked(context, badge);
+    });
 
     return Scaffold(
       body: SafeArea(
@@ -107,7 +118,7 @@ class _Dashboard extends ConsumerWidget {
           HomeHeader(
             summary: summary,
             now: now,
-            onAvatarTap: () => context.push(AppRoutes.settings),
+            onAvatarTap: () => context.push(AppRoutes.myProfile),
           ),
           const SizedBox(height: AppSpacing.lg),
           if (action != null) ...[

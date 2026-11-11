@@ -1,3 +1,4 @@
+import 'package:brainbox_core/brainbox_core.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../data/auth_repository.dart';
@@ -5,34 +6,35 @@ import '../domain/auth_models.dart';
 
 part 'auth_controller.g.dart';
 
-/// State for the Auth feature.
+/// The admin login form. `AsyncData(null)` = idle, `AsyncLoading` while
+/// signing in, `AsyncError` with the reason it failed.
 ///
-/// The state is an `AsyncValue<AuthSummary>`, so the screen gets loading,
-/// error and data cases for free:
-/// ```dart
-/// final state = ref.watch(authControllerProvider);
-/// state.when(loading: ..., error: ..., data: ...);
-/// ```
+/// On success nothing else is needed here: `currentUserProvider` changes,
+/// and the router guard opens the dashboard.
 @riverpod
 class AuthController extends _$AuthController {
   @override
-  Future<AuthSummary> build() {
-    // TODO(mogith): load what the screen needs on open.
-    return ref.watch(authRepositoryProvider).fetchSummary();
-  }
+  AsyncValue<void> build() => const AsyncData(null);
 
-  /// Reloads the data (pull-to-refresh, Retry button...).
-  Future<void> refresh() async {
+  Future<void> signIn({
+    required String email,
+    required String password,
+    bool keepSignedIn = true,
+  }) async {
     state = const AsyncLoading();
     final next = await AsyncValue.guard(
-      () => ref.read(authRepositoryProvider).fetchSummary(),
+      () => ref
+          .read(authRepositoryProvider)
+          .signIn(email: email, password: password, keepSignedIn: keepSignedIn),
     );
-    if (ref.mounted) state = next;
+    if (ref.mounted) state = next.whenData((_) {});
   }
-
-  // TODO(mogith): add one method per user action (submit, delete, generate...).
-  // Each one calls the repository and updates `state`.
 
   /// Signs out. The router guard then sends the user to the login screen.
   Future<void> signOut() => ref.read(authRepositoryProvider).signOut();
+
+  /// The sentence to show under the form for [error].
+  static String messageFor(Object error) => error is NotAdminException
+      ? NotAdminException.message
+      : ErrorMessages.of(error);
 }

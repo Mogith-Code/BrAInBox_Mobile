@@ -32,6 +32,9 @@ abstract final class AppRoutes {
   // Profile (Mogith)
   static const profileSetup = '/profile/setup';
 
+  /// My profile: stats, achievements and goal (Figma F1).
+  static const myProfile = '/profile';
+
   // Home (Samni)
   static const home = '/home';
 
@@ -162,6 +165,7 @@ abstract final class AppRoutes {
 
   // Settings (Samni)
   static const settings = '/settings';
+  static const privacy = '/settings/privacy';
 
   /// Routes a signed-OUT student may stay on (used by the redirect).
   static const signedOutRoutes = {
@@ -191,6 +195,7 @@ abstract final class AppRoutes {
     (title: 'Check your inbox (reset)', owner: 'Mogith', path: resetCode),
     (title: 'Set a new password', owner: 'Mogith', path: newPassword),
     (title: 'Profile setup', owner: 'Mogith', path: profileSetup),
+    (title: 'My profile', owner: 'Mogith', path: myProfile),
     (title: 'Home', owner: 'Samni', path: home),
     (title: 'Learn', owner: 'Keshomigha', path: learn),
     (title: 'Unit detail', owner: 'Keshomigha', path: unitDetailPath('unit-6')),
@@ -251,5 +256,6 @@ abstract final class AppRoutes {
     (title: 'Create post', owner: 'Mogith', path: createPost),
     (title: 'Notifications', owner: 'Samni', path: notifications),
     (title: 'Settings', owner: 'Samni', path: settings),
+    (title: 'Data & privacy', owner: 'Samni', path: privacy),
   ];
 }

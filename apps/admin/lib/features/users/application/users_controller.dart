@@ -5,31 +5,50 @@ import '../domain/users_models.dart';
 
 part 'users_controller.g.dart';
 
-/// State for the Users feature.
-///
-/// The state is an `AsyncValue<UsersSummary>`, so the screen gets loading,
-/// error and data cases for free:
-/// ```dart
-/// final state = ref.watch(usersControllerProvider);
-/// state.when(loading: ..., error: ..., data: ...);
-/// ```
+/// The search + filters above the Students table.
+@riverpod
+class StudentFilterController extends _$StudentFilterController {
+  @override
+  StudentFilter build() => const StudentFilter();
+
+  void set(StudentFilter filter) => state = filter;
+}
+
+/// The Students table for the current filter (`GET /admin/users`).
 @riverpod
 class UsersController extends _$UsersController {
   @override
-  Future<UsersSummary> build() {
-    // TODO(mogith): load what the screen needs on open.
-    return ref.watch(usersRepositoryProvider).fetchSummary();
-  }
+  Future<StudentPage> build() => ref
+      .watch(usersRepositoryProvider)
+      .students(ref.watch(studentFilterControllerProvider));
 
-  /// Reloads the data (pull-to-refresh, Retry button...).
-  Future<void> refresh() async {
-    state = const AsyncLoading();
-    final next = await AsyncValue.guard(
-      () => ref.read(usersRepositoryProvider).fetchSummary(),
-    );
-    if (ref.mounted) state = next;
+  /// Suspends or reinstates a student. The row changes right away and goes
+  /// back if the request fails. Returns false when it failed.
+  Future<bool> setActive(String id, {required bool active}) async {
+    final before = state.value;
+    if (before == null) return false;
+    AdminStudent swap(AdminStudent s) => s.id == id
+        ? s.copyWith(
+            status: active ? StudentStatus.active : StudentStatus.suspended,
+          )
+        : s;
+    state = AsyncData(before.copyWith(items: before.items.map(swap).toList()));
+    try {
+      final saved = await ref
+          .read(usersRepositoryProvider)
+          .setActive(id, active: active);
+      final now = state.value;
+      if (ref.mounted && now != null) {
+        state = AsyncData(
+          now.copyWith(
+            items: [for (final s in now.items) s.id == id ? saved : s],
+          ),
+        );
+      }
+      return true;
+    } catch (_) {
+      if (ref.mounted) state = AsyncData(before);
+      return false;
+    }
   }
-
-  // TODO(mogith): add one method per user action (submit, delete, generate...).
-  // Each one calls the repository and updates `state`.
 }

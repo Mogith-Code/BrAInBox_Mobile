@@ -85,8 +85,8 @@ class InsightsRepository {
     return InsightsServerError(status == null ? _genericMessage : e.message);
   }
 
-  // TODO(keshomigha): needs GET /mistakes for the mistake journal (backend
-  // not built yet).
+  // The mistake journal has its own repository: mistakes_repository.dart
+  // (GET /mistakes, PATCH /mistakes/{id}).
 }
 
 @riverpod

@@ -1,44 +1,75 @@
 import 'package:brainbox_core/brainbox_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../domain/auth_models.dart';
 
 part 'auth_repository.g.dart';
 
-/// Data layer for the Auth feature.
-///
-/// The ONLY place in this feature that calls the backend (through
-/// [ApiClient]). Controllers call this; screens never do.
-class AuthRepository {
-  AuthRepository(this.api);
+/// Admin sign-in: Firebase checks the email + password, then the backend
+/// says who the user is (`GET /auth/me`). Only role "admin" may stay in.
+abstract interface class AuthRepository {
+  /// Returns the admin, or throws [NotAdminException] (after signing out)
+  /// or a [FirebaseAuthException] / [ApiException].
+  Future<AppUser> signIn({
+    required String email,
+    required String password,
+    required bool keepSignedIn,
+  });
+
+  Future<void> signOut();
+}
+
+class FirebaseAuthRepository implements AuthRepository {
+  FirebaseAuthRepository(this.api);
 
   final ApiClient api;
 
-  /// Loads the data for the main Auth screen.
-  Future<AuthSummary> fetchSummary() async {
-    // TODO(mogith): call the backend instead of returning placeholder data.
-    // Real version (uncomment when the endpoint exists):
-    // final json = await api.get<Map<String, dynamic>>('/me');
-    // return AuthSummary.fromJson(json);
-    return const AuthSummary(
-      title: 'Admin login',
-      message: 'Placeholder data - API not connected yet.',
+  FirebaseAuth get _auth => FirebaseAuth.instance;
+
+  @override
+  Future<AppUser> signIn({
+    required String email,
+    required String password,
+    required bool keepSignedIn,
+  }) async {
+    if (!FirebaseSetup.isReady) {
+      throw const ApiException(
+        code: 'AUTH_NOT_CONFIGURED',
+        message: 'Firebase is not set up for the admin portal yet.',
+      );
+    }
+    if (kIsWeb) {
+      // "Keep me signed in" off = forget the login when the tab closes.
+      await _auth.setPersistence(
+        keepSignedIn ? Persistence.LOCAL : Persistence.SESSION,
+      );
+    }
+    await _auth.signInWithEmailAndPassword(
+      email: email.trim(),
+      password: password,
     );
+    final AppUser user;
+    try {
+      user = AppUser.fromJson(await api.get<Map<String, dynamic>>('/auth/me'));
+    } catch (_) {
+      await _auth.signOut(); // never stay half signed in
+      rethrow;
+    }
+    if (!user.isAdmin) {
+      await _auth.signOut();
+      throw const NotAdminException();
+    }
+    return user;
   }
 
-  // TODO(mogith): add signIn(email, password) here with FirebaseAuth.instance
-  // (after Samni's login screen PR is merged). The guard reads the role from
-  // GET /auth/me. Password reset uses the backend's 6-digit codes
-  // (/auth/password-reset/*), never Firebase's reset emails.
-
-  /// Signs the user out of Firebase (no-op if Firebase is not configured).
+  @override
   Future<void> signOut() async {
-    if (!FirebaseSetup.isReady) return;
-    await FirebaseAuth.instance.signOut();
+    if (FirebaseSetup.isReady) await _auth.signOut();
   }
 }
 
 @riverpod
 AuthRepository authRepository(Ref ref) =>
-    AuthRepository(ref.watch(apiClientProvider));
+    FirebaseAuthRepository(ref.watch(apiClientProvider));
