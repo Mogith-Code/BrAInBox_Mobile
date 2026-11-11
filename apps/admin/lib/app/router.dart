@@ -12,6 +12,7 @@ import '../features/mcq_mapping/presentation/mcq_mapping_screen.dart';
 import '../features/moderation/presentation/moderation_screen.dart';
 import '../features/past_papers/presentation/past_papers_screen.dart';
 import '../features/quality_review/presentation/quality_review_screen.dart';
+import '../features/question_bank/presentation/edit_question_screen.dart';
 import '../features/question_bank/presentation/question_bank_screen.dart';
 import '../features/rag_sources/presentation/rag_sources_screen.dart';
 import '../features/syllabus_manager/presentation/syllabus_manager_screen.dart';
@@ -27,6 +28,8 @@ abstract final class AdminRoutes {
   static const syllabus = '/syllabus'; // Keshomigha
   static const contentReview = '/content-review'; // Samni
   static const questionBank = '/question-bank'; // Udith
+  static const questionEdit = '/question-bank/:questionId'; // Udith
+  static String questionEditPath(String id) => '/question-bank/$id';
   static const mcqMapping = '/mcq-mapping'; // Udith
   static const qualityReview = '/quality-review'; // Udith
   static const pastPapers = '/past-papers'; // Udith
@@ -78,6 +81,12 @@ GoRouter router(Ref ref) {
           GoRoute(
             path: AdminRoutes.questionBank,
             builder: (context, state) => const QuestionBankScreen(),
+          ),
+          GoRoute(
+            path: AdminRoutes.questionEdit,
+            builder: (context, state) => EditQuestionScreen(
+              questionId: state.pathParameters['questionId']!,
+            ),
           ),
           GoRoute(
             path: AdminRoutes.mcqMapping,
