@@ -1,3 +1,4 @@
+import 'package:brainbox_core/brainbox_core.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -70,7 +71,10 @@ class ExamSessionController extends _$ExamSessionController {
       return paper;
     } catch (e) {
       if (ref.mounted) {
-        state = state.copyWith(isGenerating: false, errorMessage: e.toString());
+        state = state.copyWith(
+          isGenerating: false,
+          errorMessage: ErrorMessages.of(e),
+        );
       }
       rethrow;
     }
@@ -99,7 +103,10 @@ class ExamSessionController extends _$ExamSessionController {
       return result;
     } catch (e) {
       if (ref.mounted) {
-        state = state.copyWith(isSubmitting: false, errorMessage: e.toString());
+        state = state.copyWith(
+          isSubmitting: false,
+          errorMessage: ErrorMessages.of(e),
+        );
       }
       rethrow;
     }

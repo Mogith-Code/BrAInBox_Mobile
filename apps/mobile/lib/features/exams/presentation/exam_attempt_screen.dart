@@ -83,14 +83,8 @@ class _ExamAttemptScreenState extends ConsumerState<ExamAttemptScreen> {
       context.pushReplacement(AppRoutes.examResult);
     } catch (e) {
       if (!mounted) return;
-      String msg = e.toString().replaceFirst('Exception: ', '');
-      if (msg.contains('Failed to fetch') ||
-          msg.contains('Connection refused') ||
-          msg.contains('SocketException') ||
-          msg.contains('connectTimeout')) {
-        msg =
-            'Cannot connect to backend (${Env.apiBaseUrl}). Please make sure the backend server is running.';
-      }
+      // Friendly text for every case (offline, timeout, backend codes).
+      final msg = ErrorMessages.of(e);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(msg), backgroundColor: AppColors.error),
       );

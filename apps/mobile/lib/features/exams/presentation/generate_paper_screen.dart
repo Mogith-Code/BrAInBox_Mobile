@@ -51,14 +51,8 @@ class _GeneratePaperScreenState extends ConsumerState<GeneratePaperScreen> {
       context.push(AppRoutes.examAttemptPath(paper.paperId));
     } catch (e) {
       if (!mounted) return;
-      String msg = e.toString().replaceFirst('Exception: ', '');
-      if (msg.contains('Failed to fetch') ||
-          msg.contains('Connection refused') ||
-          msg.contains('SocketException') ||
-          msg.contains('connectTimeout')) {
-        msg =
-            'Cannot connect to backend (${Env.apiBaseUrl}). Please make sure the backend server is running.';
-      }
+      // Friendly text for every case (offline, timeout, backend codes).
+      final msg = ErrorMessages.of(e);
       setState(() {
         _loading = false;
         _error = msg;
