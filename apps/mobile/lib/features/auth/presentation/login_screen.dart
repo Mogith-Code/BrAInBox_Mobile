@@ -1,5 +1,4 @@
 import 'package:brainbox_core/brainbox_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -144,23 +143,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             context,
           ).textTheme.labelSmall?.copyWith(color: AppColors.muted),
         ),
-        // TODO(mogith): Only show this in debug builds
-        if (kDebugMode) ...[
-          const SizedBox(height: AppSpacing.lg),
-          OutlinedButton.icon(
-            onPressed: () => context.push(AppRoutes.devMenu),
-            icon: const Icon(Icons.developer_mode),
-            label: const Text('Dev Menu (Open all screens)'),
-            style: OutlinedButton.styleFrom(
-              minimumSize: const Size.fromHeight(48),
-            ),
-          ),
-          const SizedBox(height: AppSpacing.xs),
-          TextButton(
-            onPressed: () => context.go(AppRoutes.home),
-            child: const Text('Skip login → Go to Home'),
-          ),
-        ],
       ],
     );
   }
