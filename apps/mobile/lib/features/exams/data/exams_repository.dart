@@ -14,22 +14,73 @@ class ExamsRepository {
 
   final ApiClient api;
 
-  /// Loads the data for the main Exams screen.
+  /// Loads the overview / status for the Exams feature.
   Future<ExamsSummary> fetchSummary() async {
-    // TODO(udith): call the backend instead of returning placeholder data.
-    // Real version (uncomment when the endpoint exists):
-    // final json = await api.get<Map<String, dynamic>>('/past-papers');
-    // return ExamsSummary.fromJson(json);
-    return const ExamsSummary(
-      title: 'Past papers',
-      message: 'Placeholder data - API not connected yet.',
-    );
+    try {
+      final json = await api.get<Map<String, dynamic>>('/exams/status');
+      return ExamsSummary(
+        title: 'A/L Biology Model Papers',
+        message: 'Module: ${json['module'] ?? 'exams'} (${json['status'] ?? 'ready'})',
+      );
+    } catch (_) {
+      return const ExamsSummary(
+        title: 'A/L Biology Model Papers',
+        message: 'Generate customized practice papers from curriculum units.',
+      );
+    }
   }
 
-  // TODO(udith): add one method per endpoint, e.g.
-  //   POST /model-papers/generate  ->  Start model paper generation (returns a job id)
-  //   POST /exam-attempts  ->  Start an exam attempt
-  //   POST /exam-attempts/{attempt_id}/submit  ->  Submit answers
+  /// Generates an AI model paper by selecting 1..10 syllabus units.
+  Future<ExamPaper> generatePaperByUnits({
+    required List<int> units,
+    required int count,
+    String? title,
+  }) async {
+    final response = await api.post<Map<String, dynamic>>(
+      '/papers/generate-by-units',
+      data: {
+        'subject': 'Biology',
+        'units': units,
+        'unit_numbers': units,
+        'num_questions': count,
+        if (title != null && title.isNotEmpty) 'title': title,
+      },
+    );
+    return ExamPaper.fromJson(response);
+  }
+
+  /// Generates an AI model paper by selecting specific syllabus topic IDs.
+  Future<ExamPaper> generatePaperByTopics({
+    required List<String> topicIds,
+    required int count,
+    String? title,
+  }) async {
+    final response = await api.post<Map<String, dynamic>>(
+      '/papers/generate',
+      data: {
+        'topic_ids': topicIds,
+        'num_questions': count,
+        if (title != null && title.isNotEmpty) 'title': title,
+      },
+    );
+    return ExamPaper.fromJson(response);
+  }
+
+  /// Submits student answers for evaluation and AI explanations.
+  Future<EvalResult> submitPaper({
+    required String paperId,
+    required List<AnswerItem> answers,
+    bool explain = true,
+  }) async {
+    final response = await api.post<Map<String, dynamic>>(
+      '/papers/$paperId/submit',
+      data: {
+        'answers': answers.map((a) => a.toJson()).toList(),
+        'explain': explain,
+      },
+    );
+    return EvalResult.fromJson(response);
+  }
 }
 
 @riverpod

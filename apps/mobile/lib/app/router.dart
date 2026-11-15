@@ -19,6 +19,7 @@ import '../features/evaluation/presentation/handwritten_upload_screen.dart';
 import '../features/evaluation/presentation/ocr_preview_screen.dart';
 import '../features/evaluation/presentation/typed_answer_screen.dart';
 import '../features/exams/presentation/exam_attempt_screen.dart';
+import '../features/exams/presentation/exam_result_screen.dart';
 import '../features/exams/presentation/generate_paper_screen.dart';
 import '../features/exams/presentation/past_papers_screen.dart';
 import '../features/home/presentation/home_screen.dart';
@@ -212,12 +213,21 @@ GoRouter router(Ref ref) {
       ),
       GoRoute(
         path: AppRoutes.generatePaper,
-        builder: (context, state) => const GeneratePaperScreen(),
+        builder: (context, state) {
+          final initialUnits = state.extra is List<int>
+              ? state.extra as List<int>
+              : const <int>[];
+          return GeneratePaperScreen(initialUnits: initialUnits);
+        },
       ),
       GoRoute(
         path: AppRoutes.examAttempt,
         builder: (context, state) =>
             ExamAttemptScreen(paperId: state.pathParameters['paperId']!),
+      ),
+      GoRoute(
+        path: AppRoutes.examResult,
+        builder: (context, state) => const ExamResultScreen(),
       ),
       GoRoute(
         path: AppRoutes.typedAnswer,
