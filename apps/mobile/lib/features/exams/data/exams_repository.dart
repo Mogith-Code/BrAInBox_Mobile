@@ -83,6 +83,6 @@ class ExamsRepository {
   }
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 ExamsRepository examsRepository(Ref ref) =>
     ExamsRepository(ref.watch(apiClientProvider));

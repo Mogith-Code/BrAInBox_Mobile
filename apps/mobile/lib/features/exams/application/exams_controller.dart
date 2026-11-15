@@ -23,7 +23,7 @@ abstract class ExamSessionState with _$ExamSessionState {
 }
 
 /// Controller managing the active practice exam session.
-@riverpod
+@Riverpod(keepAlive: true)
 class ExamSessionController extends _$ExamSessionController {
   @override
   ExamSessionState build() => const ExamSessionState();
@@ -64,10 +64,14 @@ class ExamSessionController extends _$ExamSessionController {
     try {
       final repo = ref.read(examsRepositoryProvider);
       final paper = await repo.generatePaperByUnits(units: units, count: count);
-      state = ExamSessionState(paper: paper);
+      if (ref.mounted) {
+        state = ExamSessionState(paper: paper);
+      }
       return paper;
     } catch (e) {
-      state = state.copyWith(isGenerating: false, errorMessage: e.toString());
+      if (ref.mounted) {
+        state = state.copyWith(isGenerating: false, errorMessage: e.toString());
+      }
       rethrow;
     }
   }
@@ -89,10 +93,14 @@ class ExamSessionController extends _$ExamSessionController {
         answers: answers,
         explain: state.explain,
       );
-      state = state.copyWith(isSubmitting: false, result: result);
+      if (ref.mounted) {
+        state = state.copyWith(isSubmitting: false, result: result);
+      }
       return result;
     } catch (e) {
-      state = state.copyWith(isSubmitting: false, errorMessage: e.toString());
+      if (ref.mounted) {
+        state = state.copyWith(isSubmitting: false, errorMessage: e.toString());
+      }
       rethrow;
     }
   }

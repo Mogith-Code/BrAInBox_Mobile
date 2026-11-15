@@ -67,6 +67,7 @@ class _GeneratePaperScreenState extends ConsumerState<GeneratePaperScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ref.watch(examSessionControllerProvider);
     final selected = _units.length;
     final enough = _count >= selected;
     final perUnit = selected == 0 ? 0 : (_count / selected).ceil();
