@@ -1,8 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 
-import '../config/env.dart';
 import '../config/firebase_setup.dart';
 
 /// Returns the current Firebase ID token, or `null` when signed out.
@@ -86,15 +84,6 @@ class AuthInterceptor extends Interceptor {
 
 /// Default [IdTokenGetter]: reads the token from Firebase Auth.
 Future<String?> firebaseIdToken({bool forceRefresh = false}) async {
-  if (!FirebaseSetup.isReady) {
-    if (Env.disableAuthGuard || kDebugMode) return 'dev-token';
-    return null; // Firebase not configured yet.
-  }
-  final token = await FirebaseAuth.instance.currentUser?.getIdToken(
-    forceRefresh,
-  );
-  if (token == null && (Env.disableAuthGuard || kDebugMode)) {
-    return 'dev-token';
-  }
-  return token;
+  if (!FirebaseSetup.isReady) return null; // Firebase not configured yet.
+  return FirebaseAuth.instance.currentUser?.getIdToken(forceRefresh);
 }
