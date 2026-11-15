@@ -90,8 +90,9 @@ Future<String?> firebaseIdToken({bool forceRefresh = false}) async {
     if (Env.disableAuthGuard || kDebugMode) return 'dev-token';
     return null; // Firebase not configured yet.
   }
-  final token =
-      await FirebaseAuth.instance.currentUser?.getIdToken(forceRefresh);
+  final token = await FirebaseAuth.instance.currentUser?.getIdToken(
+    forceRefresh,
+  );
   if (token == null && (Env.disableAuthGuard || kDebugMode)) {
     return 'dev-token';
   }

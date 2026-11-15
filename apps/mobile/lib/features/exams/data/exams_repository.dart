@@ -20,7 +20,8 @@ class ExamsRepository {
       final json = await api.get<Map<String, dynamic>>('/exams/status');
       return ExamsSummary(
         title: 'A/L Biology Model Papers',
-        message: 'Module: ${json['module'] ?? 'exams'} (${json['status'] ?? 'ready'})',
+        message:
+            'Module: ${json['module'] ?? 'exams'} (${json['status'] ?? 'ready'})',
       );
     } catch (_) {
       return const ExamsSummary(

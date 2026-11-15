@@ -18,9 +18,7 @@ class PastPapersScreen extends ConsumerWidget {
     final summaryAsync = ref.watch(examsControllerProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Past Papers & Exams'),
-      ),
+      appBar: AppBar(title: const Text('Past Papers & Exams')),
       body: summaryAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (err, _) => Center(
@@ -106,9 +104,9 @@ class PastPapersScreen extends ConsumerWidget {
             Text(
               'Curriculum Units (Units 1 - 10)',
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.ink,
-                  ),
+                fontWeight: FontWeight.bold,
+                color: AppColors.ink,
+              ),
             ),
             const SizedBox(height: AppSpacing.xs),
             const Text(
@@ -131,10 +129,7 @@ class PastPapersScreen extends ConsumerWidget {
                       color: AppColors.ink,
                     ),
                     onPressed: () {
-                      context.push(
-                        AppRoutes.generatePaper,
-                        extra: [entry.key],
-                      );
+                      context.push(AppRoutes.generatePaper, extra: [entry.key]);
                     },
                   ),
               ],
@@ -143,9 +138,9 @@ class PastPapersScreen extends ConsumerWidget {
             Text(
               'A/L Biology Past Papers',
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.ink,
-                  ),
+                fontWeight: FontWeight.bold,
+                color: AppColors.ink,
+              ),
             ),
             const SizedBox(height: AppSpacing.xs),
             Text(

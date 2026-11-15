@@ -68,9 +68,7 @@ class _ExamAttemptScreenState extends ConsumerState<ExamAttemptScreen> {
             ),
             FilledButton(
               onPressed: () => Navigator.pop(ctx, true),
-              style: FilledButton.styleFrom(
-                backgroundColor: AppColors.primary,
-              ),
+              style: FilledButton.styleFrom(backgroundColor: AppColors.primary),
               child: const Text('Submit'),
             ),
           ],
@@ -94,10 +92,7 @@ class _ExamAttemptScreenState extends ConsumerState<ExamAttemptScreen> {
             'Cannot connect to backend (${Env.apiBaseUrl}). Please make sure the backend server is running.';
       }
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(msg),
-          backgroundColor: AppColors.error,
-        ),
+        SnackBar(content: Text(msg), backgroundColor: AppColors.error),
       );
     }
   }
@@ -135,7 +130,9 @@ class _ExamAttemptScreenState extends ConsumerState<ExamAttemptScreen> {
                   shape: BoxShape.circle,
                   color: isSelected ? AppColors.primary : Colors.transparent,
                   border: Border.all(
-                    color: isSelected ? AppColors.primary : AppColors.mutedLight,
+                    color: isSelected
+                        ? AppColors.primary
+                        : AppColors.mutedLight,
                     width: 1.5,
                   ),
                 ),
@@ -157,7 +154,9 @@ class _ExamAttemptScreenState extends ConsumerState<ExamAttemptScreen> {
                   style: TextStyle(
                     fontSize: 14,
                     color: isSelected ? AppColors.ink : AppColors.ink,
-                    fontWeight: isSelected ? FontWeight.w500 : FontWeight.normal,
+                    fontWeight: isSelected
+                        ? FontWeight.w500
+                        : FontWeight.normal,
                   ),
                 ),
               ),
@@ -184,7 +183,10 @@ class _ExamAttemptScreenState extends ConsumerState<ExamAttemptScreen> {
             Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 3,
+                  ),
                   decoration: BoxDecoration(
                     color: AppColors.primarySoft,
                     borderRadius: BorderRadius.circular(6),
@@ -201,10 +203,7 @@ class _ExamAttemptScreenState extends ConsumerState<ExamAttemptScreen> {
                 const Spacer(),
                 Text(
                   '${q.marks} mark${q.marks > 1 ? 's' : ''}',
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: AppColors.muted,
-                  ),
+                  style: const TextStyle(fontSize: 12, color: AppColors.muted),
                 ),
               ],
             ),
@@ -212,9 +211,9 @@ class _ExamAttemptScreenState extends ConsumerState<ExamAttemptScreen> {
             Text(
               '${i + 1}. ${q.question}',
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.ink,
-                  ),
+                fontWeight: FontWeight.w600,
+                color: AppColors.ink,
+              ),
             ),
             const SizedBox(height: AppSpacing.sm),
             for (var idx = 0; idx < q.options.length; idx++)
@@ -239,8 +238,11 @@ class _ExamAttemptScreenState extends ConsumerState<ExamAttemptScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.description_outlined,
-                    size: 64, color: AppColors.muted),
+                const Icon(
+                  Icons.description_outlined,
+                  size: 64,
+                  color: AppColors.muted,
+                ),
                 const SizedBox(height: AppSpacing.md),
                 const Text(
                   'No active exam paper found.',
@@ -281,7 +283,11 @@ class _ExamAttemptScreenState extends ConsumerState<ExamAttemptScreen> {
             ),
             child: Row(
               children: [
-                const Icon(Icons.timer_outlined, size: 16, color: AppColors.muted),
+                const Icon(
+                  Icons.timer_outlined,
+                  size: 16,
+                  color: AppColors.muted,
+                ),
                 const SizedBox(width: 4),
                 Text(
                   _formatTime(session.elapsedSeconds),
@@ -319,7 +325,10 @@ class _ExamAttemptScreenState extends ConsumerState<ExamAttemptScreen> {
               ),
               child: Text(
                 'Some topics could not be generated fully:\n${paper.warnings.join('\n')}',
-                style: const TextStyle(color: AppColors.warningDark, fontSize: 13),
+                style: const TextStyle(
+                  color: AppColors.warningDark,
+                  fontSize: 13,
+                ),
               ),
             ),
           const SizedBox(height: AppSpacing.md),
@@ -357,8 +366,9 @@ class _ExamAttemptScreenState extends ConsumerState<ExamAttemptScreen> {
                   value: progress,
                   minHeight: 6,
                   backgroundColor: AppColors.surfaceMuted,
-                  valueColor:
-                      const AlwaysStoppedAnimation<Color>(AppColors.primary),
+                  valueColor: const AlwaysStoppedAnimation<Color>(
+                    AppColors.primary,
+                  ),
                 ),
               ),
               const SizedBox(height: AppSpacing.xs),
@@ -384,14 +394,16 @@ class _ExamAttemptScreenState extends ConsumerState<ExamAttemptScreen> {
                     onChanged: session.isSubmitting
                         ? null
                         : (v) => ref
-                            .read(examSessionControllerProvider.notifier)
-                            .toggleExplain(v),
+                              .read(examSessionControllerProvider.notifier)
+                              .toggleExplain(v),
                   ),
                 ],
               ),
               const SizedBox(height: AppSpacing.xs),
               AppButton(
-                label: session.isSubmitting ? 'Marking answers...' : 'Submit paper',
+                label: session.isSubmitting
+                    ? 'Marking answers...'
+                    : 'Submit paper',
                 isLoading: session.isSubmitting,
                 onPressed: session.isSubmitting ? null : () => _submit(paper),
               ),

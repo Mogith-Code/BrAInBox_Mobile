@@ -56,10 +56,8 @@ abstract class ExamPaper with _$ExamPaper {
 /// One student answer for an exam question ("A".."E" or null if skipped).
 @freezed
 abstract class AnswerItem with _$AnswerItem {
-  const factory AnswerItem({
-    required String questionId,
-    String? selected,
-  }) = _AnswerItem;
+  const factory AnswerItem({required String questionId, String? selected}) =
+      _AnswerItem;
 
   factory AnswerItem.fromJson(Map<String, dynamic> json) =>
       _$AnswerItemFromJson(json);

@@ -16,7 +16,8 @@ class GeneratePaperScreen extends ConsumerStatefulWidget {
   final List<int> initialUnits;
 
   @override
-  ConsumerState<GeneratePaperScreen> createState() => _GeneratePaperScreenState();
+  ConsumerState<GeneratePaperScreen> createState() =>
+      _GeneratePaperScreenState();
 }
 
 class _GeneratePaperScreenState extends ConsumerState<GeneratePaperScreen> {
@@ -73,17 +74,15 @@ class _GeneratePaperScreenState extends ConsumerState<GeneratePaperScreen> {
     final perUnit = selected == 0 ? 0 : (_count / selected).ceil();
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Create practice paper'),
-      ),
+      appBar: AppBar(title: const Text('Create practice paper')),
       body: ListView(
         padding: const EdgeInsets.all(AppSpacing.md),
         children: [
           Text(
             'Select the units you want to practise. Questions are generated and grounded in the approved A/L Biology resource books.',
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: AppColors.muted,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium?.copyWith(color: AppColors.muted),
           ),
           const SizedBox(height: AppSpacing.sm),
           Row(
@@ -91,9 +90,9 @@ class _GeneratePaperScreenState extends ConsumerState<GeneratePaperScreen> {
               Text(
                 'Units ($selected/10 selected)',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.ink,
-                    ),
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.ink,
+                ),
               ),
               const Spacer(),
               TextButton(
@@ -146,9 +145,9 @@ class _GeneratePaperScreenState extends ConsumerState<GeneratePaperScreen> {
           const SizedBox(height: AppSpacing.md),
           Text(
             'Number of questions: $_count',
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
           ),
           Slider(
             value: _count.toDouble(),
@@ -157,8 +156,9 @@ class _GeneratePaperScreenState extends ConsumerState<GeneratePaperScreen> {
             divisions: 59,
             activeColor: AppColors.primary,
             label: '$_count',
-            onChanged:
-                _loading ? null : (v) => setState(() => _count = v.round()),
+            onChanged: _loading
+                ? null
+                : (v) => setState(() => _count = v.round()),
           ),
           if (selected > 0 && enough)
             Padding(
@@ -187,11 +187,17 @@ class _GeneratePaperScreenState extends ConsumerState<GeneratePaperScreen> {
               decoration: BoxDecoration(
                 color: AppColors.errorSoft,
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: AppColors.error.withValues(alpha: 0.3)),
+                border: Border.all(
+                  color: AppColors.error.withValues(alpha: 0.3),
+                ),
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.error_outline, color: AppColors.error, size: 20),
+                  const Icon(
+                    Icons.error_outline,
+                    color: AppColors.error,
+                    size: 20,
+                  ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
@@ -207,8 +213,7 @@ class _GeneratePaperScreenState extends ConsumerState<GeneratePaperScreen> {
                 ? 'Generating paper... this may take up to a minute'
                 : 'Generate paper',
             isLoading: _loading,
-            onPressed:
-                (selected == 0 || !enough || _loading) ? null : _start,
+            onPressed: (selected == 0 || !enough || _loading) ? null : _start,
           ),
           const SizedBox(height: AppSpacing.xl),
         ],

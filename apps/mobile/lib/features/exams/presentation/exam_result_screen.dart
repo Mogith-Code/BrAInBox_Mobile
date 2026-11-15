@@ -69,19 +69,16 @@ class ExamResultScreen extends ConsumerWidget {
             Text(
               '${res.percent.toStringAsFixed(res.percent % 1 == 0 ? 0 : 1)}%',
               style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                    color: _scoreColor(res.percent),
-                    fontWeight: FontWeight.bold,
-                  ),
+                color: _scoreColor(res.percent),
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: 8),
             Text(
               '${res.marksObtained} / ${res.marksTotal} marks · ${res.correct} correct · '
               '${res.answered} answered · ${res.totalQuestions} questions',
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 14,
-                color: AppColors.ink,
-              ),
+              style: const TextStyle(fontSize: 14, color: AppColors.ink),
             ),
           ],
         ),
@@ -105,9 +102,9 @@ class ExamResultScreen extends ConsumerWidget {
             Text(
               'Performance by topic',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.ink,
-                  ),
+                fontWeight: FontWeight.bold,
+                color: AppColors.ink,
+              ),
             ),
             const SizedBox(height: AppSpacing.sm),
             for (final t in res.byTopic) ...[
@@ -140,7 +137,9 @@ class ExamResultScreen extends ConsumerWidget {
                   value: t.percent / 100,
                   minHeight: 8,
                   backgroundColor: AppColors.surfaceMuted,
-                  valueColor: AlwaysStoppedAnimation<Color>(_scoreColor(t.percent)),
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    _scoreColor(t.percent),
+                  ),
                 ),
               ),
               const SizedBox(height: AppSpacing.sm),
@@ -194,11 +193,7 @@ class ExamResultScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildReviewOption(
-    String text,
-    int idx,
-    QuestionResult r,
-  ) {
+  Widget _buildReviewOption(String text, int idx, QuestionResult r) {
     final isCorrect = text == r.correctAnswer;
     final isSelected = text == r.selectedOption;
 
@@ -310,7 +305,10 @@ class ExamResultScreen extends ConsumerWidget {
               children: [
                 Flexible(
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 3,
+                    ),
                     decoration: BoxDecoration(
                       color: AppColors.primarySoft,
                       borderRadius: BorderRadius.circular(6),
@@ -339,9 +337,9 @@ class ExamResultScreen extends ConsumerWidget {
             Text(
               '${i + 1}. ${r.question}',
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.ink,
-                  ),
+                fontWeight: FontWeight.w600,
+                color: AppColors.ink,
+              ),
             ),
             const SizedBox(height: AppSpacing.sm),
             for (var idx = 0; idx < options.length; idx++)
@@ -360,7 +358,11 @@ class ExamResultScreen extends ConsumerWidget {
                   children: [
                     const Row(
                       children: [
-                        Icon(Icons.auto_awesome, size: 16, color: AppColors.primary),
+                        Icon(
+                          Icons.auto_awesome,
+                          size: 16,
+                          color: AppColors.primary,
+                        ),
                         SizedBox(width: 4),
                         Text(
                           'AI Explanation',
@@ -375,7 +377,10 @@ class ExamResultScreen extends ConsumerWidget {
                     const SizedBox(height: 4),
                     Text(
                       r.explanation!,
-                      style: const TextStyle(fontSize: 13, color: AppColors.ink),
+                      style: const TextStyle(
+                        fontSize: 13,
+                        color: AppColors.ink,
+                      ),
                     ),
                   ],
                 ),
@@ -401,8 +406,11 @@ class ExamResultScreen extends ConsumerWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.bar_chart_outlined,
-                    size: 64, color: AppColors.muted),
+                const Icon(
+                  Icons.bar_chart_outlined,
+                  size: 64,
+                  color: AppColors.muted,
+                ),
                 const SizedBox(height: AppSpacing.md),
                 const Text(
                   'No exam results found.',
@@ -437,9 +445,9 @@ class ExamResultScreen extends ConsumerWidget {
           Text(
             'Question review',
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.ink,
-                ),
+              fontWeight: FontWeight.bold,
+              color: AppColors.ink,
+            ),
           ),
           const SizedBox(height: AppSpacing.sm),
           for (var i = 0; i < activeResult.results.length; i++)
@@ -463,4 +471,3 @@ class ExamResultScreen extends ConsumerWidget {
     );
   }
 }
-
