@@ -26,7 +26,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Coming soon'), findsOneWidget);
+    expect(find.text('AI Model Paper Generator'), findsOneWidget);
     verify(() => repository.fetchSummary()).called(1);
   });
 }

@@ -129,6 +129,7 @@ abstract final class AppRoutes {
   static const generatePaper = '/exams/generate';
   static const examAttempt = '/exams/attempt/:paperId';
   static String examAttemptPath(String paperId) => '/exams/attempt/$paperId';
+  static const examResult = '/exams/result';
 
   // Evaluation (Keshomigha)
   static const typedAnswer = '/evaluation/typed/:questionId';
@@ -232,6 +233,7 @@ abstract final class AppRoutes {
     (title: 'Past papers', owner: 'Udith', path: pastPapers),
     (title: 'Generate model paper', owner: 'Udith', path: generatePaper),
     (title: 'Exam mode', owner: 'Udith', path: examAttemptPath('demo')),
+    (title: 'Exam result', owner: 'Udith', path: examResult),
     (title: 'Typed answer', owner: 'Keshomigha', path: typedAnswerPath('demo')),
     (
       title: 'Handwritten answer',
