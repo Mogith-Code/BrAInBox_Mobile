@@ -97,8 +97,9 @@ class _UploadSheetState extends ConsumerState<UploadSheet> {
         _error = null;
       });
     } catch (_) {
-      if (mounted)
+      if (mounted) {
         setState(() => _error = "Couldn't open that file. Try another one.");
+      }
     }
   }
 

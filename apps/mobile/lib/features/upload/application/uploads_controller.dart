@@ -34,8 +34,9 @@ class UploadsController extends _$UploadsController {
     ref.invalidateSelf();
     try {
       final fresh = await future;
-      if (ref.mounted && local.isNotEmpty)
+      if (ref.mounted && local.isNotEmpty) {
         state = AsyncData([...local, ...fresh]);
+      }
     } catch (_) {
       // The screen shows the error.
     }

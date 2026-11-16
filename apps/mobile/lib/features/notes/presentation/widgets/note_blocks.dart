@@ -141,8 +141,9 @@ List<TextSpan> highlightSpans(String text, List<String> terms) {
   final spans = <TextSpan>[];
   var start = 0;
   for (final m in pattern.allMatches(text)) {
-    if (m.start > start)
+    if (m.start > start) {
       spans.add(TextSpan(text: text.substring(start, m.start)));
+    }
     spans.add(
       TextSpan(
         text: m.group(0),

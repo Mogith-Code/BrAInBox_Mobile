@@ -1,5 +1,4 @@
 import 'package:brainbox_mobile/features/syllabus/domain/syllabus_models.dart';
-import 'package:brainbox_mobile/features/syllabus/presentation/widgets/learn_widgets.dart';
 import 'package:brainbox_mobile/features/syllabus/presentation/widgets/topic_row.dart';
 import 'package:brainbox_mobile/features/syllabus/presentation/widgets/unit_card.dart';
 import 'package:brainbox_core/brainbox_core.dart';
