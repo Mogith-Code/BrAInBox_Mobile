@@ -2,6 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../data/insights_repository.dart';
 import '../domain/insights_models.dart';
+import '../domain/unit_insights.dart';
 
 part 'insights_controller.g.dart';
 
@@ -37,6 +38,27 @@ class InsightsController extends _$InsightsController {
       await future;
     } on Object {
       // Already in `state`; the screen shows it.
+    }
+  }
+}
+
+/// Mastery per unit for the Unit mastery card (`GET /insights/units`).
+/// ```dart
+/// final state = ref.watch(unitInsightsControllerProvider);
+/// ```
+@Riverpod(retry: _noAutoRetry)
+class UnitInsightsController extends _$UnitInsightsController {
+  @override
+  Future<UnitInsights> build() =>
+      ref.watch(insightsRepositoryProvider).fetchUnitInsights();
+
+  /// Reloads the units. Never throws; see [InsightsController.refresh].
+  Future<void> refresh() async {
+    ref.invalidateSelf();
+    try {
+      await future;
+    } on Object {
+      // Already in `state`; the card shows it.
     }
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../domain/insights_models.dart';
+import '../domain/unit_insights.dart';
 
 part 'insights_repository.g.dart';
 
@@ -62,6 +63,19 @@ class InsightsRepository {
       return TopicInsights.fromJson(json);
     } on ApiException catch (e) {
       throw _mapError(e, attemptId);
+    }
+  }
+
+  /// `GET /insights/units`: the student's mastery of every unit, Unit 1
+  /// first.
+  ///
+  /// Throws an [InsightsFailure].
+  Future<UnitInsights> fetchUnitInsights() async {
+    try {
+      final json = await api.get<Map<String, dynamic>>('/insights/units');
+      return UnitInsights.fromJson(json);
+    } on ApiException catch (e) {
+      throw _mapError(e, null);
     }
   }
 
