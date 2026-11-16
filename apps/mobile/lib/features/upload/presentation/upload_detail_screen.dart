@@ -45,6 +45,9 @@ class _UploadDetailScreenState extends ConsumerState<UploadDetailScreen> {
       SnackBar(
         content: const Text('Saved to your short notes'),
         duration: UploadDetailScreen.undoWindow,
+        // Snack bars with an action stay up by default; this one must
+        // close so the save goes through.
+        persist: false,
         action: SnackBarAction(label: 'Undo', onPressed: () => undone = true),
       ),
     );

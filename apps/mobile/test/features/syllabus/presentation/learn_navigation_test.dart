@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:brainbox_mobile/app/routes.dart';
 import 'package:brainbox_mobile/features/syllabus/data/learn_repository.dart';
 import 'package:brainbox_mobile/features/syllabus/presentation/syllabus_screen.dart';
+import 'package:brainbox_mobile/features/upload/presentation/upload_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -15,17 +16,34 @@ Future<void> _frames(WidgetTester tester, [int n = 20]) async {
   }
 }
 
+/// The tab bar scrolls on a narrow phone; bring [label] into view first.
+Future<void> _tapTab(WidgetTester tester, String label) async {
+  final tab = find.widgetWithText(Tab, label);
+  await tester.ensureVisible(tab);
+  await tester.pumpAndSettle();
+  await tester.tap(tab);
+  await tester.pumpAndSettle();
+}
+
 void main() {
   testWidgets('Learn -> unit -> topic -> tabs, and back', (tester) async {
     final repo = fastMock();
-    await pumpLearnApp(tester, repository: repo);
+    final router = await pumpLearnApp(tester, repository: repo);
 
     expect(find.text('Learn'), findsOneWidget);
     expect(find.text('Introduction to Biology'), findsOneWidget);
     expect(find.text('My uploaded notes'), findsOneWidget);
     expect(tester.takeException(), isNull);
 
-    await tester.scrollUntilVisible(find.text('Genetics'), 200);
+    // The subject chips scroll sideways too, so name the unit list.
+    await tester.scrollUntilVisible(
+      find.text('Genetics'),
+      200,
+      scrollable: find.descendant(
+        of: find.byType(ListView),
+        matching: find.byType(Scrollable),
+      ),
+    );
     await tester.tap(find.text('Genetics'));
     await tester.pumpAndSettle();
     expect(find.text('UNIT 6'), findsOneWidget);
@@ -63,7 +81,19 @@ void main() {
     expect(find.text('Genotype and phenotype'), findsOneWidget);
     expect(find.text("Mendel's first law: law of segregation"), findsOneWidget);
     expect(find.text('TT (tall)'), findsOneWidget); // table
-    await tester.scrollUntilVisible(find.text('PAST-PAPER TIP'), 300);
+    // The tab bar and tables scroll too, so name the notes list.
+    await tester.scrollUntilVisible(
+      find.text('PAST-PAPER TIP'),
+      300,
+      scrollable: find
+          .ancestor(
+            of: find.text('Genotype and phenotype'),
+            matching: find.byWidgetPredicate(
+              (w) => w is Scrollable && w.axisDirection == AxisDirection.down,
+            ),
+          )
+          .first,
+    );
     expect(find.text('9 yellow round (Y_R_)'), findsOneWidget); // bullets
     await tester.pumpAndSettle();
     // Scrolled to the end: a completed read was sent.
@@ -73,18 +103,15 @@ void main() {
     );
     expect(find.text('Ask BrAInBox'), findsOneWidget);
 
-    await tester.tap(find.widgetWithText(Tab, 'Diagrams'));
-    await tester.pumpAndSettle();
+    await _tapTab(tester, 'Diagrams');
     expect(find.text('Monohybrid cross Punnett square'), findsOneWidget);
     expect(find.text('Ask BrAInBox'), findsNothing);
 
-    await tester.tap(find.widgetWithText(Tab, 'Videos'));
-    await tester.pumpAndSettle();
+    await _tapTab(tester, 'Videos');
     expect(find.text('Mendelian inheritance explained'), findsOneWidget);
     expect(find.text('12:34'), findsOneWidget);
 
-    await tester.tap(find.widgetWithText(Tab, 'Practice'));
-    await tester.pumpAndSettle();
+    await _tapTab(tester, 'Practice');
     expect(find.text('48'), findsOneWidget);
     expect(find.text('62%'), findsOneWidget);
     await tester.tap(find.text('Quick 10 MCQs'));
@@ -95,7 +122,8 @@ void main() {
       ),
       findsOneWidget,
     );
-    await tester.pageBack();
+    // The stand-in quiz screen has no back button.
+    router.pop();
     await tester.pumpAndSettle();
 
     // Back to the unit, then Learn.
@@ -209,7 +237,12 @@ void main() {
     await tester.pump();
     expect(find.text('Saved to your short notes'), findsOneWidget);
     expect(find.text('Undo'), findsOneWidget);
-    await tester.pump(const Duration(seconds: 5));
+    // The snack bar's timer starts once it has slid in, and a timer
+    // alone doesn't schedule frames, so pump through the window.
+    await tester.pumpAndSettle();
+    await tester.pump(UploadDetailScreen.undoWindow);
+    // Then the snack bar slides out and the save is sent.
+    await _frames(tester);
     await tester.pumpAndSettle();
     expect(find.text('Saved to short notes'), findsOneWidget);
 
@@ -227,7 +260,8 @@ void main() {
       initialLocation: AppRoutes.uploadDetailPath('up-1'),
     );
     await tester.tap(find.text('Save to short notes'));
-    await tester.pump();
+    // Let the snack bar slide in so Undo is on screen.
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Undo'));
     await tester.pumpAndSettle();
     final bookmarks = await repo.fetchBookmarks();
