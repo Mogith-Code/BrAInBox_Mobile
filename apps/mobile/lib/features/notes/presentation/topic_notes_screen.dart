@@ -1,44 +1,38 @@
-import 'package:brainbox_core/brainbox_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
-import '../../../app/routes.dart';
-import '../application/notes_controller.dart';
+import '../../syllabus/application/topic_controller.dart';
+import '../../syllabus/presentation/widgets/learn_widgets.dart';
+import 'notes_tabs.dart';
 
-/// Topic notes screen - AI notes for a topic (markdown) + generate-notes sheet.
+/// Full-screen notes for a topic (outside the Topic page), e.g. from links.
 ///
-/// Route: `/notes/topics/:topicId`
-///
-// TODO(samni): build the real UI from Figma. Keep this file UI-only: read state
-// from the controller and call its methods. Never call Dio / Firebase here.
+/// Routes: `/notes/topics/:topicId` (full) and `/notes/topics/:topicId/short`.
 class TopicNotesScreen extends ConsumerWidget {
-  const TopicNotesScreen({super.key, required this.topicId});
+  const TopicNotesScreen({super.key, required this.topicId, this.short = false});
 
   final String topicId;
+  final bool short;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(notesControllerProvider);
+    final state = ref.watch(topicControllerProvider(topicId));
     return Scaffold(
-      appBar: AppBar(title: const Text('Topic notes')),
-      body: state.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, _) => Center(
-          child: ErrorBanner(
-            message: '$error',
-            onRetry: () => ref.invalidate(notesControllerProvider),
-          ),
-        ),
-        data: (summary) => FeaturePlaceholder(
-          title: 'Topic notes',
-          owner: 'Samni',
-          description:
-              'AI notes for a topic (markdown) + generate-notes sheet. (topicId: $topicId)\n${summary.message}',
-          actionLabel: 'Short notes',
-          onAction: () => context.push(AppRoutes.shortNotesPath('demo')),
+      backgroundColor: context.learnBackground,
+      appBar: AppBar(
+        title: Text(
+          state.value?.topic.title ?? (short ? 'Short notes' : 'Notes'),
         ),
       ),
+      body: switch (state) {
+        AsyncValue(:final value?) =>
+          short ? ShortNotesTab(detail: value) : NotesTab(detail: value),
+        AsyncError(:final error) => ErrorCard(
+          error: error,
+          onRetry: () => ref.invalidate(topicControllerProvider(topicId)),
+        ),
+        _ => const SkeletonList(label: 'Loading notes'),
+      },
     );
   }
 }
