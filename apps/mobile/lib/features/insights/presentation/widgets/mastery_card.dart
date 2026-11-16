@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import '../../domain/insights_models.dart';
 import 'insights_style.dart';
 
-/// White rounded card used on the Insights overview.
+/// White rounded card used on the Insights overview, with an optional
+/// [title] ("Unit mastery").
 class InsightsPanel extends StatelessWidget {
-  const InsightsPanel({super.key, required this.child});
+  const InsightsPanel({super.key, this.title, required this.child});
 
+  final String? title;
   final Widget child;
 
   @override
@@ -30,7 +32,24 @@ class InsightsPanel extends StatelessWidget {
                 ),
               ],
       ),
-      child: child,
+      child: title == null
+          ? child
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Semantics(
+                  header: true,
+                  child: Text(
+                    title!,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                child,
+              ],
+            ),
     );
   }
 }

@@ -279,3 +279,63 @@ Map<String, dynamic> _topic({
   'understanding': status,
   'reliable': reliable,
 };
+
+/// A `GET /insights/units` response: two assessed units and one never
+/// measured (mastery null, status not_attempted).
+Map<String, dynamic> sampleUnitsJson() => {
+  'units': [
+    _unit(1, 'Introduction to Biology', 88, 'strong', changeWeek: 4),
+    _unit(2, 'Chemical & Cellular Basis of Life', 41, 'weak'),
+    _unit(3, 'Evolution & Diversity of Organisms', null, 'not_attempted'),
+  ],
+  'assessed_units': 2,
+  'total_units': 3,
+  'average_mastery': 64.5,
+  'strongest': {
+    'unit_id': 'u-1',
+    'number': 1,
+    'title': 'Introduction to Biology',
+    'mastery': 88,
+  },
+  'weakest': {
+    'unit_id': 'u-2',
+    'number': 2,
+    'title': 'Chemical & Cellular Basis of Life',
+    'mastery': 41,
+  },
+  'grade_bands': <Object>[],
+  'note': 'Practice indicator, not an official exam grade.',
+};
+
+/// A new student: no unit measured yet.
+Map<String, dynamic> unassessedUnitsJson() => {
+  'units': [_unit(1, 'Introduction to Biology', null, 'not_attempted')],
+  'assessed_units': 0,
+  'total_units': 1,
+  'average_mastery': null,
+  'strongest': null,
+  'weakest': null,
+  'grade_bands': <Object>[],
+  'note': '',
+};
+
+Map<String, dynamic> _unit(
+  int number,
+  String title,
+  int? mastery,
+  String status, {
+  int? changeWeek,
+}) => {
+  'unit_id': 'u-$number',
+  'number': number,
+  'title': title,
+  'topic_count': 4,
+  'mastery': mastery,
+  'grade': null,
+  'grade_label': null,
+  'status': status,
+  'understanding': status,
+  'change_week': changeWeek,
+  'source': mastery == null ? null : 'quiz',
+  'measured_at': mastery == null ? null : '2026-11-10T08:00:00Z',
+};

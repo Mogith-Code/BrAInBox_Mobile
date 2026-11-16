@@ -40,7 +40,6 @@ void main() {
       // No cards without backend data, no period selector, no placeholders.
       expect(find.text('Study time'), findsNothing);
       expect(find.text('Accuracy trend'), findsNothing);
-      expect(find.text('Unit mastery'), findsNothing);
       expect(find.text('This week'), findsNothing);
       expect(find.text('Coming soon'), findsNothing);
 
@@ -60,6 +59,82 @@ void main() {
       expect(find.text('75% and above'), findsOneWidget);
       expect(find.text('Formative feedback'), findsOneWidget);
       expect(find.textContaining('not official examination'), findsOneWidget);
+    });
+
+    testWidgets('shows unit mastery from GET /insights/units', (tester) async {
+      await pumpInsights(
+        tester,
+        const InsightsScreen(),
+        fakeRepository(json: sampleInsightsJson()),
+      );
+
+      expect(find.text('Unit mastery'), findsOneWidget);
+      expect(find.text('1. Introduction to Biology'), findsOneWidget);
+      expect(find.text('88%'), findsOneWidget);
+      expect(find.text('41%'), findsOneWidget);
+      // A unit never measured shows a dash, never 0 %.
+      expect(
+        find.bySemanticsLabel(
+          'Unit 3. Evolution & Diversity of Organisms, not assessed',
+        ),
+        findsOneWidget,
+      );
+      expect(find.text('0%'), findsNothing);
+      expect(
+        find.bySemanticsLabel(
+          'Unit 1. Introduction to Biology, 88 percent, strong',
+        ),
+        findsOneWidget,
+      );
+    });
+
+    testWidgets('unit mastery says how to start when nothing is assessed', (
+      tester,
+    ) async {
+      await pumpInsights(
+        tester,
+        const InsightsScreen(),
+        fakeRepository(
+          json: sampleInsightsJson(),
+          unitsJson: unassessedUnitsJson(),
+        ),
+      );
+
+      expect(
+        find.text('Finish a quiz to see how well you know each unit.'),
+        findsOneWidget,
+      );
+      expect(find.text('1. Introduction to Biology'), findsNothing);
+    });
+
+    testWidgets('a unit mastery error shows Retry and keeps the overview', (
+      tester,
+    ) async {
+      final repository = fakeRepository(
+        json: sampleInsightsJson(),
+        unitsError: const InsightsServerError('Server error'),
+      );
+      await pumpInsights(tester, const InsightsScreen(), repository);
+
+      // The rest of the overview still shows.
+      expect(find.text('mastery'), findsOneWidget);
+      expect(find.text('Server error'), findsOneWidget);
+
+      await tester.tap(find.text('Retry'));
+      await tester.pumpAndSettle();
+      verify(repository.fetchUnitInsights).called(2);
+    });
+
+    testWidgets('single-attempt mode never loads unit mastery', (tester) async {
+      final repository = fakeRepository(json: sampleInsightsJson());
+      await pumpInsights(
+        tester,
+        const InsightsScreen(attemptId: 'a-1'),
+        repository,
+      );
+
+      expect(find.text('Unit mastery'), findsNothing);
+      verifyNever(repository.fetchUnitInsights);
     });
 
     testWidgets('renders in the dark theme', (tester) async {
@@ -93,6 +168,7 @@ void main() {
       when(
         () => repository.fetchTopicInsights(attemptId: any(named: 'attemptId')),
       ).thenAnswer((_) => pending.future);
+      stubUnits(repository);
 
       await pumpInsights(
         tester,
