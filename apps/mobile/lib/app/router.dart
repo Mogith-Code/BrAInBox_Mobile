@@ -50,9 +50,8 @@ import '../features/syllabus/presentation/syllabus_screen.dart';
 import '../features/syllabus/presentation/topic_screen.dart';
 import '../features/syllabus/presentation/unit_detail_screen.dart';
 import '../features/tutor/presentation/ask_screen.dart';
-import '../features/upload/presentation/summary_screen.dart';
-import '../features/upload/presentation/upload_job_screen.dart';
-import '../features/upload/presentation/upload_screen.dart';
+import '../features/upload/presentation/upload_detail_screen.dart';
+import '../features/upload/presentation/uploads_screen.dart';
 import '../features/visuals/presentation/diagram_gallery_screen.dart';
 import '../features/visuals/presentation/diagram_viewer_screen.dart';
 import '../features/visuals/presentation/generate_visual_screen.dart';
@@ -140,20 +139,10 @@ GoRouter router(Ref ref) {
         builder: (context, state) =>
             ShortNotesScreen(topicId: state.pathParameters['topicId']!),
       ),
-      // Learn tab, full screen (bottom nav hidden).
+      // Old upload path: the uploads list now lives in the Learn tab.
       GoRoute(
         path: AppRoutes.upload,
-        builder: (context, state) => const UploadScreen(),
-      ),
-      GoRoute(
-        path: AppRoutes.uploadJob,
-        builder: (context, state) =>
-            UploadJobScreen(jobId: state.pathParameters['jobId']!),
-      ),
-      GoRoute(
-        path: AppRoutes.summary,
-        builder: (context, state) =>
-            SummaryScreen(summaryId: state.pathParameters['summaryId']!),
+        redirect: (context, state) => AppRoutes.uploads,
       ),
       // `new` must come before `:visualId`.
       GoRoute(
@@ -309,6 +298,16 @@ GoRouter router(Ref ref) {
                 path: AppRoutes.notesLibrary,
                 builder: (context, state) => const LibraryScreen(),
               ),
+              GoRoute(
+                path: AppRoutes.uploads,
+                builder: (context, state) => const UploadsScreen(),
+              ),
+              GoRoute(
+                path: AppRoutes.uploadDetail,
+                builder: (context, state) => UploadDetailScreen(
+                  uploadId: state.pathParameters['uploadId']!,
+                ),
+              ),
             ],
           ),
           // Tab: /practice
@@ -320,7 +319,10 @@ GoRouter router(Ref ref) {
               ),
               GoRoute(
                 path: AppRoutes.quizSetup,
-                builder: (context, state) => const QuizSetupScreen(),
+                builder: (context, state) => QuizSetupScreen(
+                  topicId: state.uri.queryParameters['topicId'],
+                  mode: state.uri.queryParameters['mode'],
+                ),
               ),
               GoRoute(
                 path: AppRoutes.mcqQuestion,
