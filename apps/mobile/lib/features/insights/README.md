@@ -30,6 +30,7 @@ context.push(InsightsNav.attemptLocation(attemptId));
 |---|---|---|
 | `GET` | `/insights/topics` | Overview, mastery map and topic detail (one request, shared through `insightsControllerProvider`) |
 | `GET` | `/insights/topics?attempt_id=<uuid>` | "This attempt" mode |
+| `GET` | `/insights/units` | Unit mastery card on the overview (loads on its own; pull-to-refresh reloads it) |
 | `GET` | `/mistakes` | Mistake journal. **Backend not built yet.** |
 
 ### Rules the screens follow
@@ -53,9 +54,9 @@ context.push(InsightsNav.attemptLocation(attemptId));
 
 ### What the screens show (MCQ results only)
 
-- **Overview:** mastery ring = `overall.percent`; legend = counts of the backend's topic statuses (strong → Mastered, good → Strong, developing → Improving, weak + very weak → Weak). Then strongest / weakest, weak topics, not-enough-data topics, mastery map button, grade bands, note.
+- **Overview:** mastery ring = `overall.percent`; legend = counts of the backend's topic statuses (strong → Mastered, good → Strong, developing → Improving, weak + very weak → Weak). Then the **Unit mastery** card (`/insights/units`: one bar per unit, Unit 1 first, coloured by the unit's `status`; `mastery: null` shows "—", never 0 %; "Finish a quiz…" when no unit is assessed), strongest / weakest, weak topics, not-enough-data topics, mastery map button, grade bands, note.
 - **Mastery map:** one row per unit ("6 Genetics", unit number taken from the topic numbers), one square per topic with its percent, coloured by the backend's `status` (`StatusStyle.heatFill`). Rows are in unit-number order and squares in topic-number order; topics without a number go to the "Other" row, last. Tapping a square outlines it and opens a sheet (ring, unit, topic, status, questions tried, Open topic / Practice).
-- **Not shown until the backend has data:** study time, accuracy trend, unit mastery, the This week / This month selector, the mistake journal and recurring mistakes. They are left out, not faked.
+- **Not shown until the backend has data:** study time, accuracy trend, the This week / This month selector, the mistake journal and recurring mistakes. They are left out, not faked.
 
 ### Errors
 
@@ -74,7 +75,7 @@ A failed pull-to-refresh keeps the old data on screen with an `ErrorBanner` abov
 - **Routes (Samni):** add `AppRoutes.insightsTopic` (`/insights/topics/:topicKey`) and `AppRoutes.insightsAttempt` (`/insights/attempts/:attemptId`), then replace the Navigator pushes and the `attempt_id` query in `presentation/insights_navigation.dart`.
 - **Practice button** on the mastery-map sheet opens the Practice tab; it should open practice for that topic once Udith's practice feature accepts a topic id.
 - **Mistake journal:** needs `GET /mistakes`.
-- **Backend (overview cards in Figma):** study time, accuracy trend and unit mastery need endpoints first (the backend README plans `/insights/summary` and `/insights/units`). Add the cards back when they exist.
+- **Backend (overview cards in Figma):** study time and accuracy trend need daily / weekly data from the backend first. Add the cards when it exists.
 - Not in this version (no backend data yet): weekly plan, recommendations, reassessment.
 
 ## Folders
