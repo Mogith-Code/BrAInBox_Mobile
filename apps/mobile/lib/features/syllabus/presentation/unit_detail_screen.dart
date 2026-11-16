@@ -9,10 +9,11 @@ import '../domain/syllabus_models.dart';
 import 'widgets/topic_row.dart';
 import 'widgets/unit_card.dart';
 
-/// Unit detail screen (Figma B3) - the topics in one unit.
+/// Unit detail: the topics in one unit.
 ///
-/// Route: `/learn/unit/:unitId` (inside the Learn tab). Solid indigo
-/// header with the unit's mastery, then one row per topic.
+/// Route: `/learn/unit/:unitId` (inside the Learn tab). Teal → indigo
+/// gradient header with the unit's mastery ring, the weak-topic banner,
+/// then one row per topic.
 class UnitDetailScreen extends ConsumerWidget {
   const UnitDetailScreen({super.key, required this.unitId});
 
@@ -23,24 +24,27 @@ class UnitDetailScreen extends ConsumerWidget {
     final state = ref.watch(unitDetailControllerProvider(unitId));
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: context.learnBackground,
       body: switch (state) {
-        AsyncData(:final value) => _UnitDetailBody(detail: value),
+        AsyncValue(:final value?) => RefreshIndicator(
+          onRefresh: ref
+              .read(unitDetailControllerProvider(unitId).notifier)
+              .refresh,
+          child: _UnitDetailBody(detail: value),
+        ),
         AsyncError(:final error) => SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Padding(
                 padding: EdgeInsets.all(AppSpacing.lg),
-                child: _BackButton(onDark: false),
+                child: LearnBackButton(onDark: false),
               ),
               Expanded(
-                child: Center(
-                  child: ErrorBanner(
-                    message: ErrorMessages.of(error),
-                    onRetry: () =>
-                        ref.invalidate(unitDetailControllerProvider(unitId)),
-                  ),
+                child: ErrorCard(
+                  error: error,
+                  onRetry: () =>
+                      ref.invalidate(unitDetailControllerProvider(unitId)),
                 ),
               ),
             ],
@@ -62,6 +66,7 @@ class _UnitDetailBody extends StatelessWidget {
     final topics = detail.topics;
 
     return CustomScrollView(
+      physics: const AlwaysScrollableScrollPhysics(),
       slivers: [
         SliverToBoxAdapter(child: _UnitHeader(detail: detail)),
         if (detail.weakCount > 0)
@@ -74,26 +79,36 @@ class _UnitDetailBody extends StatelessWidget {
             ),
             sliver: SliverToBoxAdapter(child: _WeakTopicsBanner()),
           ),
-        SliverPadding(
-          padding: const EdgeInsets.all(AppSpacing.lg),
-          sliver: SliverList.separated(
-            itemCount: topics.length,
-            separatorBuilder: (_, _) =>
-                const SizedBox(height: AppSpacing.sm + 2),
-            itemBuilder: (context, i) => TopicRow(
-              topic: topics[i],
-              onTap: () => context.push(
-                AppRoutes.unitTopicPath(detail.unit.id, topics[i].id),
+        if (topics.isEmpty)
+          const SliverFillRemaining(
+            hasScrollBody: false,
+            child: LearnEmptyState(
+              icon: Icons.menu_book_outlined,
+              title: 'No topics yet',
+              message: 'Topics for this unit will show up here.',
+            ),
+          )
+        else
+          SliverPadding(
+            padding: const EdgeInsets.all(AppSpacing.lg),
+            sliver: SliverList.separated(
+              itemCount: topics.length,
+              separatorBuilder: (_, _) =>
+                  const SizedBox(height: AppSpacing.sm + 2),
+              itemBuilder: (context, i) => TopicRow(
+                topic: topics[i],
+                onTap: () => context.push(
+                  AppRoutes.unitTopicPath(detail.unit.id, topics[i].id),
+                ),
               ),
             ),
           ),
-        ),
       ],
     );
   }
 }
 
-/// Solid dark indigo header: back, "UNIT 6", name, counts, white ring.
+/// Gradient header: back, "UNIT 6", name, counts, yellow ring.
 class _UnitHeader extends StatelessWidget {
   const _UnitHeader({required this.detail});
 
@@ -103,11 +118,10 @@ class _UnitHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final unit = detail.unit;
-    final mastery = masteryFraction(unit.mastery).clamp(0.0, 1.0);
     final topics = '${unit.topicCount} topic${unit.topicCount == 1 ? '' : 's'}';
 
     return Container(
-      color: AppColors.primaryDark,
+      decoration: const BoxDecoration(gradient: AppColors.brandGradient),
       padding: EdgeInsets.fromLTRB(
         AppSpacing.lg,
         MediaQuery.paddingOf(context).top + AppSpacing.sm,
@@ -117,7 +131,7 @@ class _UnitHeader extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const _BackButton(onDark: true),
+          const LearnBackButton(onDark: true),
           const SizedBox(height: AppSpacing.lg),
           Row(
             children: [
@@ -128,8 +142,8 @@ class _UnitHeader extends StatelessWidget {
                     Text(
                       'UNIT ${unit.order}',
                       style: textTheme.labelSmall?.copyWith(
-                        color: AppColors.primaryLight,
-                        letterSpacing: 0.6,
+                        color: AppColors.taglineOnDark,
+                        letterSpacing: 0.8,
                       ),
                     ),
                     const SizedBox(height: AppSpacing.xs),
@@ -139,7 +153,6 @@ class _UnitHeader extends StatelessWidget {
                         unit.title,
                         style: textTheme.headlineSmall?.copyWith(
                           color: AppColors.white,
-                          fontSize: 26,
                         ),
                       ),
                     ),
@@ -155,15 +168,13 @@ class _UnitHeader extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: AppSpacing.lg),
-              MasteryRing(
-                value: mastery,
+              ProgressRing(
+                value: unit.mastery,
                 size: 64,
                 strokeWidth: 6,
-                color: AppColors.white,
+                color: AppColors.amber,
                 trackColor: AppColors.white.withValues(alpha: 0.25),
-                labelStyle: textTheme.titleSmall?.copyWith(
-                  color: AppColors.white,
-                ),
+                labelColor: AppColors.white,
               ),
             ],
           ),
@@ -173,8 +184,10 @@ class _UnitHeader extends StatelessWidget {
   }
 }
 
-class _BackButton extends StatelessWidget {
-  const _BackButton({required this.onDark});
+/// Back button used on Learn screens. Goes to `/learn` when there is
+/// nothing to pop (e.g. a deep link).
+class LearnBackButton extends StatelessWidget {
+  const LearnBackButton({super.key, required this.onDark});
 
   final bool onDark;
 
@@ -184,7 +197,7 @@ class _BackButton extends StatelessWidget {
       tooltip: 'Back',
       icon: Icons.arrow_back,
       background: onDark
-          ? AppColors.white.withValues(alpha: 0.15)
+          ? AppColors.white.withValues(alpha: 0.18)
           : AppColors.primarySoft,
       foreground: onDark ? AppColors.white : AppColors.primary,
       onPressed: () =>
@@ -209,8 +222,8 @@ class _WeakTopicsBanner extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 9,
-            height: 9,
+            width: 10,
+            height: 10,
             decoration: const BoxDecoration(
               color: AppColors.warning,
               shape: BoxShape.circle,
@@ -232,25 +245,29 @@ class _WeakTopicsBanner extends StatelessWidget {
   }
 }
 
-/// Header block + grey rows while the unit loads.
+/// Gradient block + grey rows while the unit loads.
 class _UnitDetailSkeleton extends StatelessWidget {
   const _UnitDetailSkeleton();
 
   @override
   Widget build(BuildContext context) {
-    return Semantics(
-      label: 'Loading unit',
-      child: ExcludeSemantics(
-        child: Column(
-          children: [
-            Container(
-              height: 200 + MediaQuery.paddingOf(context).top,
-              color: AppColors.primaryDark,
-            ),
-            const Expanded(child: LearnSkeleton()),
-          ],
+    return Column(
+      children: [
+        Container(
+          height: 180 + MediaQuery.paddingOf(context).top,
+          decoration: const BoxDecoration(gradient: AppColors.brandGradient),
+          alignment: Alignment.topLeft,
+          padding: EdgeInsets.fromLTRB(
+            AppSpacing.lg,
+            MediaQuery.paddingOf(context).top + AppSpacing.sm,
+            AppSpacing.lg,
+            0,
+          ),
+          child: const LearnBackButton(onDark: true),
         ),
-      ),
+        const SizedBox(height: AppSpacing.lg),
+        const Expanded(child: SkeletonList(label: 'Loading unit', height: 68)),
+      ],
     );
   }
 }

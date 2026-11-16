@@ -96,4 +96,31 @@ void main() {
     final user = AppUser.fromJson({'id': 'u1', 'email': null});
     expect(user.email, '');
   });
+
+  group('ApiException.fromDioException', () {
+    DioException error(Object? data, int status) => DioException(
+      requestOptions: RequestOptions(path: '/learn/topics/x'),
+      type: DioExceptionType.badResponse,
+      response: Response<dynamic>(
+        requestOptions: RequestOptions(path: '/learn/topics/x'),
+        statusCode: status,
+        data: data,
+      ),
+    );
+
+    test('reads the {"detail", "code"} shape', () {
+      final e = ApiException.fromDioException(
+        error({'detail': 'Topic not found.', 'code': 'TOPIC_NOT_FOUND'}, 404),
+      );
+      expect(e.code, 'TOPIC_NOT_FOUND');
+      expect(e.message, 'Topic not found.');
+      expect(e.isNotFound, isTrue);
+    });
+
+    test('a detail without a code falls back to the status', () {
+      final e = ApiException.fromDioException(error({'detail': 'Nope'}, 409));
+      expect(e.code, 'http_409');
+      expect(e.message, 'Nope');
+    });
+  });
 }

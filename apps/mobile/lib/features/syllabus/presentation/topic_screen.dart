@@ -1,20 +1,20 @@
 import 'package:brainbox_core/brainbox_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
-import '../../../app/routes.dart';
 import '../application/topic_controller.dart';
 import '../domain/syllabus_models.dart';
 import 'topic_tabs.dart';
+import 'unit_detail_screen.dart' show LearnBackButton;
 import 'widgets/ask_brainbox_button.dart';
-import 'widgets/status_pill.dart';
+import 'widgets/learn_widgets.dart';
 
-/// Topic screen (Figma B4) - breadcrumb, title and the topic tabs.
+/// Topic screen: breadcrumb, bookmark, title + mastery chip and the tabs
+/// Notes · Short Notes · Diagrams · Videos · Practice.
 ///
 /// Routes (inside the Learn tab): `/learn/unit/:unitId/topic/:topicId`,
 /// and `/learn/topic/:topicId` when only the topic id is known.
-/// The tab bodies come from other features (see `topic_tabs.dart`).
+/// Opening it marks the topic "in progress" and tells the progress API.
 class TopicScreen extends ConsumerWidget {
   const TopicScreen({super.key, required this.topicId});
 
@@ -25,20 +25,29 @@ class TopicScreen extends ConsumerWidget {
     final state = ref.watch(topicControllerProvider(topicId));
 
     return switch (state) {
-      AsyncData(:final value) => _TopicShell(detail: value),
+      AsyncValue(:final value?) => _TopicShell(detail: value),
       AsyncError(:final error) => Scaffold(
-        appBar: AppBar(leading: const _BackButton()),
-        body: Center(
-          child: ErrorBanner(
-            message: ErrorMessages.of(error),
-            onRetry: () => ref.invalidate(topicControllerProvider(topicId)),
+        backgroundColor: context.learnBackground,
+        body: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(AppSpacing.lg),
+                child: LearnBackButton(onDark: false),
+              ),
+              Expanded(
+                child: ErrorCard(
+                  error: error,
+                  onRetry: () =>
+                      ref.invalidate(topicControllerProvider(topicId)),
+                ),
+              ),
+            ],
           ),
         ),
       ),
-      _ => Scaffold(
-        appBar: AppBar(leading: const _BackButton()),
-        body: const Center(child: CircularProgressIndicator()),
-      ),
+      _ => const _TopicSkeleton(),
     };
   }
 }
@@ -60,6 +69,18 @@ class _TopicShellState extends ConsumerState<_TopicShell>
   )..addListener(_onTabChanged);
 
   TopicTab get _tab => TopicTab.values[_tabs.index];
+
+  @override
+  void initState() {
+    super.initState();
+    // Mark the topic opened once the first frame is up.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      ref
+          .read(topicControllerProvider(widget.detail.topic.id).notifier)
+          .markOpened();
+    });
+  }
 
   void _onTabChanged() {
     // Rebuild once the tab settles, to show / hide the Ask button.
@@ -102,7 +123,7 @@ class _TopicShellState extends ConsumerState<_TopicShell>
     final topic = detail.topic;
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: context.learnBackground,
       body: SafeArea(
         bottom: false,
         child: Column(
@@ -117,15 +138,15 @@ class _TopicShellState extends ConsumerState<_TopicShell>
               ),
               child: Row(
                 children: [
-                  const _BackButton(),
+                  const LearnBackButton(onDark: false),
                   const SizedBox(width: AppSpacing.md),
                   Expanded(
                     child: Text(
-                      'Biology › Unit ${detail.unit.order} › ${topic.title}',
+                      detail.breadcrumbText,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: textTheme.bodySmall?.copyWith(
-                        color: AppColors.muted,
+                        color: context.learnMuted,
                       ),
                     ),
                   ),
@@ -149,24 +170,27 @@ class _TopicShellState extends ConsumerState<_TopicShell>
                 AppSpacing.lg,
                 AppSpacing.sm,
               ),
-              child: Row(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: Semantics(
-                      header: true,
-                      child: Text(
-                        topic.title,
-                        style: textTheme.headlineSmall?.copyWith(
-                          color: AppColors.ink,
-                        ),
+                  Semantics(
+                    header: true,
+                    child: Text(
+                      topic.title,
+                      style: textTheme.headlineSmall?.copyWith(
+                        color: context.learnInk,
                       ),
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.md),
-                  Padding(
-                    padding: const EdgeInsets.only(top: AppSpacing.xs + 2),
-                    child: StatusPill.topic(topic.status),
+                  const SizedBox(height: AppSpacing.sm),
+                  Wrap(
+                    spacing: AppSpacing.sm,
+                    runSpacing: AppSpacing.xs,
+                    children: [
+                      MasteryChip(level: detail.masteryLevel),
+                      if (detail.isOutdated)
+                        OutdatedSyllabusTag(version: detail.syllabusVersion),
+                    ],
                   ),
                 ],
               ),
@@ -177,7 +201,7 @@ class _TopicShellState extends ConsumerState<_TopicShell>
               tabAlignment: TabAlignment.start,
               padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
               labelColor: AppColors.primary,
-              unselectedLabelColor: AppColors.muted,
+              unselectedLabelColor: context.learnMuted,
               labelStyle: textTheme.bodyMedium?.copyWith(
                 fontWeight: FontWeight.w600,
               ),
@@ -187,7 +211,7 @@ class _TopicShellState extends ConsumerState<_TopicShell>
               indicatorColor: AppColors.primary,
               indicatorWeight: 2,
               indicatorSize: TabBarIndicatorSize.label,
-              dividerColor: AppColors.border,
+              dividerColor: context.learnBorder,
               tabs: [for (final tab in TopicTab.values) Tab(text: tab.label)],
             ),
             Expanded(
@@ -209,16 +233,39 @@ class _TopicShellState extends ConsumerState<_TopicShell>
   }
 }
 
-class _BackButton extends StatelessWidget {
-  const _BackButton();
+class _TopicSkeleton extends StatelessWidget {
+  const _TopicSkeleton();
 
   @override
   Widget build(BuildContext context) {
-    return SoftIconButton(
-      tooltip: 'Back',
-      icon: Icons.arrow_back,
-      onPressed: () =>
-          context.canPop() ? context.pop() : context.go(AppRoutes.learn),
+    return Scaffold(
+      backgroundColor: context.learnBackground,
+      body: SafeArea(
+        child: Semantics(
+          label: 'Loading topic',
+          child: const Padding(
+            padding: EdgeInsets.all(AppSpacing.lg),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                LearnBackButton(onDark: false),
+                SizedBox(height: AppSpacing.lg),
+                SkeletonBox(height: 28, width: 240),
+                SizedBox(height: AppSpacing.sm),
+                SkeletonBox(
+                  height: 20,
+                  width: 90,
+                  radius: AppSpacing.radiusPill,
+                ),
+                SizedBox(height: AppSpacing.xl),
+                SkeletonBox(height: 32),
+                SizedBox(height: AppSpacing.lg),
+                SkeletonCard(height: 120, lines: 4),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

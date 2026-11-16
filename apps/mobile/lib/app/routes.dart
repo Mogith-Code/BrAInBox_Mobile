@@ -61,12 +61,13 @@ abstract final class AppRoutes {
   /// "My library" (B14), inside the Learn tab.
   static const notesLibrary = '/learn/library';
 
-  // Upload (Samni) - full screen, outside the bottom nav.
+  // Upload (Samni) - "My uploaded notes", inside the Learn tab.
+  static const uploads = '/learn/uploads';
+  static const uploadDetail = '/learn/uploads/:uploadId';
+  static String uploadDetailPath(String uploadId) => '/learn/uploads/$uploadId';
+
+  /// Old path, kept as a redirect to [uploads].
   static const upload = '/learn/upload';
-  static const uploadJob = '/learn/upload/job/:jobId';
-  static String uploadJobPath(String jobId) => '/learn/upload/job/$jobId';
-  static const summary = '/learn/summary/:summaryId';
-  static String summaryPath(String summaryId) => '/learn/summary/$summaryId';
 
   // Visuals (Mogith)
   /// "My visuals": generate a visual about anything (no topic needed) and
@@ -115,6 +116,10 @@ abstract final class AppRoutes {
   // Practice (Udith)
   static const practice = '/practice';
   static const quizSetup = '/practice/setup';
+
+  /// Quiz setup for one topic. [mode]: `quick` (10 MCQs) or `weak`.
+  static String quizSetupPath({String? topicId, String? mode}) =>
+      _withQuery(quizSetup, {'topicId': topicId, 'mode': mode});
   static const mcqQuestion = '/practice/quiz';
   static const answerFeedback = '/practice/feedback';
   static const quizResult = '/practice/result';
@@ -210,12 +215,11 @@ abstract final class AppRoutes {
       owner: 'Keshomigha',
       path: topicPath('t-dihybrid'),
     ),
-    (title: 'Topic notes', owner: 'Samni', path: topicNotesPath('demo')),
-    (title: 'Short notes', owner: 'Samni', path: shortNotesPath('demo')),
+    (title: 'Topic notes', owner: 'Samni', path: topicNotesPath('t-mendelian')),
+    (title: 'Short notes', owner: 'Samni', path: shortNotesPath('t-mendelian')),
     (title: 'Notes library', owner: 'Samni', path: notesLibrary),
-    (title: 'Upload notes', owner: 'Samni', path: upload),
-    (title: 'Processing notes', owner: 'Samni', path: uploadJobPath('demo')),
-    (title: 'Notes summary', owner: 'Samni', path: summaryPath('demo')),
+    (title: 'My uploaded notes', owner: 'Samni', path: uploads),
+    (title: 'Upload detail', owner: 'Samni', path: uploadDetailPath('demo')),
     // The Diagrams gallery and viewers need real ids: open them from a topic
     // (Learn -> unit -> topic -> Diagrams).
     (title: 'My visuals', owner: 'Mogith', path: myVisuals),

@@ -1,7 +1,10 @@
 import 'package:brainbox_core/brainbox_core.dart';
 import 'package:flutter/material.dart';
 
-/// The dashed "Upload your tuition notes" card on the Learn tab (Figma B2).
+import 'learn_widgets.dart';
+
+/// The dashed "My uploaded notes" card on the Learn tab: opens the
+/// Uploads screen (upload tuition notes, get an AI summary).
 class UploadNotesCard extends StatelessWidget {
   const UploadNotesCard({super.key, required this.onTap});
 
@@ -10,15 +13,17 @@ class UploadNotesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final radius = BorderRadius.circular(AppSpacing.radiusLg);
+    final radius = BorderRadius.circular(LearnStyle.cardRadius);
 
     return Semantics(
       button: true,
-      label: 'Upload your tuition notes. AI summary, matched to the syllabus',
+      label: 'My uploaded notes. Upload tuition notes and get an AI summary',
       child: ExcludeSemantics(
         child: DashedBorder(
           child: Material(
-            color: AppColors.primarySoft,
+            color: context.isDark
+                ? AppColors.primary.withValues(alpha: 0.15)
+                : AppColors.primarySoft,
             borderRadius: radius,
             clipBehavior: Clip.antiAlias,
             child: InkWell(
@@ -28,8 +33,8 @@ class UploadNotesCard extends StatelessWidget {
                 child: Row(
                   children: [
                     Container(
-                      width: 40,
-                      height: 40,
+                      width: 44,
+                      height: 44,
                       decoration: BoxDecoration(
                         color: AppColors.primary,
                         borderRadius: BorderRadius.circular(
@@ -38,7 +43,7 @@ class UploadNotesCard extends StatelessWidget {
                       ),
                       child: const Icon(
                         Icons.upload_file_outlined,
-                        size: 20,
+                        size: 22,
                         color: AppColors.white,
                       ),
                     ),
@@ -48,16 +53,16 @@ class UploadNotesCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Upload your tuition notes',
+                            'My uploaded notes',
                             style: textTheme.titleSmall?.copyWith(
-                              color: AppColors.ink,
+                              color: context.learnInk,
                             ),
                           ),
                           const SizedBox(height: 2),
                           Text(
-                            'AI summary, matched to the syllabus',
+                            'Upload tuition notes · AI summary',
                             style: textTheme.bodySmall?.copyWith(
-                              color: AppColors.muted,
+                              color: context.learnMuted,
                             ),
                           ),
                         ],
