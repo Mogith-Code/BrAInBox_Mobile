@@ -1,22 +1,26 @@
 import 'package:brainbox_core/brainbox_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../application/insights_controller.dart';
 import '../domain/insights_models.dart';
 import 'insights_navigation.dart';
 import 'widgets/insights_states.dart';
 import 'widgets/mastery_card.dart';
 import 'widgets/overview_cards.dart';
+import 'widgets/unit_mastery_card.dart';
 
-/// Insights overview: mastery ring, strongest / weakest, weak topics,
-/// mastery map, grade bands.
+/// Insights overview: mastery ring, unit mastery, strongest / weakest, weak
+/// topics, mastery map, grade bands.
 ///
 /// Route: `/insights` (bottom-nav tab). With `?attempt_id=<id>` (see
 /// [InsightsNav.attemptLocation]) it shows one attempt, titled
 /// "This attempt", with the per-attempt result instead of the mastery ring.
 ///
-/// Data: `GET /insights/topics` (MCQ results). Study time, accuracy trend and
-/// unit mastery come later, when the backend has endpoints for them.
-class InsightsScreen extends StatelessWidget {
+/// Data: `GET /insights/topics` (MCQ results) and `GET /insights/units`
+/// (unit mastery). Study time and accuracy trend come later, when the
+/// backend sends them.
+class InsightsScreen extends ConsumerWidget {
   const InsightsScreen({super.key, this.attemptId});
 
   /// Analyse only this attempt. When null, the route's `attempt_id` query is
@@ -24,7 +28,7 @@ class InsightsScreen extends StatelessWidget {
   final String? attemptId;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final id = attemptId ?? InsightsNav.attemptIdFromRoute(context);
     return Scaffold(
       appBar: AppBar(
@@ -34,10 +38,15 @@ class InsightsScreen extends StatelessWidget {
       ),
       body: InsightsAsyncBody(
         attemptId: id,
+        // Pull-to-refresh on the overview also reloads the unit mastery card.
+        onRefresh: id == null
+            ? () => ref.read(unitInsightsControllerProvider.notifier).refresh()
+            : null,
         builder: (context, data) => [
-          if (id == null)
-            MasteryCard(data: data)
-          else
+          if (id == null) ...[
+            MasteryCard(data: data),
+            const UnitMasteryCard(),
+          ] else
             OverallHeroCard(
               overall: data.overall,
               attemptsAnalysed: data.attemptsAnalysed,

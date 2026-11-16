@@ -15,16 +15,23 @@ class InsightsAsyncBody extends ConsumerWidget {
     super.key,
     required this.attemptId,
     required this.builder,
+    this.onRefresh,
   });
 
   final String? attemptId;
   final List<Widget> Function(BuildContext context, TopicInsights data) builder;
 
+  /// Also reloads other data on the screen (pull-to-refresh, Retry).
+  final Future<void> Function()? onRefresh;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final provider = insightsControllerProvider(attemptId: attemptId);
     final state = ref.watch(provider);
-    Future<void> refresh() => ref.read(provider.notifier).refresh();
+    Future<void> refresh() => Future.wait([
+      ref.read(provider.notifier).refresh(),
+      ?onRefresh?.call(),
+    ]);
 
     // Backend has no profile for this account: send them to set one up.
     ref.listen(provider, (_, next) {
