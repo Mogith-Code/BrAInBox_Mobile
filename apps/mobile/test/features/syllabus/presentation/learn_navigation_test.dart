@@ -264,7 +264,8 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('Undo'));
     await tester.pumpAndSettle();
-    final bookmarks = await repo.fetchBookmarks();
+    // The mock waits on a timer; run it on the real clock.
+    final bookmarks = (await tester.runAsync(repo.fetchBookmarks))!;
     expect(bookmarks.where((b) => b.kind == BookmarkKind.shortNote), isEmpty);
   });
 
