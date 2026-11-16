@@ -2,9 +2,10 @@ import 'package:dio/dio.dart';
 
 /// The error every failed API call throws.
 ///
-/// The backend sends errors in this shape:
+/// The backend sends errors in one of these shapes:
 /// ```json
 /// {"error": {"code": "topic_not_found", "message": "Topic not found."}}
+/// {"detail": "Topic not found.", "code": "TOPIC_NOT_FOUND"}
 /// ```
 /// [message] is safe to show to the student.
 class ApiException implements Exception {
@@ -33,7 +34,22 @@ class ApiException implements Exception {
       );
     }
 
-    // 2. No backend error body: network problems, timeouts, etc.
+    // 2. FastAPI-style errors: {"detail": "message", "code": "STRING"}
+    //    (used by the Learn API). `detail` can also be a validation list.
+    if (data is Map && data['detail'] is String) {
+      return ApiException(
+        code: '${data['code'] ?? 'http_${status ?? 'unknown'}'}',
+        message: data['detail'] as String,
+        statusCode: status,
+        retryAfter: _readRetryAfter(
+          Map<String, dynamic>.from(data),
+          e.response?.headers,
+        ),
+        details: Map<String, dynamic>.from(data),
+      );
+    }
+
+    // 3. No backend error body: network problems, timeouts, etc.
     return switch (e.type) {
       DioExceptionType.connectionTimeout ||
       DioExceptionType.sendTimeout ||
