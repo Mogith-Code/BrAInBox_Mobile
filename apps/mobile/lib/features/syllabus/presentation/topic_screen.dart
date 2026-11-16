@@ -104,7 +104,9 @@ class _TopicShellState extends ConsumerState<_TopicShell>
         ..hideCurrentSnackBar()
         ..showSnackBar(
           SnackBar(
-            content: Text(saved ? 'Saved to My library' : 'Removed from My library'),
+            content: Text(
+              saved ? 'Saved to My library' : 'Removed from My library',
+            ),
           ),
         );
     } catch (error) {
@@ -250,7 +252,11 @@ class _TopicSkeleton extends StatelessWidget {
                 SizedBox(height: AppSpacing.lg),
                 SkeletonBox(height: 28, width: 240),
                 SizedBox(height: AppSpacing.sm),
-                SkeletonBox(height: 20, width: 90, radius: AppSpacing.radiusPill),
+                SkeletonBox(
+                  height: 20,
+                  width: 90,
+                  radius: AppSpacing.radiusPill,
+                ),
                 SizedBox(height: AppSpacing.xl),
                 SkeletonBox(height: 32),
                 SizedBox(height: AppSpacing.lg),

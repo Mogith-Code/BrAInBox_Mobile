@@ -91,9 +91,9 @@ class VideoCard extends StatelessWidget {
                       video.title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        color: context.learnInk,
-                      ),
+                      style: Theme.of(
+                        context,
+                      ).textTheme.titleSmall?.copyWith(color: context.learnInk),
                     ),
                     const SizedBox(height: AppSpacing.sm),
                     SyllabusTag(text: syllabusTag),

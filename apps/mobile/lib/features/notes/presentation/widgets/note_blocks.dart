@@ -94,7 +94,10 @@ class NoteBlockView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 9, right: AppSpacing.sm + 2),
+                    padding: const EdgeInsets.only(
+                      top: 9,
+                      right: AppSpacing.sm + 2,
+                    ),
                     child: Container(
                       width: 6,
                       height: 6,
@@ -115,7 +118,10 @@ class NoteBlockView extends StatelessWidget {
         rows: rows,
         caption: caption,
       ),
-      ImageBlock(:final url, :final caption) => _Figure(url: url, caption: caption),
+      ImageBlock(:final url, :final caption) => _Figure(
+        url: url,
+        caption: caption,
+      ),
       UnknownBlock() => const SizedBox.shrink(),
     };
   }
@@ -128,11 +134,15 @@ List<TextSpan> highlightSpans(String text, List<String> terms) {
       if (t.trim().isNotEmpty) t.trim(),
   ]..sort((a, b) => b.length.compareTo(a.length));
   if (clean.isEmpty) return [TextSpan(text: text)];
-  final pattern = RegExp(clean.map(RegExp.escape).join('|'), caseSensitive: false);
+  final pattern = RegExp(
+    clean.map(RegExp.escape).join('|'),
+    caseSensitive: false,
+  );
   final spans = <TextSpan>[];
   var start = 0;
   for (final m in pattern.allMatches(text)) {
-    if (m.start > start) spans.add(TextSpan(text: text.substring(start, m.start)));
+    if (m.start > start)
+      spans.add(TextSpan(text: text.substring(start, m.start)));
     spans.add(
       TextSpan(
         text: m.group(0),
@@ -226,11 +236,16 @@ class _NoteTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final columns = [headers.length, for (final r in rows) r.length]
-        .fold(0, (a, b) => a > b ? a : b);
+    final columns = [
+      headers.length,
+      for (final r in rows) r.length,
+    ].fold(0, (a, b) => a > b ? a : b);
     if (columns == 0) return const SizedBox.shrink();
     Widget cell(String text, {bool header = false}) => Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.sm,
+      ),
       child: Text(
         text,
         style: textTheme.bodyMedium?.copyWith(
@@ -239,7 +254,10 @@ class _NoteTable extends StatelessWidget {
         ),
       ),
     );
-    List<String> pad(List<String> r) => [...r, for (var i = r.length; i < columns; i++) ''];
+    List<String> pad(List<String> r) => [
+      ...r,
+      for (var i = r.length; i < columns; i++) '',
+    ];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -264,7 +282,9 @@ class _NoteTable extends StatelessWidget {
                           ? AppColors.primary.withValues(alpha: 0.18)
                           : AppColors.primarySoft,
                     ),
-                    children: [for (final h in pad(headers)) cell(h, header: true)],
+                    children: [
+                      for (final h in pad(headers)) cell(h, header: true),
+                    ],
                   ),
                 for (final r in rows)
                   TableRow(children: [for (final c in pad(r)) cell(c)]),
@@ -274,7 +294,10 @@ class _NoteTable extends StatelessWidget {
         ),
         if (caption != null) ...[
           const SizedBox(height: AppSpacing.xs),
-          Text(caption!, style: textTheme.bodySmall?.copyWith(color: context.learnMuted)),
+          Text(
+            caption!,
+            style: textTheme.bodySmall?.copyWith(color: context.learnMuted),
+          ),
         ],
       ],
     );
@@ -296,12 +319,16 @@ class _Figure extends StatelessWidget {
           button: true,
           label: 'Figure${caption == null ? '' : ': $caption'}. Tap to zoom',
           child: GestureDetector(
-            onTap: () => ZoomImageScreen.open(context, url: url, caption: caption),
+            onTap: () =>
+                ZoomImageScreen.open(context, url: url, caption: caption),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
               child: Container(
                 color: AppColors.white,
-                constraints: const BoxConstraints(minHeight: 120, maxHeight: 260),
+                constraints: const BoxConstraints(
+                  minHeight: 120,
+                  maxHeight: 260,
+                ),
                 width: double.infinity,
                 child: DiagramImage(url: url),
               ),
@@ -312,7 +339,9 @@ class _Figure extends StatelessWidget {
           const SizedBox(height: AppSpacing.xs),
           Text(
             caption!,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.learnMuted),
+            style: Theme.of(
+              context,
+            ).textTheme.bodySmall?.copyWith(color: context.learnMuted),
           ),
         ],
       ],

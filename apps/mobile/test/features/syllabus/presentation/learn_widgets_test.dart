@@ -41,7 +41,9 @@ void main() {
   });
 
   group('UnitCard', () {
-    testWidgets('shows caption, title, chip, topics and ring %', (tester) async {
+    testWidgets('shows caption, title, chip, topics and ring %', (
+      tester,
+    ) async {
       var taps = 0;
       await _pump(
         tester,
@@ -102,7 +104,9 @@ void main() {
   });
 
   group('TopicRow', () {
-    testWidgets('not started: number, slate pill, no bar, no dot', (tester) async {
+    testWidgets('not started: number, slate pill, no bar, no dot', (
+      tester,
+    ) async {
       await _pump(
         tester,
         TopicRow(
@@ -133,13 +137,12 @@ void main() {
         ),
       );
       expect(find.text('In progress'), findsOneWidget);
-      final bar = tester.widget<LinearProgressIndicator>(find.byType(LinearProgressIndicator));
+      final bar = tester.widget<LinearProgressIndicator>(
+        find.byType(LinearProgressIndicator),
+      );
       expect(bar.value, 0.25);
       expect(find.byKey(const ValueKey('weak-dot')), findsOneWidget);
-      expect(
-        find.bySemanticsLabel(RegExp('flagged as weak')),
-        findsOneWidget,
-      );
+      expect(find.bySemanticsLabel(RegExp('flagged as weak')), findsOneWidget);
     });
 
     testWidgets('mastered: green check instead of the number', (tester) async {

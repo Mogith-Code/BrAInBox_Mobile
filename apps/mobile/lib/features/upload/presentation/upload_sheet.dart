@@ -11,7 +11,8 @@ import '../../syllabus/presentation/widgets/learn_widgets.dart';
 import '../application/uploads_controller.dart';
 
 /// Picks a file (or opens the camera). Swappable in tests.
-typedef UploadFilePicker = Future<PickedUploadFile?> Function({required bool camera});
+typedef UploadFilePicker =
+    Future<PickedUploadFile?> Function({required bool camera});
 
 /// The real picker: PDF / DOCX / TXT / JPG / PNG via file_picker, or a
 /// photo via image_picker.
@@ -56,7 +57,9 @@ Future<bool> showUploadSheet(
     showDragHandle: true,
     backgroundColor: context.learnSurface,
     shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(AppSpacing.radiusXl)),
+      borderRadius: BorderRadius.vertical(
+        top: Radius.circular(AppSpacing.radiusXl),
+      ),
     ),
     builder: (_) => UploadSheet(picker: picker),
   );
@@ -94,7 +97,8 @@ class _UploadSheetState extends ConsumerState<UploadSheet> {
         _error = null;
       });
     } catch (_) {
-      if (mounted) setState(() => _error = "Couldn't open that file. Try another one.");
+      if (mounted)
+        setState(() => _error = "Couldn't open that file. Try another one.");
     }
   }
 
@@ -104,7 +108,10 @@ class _UploadSheetState extends ConsumerState<UploadSheet> {
     final topics = _unitId == null
         ? null
         : ref.read(unitDetailControllerProvider(_unitId!)).value?.topics;
-    final topicTitle = topics?.where((t) => t.id == _topicId).firstOrNull?.title;
+    final topicTitle = topics
+        ?.where((t) => t.id == _topicId)
+        .firstOrNull
+        ?.title;
     // Fire and forget: the list shows progress, processing and the result.
     ref
         .read(uploadsControllerProvider.notifier)
@@ -124,12 +131,19 @@ class _UploadSheetState extends ConsumerState<UploadSheet> {
     final topics = _unitId == null
         ? null
         : ref.watch(unitDetailControllerProvider(_unitId!)).value?.topics;
-    Text label(String text) =>
-        Text(text, style: textTheme.labelLarge?.copyWith(color: context.learnInk));
+    Text label(String text) => Text(
+      text,
+      style: textTheme.labelLarge?.copyWith(color: context.learnInk),
+    );
 
     return SafeArea(
       child: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(AppSpacing.lg, 0, AppSpacing.lg, AppSpacing.lg),
+        padding: const EdgeInsets.fromLTRB(
+          AppSpacing.lg,
+          0,
+          AppSpacing.lg,
+          AppSpacing.lg,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
@@ -180,7 +194,9 @@ class _UploadSheetState extends ConsumerState<UploadSheet> {
                         _file!.name,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: textTheme.titleSmall?.copyWith(color: context.learnInk),
+                        style: textTheme.titleSmall?.copyWith(
+                          color: context.learnInk,
+                        ),
                       ),
                     ),
                     IconButton(
@@ -195,12 +211,18 @@ class _UploadSheetState extends ConsumerState<UploadSheet> {
               const SizedBox(height: AppSpacing.sm),
               Row(
                 children: [
-                  const Icon(Icons.error_outline, size: 16, color: AppColors.error),
+                  const Icon(
+                    Icons.error_outline,
+                    size: 16,
+                    color: AppColors.error,
+                  ),
                   const SizedBox(width: AppSpacing.xs),
                   Expanded(
                     child: Text(
                       _error!,
-                      style: textTheme.bodySmall?.copyWith(color: AppColors.errorDark),
+                      style: textTheme.bodySmall?.copyWith(
+                        color: AppColors.errorDark,
+                      ),
                     ),
                   ),
                 ],
@@ -237,14 +259,19 @@ class _UploadSheetState extends ConsumerState<UploadSheet> {
                 isExpanded: true,
                 decoration: const InputDecoration(labelText: 'Topic'),
                 items: [
-                  const DropdownMenuItem(value: null, child: Text('Whole unit')),
+                  const DropdownMenuItem(
+                    value: null,
+                    child: Text('Whole unit'),
+                  ),
                   for (final t in topics ?? const [])
                     DropdownMenuItem(
                       value: t.id,
                       child: Text(t.title, overflow: TextOverflow.ellipsis),
                     ),
                 ],
-                onChanged: topics == null ? null : (v) => setState(() => _topicId = v),
+                onChanged: topics == null
+                    ? null
+                    : (v) => setState(() => _topicId = v),
               ),
             ],
             const SizedBox(height: AppSpacing.lg),

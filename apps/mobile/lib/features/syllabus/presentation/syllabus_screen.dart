@@ -252,7 +252,8 @@ class _UnitList extends ConsumerWidget {
         ? null
         : ref.watch(learnSearchProvider(serverQuery));
     final topicHits = search?.value?.topics ?? const <TopicSearchHit>[];
-    final searchPending = searching && (serverQuery != query || (search?.isLoading ?? false));
+    final searchPending =
+        searching && (serverQuery != query || (search?.isLoading ?? false));
 
     if (searching && units.isEmpty && topicHits.isEmpty && !searchPending) {
       return LearnEmptyState(
@@ -308,7 +309,10 @@ class _UnitList extends ConsumerWidget {
                 onTap: () => context.push(AppRoutes.topicPath(hit.id)),
                 child: Row(
                   children: [
-                    const Icon(Icons.article_outlined, color: AppColors.secondary),
+                    const Icon(
+                      Icons.article_outlined,
+                      color: AppColors.secondary,
+                    ),
                     const SizedBox(width: AppSpacing.md),
                     Expanded(
                       child: Column(

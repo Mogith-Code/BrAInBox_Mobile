@@ -103,7 +103,8 @@ abstract class TopicNote with _$TopicNote {
     DateTime? createdAt,
   }) = _TopicNote;
 
-  factory TopicNote.fromJson(Map<String, dynamic> json) => _$TopicNoteFromJson(json);
+  factory TopicNote.fromJson(Map<String, dynamic> json) =>
+      _$TopicNoteFromJson(json);
 }
 
 /// Body of `POST /learn/topics/{topicId}/notes/generate`.

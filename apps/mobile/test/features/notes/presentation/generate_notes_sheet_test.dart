@@ -41,30 +41,31 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('generate: thinking, then closes, shows notes and "Notes ready"', (
-    tester,
-  ) async {
-    final repo = fastMock();
-    await pumpLearnApp(
-      tester,
-      repository: repo,
-      initialLocation: AppRoutes.topicPath('t-pedigree'),
-    );
-    await _openSheet(tester, 't-pedigree');
-    await tester.tap(find.text('Quick'));
-    await tester.pump();
+  testWidgets(
+    'generate: thinking, then closes, shows notes and "Notes ready"',
+    (tester) async {
+      final repo = fastMock();
+      await pumpLearnApp(
+        tester,
+        repository: repo,
+        initialLocation: AppRoutes.topicPath('t-pedigree'),
+      );
+      await _openSheet(tester, 't-pedigree');
+      await tester.tap(find.text('Quick'));
+      await tester.pump();
 
-    await tester.tap(find.text('Generate'));
-    await tester.pump();
-    expect(find.text('BrAInBox is thinking'), findsOneWidget);
+      await tester.tap(find.text('Generate'));
+      await tester.pump();
+      expect(find.text('BrAInBox is thinking'), findsOneWidget);
 
-    await _frames(tester);
-    await tester.pumpAndSettle();
-    expect(find.text('BrAInBox is thinking'), findsNothing);
-    expect(find.text('Notes ready'), findsOneWidget);
-    expect(find.text('AI-generated'), findsOneWidget);
-    expect(find.text('2 min read'), findsOneWidget);
-  });
+      await _frames(tester);
+      await tester.pumpAndSettle();
+      expect(find.text('BrAInBox is thinking'), findsNothing);
+      expect(find.text('Notes ready'), findsOneWidget);
+      expect(find.text('AI-generated'), findsOneWidget);
+      expect(find.text('2 min read'), findsOneWidget);
+    },
+  );
 
   testWidgets('a failed job shows the error; Retry generates again', (
     tester,

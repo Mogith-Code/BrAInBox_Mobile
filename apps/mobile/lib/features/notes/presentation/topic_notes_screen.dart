@@ -9,7 +9,11 @@ import 'notes_tabs.dart';
 ///
 /// Routes: `/notes/topics/:topicId` (full) and `/notes/topics/:topicId/short`.
 class TopicNotesScreen extends ConsumerWidget {
-  const TopicNotesScreen({super.key, required this.topicId, this.short = false});
+  const TopicNotesScreen({
+    super.key,
+    required this.topicId,
+    this.short = false,
+  });
 
   final String topicId;
   final bool short;

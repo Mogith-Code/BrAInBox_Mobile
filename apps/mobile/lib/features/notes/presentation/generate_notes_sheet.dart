@@ -22,7 +22,9 @@ Future<bool> showGenerateNotesSheet(
     showDragHandle: true,
     backgroundColor: context.learnSurface,
     shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(AppSpacing.radiusXl)),
+      borderRadius: BorderRadius.vertical(
+        top: Radius.circular(AppSpacing.radiusXl),
+      ),
     ),
     builder: (_) => GenerateNotesSheet(detail: detail, initialType: type),
   );
@@ -83,7 +85,9 @@ class _GenerateNotesSheetState extends ConsumerState<GenerateNotesSheet> {
 
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(context).bottom),
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.viewInsetsOf(context).bottom,
+        ),
         child: SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(
             AppSpacing.lg,
@@ -104,7 +108,10 @@ class _GenerateNotesSheetState extends ConsumerState<GenerateNotesSheet> {
                       gradient: AppColors.brandGradient,
                       borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
                     ),
-                    child: const Icon(Icons.auto_awesome, color: AppColors.white),
+                    child: const Icon(
+                      Icons.auto_awesome,
+                      color: AppColors.white,
+                    ),
                   ),
                   const SizedBox(width: AppSpacing.md),
                   Expanded(
@@ -157,8 +164,7 @@ class _GenerateNotesSheetState extends ConsumerState<GenerateNotesSheet> {
                   GenerationFailed(:final message) => _ErrorPanel(
                     key: const ValueKey('error'),
                     message: message,
-                    onRetry: () =>
-                        ref.read(provider.notifier).retry(),
+                    onRetry: () => ref.read(provider.notifier).retry(),
                     onChangeOptions: () => ref.read(provider.notifier).reset(),
                   ),
                   _ => _form(context),
@@ -365,9 +371,16 @@ class _ErrorPanel extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.lg),
-          GradientButton(label: 'Retry', icon: Icons.refresh, onPressed: onRetry),
+          GradientButton(
+            label: 'Retry',
+            icon: Icons.refresh,
+            onPressed: onRetry,
+          ),
           const SizedBox(height: AppSpacing.sm),
-          TextButton(onPressed: onChangeOptions, child: const Text('Change options')),
+          TextButton(
+            onPressed: onChangeOptions,
+            child: const Text('Change options'),
+          ),
         ],
       ),
     );

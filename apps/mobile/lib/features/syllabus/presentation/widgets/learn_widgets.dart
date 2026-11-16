@@ -47,7 +47,12 @@ class ProgressRing extends StatelessWidget {
 
 /// Thin rounded progress bar (teal on the border colour).
 class ProgressBar extends StatelessWidget {
-  const ProgressBar({super.key, required this.value, this.width = 70, this.color});
+  const ProgressBar({
+    super.key,
+    required this.value,
+    this.width = 70,
+    this.color,
+  });
 
   final double value;
   final double? width;
@@ -116,7 +121,10 @@ class _Tag extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 3),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.sm,
+        vertical: 3,
+      ),
       decoration: BoxDecoration(
         color: background,
         borderRadius: BorderRadius.circular(AppSpacing.radiusPill),
@@ -204,7 +212,12 @@ class GradientButton extends StatelessWidget {
         ),
       ),
     );
-    return Semantics(button: true, enabled: enabled, label: label, child: ExcludeSemantics(child: button));
+    return Semantics(
+      button: true,
+      enabled: enabled,
+      label: label,
+      child: ExcludeSemantics(child: button),
+    );
   }
 }
 
@@ -362,7 +375,9 @@ class LearnEmptyState extends StatelessWidget {
               Text(
                 message!,
                 textAlign: TextAlign.center,
-                style: textTheme.bodyMedium?.copyWith(color: context.learnMuted),
+                style: textTheme.bodyMedium?.copyWith(
+                  color: context.learnMuted,
+                ),
               ),
             ],
             if (action != null) ...[
@@ -401,7 +416,9 @@ class ErrorCard extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(
-                  _offline ? Icons.wifi_off_rounded : Icons.sentiment_dissatisfied_outlined,
+                  _offline
+                      ? Icons.wifi_off_rounded
+                      : Icons.sentiment_dissatisfied_outlined,
                   size: 40,
                   color: _offline ? AppColors.warning : AppColors.error,
                 ),
@@ -409,7 +426,9 @@ class ErrorCard extends StatelessWidget {
                 Text(
                   _offline ? "You're offline" : 'Something went wrong',
                   textAlign: TextAlign.center,
-                  style: textTheme.titleMedium?.copyWith(color: context.learnInk),
+                  style: textTheme.titleMedium?.copyWith(
+                    color: context.learnInk,
+                  ),
                 ),
                 const SizedBox(height: AppSpacing.xs),
                 Text(
@@ -417,7 +436,9 @@ class ErrorCard extends StatelessWidget {
                       ? 'Check your internet connection and try again.'
                       : ErrorMessages.of(error),
                   textAlign: TextAlign.center,
-                  style: textTheme.bodyMedium?.copyWith(color: context.learnMuted),
+                  style: textTheme.bodyMedium?.copyWith(
+                    color: context.learnMuted,
+                  ),
                 ),
                 if (onRetry != null) ...[
                   const SizedBox(height: AppSpacing.lg),
@@ -428,7 +449,9 @@ class ErrorCard extends StatelessWidget {
                     style: OutlinedButton.styleFrom(
                       minimumSize: const Size(120, 48),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(LearnStyle.buttonRadius),
+                        borderRadius: BorderRadius.circular(
+                          LearnStyle.buttonRadius,
+                        ),
                       ),
                     ),
                   ),
@@ -481,12 +504,18 @@ class _AIThinkingCardState extends State<AIThinkingCard>
               children: [
                 Row(
                   children: [
-                    const Icon(Icons.auto_awesome, size: 18, color: AppColors.primary),
+                    const Icon(
+                      Icons.auto_awesome,
+                      size: 18,
+                      color: AppColors.primary,
+                    ),
                     const SizedBox(width: AppSpacing.sm),
                     Flexible(
                       child: Text(
                         widget.message,
-                        style: textTheme.titleSmall?.copyWith(color: context.learnInk),
+                        style: textTheme.titleSmall?.copyWith(
+                          color: context.learnInk,
+                        ),
                       ),
                     ),
                     const SizedBox(width: AppSpacing.sm),

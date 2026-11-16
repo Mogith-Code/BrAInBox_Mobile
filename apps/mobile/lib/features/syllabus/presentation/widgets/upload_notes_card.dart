@@ -37,7 +37,9 @@ class UploadNotesCard extends StatelessWidget {
                       height: 44,
                       decoration: BoxDecoration(
                         color: AppColors.primary,
-                        borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
+                        borderRadius: BorderRadius.circular(
+                          AppSpacing.radiusMd,
+                        ),
                       ),
                       child: const Icon(
                         Icons.upload_file_outlined,

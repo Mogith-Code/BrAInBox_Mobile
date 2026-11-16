@@ -5,7 +5,12 @@ import 'widgets/media_cards.dart';
 
 /// Full-screen pinch-to-zoom view of a diagram or figure.
 class ZoomImageScreen extends StatelessWidget {
-  const ZoomImageScreen({super.key, required this.url, this.caption, this.heroTag});
+  const ZoomImageScreen({
+    super.key,
+    required this.url,
+    this.caption,
+    this.heroTag,
+  });
 
   final String url;
   final String? caption;
@@ -20,7 +25,8 @@ class ZoomImageScreen extends StatelessWidget {
   }) => Navigator.of(context, rootNavigator: true).push(
     MaterialPageRoute<void>(
       fullscreenDialog: true,
-      builder: (_) => ZoomImageScreen(url: url, caption: caption, heroTag: heroTag),
+      builder: (_) =>
+          ZoomImageScreen(url: url, caption: caption, heroTag: heroTag),
     ),
   );
 

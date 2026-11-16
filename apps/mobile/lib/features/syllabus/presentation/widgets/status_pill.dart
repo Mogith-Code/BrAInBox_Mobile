@@ -81,7 +81,10 @@ class StatusPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 3),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.sm,
+        vertical: 3,
+      ),
       decoration: BoxDecoration(
         color: style.background,
         borderRadius: BorderRadius.circular(AppSpacing.radiusPill),
@@ -115,6 +118,8 @@ class MasteryChip extends StatelessWidget {
   final MasteryLevel level;
 
   @override
-  Widget build(BuildContext context) =>
-      Semantics(label: 'Mastery: ${level.label}', child: ExcludeSemantics(child: StatusPill(style: level.style)));
+  Widget build(BuildContext context) => Semantics(
+    label: 'Mastery: ${level.label}',
+    child: ExcludeSemantics(child: StatusPill(style: level.style)),
+  );
 }

@@ -135,7 +135,9 @@ abstract class UnitDetail with _$UnitDetail {
     ];
     final counts = json['counts'] is Map ? json['counts'] as Map : json;
     return UnitDetail(
-      unit: unit.topicCount == 0 ? unit.copyWith(topicCount: topics.length) : unit,
+      unit: unit.topicCount == 0
+          ? unit.copyWith(topicCount: topics.length)
+          : unit,
       topics: topics,
       masteredTopics: _asInt(counts['mastered'] ?? counts['mastered_count']),
       weakTopics: _asInt(counts['weak'] ?? counts['weak_count']),

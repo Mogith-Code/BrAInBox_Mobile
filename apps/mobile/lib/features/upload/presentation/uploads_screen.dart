@@ -5,7 +5,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/routes.dart';
 import '../../syllabus/domain/learn_models.dart';
-import '../../syllabus/presentation/unit_detail_screen.dart' show LearnBackButton;
+import '../../syllabus/presentation/unit_detail_screen.dart'
+    show LearnBackButton;
 import '../../syllabus/presentation/widgets/learn_widgets.dart';
 import '../application/uploads_controller.dart';
 import 'upload_sheet.dart';
@@ -49,7 +50,9 @@ class UploadsScreen extends ConsumerWidget {
                         'My uploaded notes',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: textTheme.titleLarge?.copyWith(color: context.learnInk),
+                        style: textTheme.titleLarge?.copyWith(
+                          color: context.learnInk,
+                        ),
                       ),
                     ),
                   ),
@@ -57,7 +60,12 @@ class UploadsScreen extends ConsumerWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(AppSpacing.lg, 0, AppSpacing.lg, AppSpacing.md),
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.lg,
+                0,
+                AppSpacing.lg,
+                AppSpacing.md,
+              ),
               child: GradientButton(
                 label: 'Upload notes',
                 icon: Icons.upload_file_outlined,
@@ -67,7 +75,9 @@ class UploadsScreen extends ConsumerWidget {
             Expanded(
               child: switch (state) {
                 AsyncValue(:final value?) => RefreshIndicator(
-                  onRefresh: ref.read(uploadsControllerProvider.notifier).refresh,
+                  onRefresh: ref
+                      .read(uploadsControllerProvider.notifier)
+                      .refresh,
                   child: value.isEmpty
                       ? LayoutBuilder(
                           builder: (context, c) => ListView(
@@ -95,8 +105,10 @@ class UploadsScreen extends ConsumerWidget {
                             AppSpacing.xl,
                           ),
                           itemCount: value.length,
-                          separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.sm),
-                          itemBuilder: (context, i) => UploadTile(upload: value[i]),
+                          separatorBuilder: (_, _) =>
+                              const SizedBox(height: AppSpacing.sm),
+                          itemBuilder: (context, i) =>
+                              UploadTile(upload: value[i]),
                         ),
                 ),
                 AsyncError(:final error) => ErrorCard(
@@ -124,10 +136,14 @@ class UploadTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final textTheme = Theme.of(context).textTheme;
     final local = upload.id.startsWith('local-');
-    final date = upload.createdAt == null ? null : Formatters.shortDate(upload.createdAt!);
+    final date = upload.createdAt == null
+        ? null
+        : Formatters.shortDate(upload.createdAt!);
 
     return LearnCard(
-      onTap: local ? null : () => context.push(AppRoutes.uploadDetailPath(upload.id)),
+      onTap: local
+          ? null
+          : () => context.push(AppRoutes.uploadDetailPath(upload.id)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -143,7 +159,9 @@ class UploadTile extends ConsumerWidget {
                       upload.fileName,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: textTheme.titleSmall?.copyWith(color: context.learnInk),
+                      style: textTheme.titleSmall?.copyWith(
+                        color: context.learnInk,
+                      ),
                     ),
                     const SizedBox(height: AppSpacing.xs),
                     Wrap(
@@ -155,9 +173,12 @@ class UploadTile extends ConsumerWidget {
                         if (date != null)
                           Text(
                             date,
-                            style: textTheme.bodySmall?.copyWith(color: context.learnMuted),
+                            style: textTheme.bodySmall?.copyWith(
+                              color: context.learnMuted,
+                            ),
                           ),
-                        if (upload.topic != null && upload.topic!.title.isNotEmpty)
+                        if (upload.topic != null &&
+                            upload.topic!.title.isNotEmpty)
                           SyllabusTag(text: upload.topic!.title),
                       ],
                     ),
@@ -168,8 +189,9 @@ class UploadTile extends ConsumerWidget {
                 IconButton(
                   tooltip: 'Remove',
                   icon: const Icon(Icons.close),
-                  onPressed: () =>
-                      ref.read(uploadsControllerProvider.notifier).delete(upload.id),
+                  onPressed: () => ref
+                      .read(uploadsControllerProvider.notifier)
+                      .delete(upload.id),
                 )
               else if (!local)
                 Icon(Icons.chevron_right, color: context.learnMuted),
@@ -179,13 +201,22 @@ class UploadTile extends ConsumerWidget {
             const SizedBox(height: AppSpacing.md),
             Semantics(
               label: 'Uploading, ${Formatters.percent(upload.sendProgress)}',
-              child: ProgressBar(value: upload.sendProgress, width: null, color: AppColors.primary),
+              child: ProgressBar(
+                value: upload.sendProgress,
+                width: null,
+                color: AppColors.primary,
+              ),
             ),
           ] else if (upload.status.isBusy) ...[
             const SizedBox(height: AppSpacing.md),
             const ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(AppSpacing.radiusPill)),
-              child: LinearProgressIndicator(minHeight: 5, color: AppColors.secondary),
+              borderRadius: BorderRadius.all(
+                Radius.circular(AppSpacing.radiusPill),
+              ),
+              child: LinearProgressIndicator(
+                minHeight: 5,
+                color: AppColors.secondary,
+              ),
             ),
           ],
           if (upload.status == UploadStatus.failed && upload.error != null) ...[

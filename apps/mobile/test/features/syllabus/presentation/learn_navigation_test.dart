@@ -38,9 +38,18 @@ void main() {
 
     await tester.tap(find.text('Mendelian inheritance'));
     await tester.pumpAndSettle();
-    expect(find.text('Biology › Unit 6 › Mendelian inheritance'), findsOneWidget);
+    expect(
+      find.text('Biology › Unit 6 › Mendelian inheritance'),
+      findsOneWidget,
+    );
     expect(find.text('Improving'), findsOneWidget);
-    for (final tab in ['Notes', 'Short Notes', 'Diagrams', 'Videos', 'Practice']) {
+    for (final tab in [
+      'Notes',
+      'Short Notes',
+      'Diagrams',
+      'Videos',
+      'Practice',
+    ]) {
       expect(find.widgetWithText(Tab, tab), findsOneWidget, reason: tab);
     }
     // Opening the topic is reported.
@@ -81,7 +90,9 @@ void main() {
     await tester.tap(find.text('Quick 10 MCQs'));
     await tester.pumpAndSettle();
     expect(
-      find.text('AT ${AppRoutes.quizSetupPath(topicId: 't-mendelian', mode: 'quick')}'),
+      find.text(
+        'AT ${AppRoutes.quizSetupPath(topicId: 't-mendelian', mode: 'quick')}',
+      ),
       findsOneWidget,
     );
     await tester.pageBack();
@@ -96,33 +107,34 @@ void main() {
     expect(find.text('Learn'), findsOneWidget);
   });
 
-  testWidgets('search filters units, finds topics, shows the sprout empty state', (
-    tester,
-  ) async {
-    await pumpLearnApp(tester, repository: fastMock());
+  testWidgets(
+    'search filters units, finds topics, shows the sprout empty state',
+    (tester) async {
+      await pumpLearnApp(tester, repository: fastMock());
 
-    await tester.enterText(find.byType(TextField), 'genet');
-    await tester.pump(SyllabusScreen.searchDebounce);
-    await tester.pumpAndSettle();
-    expect(find.text('Genetics'), findsOneWidget);
-    expect(find.text('Introduction to Biology'), findsNothing);
-    expect(find.text('My uploaded notes'), findsNothing);
+      await tester.enterText(find.byType(TextField), 'genet');
+      await tester.pump(SyllabusScreen.searchDebounce);
+      await tester.pumpAndSettle();
+      expect(find.text('Genetics'), findsOneWidget);
+      expect(find.text('Introduction to Biology'), findsNothing);
+      expect(find.text('My uploaded notes'), findsNothing);
 
-    await tester.enterText(find.byType(TextField), 'pedigree');
-    await tester.pump(SyllabusScreen.searchDebounce);
-    await tester.pumpAndSettle();
-    expect(find.text('Topics'), findsOneWidget);
-    expect(find.text('Pedigree analysis'), findsOneWidget);
+      await tester.enterText(find.byType(TextField), 'pedigree');
+      await tester.pump(SyllabusScreen.searchDebounce);
+      await tester.pumpAndSettle();
+      expect(find.text('Topics'), findsOneWidget);
+      expect(find.text('Pedigree analysis'), findsOneWidget);
 
-    await tester.enterText(find.byType(TextField), 'zzz');
-    await tester.pump(SyllabusScreen.searchDebounce);
-    await tester.pumpAndSettle();
-    expect(find.text('No units match "zzz"'), findsOneWidget);
+      await tester.enterText(find.byType(TextField), 'zzz');
+      await tester.pump(SyllabusScreen.searchDebounce);
+      await tester.pumpAndSettle();
+      expect(find.text('No units match "zzz"'), findsOneWidget);
 
-    await tester.tap(find.text('Clear search'));
-    await tester.pumpAndSettle();
-    expect(find.text('Introduction to Biology'), findsOneWidget);
-  });
+      await tester.tap(find.text('Clear search'));
+      await tester.pumpAndSettle();
+      expect(find.text('Introduction to Biology'), findsOneWidget);
+    },
+  );
 
   testWidgets('bookmark toggle shows in the Library; removing it there works', (
     tester,
@@ -139,9 +151,15 @@ void main() {
     router.go(AppRoutes.notesLibrary);
     await tester.pumpAndSettle();
     expect(find.text('Mendelian inheritance'), findsOneWidget);
-    expect(find.text('Monohybrid & dihybrid crosses'), findsOneWidget); // seeded
+    expect(
+      find.text('Monohybrid & dihybrid crosses'),
+      findsOneWidget,
+    ); // seeded
 
-    await tester.drag(find.text('Mendelian inheritance'), const Offset(-500, 0));
+    await tester.drag(
+      find.text('Mendelian inheritance'),
+      const Offset(-500, 0),
+    );
     await tester.pumpAndSettle();
     expect(find.text('Mendelian inheritance'), findsNothing);
 

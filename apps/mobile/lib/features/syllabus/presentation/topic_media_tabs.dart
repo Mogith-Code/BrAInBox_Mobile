@@ -71,12 +71,18 @@ class VideosTab extends ConsumerWidget {
   Future<void> _open(BuildContext context, Video video) async {
     final messenger = ScaffoldMessenger.of(context);
     final uri = Uri.tryParse(video.url);
-    final ok = uri != null &&
-        await launchUrl(uri, mode: LaunchMode.externalApplication).catchError((Object _) => false);
+    final ok =
+        uri != null &&
+        await launchUrl(
+          uri,
+          mode: LaunchMode.externalApplication,
+        ).catchError((Object _) => false);
     if (!ok) {
       messenger
         ..hideCurrentSnackBar()
-        ..showSnackBar(const SnackBar(content: Text("Couldn't open this video.")));
+        ..showSnackBar(
+          const SnackBar(content: Text("Couldn't open this video.")),
+        );
     }
   }
 
@@ -151,7 +157,9 @@ class PracticeTab extends ConsumerWidget {
               children: [
                 Text(
                   'Practice this topic',
-                  style: textTheme.titleMedium?.copyWith(color: context.learnInk),
+                  style: textTheme.titleMedium?.copyWith(
+                    color: context.learnInk,
+                  ),
                 ),
                 const SizedBox(height: AppSpacing.lg),
                 Row(
@@ -310,7 +318,10 @@ class _GridSkeleton extends StatelessWidget {
           childAspectRatio: 0.8,
           children: [
             for (var i = 0; i < 4; i++)
-              const SkeletonBox(height: double.infinity, radius: LearnStyle.cardRadius),
+              const SkeletonBox(
+                height: double.infinity,
+                radius: LearnStyle.cardRadius,
+              ),
           ],
         ),
       ),

@@ -34,7 +34,8 @@ class UploadsController extends _$UploadsController {
     ref.invalidateSelf();
     try {
       final fresh = await future;
-      if (ref.mounted && local.isNotEmpty) state = AsyncData([...local, ...fresh]);
+      if (ref.mounted && local.isNotEmpty)
+        state = AsyncData([...local, ...fresh]);
     } catch (_) {
       // The screen shows the error.
     }
@@ -46,9 +47,7 @@ class UploadsController extends _$UploadsController {
     final id = replacing ?? upload.id;
     final items = _items;
     final i = items.indexWhere((u) => u.id == id);
-    state = AsyncData(
-      i < 0 ? [upload, ...items] : ([...items]..[i] = upload),
-    );
+    state = AsyncData(i < 0 ? [upload, ...items] : ([...items]..[i] = upload));
   }
 
   /// Sends [file] and returns the server's upload id (null if sending

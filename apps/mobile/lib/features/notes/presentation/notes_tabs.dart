@@ -66,7 +66,9 @@ class _NoteTabBody extends ConsumerWidget {
             child: ConstrainedBox(
               constraints: BoxConstraints(minHeight: constraints.maxHeight),
               child: LearnEmptyState(
-                icon: isShort ? Icons.format_list_bulleted : Icons.article_outlined,
+                icon: isShort
+                    ? Icons.format_list_bulleted
+                    : Icons.article_outlined,
                 title: isShort ? 'No short notes yet' : 'No notes yet',
                 message: isShort
                     ? 'Let BrAInBox make a quick revision summary of this topic.'
@@ -149,7 +151,9 @@ class _NoteReaderState extends ConsumerState<_NoteReader> {
 
   @override
   void dispose() {
-    if (widget.trackReading && !_sentCompleted && _stopwatch.elapsed.inSeconds >= 3) {
+    if (widget.trackReading &&
+        !_sentCompleted &&
+        _stopwatch.elapsed.inSeconds >= 3) {
       _send(completed: false);
     }
     _scroll.dispose();
@@ -166,7 +170,12 @@ class _NoteReaderState extends ConsumerState<_NoteReader> {
       child: ListView(
         controller: _scroll,
         physics: const AlwaysScrollableScrollPhysics(),
-        padding: const EdgeInsets.fromLTRB(AppSpacing.lg, AppSpacing.lg, AppSpacing.lg, 96),
+        padding: const EdgeInsets.fromLTRB(
+          AppSpacing.lg,
+          AppSpacing.lg,
+          AppSpacing.lg,
+          96,
+        ),
         children: [
           Wrap(
             spacing: AppSpacing.sm,
@@ -183,7 +192,9 @@ class _NoteReaderState extends ConsumerState<_NoteReader> {
                     const SizedBox(width: AppSpacing.xs),
                     Text(
                       '${note.readMinutes} min read',
-                      style: textTheme.bodySmall?.copyWith(color: context.learnMuted),
+                      style: textTheme.bodySmall?.copyWith(
+                        color: context.learnMuted,
+                      ),
                     ),
                   ],
                 ),
@@ -210,7 +221,11 @@ class _NoteSkeleton extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SkeletonBox(height: 20, width: 200, radius: AppSpacing.radiusPill),
+              SkeletonBox(
+                height: 20,
+                width: 200,
+                radius: AppSpacing.radiusPill,
+              ),
               SizedBox(height: AppSpacing.lg),
               SkeletonBox(height: 24, width: 220),
               SizedBox(height: AppSpacing.md),

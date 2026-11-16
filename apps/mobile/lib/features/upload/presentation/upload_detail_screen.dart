@@ -7,7 +7,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/routes.dart';
 import '../../syllabus/domain/learn_models.dart';
-import '../../syllabus/presentation/unit_detail_screen.dart' show LearnBackButton;
+import '../../syllabus/presentation/unit_detail_screen.dart'
+    show LearnBackButton;
 import '../../syllabus/presentation/widgets/learn_widgets.dart';
 import '../application/uploads_controller.dart';
 import 'uploads_screen.dart' show UploadStatusChip;
@@ -128,7 +129,9 @@ class _UploadDetailScreenState extends ConsumerState<UploadDetailScreen> {
                         upload?.fileName ?? 'Upload',
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: textTheme.titleMedium?.copyWith(color: context.learnInk),
+                        style: textTheme.titleMedium?.copyWith(
+                          color: context.learnInk,
+                        ),
                       ),
                     ),
                     if (upload != null)
@@ -148,7 +151,11 @@ class _UploadDetailScreenState extends ConsumerState<UploadDetailScreen> {
                     error: error,
                     onRetry: () => ref.invalidate(provider),
                   ),
-                  _ => const SkeletonList(count: 4, label: 'Loading upload', height: 90),
+                  _ => const SkeletonList(
+                    count: 4,
+                    label: 'Loading upload',
+                    height: 90,
+                  ),
                 },
               ),
             ],
@@ -164,7 +171,8 @@ class _UploadDetailScreenState extends ConsumerState<UploadDetailScreen> {
       return LearnEmptyState(
         icon: Icons.hourglass_top,
         title: 'BrAInBox is reading your notes',
-        message: 'This usually takes under a minute. You can leave this screen.',
+        message:
+            'This usually takes under a minute. You can leave this screen.',
         action: UploadStatusChip(status: upload.status),
       );
     }
@@ -177,7 +185,8 @@ class _UploadDetailScreenState extends ConsumerState<UploadDetailScreen> {
     }
 
     Widget scroll(List<Widget> children) => RefreshIndicator(
-      onRefresh: () => ref.refresh(uploadDetailProvider(widget.uploadId).future),
+      onRefresh: () =>
+          ref.refresh(uploadDetailProvider(widget.uploadId).future),
       child: ListView(
         physics: const AlwaysScrollableScrollPhysics(),
         padding: const EdgeInsets.all(AppSpacing.lg),
@@ -221,7 +230,8 @@ class _UploadDetailScreenState extends ConsumerState<UploadDetailScreen> {
                 Text(upload.summary ?? 'No summary.', style: body),
               ]),
               scroll([
-                if (upload.keyPoints.isEmpty) Text('No key points.', style: body),
+                if (upload.keyPoints.isEmpty)
+                  Text('No key points.', style: body),
                 for (final point in upload.keyPoints)
                   Padding(
                     padding: const EdgeInsets.only(bottom: AppSpacing.sm),
@@ -229,8 +239,15 @@ class _UploadDetailScreenState extends ConsumerState<UploadDetailScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Padding(
-                          padding: EdgeInsets.only(top: 3, right: AppSpacing.sm),
-                          child: Icon(Icons.check_circle, size: 16, color: AppColors.secondary),
+                          padding: EdgeInsets.only(
+                            top: 3,
+                            right: AppSpacing.sm,
+                          ),
+                          child: Icon(
+                            Icons.check_circle,
+                            size: 16,
+                            color: AppColors.secondary,
+                          ),
                         ),
                         Expanded(child: Text(point, style: body)),
                       ],
@@ -252,12 +269,16 @@ class _UploadDetailScreenState extends ConsumerState<UploadDetailScreen> {
                     onPressed: null,
                     icon: const Icon(Icons.check),
                     label: const Text('Saved to short notes'),
-                    style: OutlinedButton.styleFrom(minimumSize: const Size.fromHeight(48)),
+                    style: OutlinedButton.styleFrom(
+                      minimumSize: const Size.fromHeight(48),
+                    ),
                   )
                 : GradientButton(
                     label: 'Save to short notes',
                     icon: Icons.bookmark_add_outlined,
-                    onPressed: _saving ? null : () => unawaited(_saveToShortNotes()),
+                    onPressed: _saving
+                        ? null
+                        : () => unawaited(_saveToShortNotes()),
                   ),
           ),
         ),

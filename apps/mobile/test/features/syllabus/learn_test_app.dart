@@ -37,14 +37,18 @@ Future<GoRouter> pumpLearnApp(
       GoRoute(path: AppRoutes.learn, builder: (_, _) => const SyllabusScreen()),
       GoRoute(
         path: AppRoutes.unitDetail,
-        builder: (_, s) => UnitDetailScreen(unitId: s.pathParameters['unitId']!),
+        builder: (_, s) =>
+            UnitDetailScreen(unitId: s.pathParameters['unitId']!),
       ),
       for (final path in [AppRoutes.unitTopic, AppRoutes.topic])
         GoRoute(
           path: path,
           builder: (_, s) => TopicScreen(topicId: s.pathParameters['topicId']!),
         ),
-      GoRoute(path: AppRoutes.notesLibrary, builder: (_, _) => const LibraryScreen()),
+      GoRoute(
+        path: AppRoutes.notesLibrary,
+        builder: (_, _) => const LibraryScreen(),
+      ),
       GoRoute(
         path: AppRoutes.uploads,
         builder: (_, _) => picker == null
@@ -53,7 +57,8 @@ Future<GoRouter> pumpLearnApp(
       ),
       GoRoute(
         path: AppRoutes.uploadDetail,
-        builder: (_, s) => UploadDetailScreen(uploadId: s.pathParameters['uploadId']!),
+        builder: (_, s) =>
+            UploadDetailScreen(uploadId: s.pathParameters['uploadId']!),
       ),
       GoRoute(path: AppRoutes.ask, builder: (_, s) => at(s)),
       GoRoute(path: AppRoutes.quizSetup, builder: (_, s) => at(s)),

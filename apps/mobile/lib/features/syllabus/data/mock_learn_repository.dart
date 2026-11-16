@@ -37,7 +37,10 @@ class MockLearnRepository implements LearnRepository {
       fileName: 'Genetics tuition notes.pdf',
       status: UploadStatus.done,
       createdAt: DateTime(2026, 11, 10, 18, 30),
-      topic: const UploadTopic(id: 't-mendelian', title: 'Mendelian inheritance'),
+      topic: const UploadTopic(
+        id: 't-mendelian',
+        title: 'Mendelian inheritance',
+      ),
       summary: _uploadSummary,
       keyPoints: _uploadKeyPoints,
       extractedText: _uploadText,
@@ -355,8 +358,8 @@ class MockLearnRepository implements LearnRepository {
       _findTopic(topicId) ??
       (throw _notFound('TOPIC_NOT_FOUND', 'Topic not found.'));
 
-  static MasteryLevel _masteryOf(TopicProgress t) => t.status ==
-          TopicStatus.mastered
+  static MasteryLevel _masteryOf(TopicProgress t) =>
+      t.status == TopicStatus.mastered
       ? MasteryLevel.mastered
       : t.isWeak
       ? MasteryLevel.weak
@@ -393,7 +396,8 @@ class MockLearnRepository implements LearnRepository {
           ),
           if (r.includePastPaperTips)
             const NoteBlock.tip(
-              text: 'Always state the genotypes of the parents and the '
+              text:
+                  'Always state the genotypes of the parents and the '
                   'gametes before drawing the Punnett square.',
             ),
         ],
@@ -407,19 +411,22 @@ class MockLearnRepository implements LearnRepository {
       blocks: [
         NoteBlock.heading(text: job.title),
         NoteBlock.paragraph(
-          text: '${job.title} builds on the idea that each characteristic '
+          text:
+              '${job.title} builds on the idea that each characteristic '
               'is controlled by genes, and that genes come in different '
               'forms called alleles.',
           highlights: const ['genes', 'alleles'],
         ),
         const NoteBlock.definition(
           term: 'Allele',
-          text: 'One of two or more alternative forms of a gene found at the '
+          text:
+              'One of two or more alternative forms of a gene found at the '
               'same locus on homologous chromosomes.',
         ),
         if (r.depth != NoteDepth.quick)
           const NoteBlock.paragraph(
-            text: 'In a heterozygote the dominant allele is expressed in the '
+            text:
+                'In a heterozygote the dominant allele is expressed in the '
                 'phenotype, while the recessive allele is hidden.',
             highlights: ['heterozygote', 'phenotype'],
           ),
@@ -713,7 +720,8 @@ final mendelianNote = TopicNote(
   blocks: const [
     NoteBlock.heading(text: 'Mendelian inheritance'),
     NoteBlock.paragraph(
-      text: 'Gregor Mendel worked out the basic rules of inheritance by '
+      text:
+          'Gregor Mendel worked out the basic rules of inheritance by '
           'crossing pea plants with contrasting characters. He showed that '
           'characters are passed on as separate units, which we now call '
           'genes.',
@@ -721,13 +729,15 @@ final mendelianNote = TopicNote(
     ),
     NoteBlock.definition(
       term: 'Genotype and phenotype',
-      text: 'The genotype is the set of alleles an organism has for a '
+      text:
+          'The genotype is the set of alleles an organism has for a '
           'character (e.g. Tt). The phenotype is the observable '
           'characteristic that results (e.g. tall).',
     ),
     NoteBlock.heading(text: "Mendel's first law: law of segregation", level: 3),
     NoteBlock.paragraph(
-      text: 'The two alleles of a gene separate from each other during '
+      text:
+          'The two alleles of a gene separate from each other during '
           'gamete formation, so each gamete carries only one allele. In a '
           'monohybrid cross of two heterozygotes the F2 phenotypic ratio is '
           '3:1.',
@@ -746,7 +756,8 @@ final mendelianNote = TopicNote(
       level: 3,
     ),
     NoteBlock.paragraph(
-      text: 'Alleles of different genes assort independently of one another '
+      text:
+          'Alleles of different genes assort independently of one another '
           'during gamete formation, provided the genes are on different '
           'chromosomes. A dihybrid cross of two double heterozygotes (YyRr '
           '× YyRr) gives an F2 phenotypic ratio of 9:3:3:1.',
@@ -761,7 +772,8 @@ final mendelianNote = TopicNote(
       ],
     ),
     NoteBlock.tip(
-      text: 'Past papers often give a ratio such as 1:1:1:1 and ask for the '
+      text:
+          'Past papers often give a ratio such as 1:1:1:1 and ask for the '
           'parents. That ratio means a test cross: one parent is YyRr and '
           'the other is yyrr. Always write the gametes before the Punnett '
           'square: it carries marks.',

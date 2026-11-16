@@ -5,7 +5,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/routes.dart';
 import '../../syllabus/domain/learn_models.dart';
-import '../../syllabus/presentation/unit_detail_screen.dart' show LearnBackButton;
+import '../../syllabus/presentation/unit_detail_screen.dart'
+    show LearnBackButton;
 import '../../syllabus/presentation/widgets/learn_widgets.dart';
 import '../application/library_controller.dart';
 
@@ -58,7 +59,9 @@ class LibraryScreen extends ConsumerWidget {
                     header: true,
                     child: Text(
                       'My library',
-                      style: textTheme.titleLarge?.copyWith(color: context.learnInk),
+                      style: textTheme.titleLarge?.copyWith(
+                        color: context.learnInk,
+                      ),
                     ),
                   ),
                 ],
@@ -67,7 +70,9 @@ class LibraryScreen extends ConsumerWidget {
             Expanded(
               child: switch (state) {
                 AsyncValue(:final value?) => RefreshIndicator(
-                  onRefresh: ref.read(bookmarksControllerProvider.notifier).refresh,
+                  onRefresh: ref
+                      .read(bookmarksControllerProvider.notifier)
+                      .refresh,
                   child: value.isEmpty
                       ? const _Empty()
                       : _List(
@@ -118,17 +123,29 @@ class _List extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final topics = bookmarks.where((b) => b.kind == BookmarkKind.topic).toList();
-    final notes = bookmarks.where((b) => b.kind == BookmarkKind.shortNote).toList();
+    final topics = bookmarks
+        .where((b) => b.kind == BookmarkKind.topic)
+        .toList();
+    final notes = bookmarks
+        .where((b) => b.kind == BookmarkKind.shortNote)
+        .toList();
     final textTheme = Theme.of(context).textTheme;
     Widget section(String title) => Padding(
       padding: const EdgeInsets.only(top: AppSpacing.sm, bottom: AppSpacing.sm),
-      child: Text(title, style: textTheme.titleSmall?.copyWith(color: context.learnMuted)),
+      child: Text(
+        title,
+        style: textTheme.titleSmall?.copyWith(color: context.learnMuted),
+      ),
     );
 
     return ListView(
       physics: const AlwaysScrollableScrollPhysics(),
-      padding: const EdgeInsets.fromLTRB(AppSpacing.lg, 0, AppSpacing.lg, AppSpacing.xl),
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.lg,
+        0,
+        AppSpacing.lg,
+        AppSpacing.xl,
+      ),
       children: [
         if (topics.isNotEmpty) section('Topics'),
         for (final b in topics) ...[
@@ -146,7 +163,10 @@ class _List extends StatelessWidget {
               child: const Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.bookmark_remove_outlined, color: AppColors.errorDark),
+                  Icon(
+                    Icons.bookmark_remove_outlined,
+                    color: AppColors.errorDark,
+                  ),
                   SizedBox(width: AppSpacing.xs),
                   Text('Remove', style: TextStyle(color: AppColors.errorDark)),
                 ],
@@ -164,14 +184,18 @@ class _List extends StatelessWidget {
                       children: [
                         Text(
                           b.topicTitle,
-                          style: textTheme.titleSmall?.copyWith(color: context.learnInk),
+                          style: textTheme.titleSmall?.copyWith(
+                            color: context.learnInk,
+                          ),
                         ),
                         if (b.unitTitle.isNotEmpty)
                           Text(
                             'Unit ${b.unitOrder} · ${b.unitTitle}',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: textTheme.bodySmall?.copyWith(color: context.learnMuted),
+                            style: textTheme.bodySmall?.copyWith(
+                              color: context.learnMuted,
+                            ),
                           ),
                       ],
                     ),
@@ -199,7 +223,10 @@ class _List extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Icon(Icons.sticky_note_2_outlined, color: AppColors.secondary),
+                const Icon(
+                  Icons.sticky_note_2_outlined,
+                  color: AppColors.secondary,
+                ),
                 const SizedBox(width: AppSpacing.md),
                 Expanded(
                   child: Column(
@@ -207,14 +234,18 @@ class _List extends StatelessWidget {
                     children: [
                       Text(
                         b.title ?? b.topicTitle,
-                        style: textTheme.titleSmall?.copyWith(color: context.learnInk),
+                        style: textTheme.titleSmall?.copyWith(
+                          color: context.learnInk,
+                        ),
                       ),
                       if (b.preview != null)
                         Text(
                           b.preview!,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: textTheme.bodySmall?.copyWith(color: context.learnMuted),
+                          style: textTheme.bodySmall?.copyWith(
+                            color: context.learnMuted,
+                          ),
                         ),
                     ],
                   ),
