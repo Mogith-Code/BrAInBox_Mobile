@@ -3,128 +3,118 @@ import 'package:flutter/material.dart';
 
 import '../../domain/syllabus_models.dart';
 
-/// Label and colours for each [UnitStatus] pill and ring.
-extension UnitStatusStyle on UnitStatus {
-  String get label => switch (this) {
-    UnitStatus.mastered => 'Mastered',
-    UnitStatus.strong => 'Strong',
-    UnitStatus.improving => 'Improving',
-    UnitStatus.weak => 'Weak',
-  };
-
-  /// Only "Improving" has an icon (↗) in Figma.
-  IconData? get icon => this == UnitStatus.improving ? Icons.trending_up : null;
-
-  Color get background => switch (this) {
-    UnitStatus.mastered || UnitStatus.strong => AppColors.successSoft,
-    UnitStatus.improving => AppColors.streakSoft,
-    UnitStatus.weak => AppColors.errorSoft,
-  };
-
-  Color get foreground => switch (this) {
-    UnitStatus.mastered || UnitStatus.strong => AppColors.successDark,
-    UnitStatus.improving => AppColors.streakDark,
-    UnitStatus.weak => AppColors.errorDark,
-  };
-
-  Color get ringColor => switch (this) {
-    UnitStatus.mastered || UnitStatus.strong => AppColors.secondary,
-    UnitStatus.improving => AppColors.warning,
-    UnitStatus.weak => AppColors.error,
-  };
-}
-
-/// Label and colours for each [TopicStatus] pill.
-extension TopicStatusStyle on TopicStatus {
-  String get label => switch (this) {
-    TopicStatus.mastered => 'Mastered',
-    TopicStatus.strong => 'Strong',
-    TopicStatus.improving => 'Improving',
-    TopicStatus.weak => 'Weak',
-    TopicStatus.inProgress => 'In progress',
-    TopicStatus.notStarted => 'Not started',
-  };
-
-  IconData? get icon =>
-      this == TopicStatus.improving ? Icons.trending_up : null;
-
-  Color get background => switch (this) {
-    TopicStatus.mastered || TopicStatus.strong => AppColors.successSoft,
-    TopicStatus.improving => AppColors.streakSoft,
-    TopicStatus.weak => AppColors.errorSoft,
-    TopicStatus.inProgress => AppColors.primarySoft,
-    TopicStatus.notStarted => AppColors.surfaceMuted,
-  };
-
-  Color get foreground => switch (this) {
-    TopicStatus.mastered || TopicStatus.strong => AppColors.successDark,
-    TopicStatus.improving => AppColors.streakDark,
-    TopicStatus.weak => AppColors.errorDark,
-    TopicStatus.inProgress => AppColors.primaryDark,
-    TopicStatus.notStarted => AppColors.muted,
-  };
-}
-
-/// The small rounded status badge: "Strong", "↗ Improving", "Weak"...
-class StatusPill extends StatelessWidget {
-  const StatusPill({
-    super.key,
-    required this.label,
-    required this.background,
-    required this.foreground,
-    this.icon,
-  });
-
-  StatusPill.unit(UnitStatus status, {Key? key})
-    : this(
-        key: key,
-        label: status.label,
-        background: status.background,
-        foreground: status.foreground,
-        icon: status.icon,
-      );
-
-  StatusPill.topic(TopicStatus status, {Key? key})
-    : this(
-        key: key,
-        label: status.label,
-        background: status.background,
-        foreground: status.foreground,
-        icon: status.icon,
-      );
+/// Colour + icon + label for a status. Never colour alone.
+class StatusStyle {
+  const StatusStyle(this.label, this.icon, this.background, this.foreground);
 
   final String label;
+  final IconData icon;
   final Color background;
   final Color foreground;
-  final IconData? icon;
+}
+
+extension MasteryLevelStyle on MasteryLevel {
+  StatusStyle get style => switch (this) {
+    MasteryLevel.weak => const StatusStyle(
+      'Weak',
+      Icons.warning_amber_rounded,
+      AppColors.errorSoft,
+      AppColors.errorDark,
+    ),
+    MasteryLevel.improving => const StatusStyle(
+      'Improving',
+      Icons.trending_up,
+      AppColors.streakSoft,
+      AppColors.streakDark,
+    ),
+    MasteryLevel.strong => const StatusStyle(
+      'Strong',
+      Icons.check,
+      AppColors.secondarySoft,
+      AppColors.secondaryDark,
+    ),
+    MasteryLevel.mastered => const StatusStyle(
+      'Mastered',
+      Icons.eco,
+      AppColors.successSoft,
+      AppColors.successDark,
+    ),
+  };
+
+  String get label => style.label;
+}
+
+extension TopicStatusStyle on TopicStatus {
+  StatusStyle get style => switch (this) {
+    TopicStatus.notStarted => const StatusStyle(
+      'Not started',
+      Icons.radio_button_unchecked,
+      AppColors.surfaceMuted,
+      Color(0xFF475569), // slate-600: 4.5:1 on slate-100
+    ),
+    TopicStatus.inProgress => const StatusStyle(
+      'In progress',
+      Icons.timelapse,
+      AppColors.primarySoft,
+      AppColors.primaryDark,
+    ),
+    TopicStatus.mastered => const StatusStyle(
+      'Mastered',
+      Icons.check_circle_outline,
+      AppColors.successSoft,
+      AppColors.successDark,
+    ),
+  };
+
+  String get label => style.label;
+}
+
+/// A small fully rounded chip: icon + label on a tint.
+class StatusPill extends StatelessWidget {
+  const StatusPill({super.key, required this.style});
+
+  StatusPill.topic(TopicStatus status, {Key? key})
+    : this(key: key, style: status.style);
+
+  final StatusStyle style;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.sm,
-        vertical: 3,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 3),
       decoration: BoxDecoration(
-        color: background,
+        color: style.background,
         borderRadius: BorderRadius.circular(AppSpacing.radiusPill),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (icon != null) ...[
-            Icon(icon, size: 12, color: foreground),
-            const SizedBox(width: AppSpacing.xs),
-          ],
-          Text(
-            label,
-            style: Theme.of(context).textTheme.labelSmall?.copyWith(
-              color: foreground,
-              fontWeight: FontWeight.w500,
+          Icon(style.icon, size: 12, color: style.foreground),
+          const SizedBox(width: AppSpacing.xs),
+          Flexible(
+            child: Text(
+              style.label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                color: style.foreground,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         ],
       ),
     );
   }
+}
+
+/// Weak / Improving / Strong / Mastered.
+class MasteryChip extends StatelessWidget {
+  const MasteryChip({super.key, required this.level});
+
+  final MasteryLevel level;
+
+  @override
+  Widget build(BuildContext context) =>
+      Semantics(label: 'Mastery: ${level.label}', child: ExcludeSemantics(child: StatusPill(style: level.style)));
 }
