@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../notes/presentation/notes_tabs.dart';
+import '../../visuals/presentation/diagram_gallery_screen.dart';
 import '../domain/syllabus_models.dart';
 import 'topic_media_tabs.dart';
 
@@ -32,7 +33,12 @@ class TopicTabBody extends StatelessWidget {
   Widget build(BuildContext context) => switch (tab) {
     TopicTab.notes => NotesTab(detail: detail),
     TopicTab.shortNotes => ShortNotesTab(detail: detail),
-    TopicTab.diagrams => DiagramsTab(detail: detail),
+    // Mogith's visuals gallery: AI visuals with labels, and a "Generate a
+    // new visual" card for this topic.
+    TopicTab.diagrams => DiagramGallery(
+      topicId: detail.topic.id,
+      showHeader: false,
+    ),
     TopicTab.videos => VideosTab(detail: detail),
     TopicTab.practice => PracticeTab(detail: detail),
   };

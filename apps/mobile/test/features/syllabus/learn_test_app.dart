@@ -8,6 +8,8 @@ import 'package:brainbox_mobile/features/syllabus/presentation/unit_detail_scree
 import 'package:brainbox_mobile/features/upload/presentation/upload_detail_screen.dart';
 import 'package:brainbox_mobile/features/upload/presentation/upload_sheet.dart';
 import 'package:brainbox_mobile/features/upload/presentation/uploads_screen.dart';
+import 'package:brainbox_mobile/features/visuals/data/fake_visuals_repository.dart';
+import 'package:brainbox_mobile/features/visuals/data/visuals_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -62,6 +64,8 @@ Future<GoRouter> pumpLearnApp(
       ),
       GoRoute(path: AppRoutes.ask, builder: (_, s) => at(s)),
       GoRoute(path: AppRoutes.quizSetup, builder: (_, s) => at(s)),
+      // The Diagrams tab's "Generate a new visual" card opens this.
+      GoRoute(path: AppRoutes.generateVisual, builder: (_, s) => at(s)),
     ],
   );
   await tester.pumpWidget(
@@ -70,6 +74,10 @@ Future<GoRouter> pumpLearnApp(
       overrides: [
         learnRepositoryProvider.overrideWithValue(repository),
         learnPollIntervalProvider.overrideWithValue(Duration.zero),
+        // The topic's Diagrams tab is the visuals gallery.
+        visualsRepositoryProvider.overrideWithValue(
+          FakeVisualsRepository(step: Duration.zero),
+        ),
       ],
       child: MaterialApp.router(
         routerConfig: router,

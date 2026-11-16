@@ -4,6 +4,7 @@ import 'package:brainbox_mobile/app/routes.dart';
 import 'package:brainbox_mobile/features/syllabus/data/learn_repository.dart';
 import 'package:brainbox_mobile/features/syllabus/presentation/syllabus_screen.dart';
 import 'package:brainbox_mobile/features/upload/presentation/upload_detail_screen.dart';
+import 'package:brainbox_mobile/features/visuals/presentation/widgets/visual_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -103,9 +104,21 @@ void main() {
     );
     expect(find.text('Ask BrAInBox'), findsOneWidget);
 
+    // Diagrams is the visuals gallery: AI visuals plus a Generate card
+    // that opens the generator for this topic.
     await _tapTab(tester, 'Diagrams');
-    expect(find.text('Monohybrid cross Punnett square'), findsOneWidget);
+    expect(find.text('Monohybrid cross'), findsOneWidget);
     expect(find.text('Ask BrAInBox'), findsNothing);
+    await tester.tap(find.widgetWithText(ChoicePill, 'Verified'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Generate a new visual'));
+    await tester.pumpAndSettle();
+    expect(
+      find.text('AT ${AppRoutes.generateVisualPath(topicId: 't-mendelian')}'),
+      findsOneWidget,
+    );
+    router.pop();
+    await tester.pumpAndSettle();
 
     await _tapTab(tester, 'Videos');
     expect(find.text('Mendelian inheritance explained'), findsOneWidget);
