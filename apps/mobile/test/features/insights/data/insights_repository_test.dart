@@ -49,6 +49,36 @@ void main() {
     ).called(1);
   });
 
+  test('loads unit mastery from GET /insights/units', () async {
+    answerWith(() async => sampleUnitsJson());
+
+    final data = await repository.fetchUnitInsights();
+
+    expect(data.units, hasLength(3));
+    expect(data.assessedUnits, 2);
+    expect(data.units.first.mastery, 88);
+    expect(data.units.first.changeWeek, 4);
+    // Never measured: null, never 0.
+    expect(data.units.last.mastery, isNull);
+    verify(
+      () => api.get<Map<String, dynamic>>('/insights/units', query: null),
+    ).called(1);
+  });
+
+  test('unit insights errors are mapped too', () {
+    failWith(
+      const ApiException(
+        code: 'USER_NOT_REGISTERED',
+        message: 'Not registered',
+        statusCode: 401,
+      ),
+    );
+    expect(
+      repository.fetchUnitInsights(),
+      throwsA(isA<InsightsNotRegistered>()),
+    );
+  });
+
   group('error mapping', () {
     test('401 USER_NOT_REGISTERED -> InsightsNotRegistered', () {
       failWith(
