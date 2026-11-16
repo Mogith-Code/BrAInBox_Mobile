@@ -18,6 +18,7 @@ import '../features/evaluation/presentation/evaluation_feedback_screen.dart';
 import '../features/evaluation/presentation/handwritten_upload_screen.dart';
 import '../features/evaluation/presentation/ocr_preview_screen.dart';
 import '../features/evaluation/presentation/typed_answer_screen.dart';
+import '../features/evaluation/presentation/written_questions_screen.dart';
 import '../features/exams/presentation/exam_attempt_screen.dart';
 import '../features/exams/presentation/exam_result_screen.dart';
 import '../features/exams/presentation/generate_paper_screen.dart';
@@ -219,6 +220,10 @@ GoRouter router(Ref ref) {
         builder: (context, state) => const ExamResultScreen(),
       ),
       GoRoute(
+        path: AppRoutes.writtenQuestions,
+        builder: (context, state) => const WrittenQuestionsScreen(),
+      ),
+      GoRoute(
         path: AppRoutes.typedAnswer,
         builder: (context, state) =>
             TypedAnswerScreen(questionId: state.pathParameters['questionId']!),
@@ -231,7 +236,9 @@ GoRouter router(Ref ref) {
       ),
       GoRoute(
         path: AppRoutes.ocrPreview,
-        builder: (context, state) => const OcrPreviewScreen(),
+        builder: (context, state) => OcrPreviewScreen(
+          evaluationId: state.uri.queryParameters['evaluationId'],
+        ),
       ),
       GoRoute(
         path: AppRoutes.evaluationFeedback,
@@ -249,7 +256,9 @@ GoRouter router(Ref ref) {
       ),
       GoRoute(
         path: AppRoutes.reassessment,
-        builder: (context, state) => const ReassessmentScreen(),
+        builder: (context, state) => ReassessmentScreen(
+          recommendationId: state.uri.queryParameters['id'],
+        ),
       ),
       GoRoute(
         path: AppRoutes.notifications,
@@ -332,11 +341,14 @@ GoRouter router(Ref ref) {
                 builder: (context, state) => QuizSetupScreen(
                   topicId: state.uri.queryParameters['topicId'],
                   mode: state.uri.queryParameters['mode'],
+                  conceptId: state.uri.queryParameters['conceptId'],
                 ),
               ),
               GoRoute(
                 path: AppRoutes.mcqQuestion,
-                builder: (context, state) => const McqQuestionScreen(),
+                builder: (context, state) => McqQuestionScreen(
+                  quizId: state.uri.queryParameters['quizId'],
+                ),
               ),
               GoRoute(
                 path: AppRoutes.answerFeedback,
@@ -344,7 +356,9 @@ GoRouter router(Ref ref) {
               ),
               GoRoute(
                 path: AppRoutes.quizResult,
-                builder: (context, state) => const QuizResultScreen(),
+                builder: (context, state) => QuizResultScreen(
+                  quizId: state.uri.queryParameters['quizId'],
+                ),
               ),
             ],
           ),
@@ -384,7 +398,9 @@ GoRouter router(Ref ref) {
               ),
               GoRoute(
                 path: AppRoutes.createPost,
-                builder: (context, state) => const CreatePostScreen(),
+                builder: (context, state) => CreatePostScreen(
+                  groupId: state.uri.queryParameters['groupId'],
+                ),
               ),
             ],
           ),
