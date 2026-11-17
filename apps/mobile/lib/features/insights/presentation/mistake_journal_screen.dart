@@ -5,11 +5,15 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/routes.dart';
 import '../application/mistakes_controller.dart';
+import '../application/progress_providers.dart';
 import '../domain/mistake_models.dart';
+import 'widgets/recurring_mistakes_section.dart';
 
 /// Mistake journal: every wrong MCQ answer with what the student picked,
 /// the right answer and the misconception behind it. "Mark fixed" moves it
 /// to the Fixed tab. No mistakes = the friendly empty state (Figma F5).
+///
+/// The To fix tab starts with "Recurring mistakes" (`GET /mistakes/recurring`).
 ///
 /// Route: `/insights/mistakes`. Data: `GET /mistakes`, `PATCH /mistakes/{id}`.
 class MistakeJournalScreen extends ConsumerStatefulWidget {
@@ -89,16 +93,33 @@ class _MistakeJournalScreenState extends ConsumerState<MistakeJournalScreen> {
                             'Mark a mistake as fixed once you understand it.',
                       ),
               AsyncData(:final value) => RefreshIndicator(
-                onRefresh: () => ref.refresh(provider.future),
-                child: ListView.separated(
+                onRefresh: () {
+                  ref.invalidate(recurringMistakesProvider);
+                  return ref.refresh(provider.future);
+                },
+                child: ListView(
                   padding: const EdgeInsets.all(AppSpacing.lg),
-                  itemCount: value.length,
-                  separatorBuilder: (_, _) =>
-                      const SizedBox(height: AppSpacing.md),
-                  itemBuilder: (context, i) => _MistakeCard(
-                    mistake: value[i],
-                    onToggle: () => toggle(value[i]),
-                  ),
+                  children: [
+                    if (_tab == MistakeTab.open) ...[
+                      const RecurringMistakesSection(),
+                      AppButton(
+                        label: 'Practice my mistakes',
+                        icon: Icons.replay_rounded,
+                        onPressed: () => context.push(
+                          AppRoutes.quizSetupPath(mode: 'mistakes'),
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.lg),
+                    ],
+                    for (final m in value)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: AppSpacing.md),
+                        child: _MistakeCard(
+                          mistake: m,
+                          onToggle: () => toggle(m),
+                        ),
+                      ),
+                  ],
                 ),
               ),
               AsyncError(:final error) => Center(
