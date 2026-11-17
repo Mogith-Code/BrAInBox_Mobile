@@ -52,6 +52,18 @@ abstract final class InsightsNav {
     );
   }
 
+  /// Opens quiz setup for one topic; the Practice tab when there is no id
+  /// (the "General" group).
+  static void practiseTopic(BuildContext context, String? topicId) {
+    final router = GoRouter.maybeOf(context);
+    if (router == null) return;
+    if (topicId == null) {
+      router.go(AppRoutes.practice);
+    } else {
+      router.push(AppRoutes.quizSetupPath(topicId: topicId));
+    }
+  }
+
   /// Goes to the Practice tab.
   static void goToPractice(BuildContext context) =>
       GoRouter.maybeOf(context)?.go(AppRoutes.practice);

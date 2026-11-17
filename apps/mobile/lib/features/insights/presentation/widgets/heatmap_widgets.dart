@@ -2,6 +2,7 @@ import 'package:brainbox_core/brainbox_core.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/insights_models.dart';
+import '../../domain/progress_models.dart';
 import 'insights_ring.dart';
 import 'insights_style.dart';
 import 'status_chip.dart';
@@ -333,6 +334,110 @@ class TopicSheet extends StatelessWidget {
               ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+/// One unit of `GET /insights/heatmap`: "6 Genetics" and its topic cells.
+class TopicHeatmapRow extends StatelessWidget {
+  const TopicHeatmapRow({super.key, required this.unit, required this.onTap});
+
+  final HeatmapUnit unit;
+  final ValueChanged<HeatmapTopic> onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AppSpacing.lg),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Semantics(
+            header: true,
+            child: Text(
+              '${unit.number} ${unit.title}',
+              style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                fontWeight: FontWeight.w700,
+                color: InsightsColors.text(context),
+              ),
+            ),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          Wrap(
+            spacing: AppSpacing.sm,
+            runSpacing: AppSpacing.sm,
+            children: [
+              for (final topic in unit.topics)
+                TopicHeatCell(topic: topic, onTap: () => onTap(topic)),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// One topic on the heatmap: its number and mastery on the level colour.
+/// Tapping it starts a quiz on that topic.
+class TopicHeatCell extends StatelessWidget {
+  const TopicHeatCell({super.key, required this.topic, required this.onTap});
+
+  final HeatmapTopic topic;
+  final VoidCallback onTap;
+
+  static const double size = 56;
+
+  @override
+  Widget build(BuildContext context) {
+    final style = StatusStyle.of(topic.level.colourAs);
+    final textTheme = Theme.of(context).textTheme;
+    final mastery = topic.mastery;
+    return Tooltip(
+      message: '${topic.number} ${topic.title}',
+      excludeFromSemantics: true,
+      child: Semantics(
+        button: true,
+        label:
+            '${topic.number} ${topic.title}, '
+            '${mastery == null ? 'not practised' : '$mastery percent'}, '
+            '${topic.level.label.toLowerCase()}. Practise this topic',
+        excludeSemantics: true,
+        child: Material(
+          color: style.heatFill(context),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppSpacing.radiusSm + 2),
+            side: style.neutral
+                ? BorderSide(color: InsightsColors.line(context))
+                : BorderSide.none,
+          ),
+          clipBehavior: Clip.antiAlias,
+          child: InkWell(
+            onTap: onTap,
+            child: SizedBox.square(
+              dimension: size,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    topic.number,
+                    maxLines: 1,
+                    style: textTheme.labelSmall?.copyWith(
+                      color: InsightsColors.mutedText(context),
+                    ),
+                  ),
+                  Text(
+                    mastery == null ? '—' : '$mastery',
+                    style: textTheme.labelLarge?.copyWith(
+                      fontWeight: FontWeight.w700,
+                      color: InsightsColors.text(context),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );
