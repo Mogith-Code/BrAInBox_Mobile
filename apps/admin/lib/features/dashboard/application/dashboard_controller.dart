@@ -17,7 +17,6 @@ part 'dashboard_controller.g.dart';
 class DashboardController extends _$DashboardController {
   @override
   Future<DashboardSummary> build() {
-    // TODO(samni): load what the screen needs on open.
     return ref.watch(dashboardRepositoryProvider).fetchSummary();
   }
 
@@ -29,7 +28,4 @@ class DashboardController extends _$DashboardController {
     );
     if (ref.mounted) state = next;
   }
-
-  // TODO(samni): add one method per user action (submit, delete, generate...).
-  // Each one calls the repository and updates `state`.
 }

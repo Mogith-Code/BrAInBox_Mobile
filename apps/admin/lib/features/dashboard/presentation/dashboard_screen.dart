@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/router.dart';
+import '../../../widgets/admin_page.dart';
 import '../application/dashboard_controller.dart';
 import '../domain/dashboard_models.dart';
 import 'widgets/activity_chart_card.dart';
@@ -14,7 +15,7 @@ import 'widgets/recent_reports_card.dart';
 
 /// Dashboard screen - KPI tiles (students, questions, pending reviews) and activity.
 ///
-/// Route: `/dashboard`
+/// Route: `/dashboard`. Data: `GET /admin/dashboard`.
 ///
 /// Keep this file UI-only: read state from the controller and call its
 /// methods. Never call Dio / Firebase here.
@@ -26,11 +27,9 @@ class DashboardScreen extends ConsumerWidget {
     final state = ref.watch(dashboardControllerProvider);
     return state.when(
       loading: () => const Center(child: CircularProgressIndicator()),
-      error: (error, _) => Center(
-        child: ErrorBanner(
-          message: '$error',
-          onRetry: () => ref.invalidate(dashboardControllerProvider),
-        ),
+      error: (error, _) => AdminLoadError(
+        error: error,
+        onRetry: () => ref.invalidate(dashboardControllerProvider),
       ),
       data: (summary) => _DashboardBody(summary: summary),
     );
@@ -163,7 +162,7 @@ class _KpiGrid extends StatelessWidget {
   }
 }
 
-/// A small amber note, e.g. "Placeholder data - API not connected yet.", so
+/// A small amber note, e.g. "Sample data - not from the server.", so
 /// nobody mistakes sample figures for live ones.
 class _DataNotice extends StatelessWidget {
   const _DataNotice({required this.message});

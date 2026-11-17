@@ -14,14 +14,14 @@
 |---|---|---|
 | Dashboard | `presentation/dashboard_screen.dart` | `/dashboard` |
 
-## API endpoints it will use
-
-> Planned paths only. The backend's `/docs` (OpenAPI) is the real contract -
-> update this table when the backend publishes the endpoints.
+## API endpoints it uses
 
 | Method | Path | Purpose |
 |---|---|---|
-| `GET` | `/admin/dashboard` | KPIs and recent activity |
+| `GET` | `/admin/dashboard` | KPIs, 14-day activity, newest reports, most-missed topics (`DashboardOut`) |
+
+`USE_FAKE_API=true` uses `FakeDashboardRepository` (the Figma numbers, labelled
+"Sample data" on screen).
 
 ## Folders
 

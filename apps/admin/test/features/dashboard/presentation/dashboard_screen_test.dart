@@ -3,12 +3,15 @@ import 'package:brainbox_admin/features/dashboard/domain/dashboard_models.dart';
 import 'package:brainbox_admin/features/dashboard/presentation/dashboard_screen.dart';
 import 'package:brainbox_admin/features/dashboard/presentation/widgets/dashboard_header.dart';
 import 'package:brainbox_admin/features/dashboard/presentation/widgets/kpi_card.dart';
+import 'package:brainbox_core/brainbox_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 class _MockRepository extends Mock implements DashboardRepository {}
+
+class _MockApi extends Mock implements ApiClient {}
 
 void main() {
   late _MockRepository repository;
@@ -49,10 +52,7 @@ void main() {
     expect(find.text('64%'), findsOneWidget);
     expect(find.text('Based on 41,208 attempts'), findsOneWidget);
     // Sample data is labelled as such on screen.
-    expect(
-      find.text('Placeholder data - API not connected yet.'),
-      findsOneWidget,
-    );
+    expect(find.text('Sample data - not from the server.'), findsOneWidget);
   });
 
   testWidgets('empty data shows empty states, not errors', (tester) async {
@@ -83,6 +83,62 @@ void main() {
     await tester.pump();
 
     expect(find.text('Export is not connected yet.'), findsOneWidget);
+  });
+
+  test('fetchSummary reads GET /admin/dashboard', () async {
+    final api = _MockApi();
+    when(() => api.get<Map<String, dynamic>>('/admin/dashboard')).thenAnswer(
+      (_) async => {
+        'title': 'Dashboard',
+        'message': null,
+        'batch_label': 'A/L 2027 batch',
+        'kpis': [
+          {
+            'kind': 'aiReview',
+            'label': 'AI items pending review',
+            'value': 14,
+            'delta': '5 older than 48h',
+            'trend': 'warning',
+            'sparkline': [8, 9, 11],
+          },
+        ],
+        'activity': {
+          'day_labels': ['24 Sep', '25'],
+          'quizzes': [3, 4],
+          'notes_generated': [1, 2],
+        },
+        'recent_reports': [
+          {
+            'title': 'Spam link',
+            'subtitle': 'Post',
+            'meta': '3 reports',
+            'severity': null,
+          },
+        ],
+        'missed_topics_attempts': 120,
+        'missed_topics': [
+          {
+            'topic': 'Linkage',
+            'unit': 'Unit 6 · Genetics',
+            'miss_rate': 0.64,
+            'attempts': 50,
+            'top_misconception': 'Independent assortment',
+          },
+        ],
+      },
+    );
+
+    final summary = await DashboardRepository(api).fetchSummary();
+
+    expect(summary.message, '');
+    expect(summary.batchLabel, 'A/L 2027 batch');
+    expect(summary.kpis.single.kind, DashboardKpiKind.aiReview);
+    expect(summary.kpis.single.trend, DashboardTrend.warning);
+    expect(summary.kpis.single.sparkline, [8, 9, 11]);
+    expect(summary.activity.notesGenerated, [1, 2]);
+    expect(summary.recentReports.single.severity, ReportSeverity.medium);
+    expect(summary.missedTopics.single.missRate, 0.64);
+    expect(summary.missedTopicsAttempts, 120);
   });
 
   group('DashboardHeader', () {
