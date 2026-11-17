@@ -1,5 +1,6 @@
 import 'package:brainbox_core/brainbox_core.dart';
 import 'package:brainbox_mobile/features/insights/data/insights_repository.dart';
+import 'package:brainbox_mobile/features/insights/domain/progress_models.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -47,6 +48,44 @@ void main() {
         query: {'attempt_id': 'a-1'},
       ),
     ).called(1);
+  });
+
+  test('loads study time and accuracy from GET /insights/overview', () async {
+    answerWith(() async => sampleOverviewJson());
+
+    final data = await repository.fetchOverview();
+
+    expect(data.studyMinutesWeek, 125);
+    expect(data.studyTime, hasLength(7));
+    expect(data.studyTime.first.date, DateTime(2026, 11, 11));
+    expect(data.accuracyTrend, hasLength(4));
+    expect(data.accuracyTrend[1].accuracy, isNull);
+    expect(data.accuracyPoints.map((d) => d.accuracy), [40, 58, 75]);
+    verify(
+      () => api.get<Map<String, dynamic>>('/insights/overview', query: null),
+    ).called(1);
+  });
+
+  test('loads the topic map from GET /insights/heatmap', () async {
+    answerWith(() async => sampleHeatmapJson());
+
+    final data = await repository.fetchHeatmap();
+
+    expect(data.units.map((u) => u.number), [1, 6]);
+    final topic = data.units.first.topics.last;
+    expect(topic.topicId, 't-1-2');
+    expect(topic.mastery, isNull);
+    expect(topic.level, HeatmapLevel.notStarted);
+    expect(HeatmapLevel.parse('brand_new'), HeatmapLevel.unknown);
+  });
+
+  test('overview offline maps to InsightsOffline', () async {
+    failWith(const ApiException(code: 'network', message: 'No connection'));
+
+    await expectLater(
+      repository.fetchOverview(),
+      throwsA(isA<InsightsOffline>()),
+    );
   });
 
   test('loads unit mastery from GET /insights/units', () async {

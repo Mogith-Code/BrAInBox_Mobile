@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../domain/insights_models.dart';
+import '../domain/progress_models.dart';
 import '../domain/unit_insights.dart';
 
 part 'insights_repository.g.dart';
@@ -74,6 +75,31 @@ class InsightsRepository {
     try {
       final json = await api.get<Map<String, dynamic>>('/insights/units');
       return UnitInsights.fromJson(json);
+    } on ApiException catch (e) {
+      throw _mapError(e, null);
+    }
+  }
+
+  /// `GET /insights/overview`: weekly study time and the accuracy trend.
+  ///
+  /// Throws an [InsightsFailure].
+  Future<InsightsOverview> fetchOverview() async {
+    try {
+      final json = await api.get<Map<String, dynamic>>('/insights/overview');
+      return InsightsOverview.fromJson(json);
+    } on ApiException catch (e) {
+      throw _mapError(e, null);
+    }
+  }
+
+  /// `GET /insights/heatmap`: every syllabus topic with its mastery, grouped
+  /// by unit.
+  ///
+  /// Throws an [InsightsFailure].
+  Future<TopicHeatmap> fetchHeatmap() async {
+    try {
+      final json = await api.get<Map<String, dynamic>>('/insights/heatmap');
+      return TopicHeatmap.fromJson(json);
     } on ApiException catch (e) {
       throw _mapError(e, null);
     }
