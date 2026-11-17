@@ -6,6 +6,7 @@ import 'package:brainbox_mobile/features/insights/data/insights_repository.dart'
 import 'package:brainbox_mobile/features/insights/domain/insights_models.dart';
 import 'package:brainbox_mobile/features/insights/presentation/insights_screen.dart';
 import 'package:brainbox_mobile/features/insights/presentation/widgets/insights_states.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -37,9 +38,10 @@ void main() {
       expect(find.bySemanticsLabel('Improving: 1 topic'), findsOneWidget);
       expect(find.bySemanticsLabel('Weak: 2 topics'), findsOneWidget);
 
-      // No cards without backend data, no period selector, no placeholders.
-      expect(find.text('Study time'), findsNothing);
-      expect(find.text('Accuracy trend'), findsNothing);
+      // Study time and accuracy trend from GET /insights/overview; no
+      // period selector, no placeholders.
+      expect(find.text('Study time'), findsOneWidget);
+      expect(find.text('Accuracy trend'), findsOneWidget);
       expect(find.text('This week'), findsNothing);
       expect(find.text('Coming soon'), findsNothing);
 
@@ -135,6 +137,73 @@ void main() {
 
       expect(find.text('Unit mastery'), findsNothing);
       verifyNever(repository.fetchUnitInsights);
+      expect(find.text('Study time'), findsNothing);
+      verifyNever(repository.fetchOverview);
+    });
+
+    testWidgets('charts weekly study time and the accuracy trend', (
+      tester,
+    ) async {
+      await pumpInsights(
+        tester,
+        const InsightsScreen(),
+        fakeRepository(json: sampleInsightsJson()),
+      );
+
+      expect(find.byType(BarChart), findsOneWidget);
+      expect(find.byType(LineChart), findsOneWidget);
+      // Total as the backend sent it.
+      expect(
+        find.text('2 h 5 min  in the last 7 days', findRichText: true),
+        findsOneWidget,
+      );
+      // Latest day with a value; the null-accuracy day is skipped.
+      expect(
+        find.text('75%  on 17 Nov (8 answered)', findRichText: true),
+        findsOneWidget,
+      );
+      final line = tester.widget<LineChart>(find.byType(LineChart));
+      expect(line.data.lineBarsData.single.spots.map((s) => s.y), [40, 58, 75]);
+      expect(
+        find.bySemanticsLabel(RegExp('^Study time per day: Wed 20 min')),
+        findsOneWidget,
+      );
+    });
+
+    testWidgets('a new student gets messages instead of empty charts', (
+      tester,
+    ) async {
+      await pumpInsights(
+        tester,
+        const InsightsScreen(),
+        fakeRepository(
+          json: sampleInsightsJson(),
+          overviewJson: emptyOverviewJson(),
+        ),
+      );
+
+      expect(find.byType(BarChart), findsNothing);
+      expect(find.byType(LineChart), findsNothing);
+      expect(find.textContaining('No study time this week'), findsOneWidget);
+      expect(find.textContaining('Answer a few questions'), findsOneWidget);
+    });
+
+    testWidgets('an overview error shows Retry and keeps the rest', (
+      tester,
+    ) async {
+      final repository = fakeRepository(
+        json: sampleInsightsJson(),
+        overviewError: const InsightsServerError('Overview down'),
+      );
+      await pumpInsights(tester, const InsightsScreen(), repository);
+
+      expect(find.text('mastery'), findsOneWidget);
+      expect(find.text('Overview down'), findsOneWidget);
+      expect(find.text('Accuracy trend'), findsNothing);
+
+      await tester.tap(find.text('Retry'));
+      await tester.pumpAndSettle();
+      verify(repository.fetchOverview).called(2);
     });
 
     testWidgets('renders in the dark theme', (tester) async {
@@ -169,6 +238,7 @@ void main() {
         () => repository.fetchTopicInsights(attemptId: any(named: 'attemptId')),
       ).thenAnswer((_) => pending.future);
       stubUnits(repository);
+      stubProgress(repository);
 
       await pumpInsights(
         tester,
