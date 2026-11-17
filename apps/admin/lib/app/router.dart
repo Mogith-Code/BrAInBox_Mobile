@@ -31,6 +31,10 @@ abstract final class AdminRoutes {
   static const questionEdit = '/question-bank/:questionId'; // Udith
   static String questionEditPath(String id) => '/question-bank/$id';
   static const mcqMapping = '/mcq-mapping'; // Udith
+  static String mcqMappingPath(String questionId) => Uri(
+    path: mcqMapping,
+    queryParameters: {'questionId': questionId},
+  ).toString();
   static const qualityReview = '/quality-review'; // Udith
   static const pastPapers = '/past-papers'; // Udith
   static const knowledgeBase = '/knowledge-base'; // Keshomigha
@@ -90,7 +94,9 @@ GoRouter router(Ref ref) {
           ),
           GoRoute(
             path: AdminRoutes.mcqMapping,
-            builder: (context, state) => const McqMappingScreen(),
+            builder: (context, state) => McqMappingScreen(
+              questionId: state.uri.queryParameters['questionId'],
+            ),
           ),
           GoRoute(
             path: AdminRoutes.qualityReview,
