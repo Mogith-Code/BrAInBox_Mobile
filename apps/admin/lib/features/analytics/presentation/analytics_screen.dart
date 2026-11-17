@@ -7,12 +7,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../widgets/admin_page.dart';
 import '../application/analytics_controller.dart';
 import '../domain/analytics_models.dart';
+import 'widgets/evaluation_accuracy.dart';
 
 /// Analytics: daily active students, AI feature usage, average mastery per
 /// unit and the most common misconceptions, for 7d / 30d / 90d / a term.
 ///
+/// Below them: evaluation accuracy (AI vs teacher marks, all time) and the
+/// evaluations table where an admin enters a teacher's marks.
+///
 /// Route: `/analytics`. Data: `/admin/analytics/overview`, `/performance`,
-/// `/ai-usage` (built on the backend).
+/// `/ai-usage`, `/admin/evaluations/accuracy`, `/admin/evaluations`
+/// (`PATCH /admin/evaluations/{id}` saves teacher marks).
 class AnalyticsScreen extends ConsumerWidget {
   const AnalyticsScreen({super.key});
 
@@ -227,6 +232,10 @@ class _Body extends StatelessWidget {
               pair(usage, ai),
               const SizedBox(height: AppSpacing.lg),
               pair(mastery, misconceptions, flexA: 1, flexB: 1),
+              const SizedBox(height: AppSpacing.lg),
+              const EvaluationAccuracyPanel(),
+              const SizedBox(height: AppSpacing.lg),
+              const EvaluationsPanel(),
             ],
           );
         },

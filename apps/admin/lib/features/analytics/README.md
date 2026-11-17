@@ -14,17 +14,21 @@
 |---|---|---|
 | Analytics | `presentation/analytics_screen.dart` | `/analytics` |
 
-## API endpoints it will use
-
-> Planned paths only. The backend's `/docs` (OpenAPI) is the real contract -
-> update this table when the backend publishes the endpoints.
+## API endpoints it uses
 
 | Method | Path | Purpose |
 |---|---|---|
-| `GET` | `/admin/analytics/most-missed-topics` | Most-missed topics |
-| `GET` | `/admin/analytics/misconceptions` | Most common misconceptions |
+| `GET` | `/admin/analytics/overview?days=` | Students and daily activity |
+| `GET` | `/admin/analytics/performance?days=` | Mastery per unit, misconceptions |
+| `GET` | `/admin/analytics/ai-usage?days=` | AI requests per feature |
+| `GET` | `/admin/evaluations/accuracy` | Evaluation accuracy card (AI vs teacher marks, all time) |
+| `GET` | `/admin/evaluations?page=&size=&only_manual=` | Evaluations table |
+| `PATCH` | `/admin/evaluations/{id}` | Save a teacher's marks (`{manual_marks}`, 0..max marks) |
 
-Shared models used: `Topic`, `Mistake` (from `brainbox_core`, re-exported in `domain/`).
+Evaluation code is plain classes + plain Riverpod providers:
+`domain/evaluation_models.dart`, `data/evaluations_repository.dart`,
+`application/evaluations_controller.dart`,
+`presentation/widgets/evaluation_accuracy.dart`.
 
 ## Folders
 
