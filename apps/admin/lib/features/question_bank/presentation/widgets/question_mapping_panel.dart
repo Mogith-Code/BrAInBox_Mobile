@@ -48,6 +48,10 @@ class QuestionMappingPanel extends ConsumerWidget {
       onChanged: onSelect,
     );
 
+    final topicItems = <(String, String)>[
+      for (final t in topics) (t.id, '${t.number} ${t.title}'),
+    ];
+
     return AdminPanel(
       title: 'Mapping',
       child: Column(
@@ -65,9 +69,12 @@ class QuestionMappingPanel extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.md),
-          dropdown('Topic', q.topicId, [
-            for (final t in topics) (t.id, '${t.number} ${t.title}'),
-          ], (id) => onChanged(q.copyWith(topicId: id, conceptId: null))),
+          dropdown(
+            'Topic',
+            q.topicId,
+            topicItems,
+            (id) => onChanged(q.copyWith(topicId: id, conceptId: null)),
+          ),
           const SizedBox(height: AppSpacing.md),
           dropdown('Concept', q.conceptId, [
             for (final c in concepts) (c.id, c.name),
