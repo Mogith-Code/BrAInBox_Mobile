@@ -118,11 +118,24 @@ abstract final class AppRoutes {
   static const quizSetup = '/practice/setup';
 
   /// Quiz setup for one topic. [mode]: `quick` (10 MCQs) or `weak`.
-  static String quizSetupPath({String? topicId, String? mode}) =>
-      _withQuery(quizSetup, {'topicId': topicId, 'mode': mode});
+  /// `mistakes` re-asks questions answered wrongly; [conceptId] limits the
+  /// quiz to one concept (from a recommendation).
+  static String quizSetupPath({
+    String? topicId,
+    String? mode,
+    String? conceptId,
+  }) => _withQuery(quizSetup, {
+    'topicId': topicId,
+    'mode': mode,
+    'conceptId': conceptId,
+  });
   static const mcqQuestion = '/practice/quiz';
+  static String mcqQuestionPath(String quizId) =>
+      _withQuery(mcqQuestion, {'quizId': quizId});
   static const answerFeedback = '/practice/feedback';
   static const quizResult = '/practice/result';
+  static String quizResultPath(String quizId) =>
+      _withQuery(quizResult, {'quizId': quizId});
 
   // Diagnostic (Udith) - full screen, outside the bottom nav.
   static const diagnostic = '/diagnostic';
@@ -137,6 +150,8 @@ abstract final class AppRoutes {
   static const examResult = '/exams/result';
 
   // Evaluation (Keshomigha)
+  /// Structured and essay questions to practise.
+  static const writtenQuestions = '/evaluation';
   static const typedAnswer = '/evaluation/typed/:questionId';
   static String typedAnswerPath(String questionId) =>
       '/evaluation/typed/$questionId';
@@ -144,6 +159,8 @@ abstract final class AppRoutes {
   static String handwrittenUploadPath(String questionId) =>
       '/evaluation/handwritten/$questionId';
   static const ocrPreview = '/evaluation/ocr-preview';
+  static String ocrPreviewPath(String evaluationId) =>
+      _withQuery(ocrPreview, {'evaluationId': evaluationId});
   static const evaluationFeedback = '/evaluation/feedback/:evaluationId';
   static String evaluationFeedbackPath(String evaluationId) =>
       '/evaluation/feedback/$evaluationId';
@@ -157,6 +174,8 @@ abstract final class AppRoutes {
   static const nextSteps = '/recommendations';
   static const studyPlan = '/recommendations/study-plan';
   static const reassessment = '/recommendations/reassessment';
+  static String reassessmentPath(String recommendationId) =>
+      _withQuery(reassessment, {'id': recommendationId});
 
   // Community (Mogith)
   static const community = '/community';
@@ -165,6 +184,8 @@ abstract final class AppRoutes {
   static const postDetail = '/community/posts/:postId';
   static String postDetailPath(String postId) => '/community/posts/$postId';
   static const createPost = '/community/create';
+  static String createPostPath(String groupId) =>
+      _withQuery(createPost, {'groupId': groupId});
 
   // Notifications (Samni)
   static const notifications = '/notifications';
@@ -238,6 +259,7 @@ abstract final class AppRoutes {
     (title: 'Generate model paper', owner: 'Udith', path: generatePaper),
     (title: 'Exam mode', owner: 'Udith', path: examAttemptPath('demo')),
     (title: 'Exam result', owner: 'Udith', path: examResult),
+    (title: 'Written practice', owner: 'Keshomigha', path: writtenQuestions),
     (title: 'Typed answer', owner: 'Keshomigha', path: typedAnswerPath('demo')),
     (
       title: 'Handwritten answer',

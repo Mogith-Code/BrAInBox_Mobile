@@ -1,9 +1,7 @@
 import 'package:brainbox_core/brainbox_core.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../domain/recommendations_models.dart';
-
-part 'recommendations_repository.g.dart';
 
 /// Data layer for the Recommendations feature.
 ///
@@ -14,23 +12,50 @@ class RecommendationsRepository {
 
   final ApiClient api;
 
-  /// Loads the data for the main Recommendations screen.
-  Future<RecommendationsSummary> fetchSummary() async {
-    // TODO(udith): call the backend instead of returning placeholder data.
-    // Real version (uncomment when the endpoint exists):
-    // final json = await api.get<Map<String, dynamic>>('/recommendations');
-    // return RecommendationsSummary.fromJson(json);
-    return const RecommendationsSummary(
-      title: 'Next steps',
-      message: 'Placeholder data - API not connected yet.',
-    );
+  /// `GET /recommendations`
+  Future<NextSteps> fetchNextSteps() async {
+    final json = await api.get<Map<String, dynamic>>('/recommendations');
+    return NextSteps.fromJson(json);
   }
 
-  // TODO(udith): add one method per endpoint, e.g.
-  //   GET /study-plan  ->  The student's study plan
-  //   POST /reassessments  ->  Start a reassessment
+  /// `PATCH /recommendations/{id}` - `in_progress`, `done` or `dismissed`.
+  Future<void> setStatus(String id, String status) =>
+      api.patch<dynamic>('/recommendations/$id', data: {'status': status});
+
+  /// `GET /recommendations/{id}/outcome`
+  Future<Outcome> fetchOutcome(String id) async {
+    final json = await api.get<Map<String, dynamic>>(
+      '/recommendations/$id/outcome',
+    );
+    return Outcome.fromJson(json);
+  }
+
+  /// `GET /study-plan`
+  Future<StudyPlan> fetchPlan() async {
+    final json = await api.get<Map<String, dynamic>>('/study-plan');
+    return StudyPlan.fromJson(json);
+  }
+
+  /// `POST /study-plan/regenerate`
+  Future<StudyPlan> regeneratePlan() async {
+    final json = await api.post<Map<String, dynamic>>('/study-plan/regenerate');
+    return StudyPlan.fromJson(json);
+  }
+
+  /// `PATCH /study-plan/items/{id}`
+  Future<void> setItemDone(String itemId, {required bool done}) =>
+      api.patch<dynamic>('/study-plan/items/$itemId', data: {'is_done': done});
+
+  /// `PUT /study-plan/order` - the new order of one day's items.
+  Future<StudyPlan> reorder(List<String> itemIds) async {
+    final json = await api.put<Map<String, dynamic>>(
+      '/study-plan/order',
+      data: {'item_ids': itemIds},
+    );
+    return StudyPlan.fromJson(json);
+  }
 }
 
-@riverpod
-RecommendationsRepository recommendationsRepository(Ref ref) =>
-    RecommendationsRepository(ref.watch(apiClientProvider));
+final recommendationsRepositoryProvider = Provider<RecommendationsRepository>(
+  (ref) => RecommendationsRepository(ref.watch(apiClientProvider)),
+);

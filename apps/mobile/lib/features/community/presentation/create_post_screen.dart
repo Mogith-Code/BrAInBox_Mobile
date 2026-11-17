@@ -11,7 +11,10 @@ import '../../../app/routes.dart';
 // TODO(mogith): build the real UI from Figma. Keep this file UI-only: read state
 // from the controller and call its methods. Never call Dio / Firebase here.
 class CreatePostScreen extends StatelessWidget {
-  const CreatePostScreen({super.key});
+  const CreatePostScreen({super.key, this.groupId});
+
+  /// The group to post in (`/community/create?groupId=...`).
+  final String? groupId;
 
   @override
   Widget build(BuildContext context) {
