@@ -465,6 +465,13 @@ class ExamResultScreen extends ConsumerWidget {
               onPressed: () => _openSetup(context, ref, weakUnitNumbers),
             ),
           ],
+          const SizedBox(height: AppSpacing.sm),
+          AppButton(
+            label: 'See my next steps',
+            icon: Icons.route_rounded,
+            variant: AppButtonVariant.secondary,
+            onPressed: () => context.push(AppRoutes.nextSteps),
+          ),
           const SizedBox(height: AppSpacing.xl),
         ],
       ),
