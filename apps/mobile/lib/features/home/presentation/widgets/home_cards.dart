@@ -214,10 +214,24 @@ class _WhiteCard extends StatelessWidget {
 
 /// "Today's plan · 1/3" with tick circles.
 class TodaysPlanCard extends StatelessWidget {
-  const TodaysPlanCard({super.key, required this.plan, required this.onToggle});
+  const TodaysPlanCard({
+    super.key,
+    required this.plan,
+    required this.onToggle,
+    this.onOpen,
+    this.onSeePlan,
+  });
 
   final TodaysPlan plan;
+
+  /// The circle: ticks / unticks the item.
   final ValueChanged<PlanItem> onToggle;
+
+  /// The rest of the row: opens the item. Null: the row ticks it too.
+  final ValueChanged<PlanItem>? onOpen;
+
+  /// "See plan" in the header.
+  final VoidCallback? onSeePlan;
 
   @override
   Widget build(BuildContext context) {
@@ -241,11 +255,28 @@ class TodaysPlanCard extends StatelessWidget {
                 '${plan.done}/${plan.total}',
                 style: textTheme.labelMedium?.copyWith(color: AppColors.muted),
               ),
+              if (onSeePlan != null)
+                TextButton(
+                  onPressed: onSeePlan,
+                  style: TextButton.styleFrom(
+                    minimumSize: const Size(48, 48),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.sm,
+                    ),
+                    foregroundColor: AppColors.primary,
+                    textStyle: const TextStyle(fontWeight: FontWeight.w700),
+                  ),
+                  child: const Text('See plan'),
+                ),
             ],
           ),
           const SizedBox(height: AppSpacing.xs),
           for (final item in plan.items)
-            _PlanRow(item: item, onTap: () => onToggle(item)),
+            _PlanRow(
+              item: item,
+              onToggle: () => onToggle(item),
+              onOpen: onOpen == null ? null : () => onOpen!(item),
+            ),
         ],
       ),
     );
@@ -253,10 +284,13 @@ class TodaysPlanCard extends StatelessWidget {
 }
 
 class _PlanRow extends StatelessWidget {
-  const _PlanRow({required this.item, required this.onTap});
+  const _PlanRow({required this.item, required this.onToggle, this.onOpen});
 
   final PlanItem item;
-  final VoidCallback onTap;
+  final VoidCallback onToggle;
+
+  /// Null: tapping the text ticks the item too.
+  final VoidCallback? onOpen;
 
   @override
   Widget build(BuildContext context) {
@@ -265,71 +299,110 @@ class _PlanRow extends StatelessWidget {
       if (item.minutes > 0) '${item.minutes} min',
       if (item.unitLabel.isNotEmpty) item.unitLabel,
     ].join(' · ');
-    return Semantics(
+    // The circle has its own 48 px target; it ticks / unticks.
+    final circle = Semantics(
       checked: item.done,
       button: true,
-      label: '${item.title}, $subtitle',
-      child: ExcludeSemantics(
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(AppSpacing.radiusSm),
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(minHeight: 48),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs + 2),
-              child: Row(
-                children: [
-                  AnimatedContainer(
-                    duration: const Duration(milliseconds: 180),
-                    width: 22,
-                    height: 22,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: item.done ? AppColors.success : AppColors.white,
-                      border: Border.all(
-                        color: item.done ? AppColors.success : AppColors.border,
-                        width: 2,
-                      ),
-                    ),
-                    child: item.done
-                        ? const Icon(
-                            Icons.check,
-                            size: 14,
-                            color: AppColors.white,
-                          )
-                        : null,
-                  ),
-                  const SizedBox(width: AppSpacing.sm + 2),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          item.title,
-                          style: textTheme.bodyMedium?.copyWith(
-                            color: item.done ? AppColors.muted : AppColors.ink,
-                            decoration: item.done
-                                ? TextDecoration.lineThrough
-                                : null,
-                            decorationColor: AppColors.muted,
-                          ),
-                        ),
-                        if (subtitle.isNotEmpty)
-                          Text(
-                            subtitle,
-                            style: textTheme.labelSmall?.copyWith(
-                              color: AppColors.muted,
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                ],
+      label: '${item.done ? 'Done' : 'Mark done'}: ${item.title}',
+      excludeSemantics: true,
+      child: InkResponse(
+        onTap: onToggle,
+        radius: 24,
+        child: SizedBox.square(
+          dimension: 48,
+          child: Center(
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 180),
+              width: 22,
+              height: 22,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: item.done ? AppColors.success : AppColors.white,
+                border: Border.all(
+                  color: item.done ? AppColors.success : AppColors.border,
+                  width: 2,
+                ),
               ),
+              child: item.done
+                  ? const Icon(Icons.check, size: 14, color: AppColors.white)
+                  : null,
             ),
           ),
         ),
       ),
+    );
+    return Row(
+      children: [
+        // Pull the target back so the dot lines up with the card title.
+        Transform.translate(offset: const Offset(-13, 0), child: circle),
+        Expanded(
+          child: Transform.translate(
+            offset: const Offset(-13, 0),
+            child: Semantics(
+              button: true,
+              checked: onOpen == null ? item.done : null,
+              label:
+                  '${item.title}${subtitle.isEmpty ? '' : ', $subtitle'}'
+                  '${onOpen == null ? '' : '. Opens the study plan'}',
+              excludeSemantics: true,
+              child: InkWell(
+                onTap: onOpen ?? onToggle,
+                borderRadius: BorderRadius.circular(AppSpacing.radiusSm),
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(minHeight: 48),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: AppSpacing.xs + 2,
+                    ),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: _PlanText(
+                        item: item,
+                        subtitle: subtitle,
+                        textTheme: textTheme,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _PlanText extends StatelessWidget {
+  const _PlanText({
+    required this.item,
+    required this.subtitle,
+    required this.textTheme,
+  });
+
+  final PlanItem item;
+  final String subtitle;
+  final TextTheme textTheme;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          item.title,
+          style: textTheme.bodyMedium?.copyWith(
+            color: item.done ? AppColors.muted : AppColors.ink,
+            decoration: item.done ? TextDecoration.lineThrough : null,
+            decorationColor: AppColors.muted,
+          ),
+        ),
+        if (subtitle.isNotEmpty)
+          Text(
+            subtitle,
+            style: textTheme.labelSmall?.copyWith(color: AppColors.muted),
+          ),
+      ],
     );
   }
 }
