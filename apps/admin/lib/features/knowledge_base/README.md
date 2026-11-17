@@ -14,24 +14,26 @@
 |---|---|---|
 | Knowledge base | `presentation/knowledge_base_screen.dart` | `/knowledge-base` |
 
-## API endpoints it will use
-
-> Planned paths only. The backend's `/docs` (OpenAPI) is the real contract -
-> update this table when the backend publishes the endpoints.
+## API endpoints it uses
 
 | Method | Path | Purpose |
 |---|---|---|
-| `GET` | `/admin/model-answers` | Model answers |
-| `POST` | `/admin/model-answers` | Add a model answer |
-| `PUT` | `/admin/model-answers/{answer_id}/keywords` | Edit keywords |
+| `GET` | `/admin/model-answers?status=` | Model answers with marking points + keywords |
+| `POST` | `/admin/model-answers` | Add one (`status: draft` or `approved`) with points `{text, marks, keywords}` |
+| `PUT` | `/admin/model-answers/{answer_id}/keywords` | Replace the keywords of the changed points |
+| `GET` | `/admin/questions?type=structured` / `essay` | Questions to write an answer for |
+
+"Practisable" = approved **and** has marking points (that is what the backend's
+evaluation uses). The backend has no route to approve an answer that is
+already saved, so approving happens only when adding one ("Save and approve").
 
 ## Folders
 
 ```
 knowledge_base/
-├── domain/knowledge_base_models.dart              freezed models
+├── domain/knowledge_base_models.dart              plain classes with fromJson
 ├── data/knowledge_base_repository.dart            calls ApiClient (the only place that does)
-├── application/knowledge_base_controller.dart     Riverpod controller (loading / error / data)
+├── application/knowledge_base_controller.dart     plain Riverpod 3 providers
 └── presentation/                       screens + widgets/ (UI only)
 ```
 
