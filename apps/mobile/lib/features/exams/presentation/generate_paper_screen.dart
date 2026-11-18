@@ -6,8 +6,10 @@ import 'package:go_router/go_router.dart';
 import '../../../app/routes.dart';
 import '../application/exams_controller.dart';
 import '../domain/exams_models.dart';
+import '../domain/paper_models.dart';
 
-/// Generate model paper screen - Configure and generate customized A/L Biology model papers.
+/// Model paper generator: units + MCQ / structured / essay mix.
+/// `POST /papers/generate` returns 202 + a job, polled with JobPoller.
 ///
 /// Route: `/exams/generate`
 class GeneratePaperScreen extends ConsumerStatefulWidget {
@@ -22,196 +24,181 @@ class GeneratePaperScreen extends ConsumerStatefulWidget {
 
 class _GeneratePaperScreenState extends ConsumerState<GeneratePaperScreen> {
   late final Set<int> _units = Set<int>.of(widget.initialUnits);
-  int _count = 10;
-  bool _loading = false;
-  String? _error;
+  int _mcq = 20;
+  int _structured = 0;
+  int _essay = 0;
+  int? _minutes = 60;
 
-  void _toggle(int unit) {
-    setState(() {
-      if (!_units.remove(unit)) {
-        _units.add(unit);
-      }
-    });
-  }
+  bool get _valid => _units.isNotEmpty && (_mcq + _structured + _essay) > 0;
 
   Future<void> _start() async {
-    setState(() {
-      _loading = true;
-      _error = null;
-    });
-
-    try {
-      final units = _units.toList()..sort();
-      final paper = await ref
-          .read(examSessionControllerProvider.notifier)
-          .generatePaper(units: units, count: _count);
-
-      if (!mounted) return;
-      setState(() => _loading = false);
-      context.push(AppRoutes.examAttemptPath(paper.paperId));
-    } catch (e) {
-      if (!mounted) return;
-      // Friendly text for every case (offline, timeout, backend codes).
-      final msg = ErrorMessages.of(e);
-      setState(() {
-        _loading = false;
-        _error = msg;
-      });
+    final id = await ref
+        .read(generatePaperControllerProvider.notifier)
+        .generate(
+          PaperBlueprint(
+            unitNumbers: _units.toList()..sort(),
+            mcqCount: _mcq,
+            structuredCount: _structured,
+            essayCount: _essay,
+            timeLimitMinutes: _minutes,
+          ),
+        );
+    if (id != null && mounted) {
+      context.pushReplacement(AppRoutes.examAttemptPath(id));
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    ref.watch(examSessionControllerProvider);
-    final selected = _units.length;
-    final enough = _count >= selected;
-    final perUnit = selected == 0 ? 0 : (_count / selected).ceil();
+    final gen = ref.watch(generatePaperControllerProvider);
+
+    if (gen.running) {
+      return Scaffold(
+        appBar: AppBar(title: const Text('Generate model paper')),
+        body: Center(
+          child: AiGeneratingLoader(
+            message: 'Building your model paper...',
+            progress: (gen.progress ?? 0) > 0 ? gen.progress : null,
+          ),
+        ),
+      );
+    }
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Create practice paper')),
+      appBar: AppBar(title: const Text('Generate model paper')),
       body: ListView(
-        padding: const EdgeInsets.all(AppSpacing.md),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         children: [
-          Text(
-            'Select the units you want to practise. Questions are generated and grounded in the approved A/L Biology resource books.',
-            style: Theme.of(
-              context,
-            ).textTheme.bodyMedium?.copyWith(color: AppColors.muted),
-          ),
-          const SizedBox(height: AppSpacing.sm),
-          Row(
+          if (gen.error != null) ...[
+            ErrorBanner(message: gen.error!, onRetry: _valid ? _start : null),
+            const SizedBox(height: AppSpacing.md),
+          ],
+          const _Heading('Units'),
+          Wrap(
+            spacing: AppSpacing.sm,
+            runSpacing: AppSpacing.sm,
             children: [
-              Text(
-                'Units ($selected/10 selected)',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.ink,
+              for (final e in kBiologyUnits.entries)
+                FilterChip(
+                  label: Text('Unit ${e.key} · ${e.value}'),
+                  selected: _units.contains(e.key),
+                  materialTapTargetSize: MaterialTapTargetSize.padded,
+                  onSelected: (on) => setState(
+                    () => on ? _units.add(e.key) : _units.remove(e.key),
+                  ),
                 ),
-              ),
-              const Spacer(),
-              TextButton(
-                onPressed: _loading
-                    ? null
-                    : () => setState(() => _units.addAll(kBiologyUnits.keys)),
-                child: const Text('Select all'),
-              ),
-              TextButton(
-                onPressed: _loading ? null : () => setState(_units.clear),
-                child: const Text('Clear'),
-              ),
             ],
           ),
-          const SizedBox(height: AppSpacing.xs),
-          for (final entry in kBiologyUnits.entries)
-            Card(
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                side: BorderSide(
-                  color: _units.contains(entry.key)
-                      ? AppColors.primary
-                      : AppColors.border,
-                ),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              color: _units.contains(entry.key)
-                  ? AppColors.primarySoft
-                  : AppColors.white,
-              margin: const EdgeInsets.only(bottom: 8),
-              child: CheckboxListTile(
-                value: _units.contains(entry.key),
-                activeColor: AppColors.primary,
-                onChanged: _loading ? null : (_) => _toggle(entry.key),
-                controlAffinity: ListTileControlAffinity.leading,
-                title: Text(
-                  'Unit ${entry.key}',
-                  style: const TextStyle(fontWeight: FontWeight.w600),
-                ),
-                subtitle: Text(
-                  entry.value,
-                  style: TextStyle(
-                    color: _units.contains(entry.key)
-                        ? AppColors.ink
-                        : AppColors.muted,
-                  ),
-                ),
-              ),
-            ),
-          const SizedBox(height: AppSpacing.md),
-          Text(
-            'Number of questions: $_count',
-            style: Theme.of(
-              context,
-            ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-          ),
-          Slider(
-            value: _count.toDouble(),
-            min: 1,
+          const SizedBox(height: AppSpacing.lg),
+          const _Heading('Questions'),
+          _Counter(
+            label: 'Part I · MCQ',
+            value: _mcq,
             max: 60,
-            divisions: 59,
-            activeColor: AppColors.primary,
-            label: '$_count',
-            onChanged: _loading
-                ? null
-                : (v) => setState(() => _count = v.round()),
+            step: 5,
+            onChanged: (v) => setState(() => _mcq = v),
           ),
-          if (selected > 0 && enough)
-            Padding(
-              padding: const EdgeInsets.only(left: 4),
-              child: Text(
-                'About $perUnit question(s) per unit.',
-                style: const TextStyle(color: AppColors.muted),
-              ),
-            ),
-          if (selected > 0 && !enough)
-            Padding(
-              padding: const EdgeInsets.only(left: 4),
-              child: Text(
-                'Increase the number of questions (at least one per selected unit).',
-                style: const TextStyle(
-                  color: AppColors.error,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-          const SizedBox(height: AppSpacing.md),
-          if (_error != null)
-            Container(
-              padding: const EdgeInsets.all(AppSpacing.sm),
-              margin: const EdgeInsets.only(bottom: AppSpacing.md),
-              decoration: BoxDecoration(
-                color: AppColors.errorSoft,
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(
-                  color: AppColors.error.withValues(alpha: 0.3),
-                ),
-              ),
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.error_outline,
-                    color: AppColors.error,
-                    size: 20,
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      _error!,
-                      style: const TextStyle(color: AppColors.errorDark),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          AppButton(
-            label: _loading
-                ? 'Generating paper... this may take up to a minute'
-                : 'Generate paper',
-            isLoading: _loading,
-            onPressed: (selected == 0 || !enough || _loading) ? null : _start,
+          _Counter(
+            label: 'Part II · Structured',
+            value: _structured,
+            max: 10,
+            onChanged: (v) => setState(() => _structured = v),
+          ),
+          _Counter(
+            label: 'Essay',
+            value: _essay,
+            max: 6,
+            onChanged: (v) => setState(() => _essay = v),
+          ),
+          const SizedBox(height: AppSpacing.lg),
+          const _Heading('Time limit'),
+          DropdownButtonFormField<int?>(
+            initialValue: _minutes,
+            items: const [
+              DropdownMenuItem(child: Text('No time limit')),
+              DropdownMenuItem(value: 30, child: Text('30 minutes')),
+              DropdownMenuItem(value: 60, child: Text('1 hour')),
+              DropdownMenuItem(value: 120, child: Text('2 hours')),
+              DropdownMenuItem(value: 180, child: Text('3 hours')),
+            ],
+            onChanged: (v) => setState(() => _minutes = v),
           ),
           const SizedBox(height: AppSpacing.xl),
+          AppButton(
+            label: 'Generate paper',
+            icon: Icons.auto_awesome,
+            onPressed: _valid ? _start : null,
+          ),
+          if (_units.isEmpty)
+            const Padding(
+              padding: EdgeInsets.only(top: AppSpacing.sm),
+              child: Text(
+                'Choose at least one unit.',
+                style: TextStyle(color: AppColors.muted),
+              ),
+            ),
         ],
       ),
     );
   }
+}
+
+class _Heading extends StatelessWidget {
+  const _Heading(this.text);
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+    child: Text(
+      text,
+      style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.ink),
+    ),
+  );
+}
+
+class _Counter extends StatelessWidget {
+  const _Counter({
+    required this.label,
+    required this.value,
+    required this.max,
+    required this.onChanged,
+    this.step = 1,
+  });
+
+  final String label;
+  final int value;
+  final int max;
+  final int step;
+  final ValueChanged<int> onChanged;
+
+  @override
+  Widget build(BuildContext context) => Row(
+    children: [
+      Expanded(child: Text(label)),
+      IconButton(
+        tooltip: 'Fewer $label',
+        icon: const Icon(Icons.remove_circle_outline),
+        onPressed: value > 0
+            ? () => onChanged((value - step).clamp(0, max))
+            : null,
+      ),
+      SizedBox(
+        width: 32,
+        child: Text(
+          '$value',
+          textAlign: TextAlign.center,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+      ),
+      IconButton(
+        tooltip: 'More $label',
+        icon: const Icon(Icons.add_circle_outline),
+        onPressed: value < max
+            ? () => onChanged((value + step).clamp(0, max))
+            : null,
+      ),
+    ],
+  );
 }
