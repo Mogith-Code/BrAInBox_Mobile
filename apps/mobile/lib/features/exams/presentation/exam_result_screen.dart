@@ -439,6 +439,27 @@ class ExamResultScreen extends ConsumerWidget {
         padding: const EdgeInsets.all(AppSpacing.md),
         children: [
           _buildSummary(context, activeResult),
+          if (activeResult.pendingWritten > 0) ...[
+            const SizedBox(height: AppSpacing.md),
+            Card(
+              elevation: 0,
+              color: AppColors.warningSoft,
+              child: ListTile(
+                leading: const Icon(
+                  Icons.hourglass_top_rounded,
+                  color: AppColors.warningDark,
+                ),
+                title: Text(
+                  'Marking ${activeResult.pendingWritten} written '
+                  'answer${activeResult.pendingWritten == 1 ? '' : 's'}',
+                ),
+                subtitle: const Text(
+                  'Structured and essay marks are added when ready. '
+                  'The score above covers the MCQs.',
+                ),
+              ),
+            ),
+          ],
           const SizedBox(height: AppSpacing.md),
           _buildByTopic(context, activeResult),
           const SizedBox(height: AppSpacing.lg),
