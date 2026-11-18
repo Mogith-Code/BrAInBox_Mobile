@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/routes.dart';
+import '../application/account_controller.dart';
 import '../application/settings_controller.dart';
 import '../domain/settings_models.dart';
 import 'widgets/settings_tiles.dart';
@@ -142,8 +143,113 @@ class PrivacyScreen extends ConsumerWidget {
               _ => [const LinearProgressIndicator(minHeight: 2)],
             },
           ),
+          const SettingsSection('Your data'),
+          const _YourData(),
         ],
       ),
+    );
+  }
+}
+
+/// "Download my data" and "Delete my account".
+class _YourData extends ConsumerWidget {
+  const _YourData();
+
+  Future<void> _confirmDelete(BuildContext context, WidgetRef ref) async {
+    final typed = TextEditingController();
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setState) => AlertDialog(
+          icon: const Icon(Icons.warning_amber_rounded, color: AppColors.error),
+          title: const Text('Delete my account?'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'This removes your profile, answers, evaluations, uploaded '
+                'answer photos, study plan and community posts. '
+                'It cannot be undone.',
+              ),
+              const SizedBox(height: AppSpacing.md),
+              TextField(
+                controller: typed,
+                decoration: const InputDecoration(
+                  labelText: 'Type DELETE to confirm',
+                ),
+                onChanged: (_) => setState(() {}),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: const Text('Cancel'),
+            ),
+            FilledButton(
+              style: FilledButton.styleFrom(backgroundColor: AppColors.error),
+              onPressed: typed.text.trim() == 'DELETE'
+                  ? () => Navigator.pop(ctx, true)
+                  : null,
+              child: const Text('Delete forever'),
+            ),
+          ],
+        ),
+      ),
+    );
+    typed.dispose();
+    if (ok != true) return;
+    final deleted = await ref
+        .read(accountControllerProvider.notifier)
+        .deleteAccount();
+    if (deleted && context.mounted) context.go(AppRoutes.login);
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(accountControllerProvider);
+    final account = ref.read(accountControllerProvider.notifier);
+    ref.listen(accountControllerProvider, (_, next) {
+      if (next.action == AccountAction.exported) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Your data was saved.')));
+      }
+    });
+
+    return SettingsGroup(
+      children: [
+        ListTile(
+          leading: const Icon(Icons.download_outlined),
+          title: const Text('Download my data'),
+          subtitle: const Text('A JSON file with everything we keep'),
+          trailing: state.action == AccountAction.exporting
+              ? const SizedBox.square(
+                  dimension: 20,
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                )
+              : null,
+          onTap: state.busy ? null : account.exportData,
+        ),
+        ListTile(
+          leading: const Icon(Icons.delete_forever, color: AppColors.error),
+          title: const Text(
+            'Delete my account',
+            style: TextStyle(color: AppColors.error),
+          ),
+          subtitle: const Text('Removes all your data'),
+          trailing: state.action == AccountAction.deleting
+              ? const SizedBox.square(
+                  dimension: 20,
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                )
+              : null,
+          onTap: state.busy ? null : () => _confirmDelete(context, ref),
+        ),
+        if (state.action == AccountAction.failed && state.error != null)
+          ErrorBanner(message: state.error!),
+      ],
     );
   }
 }
