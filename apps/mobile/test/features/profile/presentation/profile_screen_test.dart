@@ -89,10 +89,7 @@ void main() {
     addTearDown(c.dispose);
     await _pump(tester, c);
     await tester.pumpAndSettle();
-    expect(
-      find.text('No internet connection. Check it and try again.'),
-      findsOneWidget,
-    );
+    expect(find.text("You're offline"), findsOneWidget);
     expect(find.text('Retry'), findsOneWidget);
   });
 

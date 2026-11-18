@@ -7,152 +7,305 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/routes.dart';
 import '../application/exams_controller.dart';
-import '../domain/exams_models.dart';
+import '../domain/paper_models.dart';
 
+/// Answer letters, "A" = first option.
 const List<String> kOptionLetters = ['A', 'B', 'C', 'D', 'E'];
 
-/// Timed exam attempt screen with MCQ answering and submission.
-///
-/// Route: `/exams/attempt/:paperId`
-class ExamAttemptScreen extends ConsumerStatefulWidget {
-  const ExamAttemptScreen({super.key, required this.paperId});
+/// Status of one question in the palette.
+enum QuestionStatus {
+  answered('Answered', Icons.check_circle, AppColors.successDark),
+  unanswered('Unanswered', Icons.radio_button_unchecked, AppColors.muted),
+  flagged('Flagged', Icons.flag, AppColors.warningDark);
 
-  final String paperId;
+  const QuestionStatus(this.word, this.icon, this.color);
 
-  @override
-  ConsumerState<ExamAttemptScreen> createState() => _ExamAttemptScreenState();
+  final String word;
+  final IconData icon;
+  final Color color;
 }
 
-class _ExamAttemptScreenState extends ConsumerState<ExamAttemptScreen> {
+/// Exam mode: Part I MCQ / Part II structured / essay tabs, a question
+/// palette and a submit confirmation.
+///
+/// Route: `/exams/attempt/:paperId?hide_outdated=true`
+class ExamAttemptScreen extends ConsumerWidget {
+  const ExamAttemptScreen({
+    super.key,
+    required this.paperId,
+    this.hideOutdated = false,
+  });
+
+  final String paperId;
+  final bool hideOutdated;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final arg = (id: paperId, hideOutdated: hideOutdated);
+    final paper = ref.watch(paperDetailProvider(arg));
+    return paper.when(
+      loading: () => Scaffold(
+        appBar: AppBar(title: const Text('Exam mode')),
+        body: const Center(child: CircularProgressIndicator()),
+      ),
+      error: (e, _) => Scaffold(
+        appBar: AppBar(title: const Text('Exam mode')),
+        body: Padding(
+          padding: const EdgeInsets.all(AppSpacing.lg),
+          child: ErrorBanner(
+            message: ErrorMessages.of(e),
+            onRetry: () => ref.invalidate(paperDetailProvider(arg)),
+          ),
+        ),
+      ),
+      data: (p) => p.questions.isEmpty
+          ? Scaffold(
+              appBar: AppBar(title: Text(p.title)),
+              body: EmptyState(
+                icon: Icons.description_outlined,
+                title: 'No questions in this paper',
+                message: p.hiddenOutdated > 0
+                    ? '${p.hiddenOutdated} outdated questions are hidden.'
+                    : null,
+                actionLabel: 'Back to papers',
+                onAction: () => context.go(AppRoutes.pastPapers),
+              ),
+            )
+          : _ExamView(paper: p),
+    );
+  }
+}
+
+class _ExamView extends ConsumerStatefulWidget {
+  const _ExamView({required this.paper});
+
+  final PaperDetail paper;
+
+  @override
+  ConsumerState<_ExamView> createState() => _ExamViewState();
+}
+
+class _ExamViewState extends ConsumerState<_ExamView>
+    with TickerProviderStateMixin {
+  late final List<PaperQuestionType> _types = [
+    for (final t in PaperQuestionType.values)
+      if (widget.paper.ofType(t).isNotEmpty) t,
+  ];
+  late final TabController _tabs = TabController(
+    length: _types.length,
+    vsync: this,
+  );
+  final Map<String, GlobalKey> _keys = {};
   Timer? _timer;
+  int _elapsed = 0;
 
   @override
   void initState() {
     super.initState();
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      final session = ref.read(examSessionControllerProvider);
-      if (!session.isSubmitting && mounted) {
-        ref.read(examSessionControllerProvider.notifier).tick();
-      }
+      if (mounted) setState(() => _elapsed++);
     });
   }
 
   @override
   void dispose() {
     _timer?.cancel();
+    _tabs.dispose();
     super.dispose();
   }
 
-  String _formatTime(int totalSeconds) {
-    final m = (totalSeconds ~/ 60).toString().padLeft(2, '0');
-    final s = (totalSeconds % 60).toString().padLeft(2, '0');
-    return '$m:$s';
+  QuestionStatus _status(ExamAttemptState s, String id) {
+    if (s.flagged.contains(id)) return QuestionStatus.flagged;
+    return s.isAnswered(id)
+        ? QuestionStatus.answered
+        : QuestionStatus.unanswered;
   }
 
-  Future<void> _submit(ExamPaper paper) async {
-    final session = ref.read(examSessionControllerProvider);
-    final unanswered = paper.questions.length - session.answers.length;
+  String get _clock {
+    final limit = widget.paper.durationMinutes;
+    final secs = limit == null ? _elapsed : limit * 60 - _elapsed;
+    final s = secs.abs();
+    final text =
+        '${s ~/ 3600}:${(s ~/ 60 % 60).toString().padLeft(2, '0')}:'
+        '${(s % 60).toString().padLeft(2, '0')}';
+    if (limit == null) return text;
+    return secs < 0 ? 'Over by $text' : '$text left';
+  }
 
-    if (unanswered > 0) {
-      final ok = await showDialog<bool>(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          title: const Text('Submit paper?'),
-          content: Text(
-            'You have $unanswered unanswered question(s). Are you sure you want to finish and submit now?',
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(ctx, false),
-              child: const Text('Keep working'),
-            ),
-            FilledButton(
-              onPressed: () => Navigator.pop(ctx, true),
-              style: FilledButton.styleFrom(backgroundColor: AppColors.primary),
-              child: const Text('Submit'),
-            ),
-          ],
-        ),
-      );
-      if (ok != true) return;
-    }
-
-    try {
-      await ref.read(examSessionControllerProvider.notifier).submit();
-      if (!mounted) return;
-      context.pushReplacement(AppRoutes.examResult);
-    } catch (e) {
-      if (!mounted) return;
-      // Friendly text for every case (offline, timeout, backend codes).
-      final msg = ErrorMessages.of(e);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(msg), backgroundColor: AppColors.error),
-      );
+  Future<void> _jumpTo(PaperQuestion q) async {
+    Navigator.of(context).pop();
+    _tabs.animateTo(_types.indexOf(q.type));
+    await Future<void>.delayed(const Duration(milliseconds: 350));
+    final ctx = _keys[q.id]?.currentContext;
+    if (ctx != null && ctx.mounted) {
+      await Scrollable.ensureVisible(ctx, alignment: 0.1);
     }
   }
 
-  Widget _buildOption(ExamQuestion q, int idx, String? selectedLetter) {
-    final letter = kOptionLetters[idx];
-    final isSelected = selectedLetter == letter;
-
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(10),
-        onTap: () {
-          ref
-              .read(examSessionControllerProvider.notifier)
-              .selectAnswer(q.id, letter);
-        },
-        child: Container(
-          padding: const EdgeInsets.all(AppSpacing.sm),
-          decoration: BoxDecoration(
-            color: isSelected ? AppColors.primarySoft : AppColors.white,
-            border: Border.all(
-              color: isSelected ? AppColors.primary : AppColors.border,
-              width: isSelected ? 1.5 : 1.0,
-            ),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: 24,
-                height: 24,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: isSelected ? AppColors.primary : Colors.transparent,
-                  border: Border.all(
-                    color: isSelected
-                        ? AppColors.primary
-                        : AppColors.mutedLight,
-                    width: 1.5,
+  void _showPalette() {
+    showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      isScrollControlled: true,
+      builder: (_) => Consumer(
+        builder: (context, ref, _) {
+          final s = ref.watch(examAttemptControllerProvider(widget.paper.id));
+          return SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(AppSpacing.lg),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Question palette',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
-                ),
-                child: Center(
-                  child: Text(
-                    letter,
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                      color: isSelected ? AppColors.white : AppColors.muted,
+                  const SizedBox(height: AppSpacing.sm),
+                  const _Legend(),
+                  const SizedBox(height: AppSpacing.md),
+                  Flexible(
+                    child: SingleChildScrollView(
+                      child: Wrap(
+                        spacing: AppSpacing.sm,
+                        runSpacing: AppSpacing.sm,
+                        children: [
+                          for (final (i, q) in widget.paper.questions.indexed)
+                            _PaletteCell(
+                              number: i + 1,
+                              status: _status(s, q.id),
+                              onTap: () => _jumpTo(q),
+                            ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
-              const SizedBox(width: AppSpacing.sm),
-              Expanded(
-                child: Text(
-                  q.options[idx],
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: isSelected ? AppColors.ink : AppColors.ink,
-                    fontWeight: isSelected
-                        ? FontWeight.w500
-                        : FontWeight.normal,
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Future<void> _confirmSubmit() async {
+    final s = ref.read(examAttemptControllerProvider(widget.paper.id));
+    final qs = widget.paper.questions;
+    final answered = qs.where((q) => s.isAnswered(q.id)).length;
+    final flagged = qs.where((q) => s.flagged.contains(q.id)).length;
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Submit paper?'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _CountRow(QuestionStatus.answered, answered),
+            _CountRow(QuestionStatus.unanswered, qs.length - answered),
+            _CountRow(QuestionStatus.flagged, flagged),
+            const SizedBox(height: AppSpacing.sm),
+            const Text('You cannot change your answers after submitting.'),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: const Text('Keep working'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            child: const Text('Submit'),
+          ),
+        ],
+      ),
+    );
+    if (ok != true || !mounted) return;
+    final result = await ref
+        .read(examAttemptControllerProvider(widget.paper.id).notifier)
+        .submit(widget.paper);
+    if (result != null && mounted) context.go(AppRoutes.examResult);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final p = widget.paper;
+    final s = ref.watch(examAttemptControllerProvider(p.id));
+    final ctrl = ref.read(examAttemptControllerProvider(p.id).notifier);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(p.title, overflow: TextOverflow.ellipsis),
+        actions: [
+          IconButton(
+            tooltip: 'Question palette',
+            icon: const Icon(Icons.grid_view_rounded),
+            onPressed: _showPalette,
+          ),
+        ],
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(76),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  const SizedBox(width: AppSpacing.lg),
+                  const Icon(Icons.timer_outlined, size: 18),
+                  const SizedBox(width: AppSpacing.xs),
+                  Text(_clock),
+                  const Spacer(),
+                  if (p.isAiGenerated) const AiBadge(),
+                  const SizedBox(width: AppSpacing.lg),
+                ],
+              ),
+              TabBar(
+                controller: _tabs,
+                isScrollable: _types.length > 2,
+                tabs: [for (final t in _types) Tab(text: t.label)],
+              ),
+            ],
+          ),
+        ),
+      ),
+      body: TabBarView(
+        controller: _tabs,
+        children: [
+          for (final t in _types)
+            ListView(
+              padding: const EdgeInsets.all(AppSpacing.lg),
+              children: [
+                for (final q in p.ofType(t))
+                  _QuestionCard(
+                    key: _keys.putIfAbsent(q.id, GlobalKey.new),
+                    number: p.questions.indexOf(q) + 1,
+                    question: q,
+                    status: _status(s, q.id),
+                    selected: s.mcq[q.id],
+                    text: s.written[q.id] ?? '',
+                    onSelect: (l) => ctrl.selectOption(q.id, l),
+                    onText: (v) => ctrl.setWritten(q.id, v),
+                    onFlag: () => ctrl.toggleFlag(q.id),
                   ),
-                ),
+              ],
+            ),
+        ],
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(AppSpacing.lg),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (s.error != null) ...[
+                ErrorBanner(message: s.error!),
+                const SizedBox(height: AppSpacing.sm),
+              ],
+              AppButton(
+                label: 'Submit paper',
+                icon: Icons.send_rounded,
+                isLoading: s.submitting,
+                onPressed: s.submitting ? null : _confirmSubmit,
               ),
             ],
           ),
@@ -160,251 +313,205 @@ class _ExamAttemptScreenState extends ConsumerState<ExamAttemptScreen> {
       ),
     );
   }
+}
 
-  Widget _buildQuestionCard(int i, ExamQuestion q, String? selectedLetter) {
+class _QuestionCard extends StatelessWidget {
+  const _QuestionCard({
+    super.key,
+    required this.number,
+    required this.question,
+    required this.status,
+    required this.selected,
+    required this.text,
+    required this.onSelect,
+    required this.onText,
+    required this.onFlag,
+  });
+
+  final int number;
+  final PaperQuestion question;
+  final QuestionStatus status;
+  final String? selected;
+  final String text;
+  final ValueChanged<String> onSelect;
+  final ValueChanged<String> onText;
+  final VoidCallback onFlag;
+
+  @override
+  Widget build(BuildContext context) {
+    final q = question;
+    final flagged = status == QuestionStatus.flagged;
     return Card(
       elevation: 0,
+      margin: const EdgeInsets.only(bottom: AppSpacing.lg),
       shape: RoundedRectangleBorder(
-        side: const BorderSide(color: AppColors.border),
-        borderRadius: BorderRadius.circular(12),
+        side: BorderSide(color: flagged ? status.color : AppColors.border),
+        borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
       ),
-      margin: const EdgeInsets.only(bottom: AppSpacing.md),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.md),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 3,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.primarySoft,
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  child: Text(
-                    q.topic.toUpperCase(),
-                    style: const TextStyle(
-                      fontSize: 11,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.primary,
-                    ),
+                Text(
+                  'Q$number',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.primary,
                   ),
                 ),
-                const Spacer(),
-                Text(
-                  '${q.marks} mark${q.marks > 1 ? 's' : ''}',
-                  style: const TextStyle(fontSize: 12, color: AppColors.muted),
+                const SizedBox(width: AppSpacing.sm),
+                Expanded(
+                  child: Text(
+                    '${q.topic.isEmpty ? '' : '${q.topic} · '}'
+                    '${q.marks} mark${q.marks == 1 ? '' : 's'}',
+                    style: const TextStyle(color: AppColors.muted),
+                  ),
+                ),
+                _StatusLabel(status),
+                IconButton(
+                  tooltip: flagged ? 'Remove flag' : 'Flag for review',
+                  icon: Icon(
+                    flagged ? Icons.flag : Icons.outlined_flag,
+                    color: flagged ? status.color : AppColors.muted,
+                  ),
+                  onPressed: onFlag,
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.sm),
-            Text(
-              '${i + 1}. ${q.question}',
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                fontWeight: FontWeight.w600,
-                color: AppColors.ink,
+            if (q.isOutdated)
+              const Padding(
+                padding: EdgeInsets.only(bottom: AppSpacing.sm),
+                child: AppChip(
+                  label: 'Outdated syllabus',
+                  icon: Icons.history_toggle_off,
+                  tone: AppChipTone.streak,
+                ),
               ),
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            for (var idx = 0; idx < q.options.length; idx++)
-              _buildOption(q, idx, selectedLetter),
+            Text(q.stem, style: const TextStyle(color: AppColors.ink)),
+            const SizedBox(height: AppSpacing.md),
+            if (q.type == PaperQuestionType.mcq)
+              for (final (i, o) in q.options.indexed)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+                  child: McqOptionTile(
+                    letter: o.label.isEmpty ? kOptionLetters[i] : o.label,
+                    text: o.text,
+                    state:
+                        selected ==
+                            (o.label.isEmpty ? kOptionLetters[i] : o.label)
+                        ? McqOptionState.selected
+                        : McqOptionState.normal,
+                    onTap: () =>
+                        onSelect(o.label.isEmpty ? kOptionLetters[i] : o.label),
+                  ),
+                )
+            else
+              TextFormField(
+                initialValue: text,
+                minLines: q.type == PaperQuestionType.essay ? 8 : 4,
+                maxLines: null,
+                maxLength: 20000,
+                decoration: const InputDecoration(
+                  hintText: 'Write your answer',
+                  border: OutlineInputBorder(),
+                ),
+                onChanged: onText,
+              ),
           ],
         ),
       ),
     );
   }
+}
+
+class _StatusLabel extends StatelessWidget {
+  const _StatusLabel(this.status);
+
+  final QuestionStatus status;
 
   @override
-  Widget build(BuildContext context) {
-    final session = ref.watch(examSessionControllerProvider);
-    final paper = session.paper;
+  Widget build(BuildContext context) => Row(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      Icon(status.icon, size: 16, color: status.color),
+      const SizedBox(width: AppSpacing.xs),
+      Text(status.word, style: TextStyle(color: status.color, fontSize: 12)),
+    ],
+  );
+}
 
-    if (paper == null) {
-      return Scaffold(
-        appBar: AppBar(title: const Text('Exam Mode')),
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(AppSpacing.lg),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(
-                  Icons.description_outlined,
-                  size: 64,
-                  color: AppColors.muted,
-                ),
-                const SizedBox(height: AppSpacing.md),
-                const Text(
-                  'No active exam paper found.',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: AppSpacing.sm),
-                const Text(
-                  'Please generate a paper first to start an exam attempt.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: AppColors.muted),
-                ),
-                const SizedBox(height: AppSpacing.lg),
-                AppButton(
-                  label: 'Generate paper',
-                  onPressed: () => context.go(AppRoutes.generatePaper),
-                ),
-              ],
-            ),
-          ),
+class _PaletteCell extends StatelessWidget {
+  const _PaletteCell({
+    required this.number,
+    required this.status,
+    required this.onTap,
+  });
+
+  final int number;
+  final QuestionStatus status;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) => Semantics(
+    button: true,
+    excludeSemantics: true,
+    label: 'Question $number, ${status.word}',
+    child: InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(AppSpacing.radiusSm),
+      child: Container(
+        width: 56,
+        height: 56,
+        decoration: BoxDecoration(
+          border: Border.all(color: status.color, width: 1.5),
+          borderRadius: BorderRadius.circular(AppSpacing.radiusSm),
         ),
-      );
-    }
-
-    final total = paper.questions.length;
-    final answeredCount = session.answers.length;
-    final progress = total == 0 ? 0.0 : answeredCount / total;
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Practice paper'),
-        actions: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            margin: const EdgeInsets.only(right: 16),
-            decoration: BoxDecoration(
-              color: AppColors.surfaceMuted,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Row(
-              children: [
-                const Icon(
-                  Icons.timer_outlined,
-                  size: 16,
-                  color: AppColors.muted,
-                ),
-                const SizedBox(width: 4),
-                Text(
-                  _formatTime(session.elapsedSeconds),
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.ink,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(AppSpacing.md),
-        children: [
-          Text(
-            paper.title.isNotEmpty
-                ? '$total questions · ${paper.title}'
-                : '$total questions',
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-              color: AppColors.ink,
-            ),
-          ),
-          if (paper.warnings.isNotEmpty)
-            Container(
-              margin: const EdgeInsets.only(top: AppSpacing.sm),
-              padding: const EdgeInsets.all(AppSpacing.sm),
-              decoration: BoxDecoration(
-                color: AppColors.warningSoft,
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: AppColors.warningBorder),
-              ),
-              child: Text(
-                'Some topics could not be generated fully:\n${paper.warnings.join('\n')}',
-                style: const TextStyle(
-                  color: AppColors.warningDark,
-                  fontSize: 13,
-                ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              '$number',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: status.color,
               ),
             ),
-          const SizedBox(height: AppSpacing.md),
-          for (var i = 0; i < total; i++)
-            _buildQuestionCard(
-              i,
-              paper.questions[i],
-              session.answers[paper.questions[i].id],
-            ),
-          const SizedBox(height: 80),
-        ],
-      ),
-      bottomNavigationBar: SafeArea(
-        child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.md,
-            vertical: AppSpacing.sm,
-          ),
-          decoration: BoxDecoration(
-            color: AppColors.white,
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 10,
-                color: Colors.black.withValues(alpha: 0.08),
-                offset: const Offset(0, -2),
-              ),
-            ],
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(4),
-                child: LinearProgressIndicator(
-                  value: progress,
-                  minHeight: 6,
-                  backgroundColor: AppColors.surfaceMuted,
-                  valueColor: const AlwaysStoppedAnimation<Color>(
-                    AppColors.primary,
-                  ),
-                ),
-              ),
-              const SizedBox(height: AppSpacing.xs),
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      'Answered $answeredCount/$total · ${_formatTime(session.elapsedSeconds)}',
-                      style: const TextStyle(
-                        fontSize: 13,
-                        color: AppColors.muted,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                  const Text(
-                    'AI explanations',
-                    style: TextStyle(fontSize: 13, color: AppColors.ink),
-                  ),
-                  Switch(
-                    value: session.explain,
-                    activeThumbColor: AppColors.primary,
-                    onChanged: session.isSubmitting
-                        ? null
-                        : (v) => ref
-                              .read(examSessionControllerProvider.notifier)
-                              .toggleExplain(v),
-                  ),
-                ],
-              ),
-              const SizedBox(height: AppSpacing.xs),
-              AppButton(
-                label: session.isSubmitting
-                    ? 'Marking answers...'
-                    : 'Submit paper',
-                isLoading: session.isSubmitting,
-                onPressed: session.isSubmitting ? null : () => _submit(paper),
-              ),
-            ],
-          ),
+            Icon(status.icon, size: 14, color: status.color),
+          ],
         ),
       ),
-    );
-  }
+    ),
+  );
+}
+
+class _Legend extends StatelessWidget {
+  const _Legend();
+
+  @override
+  Widget build(BuildContext context) => Wrap(
+    spacing: AppSpacing.lg,
+    children: [for (final s in QuestionStatus.values) _StatusLabel(s)],
+  );
+}
+
+class _CountRow extends StatelessWidget {
+  const _CountRow(this.status, this.count);
+
+  final QuestionStatus status;
+  final int count;
+
+  @override
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
+    child: Row(
+      children: [
+        Icon(status.icon, size: 18, color: status.color),
+        const SizedBox(width: AppSpacing.sm),
+        Text('${status.word}: $count'),
+      ],
+    ),
+  );
 }

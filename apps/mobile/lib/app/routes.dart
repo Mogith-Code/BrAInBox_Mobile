@@ -146,7 +146,8 @@ abstract final class AppRoutes {
   static const pastPapers = '/exams';
   static const generatePaper = '/exams/generate';
   static const examAttempt = '/exams/attempt/:paperId';
-  static String examAttemptPath(String paperId) => '/exams/attempt/$paperId';
+  static String examAttemptPath(String paperId, {bool hideOutdated = false}) =>
+      '/exams/attempt/$paperId${hideOutdated ? '?hide_outdated=true' : ''}';
   static const examResult = '/exams/result';
 
   // Evaluation (Keshomigha)

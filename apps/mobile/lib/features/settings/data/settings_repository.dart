@@ -23,6 +23,9 @@ abstract interface class SettingsRepository {
 
   /// The installed app version for Settings > About, e.g. "0.1.0 (1)".
   Future<String> appVersion();
+
+  /// `GET /auth/me/export` - everything the backend keeps about me.
+  Future<Map<String, dynamic>> exportMyData();
 }
 
 class ApiSettingsRepository implements SettingsRepository {
@@ -58,6 +61,10 @@ class ApiSettingsRepository implements SettingsRepository {
     final info = await PackageInfo.fromPlatform();
     return '${info.version} (${info.buildNumber})';
   }
+
+  @override
+  Future<Map<String, dynamic>> exportMyData() =>
+      api.get<Map<String, dynamic>>('/auth/me/export');
 }
 
 /// DEBUG ONLY (`USE_FAKE_API=true`): kept in memory.
@@ -82,6 +89,12 @@ class FakeSettingsRepository implements SettingsRepository {
 
   @override
   Future<String> appVersion() async => '0.1.0 (fake)';
+
+  @override
+  Future<Map<String, dynamic>> exportMyData() async => {
+    'notifications': _notifications.toJson(),
+    'privacy': _privacy.toJson(),
+  };
 }
 
 @Riverpod(keepAlive: true)

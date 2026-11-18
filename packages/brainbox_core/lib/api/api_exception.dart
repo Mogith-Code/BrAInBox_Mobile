@@ -60,7 +60,7 @@ class ApiException implements Exception {
       ),
       DioExceptionType.connectionError => const ApiException(
         code: 'network',
-        message: 'Cannot reach the server. Check your internet connection.',
+        message: networkMessage,
       ),
       DioExceptionType.cancel => const ApiException(
         code: 'cancelled',
@@ -131,6 +131,14 @@ class ApiException implements Exception {
         '${item['field']}'.split('.').last: '${item['message']}',
     };
   }
+
+  /// Message of the `network` error (no connection). [ErrorBanner] shows
+  /// it as an offline state instead of a red error.
+  static const networkMessage =
+      'Cannot reach the server. Check your internet connection.';
+
+  /// No connection, or the server did not answer in time.
+  bool get isOffline => code == 'network' || code == 'timeout';
 
   bool get isUnauthorized => statusCode == 401;
   bool get isNotFound => statusCode == 404;

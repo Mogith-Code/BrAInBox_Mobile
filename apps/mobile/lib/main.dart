@@ -1,3 +1,4 @@
+import 'features/offline/offline_cache.dart';
 import 'package:brainbox_core/brainbox_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,10 +17,9 @@ Future<void> main() async {
   //    disabled and a "Firebase not configured" strip shows in debug.
   await FirebaseSetup.initialize(() => DefaultFirebaseOptions.currentPlatform);
 
-  // 2. Hive (offline cache).
-  // TODO(samni): open the boxes the app needs, e.g.
-  //   await Hive.openBox<String>('notes_cache');
+  // 2. Hive (offline cache for syllabus, notes and short notes).
   await Hive.initFlutter();
+  await OfflineCache.open();
 
   // 3. ProviderScope holds every Riverpod provider.
   // retry: null -> a failing request shows its error (with a Retry button)
