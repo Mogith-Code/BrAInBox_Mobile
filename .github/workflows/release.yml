@@ -1,0 +1,118 @@
+name: Release
+
+# Signed Android APK + admin web on Firebase Hosting.
+# Run it by hand (Actions > Release > Run workflow) or push a tag like v1.0.0.
+# Secrets it needs are listed in docs/deployment.md.
+on:
+  workflow_dispatch:
+  push:
+    tags: ["v*"]
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+env:
+  FLUTTER_VERSION: "3.44.x"
+
+jobs:
+  release:
+    name: Build signed APK and deploy admin web
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write # attach the APK to the GitHub release (tag runs)
+
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v7
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          cache: true
+
+      - name: Set up Java
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Install Melos
+        run: dart pub global activate melos 7.8.1
+
+      # Real Firebase config, written before bootstrap so the stub is not used.
+      - name: Write Firebase config files
+        env:
+          MOBILE_FIREBASE_OPTIONS: ${{ secrets.MOBILE_FIREBASE_OPTIONS_BASE64 }}
+          ADMIN_FIREBASE_OPTIONS: ${{ secrets.ADMIN_FIREBASE_OPTIONS_BASE64 }}
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}
+        run: |
+          echo "$MOBILE_FIREBASE_OPTIONS" | base64 -d > apps/mobile/lib/firebase_options.dart
+          echo "$ADMIN_FIREBASE_OPTIONS" | base64 -d > apps/admin/lib/firebase_options.dart
+          echo "$GOOGLE_SERVICES_JSON" | base64 -d > apps/mobile/android/app/google-services.json
+
+      - name: Write Android signing files
+        env:
+          KEYSTORE: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          STORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+        run: |
+          echo "$KEYSTORE" | base64 -d > apps/mobile/android/upload-keystore.jks
+          cat > apps/mobile/android/key.properties <<PROPS
+          storeFile=upload-keystore.jks
+          storePassword=$STORE_PASSWORD
+          keyPassword=$KEY_PASSWORD
+          keyAlias=$KEY_ALIAS
+          PROPS
+
+      - name: melos bootstrap
+        run: melos bootstrap
+
+      - name: Generate code
+        run: melos run gen
+
+      - name: Build signed release APK
+        working-directory: apps/mobile
+        run: >
+          flutter build apk --release
+          --dart-define=API_BASE_URL=${{ vars.API_BASE_URL }}
+
+      - name: Build admin web
+        working-directory: apps/admin
+        run: >
+          flutter build web --release
+          --dart-define=API_BASE_URL=${{ vars.API_BASE_URL }}
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v7
+        with:
+          name: brainbox-mobile-release-apk
+          path: apps/mobile/build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 30
+
+      - name: Attach APK to the GitHub release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: apps/mobile/build/app/outputs/flutter-apk/app-release.apk
+
+      # firebase.json is git-ignored, so the hosting config is written here.
+      - name: Write Firebase Hosting config
+        run: |
+          cat > apps/admin/firebase.json <<'JSON'
+          {"hosting": {"public": "build/web", "ignore": ["firebase.json", "**/.*"],
+            "rewrites": [{"source": "**", "destination": "/index.html"}]}}
+          JSON
+
+      - name: Deploy admin web to Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          projectId: ${{ vars.FIREBASE_PROJECT_ID }}
+          entryPoint: apps/admin
+          channelId: live
