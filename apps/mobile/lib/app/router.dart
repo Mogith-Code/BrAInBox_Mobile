@@ -212,8 +212,10 @@ GoRouter router(Ref ref) {
       ),
       GoRoute(
         path: AppRoutes.examAttempt,
-        builder: (context, state) =>
-            ExamAttemptScreen(paperId: state.pathParameters['paperId']!),
+        builder: (context, state) => ExamAttemptScreen(
+          paperId: state.pathParameters['paperId']!,
+          hideOutdated: state.uri.queryParameters['hide_outdated'] == 'true',
+        ),
       ),
       GoRoute(
         path: AppRoutes.examResult,
