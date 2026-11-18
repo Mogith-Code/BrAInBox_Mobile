@@ -2,6 +2,7 @@ import 'package:brainbox_core/brainbox_core.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../domain/mistake_models.dart';
+import '../domain/recurring_mistakes.dart';
 
 part 'mistakes_repository.g.dart';
 
@@ -12,6 +13,9 @@ abstract interface class MistakesRepository {
 
   /// `PATCH /mistakes/{id}` with `{resolved}`.
   Future<void> setResolved(String id, {required bool resolved});
+
+  /// `GET /mistakes/recurring`: misconceptions hit 3+ times in 14 days.
+  Future<RecurringMistakes> recurring();
 }
 
 class ApiMistakesRepository implements MistakesRepository {
@@ -34,6 +38,11 @@ class ApiMistakesRepository implements MistakesRepository {
   @override
   Future<void> setResolved(String id, {required bool resolved}) =>
       api.patch<Object?>('/mistakes/$id', data: {'resolved': resolved});
+
+  @override
+  Future<RecurringMistakes> recurring() async => RecurringMistakes.fromJson(
+    await api.get<Map<String, dynamic>>('/mistakes/recurring'),
+  );
 }
 
 /// DEBUG ONLY (`USE_FAKE_API=true`): two open mistakes.
@@ -84,6 +93,23 @@ class FakeMistakesRepository implements MistakesRepository {
     final i = _items.indexWhere((m) => m.id == id);
     _items[i] = _items[i].copyWith(isResolved: resolved);
   }
+
+  @override
+  Future<RecurringMistakes> recurring() async => RecurringMistakes(
+    items: [
+      RecurringMistake(
+        misconceptionId: 'mc3',
+        title: 'Mixes up mitosis and meiosis',
+        correction: 'Meiosis halves the chromosome number; mitosis keeps it.',
+        count: 4,
+        previousCount: 1,
+        trend: MistakeTrend.up,
+        lastAt: DateTime.now().subtract(const Duration(hours: 5)),
+        topicId: 'fake-topic-4-2',
+        topic: 'Cell division',
+      ),
+    ],
+  );
 }
 
 @Riverpod(keepAlive: true)

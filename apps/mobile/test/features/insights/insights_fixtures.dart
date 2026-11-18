@@ -339,3 +339,87 @@ Map<String, dynamic> _unit(
   'source': mastery == null ? null : 'quiz',
   'measured_at': mastery == null ? null : '2026-11-10T08:00:00Z',
 };
+
+/// A `GET /insights/overview` response: 2 h 5 min this week, accuracy on
+/// three days (one day without valid answers has `accuracy: null`).
+Map<String, dynamic> sampleOverviewJson() => {
+  'overall_mastery': 58,
+  'mastery_change_week': 4,
+  'streak_days': 3,
+  'study_minutes_week': 125,
+  'study_time': [
+    for (final (day, minutes) in [
+      (11, 20),
+      (12, 0),
+      (13, 35),
+      (14, 0),
+      (15, 30),
+      (16, 15),
+      (17, 25),
+    ])
+      {'date': '2026-11-$day', 'minutes': minutes},
+  ],
+  'accuracy_trend': [
+    {'date': '2026-11-05', 'answered': 10, 'accuracy': 40},
+    {'date': '2026-11-09', 'answered': 2, 'accuracy': null},
+    {'date': '2026-11-13', 'answered': 12, 'accuracy': 58},
+    {'date': '2026-11-17', 'answered': 8, 'accuracy': 75},
+  ],
+  'mastery_history': [
+    {'date': '2026-11-17', 'mastery': 58},
+  ],
+};
+
+/// A new student: no study time, no answers.
+Map<String, dynamic> emptyOverviewJson() => {
+  'overall_mastery': null,
+  'mastery_change_week': null,
+  'streak_days': 0,
+  'study_minutes_week': 0,
+  'study_time': [
+    for (var day = 11; day <= 17; day++) {'date': '2026-11-$day', 'minutes': 0},
+  ],
+  'accuracy_trend': <Object>[],
+  'mastery_history': <Object>[],
+};
+
+/// A `GET /insights/heatmap` response: two units, one topic not practised.
+Map<String, dynamic> sampleHeatmapJson() => {
+  'units': [
+    {
+      'unit_id': 'u-1',
+      'number': 1,
+      'title': 'Introduction to Biology',
+      'topics': [
+        _heatTopic('t-1-1', '1.1', 'Nature of biology', 82, 'mastered'),
+        _heatTopic('t-1-2', '1.2', 'Life processes', null, 'not_started'),
+      ],
+    },
+    {
+      'unit_id': 'u-6',
+      'number': 6,
+      'title': 'Genetics',
+      'topics': [
+        _heatTopic('t-6-2', '6.2', 'Deviations from Mendel', 23, 'weak'),
+        _heatTopic('t-6-3', '6.3', 'Linkage', 47, 'improving'),
+      ],
+    },
+  ],
+};
+
+Map<String, dynamic> _heatTopic(
+  String id,
+  String number,
+  String title,
+  int? mastery,
+  String level,
+) => {
+  'topic_id': id,
+  'code': null,
+  'number': number,
+  'title': title,
+  'mastery': mastery,
+  'level': level,
+  'concepts_practised': mastery == null ? 0 : 2,
+  'concepts_total': 4,
+};

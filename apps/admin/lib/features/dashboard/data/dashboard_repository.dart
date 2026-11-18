@@ -14,21 +14,18 @@ class DashboardRepository {
 
   final ApiClient api;
 
-  /// Loads the data for the main Dashboard screen.
-  Future<DashboardSummary> fetchSummary() async {
-    // TODO(samni): call the backend instead of returning placeholder data.
-    // Real version (uncomment when the endpoint exists):
-    // final json = await api.get<Map<String, dynamic>>('/admin/dashboard');
-    // return DashboardSummary.fromJson(json);
-    return sampleSummary;
-  }
+  /// `GET /admin/dashboard`: KPIs, 14-day activity, newest reports and the
+  /// most-missed topics (built by the backend's `build_dashboard`).
+  Future<DashboardSummary> fetchSummary() async => DashboardSummary.fromJson(
+    await api.get<Map<String, dynamic>>('/admin/dashboard'),
+  );
 
-  /// Sample figures copied from the Figma mock, so the screen can be built
-  /// before the API exists. NOT real data - [DashboardSummary.message] says so
-  /// on screen.
+  /// Sample figures copied from the Figma mock, used by
+  /// [FakeDashboardRepository]. NOT real data - [DashboardSummary.message]
+  /// says so on screen.
   static const sampleSummary = DashboardSummary(
     title: 'Dashboard',
-    message: 'Placeholder data - API not connected yet.',
+    message: 'Sample data - not from the server.',
     batchLabel: 'A/L 2027 batch',
     kpis: [
       DashboardKpi(
@@ -139,6 +136,17 @@ class DashboardRepository {
   );
 }
 
+/// DEBUG ONLY (`USE_FAKE_API=true`): the Figma numbers, no network.
+class FakeDashboardRepository implements DashboardRepository {
+  @override
+  ApiClient get api => throw UnsupportedError('The fake has no ApiClient.');
+
+  @override
+  Future<DashboardSummary> fetchSummary() async =>
+      DashboardRepository.sampleSummary;
+}
+
 @riverpod
-DashboardRepository dashboardRepository(Ref ref) =>
-    DashboardRepository(ref.watch(apiClientProvider));
+DashboardRepository dashboardRepository(Ref ref) => Env.useFakeApi
+    ? FakeDashboardRepository()
+    : DashboardRepository(ref.watch(apiClientProvider));

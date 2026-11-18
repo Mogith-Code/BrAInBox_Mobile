@@ -3,18 +3,15 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'dashboard_models.freezed.dart';
 part 'dashboard_models.g.dart';
 
-/// Everything the Dashboard screen shows.
-///
-// TODO(samni): check these fields against the response of
-// `GET /admin/dashboard` (see the backend OpenAPI /docs) once it exists.
-// Run `melos run gen` after editing.
+/// Everything the Dashboard screen shows: `GET /admin/dashboard`
+/// (backend `admin/schemas.py` `DashboardOut`, snake_case keys).
 @freezed
 abstract class DashboardSummary with _$DashboardSummary {
   const factory DashboardSummary({
     required String title,
 
-    /// A note about the data, e.g. that it is placeholder data. Shown on the
-    /// screen when not empty.
+    /// A note about the data (null from the server, or "Sample data" in the
+    /// debug fake). Shown on the screen when not empty.
     @Default('') String message,
 
     /// The student batch the numbers are for, e.g. "A/L 2027 batch".

@@ -44,10 +44,13 @@ Future<void> _pump(WidgetTester tester, ProviderContainer c) async {
         AppRoutes.learn,
         AppRoutes.topic,
         AppRoutes.devMenu,
+        AppRoutes.nextSteps,
+        AppRoutes.studyPlan,
+        AppRoutes.quizSetup,
       ])
         GoRoute(
           path: path,
-          builder: (_, state) => Scaffold(body: Text('AT ${state.uri.path}')),
+          builder: (_, state) => Scaffold(body: Text('AT ${state.uri}')),
         ),
     ],
   );
@@ -180,8 +183,10 @@ void main() {
         scrollable: find.byType(Scrollable).first,
       );
 
-      // Ticking an item updates the count.
-      await tester.tap(find.text('Practice: 10 MCQs Nephron'));
+      // Ticking an item (its circle) updates the count.
+      await tester.tap(
+        find.bySemanticsLabel('Mark done: Practice: 10 MCQs Nephron'),
+      );
       await tester.pumpAndSettle();
       expect(find.text('2/3'), findsOneWidget);
 
@@ -190,6 +195,84 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text('AT ${AppRoutes.myProfile}'), findsOneWidget);
     });
+
+    // One pump per test: re-pumping a new container leaves Riverpod
+    // dispose timers pending.
+    for (final (name, target, location) in [
+      // Revision action: the topic page.
+      (
+        'Start 10-min revision',
+        'Start 10-min revision',
+        AppRoutes.topicPath('t-dihybrid'),
+      ),
+      ('See all next steps', 'See all next steps', AppRoutes.nextSteps),
+      ('See plan', 'See plan', AppRoutes.studyPlan),
+      // The row text opens the plan instead of ticking it.
+      ('a plan row', 'Practice: 10 MCQs Nephron', AppRoutes.studyPlan),
+    ]) {
+      testWidgets('$name opens $location', (tester) async {
+        final c = ProviderContainer(
+          overrides: [
+            homeRepositoryProvider.overrideWithValue(_figmaRepo()),
+            profileOverviewRepositoryProvider.overrideWithValue(_NoBadges()),
+          ],
+        );
+        addTearDown(c.dispose);
+        await _pump(tester, c);
+        await tester.pumpAndSettle();
+        await tester.tap(find.text(target));
+        await tester.pumpAndSettle();
+        expect(find.text('AT $location'), findsOneWidget);
+      });
+    }
+
+    for (final (action, location) in [
+      (
+        const NextBestAction(
+          type: 'revise',
+          title: 'Revise',
+          target: ActionTarget(topicId: 't-1'),
+        ),
+        AppRoutes.topicPath('t-1'),
+      ),
+      (
+        const NextBestAction(
+          type: 'practice',
+          title: 'Practice',
+          target: ActionTarget(topicId: 't-1'),
+        ),
+        AppRoutes.quizSetupPath(topicId: 't-1', mode: 'quick'),
+      ),
+      (
+        const NextBestAction(type: 'something_new', title: 'New'),
+        AppRoutes.nextSteps,
+      ),
+      (
+        const NextBestAction(type: 'revise', title: 'No topic'),
+        AppRoutes.nextSteps,
+      ),
+    ]) {
+      testWidgets('next best action "${action.title}" opens $location', (
+        tester,
+      ) async {
+        final repo = _MockHomeRepository();
+        when(
+          () => repo.summary(),
+        ).thenAnswer((_) async => HomeSummary(nextBestAction: action));
+        final c = ProviderContainer(
+          overrides: [
+            homeRepositoryProvider.overrideWithValue(repo),
+            profileOverviewRepositoryProvider.overrideWithValue(_NoBadges()),
+          ],
+        );
+        addTearDown(c.dispose);
+        await _pump(tester, c);
+        await tester.pumpAndSettle();
+        await tester.tap(find.text(action.buttonLabel));
+        await tester.pumpAndSettle();
+        expect(find.text('AT $location'), findsOneWidget);
+      });
+    }
 
     testWidgets('loading state shows the skeleton', (tester) async {
       final repo = _MockHomeRepository();

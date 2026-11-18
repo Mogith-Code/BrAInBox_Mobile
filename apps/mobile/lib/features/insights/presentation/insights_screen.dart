@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../application/insights_controller.dart';
+import '../application/progress_providers.dart';
 import '../domain/insights_models.dart';
 import 'insights_navigation.dart';
 import 'widgets/insights_states.dart';
 import 'widgets/mastery_card.dart';
 import 'widgets/overview_cards.dart';
+import 'widgets/progress_charts.dart';
 import 'widgets/unit_mastery_card.dart';
 
 /// Insights overview: mastery ring, unit mastery, strongest / weakest, weak
@@ -17,9 +19,8 @@ import 'widgets/unit_mastery_card.dart';
 /// [InsightsNav.attemptLocation]) it shows one attempt, titled
 /// "This attempt", with the per-attempt result instead of the mastery ring.
 ///
-/// Data: `GET /insights/topics` (MCQ results) and `GET /insights/units`
-/// (unit mastery). Study time and accuracy trend come later, when the
-/// backend sends them.
+/// Data: `GET /insights/topics` (MCQ results), `GET /insights/units`
+/// (unit mastery) and `GET /insights/overview` (study time, accuracy trend).
 class InsightsScreen extends ConsumerWidget {
   const InsightsScreen({super.key, this.attemptId});
 
@@ -38,14 +39,21 @@ class InsightsScreen extends ConsumerWidget {
       ),
       body: InsightsAsyncBody(
         attemptId: id,
-        // Pull-to-refresh on the overview also reloads the unit mastery card.
+        // Pull-to-refresh on the overview also reloads the unit mastery card
+        // and the study time / accuracy charts.
         onRefresh: id == null
-            ? () => ref.read(unitInsightsControllerProvider.notifier).refresh()
+            ? () async {
+                ref.invalidate(insightsOverviewProvider);
+                await ref
+                    .read(unitInsightsControllerProvider.notifier)
+                    .refresh();
+              }
             : null,
         builder: (context, data) => [
           if (id == null) ...[
             MasteryCard(data: data),
             const UnitMasteryCard(),
+            const ProgressCharts(),
           ] else
             OverallHeroCard(
               overall: data.overall,

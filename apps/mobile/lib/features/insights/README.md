@@ -14,9 +14,9 @@
 |---|---|---|
 | Insights overview | `presentation/insights_screen.dart` | `/insights` (bottom-nav tab) |
 | This attempt (single attempt) | `presentation/insights_screen.dart` | `/insights?attempt_id=<id>`, built with `InsightsNav.attemptLocation(id)` |
-| Mastery map | `presentation/heatmap_screen.dart` | `/insights/heatmap`; with an attempt: `InsightsNav.openHeatmap` |
+| Mastery map | `presentation/heatmap_screen.dart` | `/insights/heatmap` (overall, tap a topic -> quiz setup); with an attempt: `InsightsNav.openHeatmap` |
 | Topic detail | `presentation/topic_insight_screen.dart` | `InsightsNav.openTopic` (Navigator push, no route constant yet) |
-| Mistake journal | `presentation/mistake_journal_screen.dart` | `/insights/mistakes` (placeholder) |
+| Mistake journal | `presentation/mistake_journal_screen.dart` | `/insights/mistakes` (Recurring mistakes on top of the To fix tab) |
 
 Practice and exam result screens can link to one attempt with:
 
@@ -28,10 +28,13 @@ context.push(InsightsNav.attemptLocation(attemptId));
 
 | Method | Path | Used by |
 |---|---|---|
-| `GET` | `/insights/topics` | Overview, mastery map and topic detail (one request, shared through `insightsControllerProvider`) |
+| `GET` | `/insights/topics` | Overview, single-attempt mastery map and topic detail (one request, shared through `insightsControllerProvider`) |
 | `GET` | `/insights/topics?attempt_id=<uuid>` | "This attempt" mode |
 | `GET` | `/insights/units` | Unit mastery card on the overview (loads on its own; pull-to-refresh reloads it) |
-| `GET` | `/mistakes` | Mistake journal. **Backend not built yet.** |
+| `GET` | `/insights/overview` | Study time (bar chart, last 7 days) and Accuracy trend (line chart, days with answers in the last 14) on the overview. Loads on its own (`insightsOverviewProvider`). |
+| `GET` | `/insights/heatmap` | Overall mastery map: every syllabus topic by unit, coloured by the backend's `level` (`topicHeatmapProvider`). |
+| `GET` / `PATCH` | `/mistakes`, `/mistakes/{id}` | Mistake journal tabs and Mark fixed. |
+| `GET` | `/mistakes/recurring` | "Recurring mistakes": misconceptions hit 3+ times in 14 days, with trend (Rising / Falling / Steady, icon + word + colour). |
 
 ### Rules the screens follow
 
@@ -55,8 +58,10 @@ context.push(InsightsNav.attemptLocation(attemptId));
 ### What the screens show (MCQ results only)
 
 - **Overview:** mastery ring = `overall.percent`; legend = counts of the backend's topic statuses (strong → Mastered, good → Strong, developing → Improving, weak + very weak → Weak). Then the **Unit mastery** card (`/insights/units`: one bar per unit, Unit 1 first, coloured by the unit's `status`; `mastery: null` shows "—", never 0 %; "Finish a quiz…" when no unit is assessed), strongest / weakest, weak topics, not-enough-data topics, mastery map button, grade bands, note.
-- **Mastery map:** one row per unit ("6 Genetics", unit number taken from the topic numbers), one square per topic with its percent, coloured by the backend's `status` (`StatusStyle.heatFill`). Rows are in unit-number order and squares in topic-number order; topics without a number go to the "Other" row, last. Tapping a square outlines it and opens a sheet (ring, unit, topic, status, questions tried, Open topic / Practice).
-- **Not shown until the backend has data:** study time, accuracy trend, the This week / This month selector, the mistake journal and recurring mistakes. They are left out, not faked.
+- **Overview charts:** Study time shows `study_minutes_week` and one bar per day; Accuracy trend plots only days whose `accuracy` is not null (no "0%" tick). A new student gets a sentence instead of an empty chart.
+- **Mastery map (overall, `/insights/heatmap`):** one row per backend unit ("6 Genetics"), one cell per topic with its number and `mastery` ("—" when null). Levels map to the status colours: mastered -> strong, strong -> good, improving -> developing, weak -> weak, not_started -> not attempted. Tapping a cell opens `AppRoutes.quizSetupPath(topicId: ...)`.
+- **Mastery map (one attempt, `/insights/topics?attempt_id=`):** rows from topic numbers, as before. Tapping a square opens the sheet (ring, unit, topic, status, questions tried, Open topic / Practice -> quiz setup for that topic).
+- **Not shown yet:** the This week / This month selector and `mastery_history` (sent by the backend, no design for it yet).
 
 ### Errors
 
@@ -73,9 +78,6 @@ A failed pull-to-refresh keeps the old data on screen with an `ErrorBanner` abov
 ## Still to do
 
 - **Routes (Samni):** add `AppRoutes.insightsTopic` (`/insights/topics/:topicKey`) and `AppRoutes.insightsAttempt` (`/insights/attempts/:attemptId`), then replace the Navigator pushes and the `attempt_id` query in `presentation/insights_navigation.dart`.
-- **Practice button** on the mastery-map sheet opens the Practice tab; it should open practice for that topic once Udith's practice feature accepts a topic id.
-- **Mistake journal:** needs `GET /mistakes`.
-- **Backend (overview cards in Figma):** study time and accuracy trend need daily / weekly data from the backend first. Add the cards when it exists.
 - Not in this version (no backend data yet): weekly plan, recommendations, reassessment.
 
 ## Folders

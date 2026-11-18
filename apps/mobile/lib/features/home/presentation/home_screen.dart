@@ -81,16 +81,20 @@ class _Dashboard extends ConsumerWidget {
     final action = summary.nextBestAction;
 
     void openAction(NextBestAction a) {
-      if (a.type == 'diagnostic') {
-        context.push(AppRoutes.diagnostic);
-        return;
-      }
-      // TODO(samni): open the real revision / practice screen per type.
       final topicId = a.target?.topicId;
-      if (topicId == null) {
-        context.go(AppRoutes.learn);
-      } else {
-        context.push(AppRoutes.topicPath(topicId));
+      switch (a.type) {
+        case 'diagnostic':
+          context.push(AppRoutes.diagnostic);
+        // "Start 10-min revision": the topic page (notes, videos, practice).
+        case 'revise' || 'revision' when topicId != null:
+          context.push(AppRoutes.topicPath(topicId));
+        case 'practice' when topicId != null:
+          context.push(
+            AppRoutes.quizSetupPath(topicId: topicId, mode: 'quick'),
+          );
+        // Unknown type or no topic: the full list of recommendations.
+        default:
+          context.push(AppRoutes.nextSteps);
       }
     }
 
@@ -126,7 +130,18 @@ class _Dashboard extends ConsumerWidget {
               action: action,
               onStart: () => openAction(action),
             ),
-            const SizedBox(height: AppSpacing.md),
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () => context.push(AppRoutes.nextSteps),
+                style: TextButton.styleFrom(
+                  minimumSize: const Size(48, 48),
+                  foregroundColor: AppColors.primary,
+                  textStyle: const TextStyle(fontWeight: FontWeight.w700),
+                ),
+                child: const Text('See all next steps'),
+              ),
+            ),
           ],
           IntrinsicHeight(
             child: Row(
@@ -138,6 +153,8 @@ class _Dashboard extends ConsumerWidget {
                   child: TodaysPlanCard(
                     plan: summary.todaysPlan,
                     onToggle: (item) => unawaited(toggle(item)),
+                    onOpen: (_) => context.push(AppRoutes.studyPlan),
+                    onSeePlan: () => context.push(AppRoutes.studyPlan),
                   ),
                 ),
                 const SizedBox(width: AppSpacing.sm),
@@ -192,7 +209,6 @@ class _Dashboard extends ConsumerWidget {
                     tint: i.isEven
                         ? AppColors.primarySoft
                         : AppColors.successSoft,
-                    // TODO(keshomigha): the topic page is still a placeholder.
                     onTap: () =>
                         context.push(AppRoutes.topicPath(item.topicId)),
                   );

@@ -14,26 +14,25 @@
 |---|---|---|
 | RAG sources | `presentation/rag_sources_screen.dart` | `/rag-sources` |
 
-## API endpoints it will use
-
-> Planned paths only. The backend's `/docs` (OpenAPI) is the real contract -
-> update this table when the backend publishes the endpoints.
+## API endpoints it uses
 
 | Method | Path | Purpose |
 |---|---|---|
-| `GET` | `/admin/rag/sources` | Sources with ingestion status |
-| `POST` | `/admin/rag/sources` | Upload a source (multipart, returns a job id) |
-| `POST` | `/admin/rag/reindex` | Re-index everything (job id) |
+| `GET` | `/admin/rag/sources` | Sources with status (pending / ingesting / ready / failed) and chunk count |
+| `POST` | `/admin/rag/sources` | Upload (multipart: file, title, source_type, unit_number?, year?) -> 202 job |
+| `POST` | `/admin/rag/reindex` | Re-index one (`{document_id}`) or all (no body) -> 202 job |
+| `GET` | `/jobs/{job_id}` | Wait for the job (`JobPoller`), then the list reloads |
 
-Shared models used: `AiJob` (from `brainbox_core`, re-exported in `domain/`).
+File picking goes through `pickUploadProvider` (`lib/widgets/pick_upload.dart`)
+so tests can hand in a file.
 
 ## Folders
 
 ```
 rag_sources/
-├── domain/rag_sources_models.dart              freezed models
+├── domain/rag_sources_models.dart              plain classes with fromJson
 ├── data/rag_sources_repository.dart            calls ApiClient (the only place that does)
-├── application/rag_sources_controller.dart     Riverpod controller (loading / error / data)
+├── application/rag_sources_controller.dart     plain Riverpod 3 providers
 └── presentation/                       screens + widgets/ (UI only)
 ```
 

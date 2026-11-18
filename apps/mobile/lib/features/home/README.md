@@ -17,10 +17,13 @@
 - Greeting by local time: Good morning (5-11), Good afternoon (12-16),
   Good evening (17-4); date like "Tuesday, 7 Oct".
 - Chips: "N-day streak", "N days to A/L" (hidden when `days_to_exam` is null).
-- Next best action: `type == diagnostic` opens the diagnostic intro; other
-  types open the topic placeholder for now (TODO).
-- Today's plan: tapping a circle ticks it right away (optimistic) and rolls
-  back if `PATCH /home/plan/{id}` fails.
+- Next best action: `diagnostic` -> diagnostic intro; `revise` (or the
+  fake's `revision`) with a topic -> topic page; `practice` with a topic ->
+  quiz setup (`mode: quick`); anything else or no topic -> Next steps
+  (`AppRoutes.nextSteps`). "See all next steps" under the card -> Next steps.
+- Today's plan: tapping a circle (48 px target) ticks it right away
+  (optimistic) and rolls back if `PATCH /home/plan/{id}` fails. Tapping the
+  row text or "See plan" opens the Study plan (`AppRoutes.studyPlan`).
 - Mastery ring + "+N% wk" (red when negative). Continue learning cards ->
   topic; See all -> Learn tab. Avatar -> Settings.
 - Pull to refresh, skeleton while loading, error banner with Retry.
