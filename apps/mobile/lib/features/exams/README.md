@@ -14,21 +14,21 @@
 |---|---|---|
 | Past papers | `presentation/past_papers_screen.dart` | `/exams` |
 | Generate model paper | `presentation/generate_paper_screen.dart` | `/exams/generate` |
-| Exam mode | `presentation/exam_attempt_screen.dart` | `/exams/attempt/:paperId` |
+| Exam mode | `presentation/exam_attempt_screen.dart` | `/exams/attempt/:paperId?hide_outdated=true` |
+| Result | `presentation/exam_result_screen.dart` | `/exams/result` |
 
-## API endpoints it will use
-
-> Planned paths only. The backend's `/docs` (OpenAPI) is the real contract -
-> update this table when the backend publishes the endpoints.
+## API endpoints
 
 | Method | Path | Purpose |
 |---|---|---|
-| `GET` | `/past-papers` | List of past papers |
-| `POST` | `/model-papers/generate` | Start model paper generation (returns a job id) |
-| `POST` | `/exam-attempts` | Start an exam attempt |
-| `POST` | `/exam-attempts/{attempt_id}/submit` | Submit answers |
+| `GET` | `/papers?year=&type=` | Approved past papers |
+| `GET` | `/papers/{id}?hide_outdated=` | One paper's questions (no answers) |
+| `POST` | `/papers/generate` | Model paper from a blueprint: 202 + job, polled with `JobPoller` |
+| `POST` | `/papers/{id}/submit` | MCQ letters + structured / essay text; written answers are marked in the background |
 
-Shared models used: `Question`, `AiJob` (from `brainbox_core`, re-exported in `domain/`).
+Exam mode has a tab per question type (Part I MCQ, Part II structured,
+essay), a question palette (answered / unanswered / flagged, each with icon,
+word and colour) and a submit confirmation.
 
 ## Folders
 

@@ -2,6 +2,7 @@ import 'package:brainbox_core/brainbox_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../offline/offline_cache.dart';
 import '../domain/learn_models.dart';
 import '../domain/syllabus_models.dart';
 import 'api_learn_repository.dart';
@@ -109,7 +110,10 @@ abstract interface class LearnRepository {
 @Riverpod(keepAlive: true)
 LearnRepository learnRepository(Ref ref) => LearnConfig.useMock
     ? MockLearnRepository()
-    : ApiLearnRepository(ref.watch(apiClientProvider));
+    : ApiLearnRepository(
+        ref.watch(apiClientProvider),
+        ref.watch(offlineCacheProvider),
+      );
 
 /// Time between two polls of a generation job or an upload. Tests set it
 /// to zero.

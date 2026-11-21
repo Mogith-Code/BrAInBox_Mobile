@@ -56,8 +56,11 @@ abstract class ExamPaper with _$ExamPaper {
 /// One student answer for an exam question ("A".."E" or null if skipped).
 @freezed
 abstract class AnswerItem with _$AnswerItem {
-  const factory AnswerItem({required String questionId, String? selected}) =
-      _AnswerItem;
+  const factory AnswerItem({
+    required String questionId,
+    String? selected,
+    String? answerText,
+  }) = _AnswerItem;
 
   factory AnswerItem.fromJson(Map<String, dynamic> json) =>
       _$AnswerItemFromJson(json);
@@ -110,6 +113,10 @@ abstract class EvalResult with _$EvalResult {
     @Default([]) List<TopicScore> byTopic,
     @Default([]) List<String> weakTopics,
     @Default([]) List<QuestionResult> results,
+    // "marking" while structured / essay answers are marked in the background.
+    @Default('graded') String status,
+    @Default(0) int pendingWritten,
+    @Default(0) int writtenMarksTotal,
   }) = _EvalResult;
 
   factory EvalResult.fromJson(Map<String, dynamic> json) =>

@@ -111,4 +111,31 @@ void main() {
     await tester.pumpAndSettle();
     expect((await repo.privacy()).shareResearch, isTrue);
   });
+
+  testWidgets('delete dialog needs DELETE and closes without errors', (
+    tester,
+  ) async {
+    await _pump(tester, location: AppRoutes.privacy);
+    final tile = find.text('Delete my account');
+    await tester.ensureVisible(tile);
+    await tester.pumpAndSettle();
+    await tester.tap(tile);
+    await tester.pumpAndSettle();
+
+    FilledButton button() => tester.widget<FilledButton>(
+      find.widgetWithText(FilledButton, 'Delete forever'),
+    );
+    expect(button().onPressed, isNull);
+    await tester.enterText(find.byType(TextField), 'DELETE');
+    await tester.pump();
+    expect(button().onPressed, isNotNull);
+
+    await tester.tap(find.text('Cancel'));
+    // Pump through the closing animation, while the TextField is still built.
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 50));
+    await tester.pumpAndSettle();
+    expect(find.text('Delete forever'), findsNothing);
+    expect(tester.takeException(), isNull);
+  });
 }

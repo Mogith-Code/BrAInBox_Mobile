@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'app/app.dart';
+import 'features/offline/offline_cache.dart';
 // Not committed (it holds Firebase keys). `melos bootstrap` creates a stub
 // from firebase_options.dart.example; `flutterfire configure` replaces it
 // with the real one. See README > Firebase setup.
@@ -16,10 +17,9 @@ Future<void> main() async {
   //    disabled and a "Firebase not configured" strip shows in debug.
   await FirebaseSetup.initialize(() => DefaultFirebaseOptions.currentPlatform);
 
-  // 2. Hive (offline cache).
-  // TODO(samni): open the boxes the app needs, e.g.
-  //   await Hive.openBox<String>('notes_cache');
+  // 2. Hive (offline cache for syllabus, notes and short notes).
   await Hive.initFlutter();
+  await OfflineCache.open();
 
   // 3. ProviderScope holds every Riverpod provider.
   // retry: null -> a failing request shows its error (with a Retry button)

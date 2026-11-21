@@ -1,73 +1,56 @@
 import 'package:brainbox_core/brainbox_core.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../domain/exams_models.dart';
-
-part 'exams_repository.g.dart';
+import '../domain/paper_models.dart';
 
 /// Data layer for the Exams feature.
 ///
 /// The ONLY place in this feature that calls the backend (through
 /// [ApiClient]). Controllers call this; screens never do.
 class ExamsRepository {
-  ExamsRepository(this.api);
+  ExamsRepository(this.api, this.jobs);
 
   final ApiClient api;
+  final JobPoller jobs;
 
-  /// Loads the overview / status for the Exams feature.
-  Future<ExamsSummary> fetchSummary() async {
-    try {
-      final json = await api.get<Map<String, dynamic>>('/exams/status');
-      return ExamsSummary(
-        title: 'A/L Biology Model Papers',
-        message:
-            'Module: ${json['module'] ?? 'exams'} (${json['status'] ?? 'ready'})',
-      );
-    } catch (_) {
-      return const ExamsSummary(
-        title: 'A/L Biology Model Papers',
-        message: 'Generate customized practice papers from curriculum units.',
-      );
-    }
-  }
-
-  /// Generates an AI model paper by selecting 1..10 syllabus units.
-  Future<ExamPaper> generatePaperByUnits({
-    required List<int> units,
-    required int count,
-    String? title,
+  /// `GET /papers` - approved past papers, newest year first.
+  Future<List<PaperSummary>> listPapers({
+    int? year,
+    PaperQuestionType? type,
   }) async {
-    final response = await api.post<Map<String, dynamic>>(
-      '/papers/generate-by-units',
-      data: {
-        'subject': 'Biology',
-        'units': units,
-        'unit_numbers': units,
-        'num_questions': count,
-        if (title != null && title.isNotEmpty) 'title': title,
-      },
+    final json = await api.get<Map<String, dynamic>>(
+      '/papers',
+      query: {'size': 100, 'year': ?year, 'type': ?type?.api},
     );
-    return ExamPaper.fromJson(response);
+    return [
+      for (final p in (json['items'] as List? ?? const []))
+        PaperSummary.fromJson(p as Map<String, dynamic>),
+    ];
   }
 
-  /// Generates an AI model paper by selecting specific syllabus topic IDs.
-  Future<ExamPaper> generatePaperByTopics({
-    required List<String> topicIds,
-    required int count,
-    String? title,
-  }) async {
-    final response = await api.post<Map<String, dynamic>>(
+  /// `GET /papers/{id}` - questions without answers.
+  Future<PaperDetail> fetchPaper(String id, {bool hideOutdated = false}) async {
+    final json = await api.get<Map<String, dynamic>>(
+      '/papers/$id',
+      query: {if (hideOutdated) 'hide_outdated': true},
+    );
+    return PaperDetail.fromJson(json);
+  }
+
+  /// `POST /papers/generate` - 202 with a job id.
+  Future<PaperJob> startModelPaper(PaperBlueprint blueprint) async {
+    final json = await api.post<Map<String, dynamic>>(
       '/papers/generate',
-      data: {
-        'topic_ids': topicIds,
-        'num_questions': count,
-        if (title != null && title.isNotEmpty) 'title': title,
-      },
+      data: blueprint.toJson(),
     );
-    return ExamPaper.fromJson(response);
+    return PaperJob.fromJson(json);
   }
 
-  /// Submits student answers for evaluation and AI explanations.
+  /// Polls `GET /jobs/{id}` until the model paper job is done.
+  Stream<AiJob> watchJob(String jobId) => jobs.watch(jobId);
+
+  /// `POST /papers/{id}/submit` - MCQ letters and written answers.
   Future<EvalResult> submitPaper({
     required String paperId,
     required List<AnswerItem> answers,
@@ -84,6 +67,9 @@ class ExamsRepository {
   }
 }
 
-@Riverpod(keepAlive: true)
-ExamsRepository examsRepository(Ref ref) =>
-    ExamsRepository(ref.watch(apiClientProvider));
+final examsRepositoryProvider = Provider<ExamsRepository>(
+  (ref) => ExamsRepository(
+    ref.watch(apiClientProvider),
+    ref.watch(jobPollerProvider),
+  ),
+);

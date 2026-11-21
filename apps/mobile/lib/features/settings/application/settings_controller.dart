@@ -4,6 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../auth/application/auth_flow_controllers.dart';
 import '../../auth/application/session_controller.dart';
 import '../../home/application/home_controller.dart';
+import '../../offline/offline_cache.dart';
 import '../../practice/application/diagnostic_controller.dart';
 import '../../profile/application/profile_overview_controller.dart';
 import '../data/settings_repository.dart';
@@ -98,7 +99,7 @@ class LogoutController extends _$LogoutController {
         ..invalidate(profileOverviewControllerProvider)
         ..invalidate(settingsControllerProvider)
         ..invalidate(privacyControllerProvider);
-      // TODO(samni): also clear the Hive boxes once the app opens any.
+      await ref.read(offlineCacheProvider).clear();
       await session.signOut();
     });
     if (ref.mounted) state = result;

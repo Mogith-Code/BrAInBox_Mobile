@@ -15,6 +15,9 @@ import 'formatters.dart';
 abstract final class ErrorMessages {
   static const generic = 'Something went wrong. Please try again.';
 
+  /// No connection. [ErrorBanner] shows it as an offline state.
+  static const offline = 'No internet connection. Check it and try again.';
+
   /// Message for any error object.
   static String of(Object? error) {
     if (error is ApiException) return fromApi(error);
@@ -72,7 +75,7 @@ abstract final class ErrorMessages {
   /// Friendly text for a backend error code, or null if we don't know it.
   static String? fromCode(String code, {int? retryAfter}) => switch (code) {
     // Network / transport
-    'network' => 'No internet connection. Check it and try again.',
+    'network' => offline,
     'timeout' => 'The server took too long to respond. Please try again.',
     'INTERNAL_ERROR' || 'FIREBASE_ERROR' => generic,
     'VALIDATION_ERROR' => 'Please check the highlighted fields.',

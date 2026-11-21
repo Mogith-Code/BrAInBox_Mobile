@@ -1,6 +1,7 @@
 import 'package:brainbox_core/brainbox_core.dart';
 import 'package:dio/dio.dart';
 
+import '../../offline/offline_cache.dart';
 import 'learn_repository.dart';
 
 /// [LearnRepository] on the real backend: `{API_BASE_URL}/learn/...`.
@@ -8,42 +9,53 @@ import 'learn_repository.dart';
 /// The auth token, the 401 token refresh and the offline banner come from
 /// [ApiClient]. Lists arrive as `{items: [], total}` (a bare list works too).
 class ApiLearnRepository implements LearnRepository {
-  ApiLearnRepository(this.api);
+  ApiLearnRepository(this.api, [this.cache = const OfflineCache()]);
 
   final ApiClient api;
+
+  /// Syllabus, units, topics and notes are kept for offline reading.
+  final OfflineCache cache;
+
+  Future<Object?> _cached(String path, [Map<String, dynamic>? query]) =>
+      cache.getJson<Object?>(
+        query == null ? path : '$path?$query',
+        () => api.get<Object?>(path, query: query),
+      );
+
+  Future<Map<String, dynamic>> _cachedMap(
+    String path, [
+    Map<String, dynamic>? query,
+  ]) async => Map<String, dynamic>.from(await _cached(path, query) as Map);
 
   static const _base = '/learn';
 
   @override
   Future<List<Subject>> fetchSubjects() async =>
-      _items(await api.get<Object?>('$_base/subjects'), Subject.fromJson);
+      _items(await _cached('$_base/subjects'), Subject.fromJson);
 
   @override
   Future<List<UnitProgress>> fetchUnits(String subjectId) async {
     final units = _items(
-      await api.get<Object?>('$_base/subjects/$subjectId/units'),
+      await _cached('$_base/subjects/$subjectId/units'),
       UnitProgress.fromJson,
     );
     return units..sort((a, b) => a.order.compareTo(b.order));
   }
 
   @override
-  Future<UnitDetail> fetchUnit(String unitId) async => UnitDetail.fromApi(
-    await api.get<Map<String, dynamic>>('$_base/units/$unitId'),
-  );
+  Future<UnitDetail> fetchUnit(String unitId) async =>
+      UnitDetail.fromApi(await _cachedMap('$_base/units/$unitId'));
 
   @override
-  Future<TopicDetail> fetchTopic(String topicId) async => TopicDetail.fromApi(
-    await api.get<Map<String, dynamic>>('$_base/topics/$topicId'),
-  );
+  Future<TopicDetail> fetchTopic(String topicId) async =>
+      TopicDetail.fromApi(await _cachedMap('$_base/topics/$topicId'));
 
   @override
   Future<TopicNote?> fetchNote(String topicId, NoteType type) async {
     try {
-      final json = await api.get<Map<String, dynamic>>(
-        '$_base/topics/$topicId/notes',
-        query: {'type': type.name},
-      );
+      final json = await _cachedMap('$_base/topics/$topicId/notes', {
+        'type': type.name,
+      });
       return TopicNote.fromJson(json);
     } on ApiException catch (e) {
       if (e.isNotFound) return null; // no notes yet
