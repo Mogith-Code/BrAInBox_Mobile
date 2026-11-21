@@ -1,10 +1,10 @@
-import 'features/offline/offline_cache.dart';
 import 'package:brainbox_core/brainbox_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'app/app.dart';
+import 'features/offline/offline_cache.dart';
 // Not committed (it holds Firebase keys). `melos bootstrap` creates a stub
 // from firebase_options.dart.example; `flutterfire configure` replaces it
 // with the real one. See README > Firebase setup.

@@ -1,8 +1,8 @@
-import '../../offline/offline_cache.dart';
 import 'package:brainbox_core/brainbox_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../offline/offline_cache.dart';
 import '../domain/learn_models.dart';
 import '../domain/syllabus_models.dart';
 import 'api_learn_repository.dart';
