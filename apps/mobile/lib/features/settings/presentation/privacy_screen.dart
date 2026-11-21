@@ -156,49 +156,10 @@ class _YourData extends ConsumerWidget {
   const _YourData();
 
   Future<void> _confirmDelete(BuildContext context, WidgetRef ref) async {
-    final typed = TextEditingController();
     final ok = await showDialog<bool>(
       context: context,
-      builder: (ctx) => StatefulBuilder(
-        builder: (ctx, setState) => AlertDialog(
-          icon: const Icon(Icons.warning_amber_rounded, color: AppColors.error),
-          title: const Text('Delete my account?'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'This removes your profile, answers, evaluations, uploaded '
-                'answer photos, study plan and community posts. '
-                'It cannot be undone.',
-              ),
-              const SizedBox(height: AppSpacing.md),
-              TextField(
-                controller: typed,
-                decoration: const InputDecoration(
-                  labelText: 'Type DELETE to confirm',
-                ),
-                onChanged: (_) => setState(() {}),
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(ctx, false),
-              child: const Text('Cancel'),
-            ),
-            FilledButton(
-              style: FilledButton.styleFrom(backgroundColor: AppColors.error),
-              onPressed: typed.text.trim() == 'DELETE'
-                  ? () => Navigator.pop(ctx, true)
-                  : null,
-              child: const Text('Delete forever'),
-            ),
-          ],
-        ),
-      ),
+      builder: (_) => const _DeleteAccountDialog(),
     );
-    typed.dispose();
     if (ok != true) return;
     final deleted = await ref
         .read(accountControllerProvider.notifier)
@@ -252,4 +213,61 @@ class _YourData extends ConsumerWidget {
       ],
     );
   }
+}
+
+/// Owns the text controller, so it is disposed only after the dialog's
+/// closing animation has removed the [TextField].
+class _DeleteAccountDialog extends StatefulWidget {
+  const _DeleteAccountDialog();
+
+  @override
+  State<_DeleteAccountDialog> createState() => _DeleteAccountDialogState();
+}
+
+class _DeleteAccountDialogState extends State<_DeleteAccountDialog> {
+  final _typed = TextEditingController();
+
+  @override
+  void dispose() {
+    _typed.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => AlertDialog(
+    icon: const Icon(Icons.warning_amber_rounded, color: AppColors.error),
+    title: const Text('Delete my account?'),
+    content: Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'This removes your profile, answers, evaluations, uploaded '
+          'answer photos, study plan and community posts. '
+          'It cannot be undone.',
+        ),
+        const SizedBox(height: AppSpacing.md),
+        TextField(
+          controller: _typed,
+          decoration: const InputDecoration(
+            labelText: 'Type DELETE to confirm',
+          ),
+          onChanged: (_) => setState(() {}),
+        ),
+      ],
+    ),
+    actions: [
+      TextButton(
+        onPressed: () => Navigator.pop(context, false),
+        child: const Text('Cancel'),
+      ),
+      FilledButton(
+        style: FilledButton.styleFrom(backgroundColor: AppColors.error),
+        onPressed: _typed.text.trim() == 'DELETE'
+            ? () => Navigator.pop(context, true)
+            : null,
+        child: const Text('Delete forever'),
+      ),
+    ],
+  );
 }
