@@ -126,6 +126,12 @@ class ExamAttemptState {
       mcq.containsKey(questionId) ||
       (written[questionId]?.trim().isNotEmpty ?? false);
 
+  /// True once leaving the exam would lose an answer or a flag.
+  bool get hasProgress =>
+      mcq.isNotEmpty ||
+      flagged.isNotEmpty ||
+      written.values.any((text) => text.trim().isNotEmpty);
+
   ExamAttemptState copyWith({
     Map<String, String>? mcq,
     Map<String, String>? written,
