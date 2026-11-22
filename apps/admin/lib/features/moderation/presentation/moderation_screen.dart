@@ -21,14 +21,11 @@ class ModerationScreen extends ConsumerWidget {
       builder: (_) => const _NewGroupDialog(),
     );
     if (name == null || name.isEmpty || !context.mounted) return;
-    final created = await ref
+    final error = await ref
         .read(studyGroupsControllerProvider.notifier)
         .create(name);
     if (context.mounted) {
-      showAdminSnack(
-        context,
-        created ? 'Group "$name" created.' : "Couldn't create the group.",
-      );
+      showAdminSnack(context, error ?? 'Group "$name" created.');
     }
   }
 
@@ -111,19 +108,18 @@ class _ReportCard extends ConsumerWidget {
     WidgetRef ref,
     ModerationAction action,
   ) async {
-    final ok = await ref
+    final error = await ref
         .read(moderationControllerProvider.notifier)
         .resolve(item.id, action);
     if (context.mounted) {
       showAdminSnack(
         context,
-        ok
-            ? switch (action) {
-                ModerationAction.keep => 'Kept. The report is closed.',
-                ModerationAction.warn => 'Warning sent to the author.',
-                ModerationAction.remove => 'Removed.',
-              }
-            : "Couldn't save that. Try again.",
+        error ??
+            switch (action) {
+              ModerationAction.keep => 'Kept. The report is closed.',
+              ModerationAction.warn => 'Warning sent to the author.',
+              ModerationAction.remove => 'Removed.',
+            },
       );
     }
   }

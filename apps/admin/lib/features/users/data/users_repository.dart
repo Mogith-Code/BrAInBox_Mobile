@@ -7,8 +7,11 @@ part 'users_repository.g.dart';
 
 /// Students (admin). Only this layer calls the API.
 abstract interface class UsersRepository {
-  /// `GET /admin/users?search=&exam_year=&status=&district=`
-  Future<StudentPage> students(StudentFilter filter);
+  /// `GET /admin/users?search=&exam_year=&status=&district=&page=&page_size=`
+  Future<StudentPage> students(
+    StudentFilter filter, {
+    int pageSize = StudentFilter.pageSize,
+  });
 
   /// `PATCH /admin/users/{id}` with `{is_active}`: suspend (false) or
   /// reinstate (true). Returns the updated row.
@@ -21,13 +24,15 @@ class ApiUsersRepository implements UsersRepository {
   final ApiClient api;
 
   @override
-  Future<StudentPage> students(StudentFilter filter) async =>
-      StudentPage.fromJson(
-        await api.get<Map<String, dynamic>>(
-          '/admin/users',
-          query: filter.toQuery(),
-        ),
-      );
+  Future<StudentPage> students(
+    StudentFilter filter, {
+    int pageSize = StudentFilter.pageSize,
+  }) async => StudentPage.fromJson(
+    await api.get<Map<String, dynamic>>(
+      '/admin/users',
+      query: filter.toQuery(pageSize: pageSize),
+    ),
+  );
 
   @override
   Future<AdminStudent> setActive(String id, {required bool active}) async =>
@@ -149,7 +154,10 @@ class FakeUsersRepository implements UsersRepository {
   ];
 
   @override
-  Future<StudentPage> students(StudentFilter filter) async {
+  Future<StudentPage> students(
+    StudentFilter filter, {
+    int pageSize = StudentFilter.pageSize,
+  }) async {
     final q = filter.search.trim().toLowerCase();
     final items = _rows.where((s) {
       if (filter.examYear != null && s.examYear != filter.examYear) {
@@ -162,7 +170,12 @@ class FakeUsersRepository implements UsersRepository {
       return q.isEmpty ||
           '${s.fullName} ${s.email} ${s.school}'.toLowerCase().contains(q);
     }).toList();
-    return StudentPage(items: items, total: 3105, activeTotal: 2418);
+    final start = (filter.page - 1) * pageSize;
+    return StudentPage(
+      items: items.skip(start).take(pageSize).toList(),
+      total: items.length,
+      activeTotal: items.where((s) => s.status == StudentStatus.active).length,
+    );
   }
 
   @override

@@ -15,7 +15,6 @@ part 'job_poller.g.dart';
 /// final job = await ref.read(jobPollerProvider).waitFor(jobId);
 /// ```
 ///
-// TODO(samni): confirm the /jobs response shape with the backend /docs.
 class JobPoller {
   JobPoller(
     this._api, {

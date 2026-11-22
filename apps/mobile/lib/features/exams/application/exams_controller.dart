@@ -88,7 +88,7 @@ class GeneratePaperController extends Notifier<GenerateState> {
               if (!done.isCompleted) done.complete(null);
             },
           );
-      return done.future;
+      return await done.future;
     } catch (e) {
       if (ref.mounted) state = GenerateState(error: ErrorMessages.of(e));
       return null;

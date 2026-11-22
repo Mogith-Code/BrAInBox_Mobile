@@ -139,3 +139,11 @@ class SettingsLinkTile extends StatelessWidget {
     );
   }
 }
+
+/// The message for a section that failed to load. A 404 means the backend
+/// doesn't have that endpoint yet, so it gets a friendly message instead of
+/// the server's "Not Found".
+String settingsErrorMessage(Object? error) =>
+    error is ApiException && error.isNotFound
+    ? "This isn't available yet. Please try again later."
+    : ErrorMessages.of(error);

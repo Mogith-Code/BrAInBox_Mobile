@@ -1,5 +1,6 @@
-import 'package:brainbox_core/brainbox_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../app/admin_errors.dart';
 
 import '../../question_bank/data/question_bank_repository.dart';
 import '../data/mcq_mapping_repository.dart';
@@ -51,7 +52,7 @@ class McqSaveController extends Notifier<bool> {
       if (ref.mounted) ref.invalidate(mcqListProvider);
       return (saved: saved, error: null);
     } catch (e) {
-      return (saved: null, error: ErrorMessages.of(e));
+      return (saved: null, error: adminErrorMessage(e));
     } finally {
       if (ref.mounted) state = false;
     }
@@ -81,7 +82,7 @@ class SuggestionsController extends Notifier<SuggestionsState> {
       final items = await _repository.suggest(questionId);
       if (ref.mounted) state = SuggestionsState(items: items);
     } catch (e) {
-      if (ref.mounted) state = SuggestionsState(error: ErrorMessages.of(e));
+      if (ref.mounted) state = SuggestionsState(error: adminErrorMessage(e));
     }
   }
 
@@ -103,7 +104,7 @@ class SuggestionsController extends Notifier<SuggestionsState> {
       if (ref.mounted) {
         state = state.copyWith(saving: {...state.saving}..remove(s.optionId));
       }
-      return ErrorMessages.of(e);
+      return adminErrorMessage(e);
     }
   }
 

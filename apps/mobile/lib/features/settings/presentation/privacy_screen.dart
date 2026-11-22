@@ -135,7 +135,7 @@ class PrivacyScreen extends ConsumerWidget {
                 Padding(
                   padding: AppSpacing.cardPadding,
                   child: ErrorBanner(
-                    message: ErrorMessages.of(error),
+                    message: settingsErrorMessage(error),
                     onRetry: () => ref.invalidate(privacyControllerProvider),
                   ),
                 ),

@@ -27,7 +27,7 @@ abstract class DiagnosticQuestion with _$DiagnosticQuestion {
     @Default(<DiagnosticOption>[]) List<DiagnosticOption> options,
 
     /// Set when the question was already answered (resuming an attempt).
-    /// TODO(udith): ask the backend to return this from /diagnostic/start.
+    /// (`selected_option_id` from `POST /diagnostic/start`.)
     String? selectedOptionId,
   }) = _DiagnosticQuestion;
 

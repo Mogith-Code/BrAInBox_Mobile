@@ -1,9 +1,9 @@
 import 'package:brainbox_core/brainbox_core.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../widgets/admin_page.dart';
+import '../../../widgets/pick_upload.dart';
 import '../application/past_papers_controller.dart';
 import '../domain/past_papers_models.dart';
 import 'widgets/answer_key_editor.dart';
@@ -20,22 +20,22 @@ class PastPapersScreen extends ConsumerStatefulWidget {
 }
 
 class _PastPapersScreenState extends ConsumerState<PastPapersScreen> {
-  int _year = 2024;
+  /// The newest A/L year that can have a paper (the exam is in August).
+  static final int _latestYear = DateTime.now().year;
+
+  int _year = _latestYear;
   PaperType _type = PaperType.paper2Structured;
   String? _openId;
   bool _uploading = false;
 
   Future<void> _upload() async {
-    final file = await FilePicker.pickFile(
-      type: FileType.custom,
-      allowedExtensions: const ['pdf'],
-    );
+    final file = await ref.read(pickUploadProvider)(const ['pdf']);
     if (file == null || !mounted) return;
     setState(() => _uploading = true);
-    final ok = await ref
+    final error = await ref
         .read(pastPapersControllerProvider.notifier)
         .upload(
-          bytes: await file.readAsBytes(),
+          bytes: file.bytes,
           fileName: file.name,
           year: _year,
           type: _type,
@@ -44,9 +44,7 @@ class _PastPapersScreenState extends ConsumerState<PastPapersScreen> {
     setState(() => _uploading = false);
     showAdminSnack(
       context,
-      ok
-          ? '${file.name} uploaded. Extracting questions...'
-          : 'Upload failed. Try again.',
+      error ?? '${file.name} uploaded. Extracting questions...',
     );
   }
 
@@ -75,7 +73,7 @@ class _PastPapersScreenState extends ConsumerState<PastPapersScreen> {
                       initialValue: _year,
                       decoration: const InputDecoration(labelText: 'Year'),
                       items: [
-                        for (var y = 2024; y >= 2011; y--)
+                        for (var y = _latestYear; y >= 2011; y--)
                           DropdownMenuItem(value: y, child: Text('$y')),
                       ],
                       onChanged: (y) => setState(() => _year = y ?? _year),
@@ -191,7 +189,7 @@ class _PastPapersScreenState extends ConsumerState<PastPapersScreen> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         AdminPageHeader(
-          eyebrow: 'Department of Examinations · 2011–2024',
+          eyebrow: 'Department of Examinations · 2011–$_latestYear',
           title: 'Past papers & marking schemes',
           actions: [
             FilledButton.icon(

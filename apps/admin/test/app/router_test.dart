@@ -1,5 +1,6 @@
 import 'package:brainbox_admin/app/admin_shell.dart';
 import 'package:brainbox_admin/app/router.dart';
+import 'package:brainbox_admin/features/auth/application/admin_session.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -12,7 +13,14 @@ void main() {
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
 
-    final container = ProviderContainer();
+    // Signed in as an admin, so the guard lets every page open.
+    final container = ProviderContainer(
+      overrides: [
+        adminSessionProvider.overrideWithValue(
+          const AdminSession(AdminSessionStatus.admin),
+        ),
+      ],
+    );
     addTearDown(container.dispose);
     final router = container.read(routerProvider);
 
@@ -22,10 +30,6 @@ void main() {
         child: MaterialApp.router(routerConfig: router),
       ),
     );
-
-    router.go(AdminRoutes.login);
-    await tester.pumpAndSettle();
-    expect(find.text('Sign in'), findsOneWidget);
 
     for (final item in AdminShell.navItems) {
       router.go(item.path);

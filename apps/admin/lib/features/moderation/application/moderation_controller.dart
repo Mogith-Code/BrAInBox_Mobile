@@ -1,5 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../app/admin_errors.dart';
+
 import '../data/moderation_repository.dart';
 import '../domain/moderation_models.dart';
 
@@ -13,17 +15,17 @@ class ModerationController extends _$ModerationController {
   Future<List<ModerationItem>> build() =>
       ref.watch(moderationRepositoryProvider).reports();
 
-  /// Returns false when it failed (the screen shows a message).
-  Future<bool> resolve(String id, ModerationAction action) async {
+  /// Returns why it failed (the screen shows it), or null.
+  Future<String?> resolve(String id, ModerationAction action) async {
     final before = state.value;
-    if (before == null) return false;
+    if (before == null) return 'The queue is still loading.';
     state = AsyncData([...before.where((r) => r.id != id)]);
     try {
       await ref.read(moderationRepositoryProvider).resolve(id, action);
-      return true;
-    } catch (_) {
+      return null;
+    } catch (e) {
       if (ref.mounted) state = AsyncData(before);
-      return false;
+      return adminErrorMessage(e);
     }
   }
 }
@@ -35,16 +37,17 @@ class StudyGroupsController extends _$StudyGroupsController {
   Future<List<StudyGroup>> build() =>
       ref.watch(moderationRepositoryProvider).groups();
 
-  Future<bool> create(String name) async {
+  /// Returns why it failed, or null.
+  Future<String?> create(String name) async {
     try {
       final group = await ref
           .read(moderationRepositoryProvider)
           .createGroup(name.trim());
       final now = state.value ?? const [];
       if (ref.mounted) state = AsyncData([...now, group]);
-      return true;
-    } catch (_) {
-      return false;
+      return null;
+    } catch (e) {
+      return adminErrorMessage(e);
     }
   }
 }

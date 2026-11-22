@@ -30,11 +30,9 @@ class _QualityReviewScreenState extends ConsumerState<QualityReviewScreen> {
     'Syllabus match',
   ];
 
-  Future<void> _done(Future<bool> action, String success) async {
-    final ok = await action;
-    if (mounted) {
-      showAdminSnack(context, ok ? success : "Couldn't save. Try again.");
-    }
+  Future<void> _done(Future<String?> action, String success) async {
+    final error = await action;
+    if (mounted) showAdminSnack(context, error ?? success);
   }
 
   @override

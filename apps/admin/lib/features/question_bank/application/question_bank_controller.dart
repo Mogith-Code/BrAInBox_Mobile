@@ -1,5 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../app/admin_errors.dart';
+
 import '../data/question_bank_repository.dart';
 import '../domain/question_bank_models.dart';
 
@@ -24,14 +26,15 @@ class QuestionBankController extends _$QuestionBankController {
       .watch(questionBankRepositoryProvider)
       .questions(ref.watch(questionFilterControllerProvider));
 
-  /// Runs a bulk action on [ids], then reloads. Returns false on failure.
-  Future<bool> bulk(List<String> ids, BulkAction action) async {
+  /// Runs a bulk action on [ids], then reloads. Returns why it failed
+  /// (e.g. which question can't be approved yet), or null.
+  Future<String?> bulk(List<String> ids, BulkAction action) async {
     try {
       await ref.read(questionBankRepositoryProvider).bulk(ids, action);
       ref.invalidateSelf();
-      return true;
-    } catch (_) {
-      return false;
+      return null;
+    } catch (e) {
+      return adminErrorMessage(e);
     }
   }
 }

@@ -1,17 +1,29 @@
+import 'dart:async';
+
 import 'package:brainbox_core/brainbox_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../widgets/admin_page.dart';
+import '../../../widgets/save_file.dart';
 import '../application/users_controller.dart';
 import '../domain/users_models.dart';
 
 /// Students: search, filter, see mastery and last activity, and suspend or
 /// reinstate an account.
 ///
-/// Route: `/users`. Data: `GET /admin/users`, `PATCH /admin/users/{id}`.
-class UsersScreen extends ConsumerWidget {
+/// Route: `/users`. Data: `GET /admin/users` (paged), `PATCH /admin/users/{id}`.
+/// Export CSV reads every matching page and saves one file.
+class UsersScreen extends ConsumerStatefulWidget {
   const UsersScreen({super.key});
+
+  @override
+  ConsumerState<UsersScreen> createState() => _UsersScreenState();
+}
+
+class _UsersScreenState extends ConsumerState<UsersScreen> {
+  /// How long typing must pause before the search runs.
+  static const searchDelay = Duration(milliseconds: 400);
 
   static const _examYears = [2025, 2026, 2027, 2028];
   static const _districts = [
@@ -24,11 +36,64 @@ class UsersScreen extends ConsumerWidget {
     'Negombo',
   ];
 
+  late final _search = TextEditingController(
+    text: ref.read(studentFilterControllerProvider).search,
+  );
+  Timer? _debounce;
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  void dispose() {
+    _debounce?.cancel();
+    _search.dispose();
+    super.dispose();
+  }
+
+  void _runSearch(String text) {
+    _debounce?.cancel();
+    final filters = ref.read(studentFilterControllerProvider.notifier);
+    final filter = ref.read(studentFilterControllerProvider);
+    if (filter.search.trim() == text.trim()) return;
+    filters.set(filter.copyWith(search: text));
+  }
+
+  void _onSearchChanged(String text) {
+    setState(() {}); // shows / hides the clear button
+    _debounce?.cancel();
+    _debounce = Timer(searchDelay, () => _runSearch(text));
+  }
+
+  Future<void> _export() async {
+    final String message;
+    try {
+      final result = await ref.read(usersCsvExportProvider.notifier).run();
+      if (result.count == 0) {
+        message = 'No students match, so there is nothing to export.';
+      } else {
+        final day = DateTime.now().toIso8601String().substring(0, 10);
+        await ref.read(saveTextFileProvider)(
+          'brainbox-students-$day.csv',
+          result.csv,
+        );
+        message =
+            'Exported ${Formatters.thousands(result.count)} '
+            '${result.count == 1 ? 'student' : 'students'}.';
+      }
+    } catch (e) {
+      if (mounted) {
+        showAdminSnack(context, "Couldn't export. ${adminErrorMessage(e)}");
+      }
+      return;
+    }
+    if (mounted) showAdminSnack(context, message);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final state = ref.watch(usersControllerProvider);
     final filter = ref.watch(studentFilterControllerProvider);
-    final setFilter = ref.read(studentFilterControllerProvider.notifier).set;
+    final filters = ref.read(studentFilterControllerProvider.notifier);
+    final setFilter = filters.set;
+    final exporting = ref.watch(usersCsvExportProvider).isLoading;
     final page = state.value;
 
     return Column(
@@ -42,14 +107,16 @@ class UsersScreen extends ConsumerWidget {
           title: 'Students',
           actions: [
             TextButton.icon(
-              onPressed: page == null
+              onPressed: page == null || page.total == 0 || exporting
                   ? null
-                  : () => showAdminSnack(
-                      context,
-                      'CSV export needs GET /admin/users/export.csv.',
-                    ),
-              icon: const Icon(Icons.download_outlined, size: 18),
-              label: const Text('Export CSV'),
+                  : _export,
+              icon: exporting
+                  ? const SizedBox.square(
+                      dimension: 16,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    )
+                  : const Icon(Icons.download_outlined, size: 18),
+              label: Text(exporting ? 'Exporting…' : 'Export CSV'),
             ),
           ],
         ),
@@ -61,12 +128,25 @@ class UsersScreen extends ConsumerWidget {
             SizedBox(
               width: 320,
               child: TextField(
-                decoration: const InputDecoration(
+                controller: _search,
+                decoration: InputDecoration(
                   isDense: true,
-                  prefixIcon: Icon(Icons.search, size: 20),
-                  hintText: 'Name, email or school',
+                  prefixIcon: const Icon(Icons.search, size: 20),
+                  hintText: 'Name or email',
+                  suffixIcon: _search.text.isEmpty
+                      ? null
+                      : IconButton(
+                          tooltip: 'Clear search',
+                          icon: const Icon(Icons.close, size: 18),
+                          onPressed: () {
+                            _search.clear();
+                            setState(() {});
+                            _runSearch('');
+                          },
+                        ),
                 ),
-                onSubmitted: (v) => setFilter(filter.copyWith(search: v)),
+                onChanged: _onSearchChanged,
+                onSubmitted: _runSearch,
               ),
             ),
             FilterDropdown<int?>(
@@ -95,7 +175,19 @@ class UsersScreen extends ConsumerWidget {
         const SizedBox(height: AppSpacing.lg),
         Expanded(
           child: switch (state) {
-            AsyncData(:final value) => _Table(students: value.items),
+            AsyncData(:final value) => Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(child: _Table(students: value.items)),
+                TablePager(
+                  pageSize: StudentFilter.pageSize,
+                  page: filter.page,
+                  shown: value.items.length,
+                  total: value.total,
+                  onPage: filters.page,
+                ),
+              ],
+            ),
             AsyncError(:final error) => AdminLoadError(
               error: error,
               onRetry: () => ref.invalidate(usersControllerProvider),
@@ -144,12 +236,16 @@ class _Table extends ConsumerWidget {
       ),
     );
     if (ok != true || !context.mounted) return;
-    final saved = await ref
+    final error = await ref
         .read(usersControllerProvider.notifier)
         .setActive(s.id, active: !suspend);
-    if (!saved && context.mounted) {
-      showAdminSnack(context, "Couldn't update ${s.fullName}. Try again.");
-    }
+    if (!context.mounted) return;
+    showAdminSnack(
+      context,
+      error == null
+          ? (suspend ? '${s.fullName} suspended.' : '${s.fullName} reinstated.')
+          : "Couldn't update ${s.fullName}. $error",
+    );
   }
 
   @override
