@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:brainbox_core/brainbox_core.dart';
 import 'package:brainbox_mobile/app/dev/fake_backend.dart';
 import 'package:brainbox_mobile/app/router.dart';
@@ -24,7 +22,6 @@ import 'package:brainbox_mobile/features/syllabus/data/learn_repository.dart';
 import 'package:brainbox_mobile/features/visuals/data/fake_visuals_repository.dart';
 import 'package:brainbox_mobile/features/visuals/data/visuals_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -56,45 +53,12 @@ const _screens = <String, String>{
   'Data & privacy': AppRoutes.privacy,
 };
 
-/// Loads Roboto from the Flutter SDK so text has real glyph widths.
-///
-/// The default test font draws every glyph 1 em wide, which is much wider
-/// than Inter and would report overflows that never happen on a phone.
-/// Roboto is within a few percent of Inter, so the 1.3 check is realistic.
-Future<bool> _loadRoboto() async {
-  final root = Platform.environment['FLUTTER_ROOT'];
-  if (root == null) return false;
-  final dir = Directory('$root/bin/cache/artifacts/material_fonts');
-  if (!dir.existsSync()) return false;
-  final loader = FontLoader('Roboto');
-  for (final name in [
-    'roboto-regular.ttf',
-    'roboto-medium.ttf',
-    'roboto-bold.ttf',
-    'roboto-black.ttf',
-  ]) {
-    final file = File('${dir.path}/$name');
-    if (!file.existsSync()) continue;
-    final bytes = file.readAsBytesSync();
-    loader.addFont(Future.value(ByteData.sublistView(bytes)));
-  }
-  await loader.load();
-  return true;
-}
-
-ThemeData _withRoboto(ThemeData theme, bool hasRoboto) => !hasRoboto
-    ? theme
-    : theme.copyWith(
-        textTheme: theme.textTheme.apply(fontFamily: 'Roboto'),
-        primaryTextTheme: theme.primaryTextTheme.apply(fontFamily: 'Roboto'),
-      );
+// Text is drawn in the flutter_test font, where every glyph is 1 em wide:
+// wider than Inter, so a screen that fits here also fits on a phone. The
+// result is the same on every machine (Windows, CI).
 
 void main() {
-  var hasRoboto = false;
-  setUpAll(() async {
-    registerFallbackValue(ReportReason.spam);
-    hasRoboto = await _loadRoboto();
-  });
+  setUpAll(() => registerFallbackValue(ReportReason.spam));
 
   Future<void> pump(
     WidgetTester tester, {
@@ -190,8 +154,8 @@ void main() {
       UncontrolledProviderScope(
         container: container,
         child: MaterialApp.router(
-          theme: _withRoboto(AppTheme.light, hasRoboto),
-          darkTheme: _withRoboto(AppTheme.dark, hasRoboto),
+          theme: AppTheme.light,
+          darkTheme: AppTheme.dark,
           themeMode: themeMode,
           routerConfig: router,
           builder: (context, child) => MediaQuery(

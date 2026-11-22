@@ -205,10 +205,16 @@ class _LegendRow extends StatelessWidget {
             ),
             const SizedBox(width: AppSpacing.sm),
             Expanded(child: Text(item.label, style: textTheme.bodyMedium)),
-            Text(
-              topics,
-              style: textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.w700,
+            const SizedBox(width: AppSpacing.xs),
+            // Flexible so large text sizes wrap instead of overflowing the
+            // narrow legend column next to the ring.
+            Flexible(
+              child: Text(
+                topics,
+                textAlign: TextAlign.end,
+                style: textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
           ],
