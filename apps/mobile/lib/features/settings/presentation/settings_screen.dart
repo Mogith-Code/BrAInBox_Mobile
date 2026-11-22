@@ -330,6 +330,12 @@ class _ProfileGroup extends ConsumerWidget {
           SettingsLinkTile(
             icon: Icons.person_outline,
             title: 'Edit profile',
+            subtitle: 'Photo, name, phone and bio',
+            onTap: () => context.push(AppRoutes.settingsPersonalDetails),
+          ),
+          SettingsLinkTile(
+            icon: Icons.school_outlined,
+            title: 'Study setup',
             subtitle: 'Stream, subject, goals and study time',
             onTap: () => context.push(AppRoutes.settingsEditProfilePath()),
           ),

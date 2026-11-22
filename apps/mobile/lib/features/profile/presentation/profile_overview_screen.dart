@@ -148,11 +148,8 @@ class _Body extends StatelessWidget {
                   label: 'Edit profile',
                   icon: Icons.edit_outlined,
                   variant: AppButtonVariant.ghost,
-                  onPressed: () => context.push(
-                    inSettingsTab
-                        ? AppRoutes.settingsEditProfilePath()
-                        : AppRoutes.profileEditPath(),
-                  ),
+                  onPressed: () =>
+                      context.push(AppRoutes.settingsPersonalDetails),
                 ),
                 const SizedBox(height: AppSpacing.lg),
                 Row(

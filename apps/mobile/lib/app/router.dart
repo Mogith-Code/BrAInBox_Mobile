@@ -42,6 +42,7 @@ import '../features/practice/presentation/quiz_result_screen.dart';
 import '../features/practice/presentation/quiz_setup_screen.dart';
 import '../features/profile/application/profile_setup_controller.dart';
 import '../features/profile/presentation/profile_overview_screen.dart';
+import '../features/profile/presentation/personal_details_screen.dart';
 import '../features/profile/presentation/profile_screen.dart';
 import '../features/recommendations/presentation/next_steps_screen.dart';
 import '../features/recommendations/presentation/reassessment_screen.dart';
@@ -420,6 +421,10 @@ GoRouter router(Ref ref) {
               GoRoute(
                 path: AppRoutes.settingsProfile,
                 builder: (context, state) => const ProfileOverviewScreen(),
+              ),
+              GoRoute(
+                path: AppRoutes.settingsPersonalDetails,
+                builder: (context, state) => const PersonalDetailsScreen(),
               ),
               GoRoute(
                 path: AppRoutes.settingsEditProfile,

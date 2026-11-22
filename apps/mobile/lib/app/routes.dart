@@ -206,6 +206,7 @@ abstract final class AppRoutes {
 
   /// Profile setup in edit mode inside the Settings tab.
   /// `?edit=all|goals|availability`.
+  static const settingsPersonalDetails = '/settings/personal-details';
   static const settingsEditProfile = '/settings/edit-profile';
   static String settingsEditProfilePath([String section = 'all']) =>
       _withQuery(settingsEditProfile, {'edit': section});

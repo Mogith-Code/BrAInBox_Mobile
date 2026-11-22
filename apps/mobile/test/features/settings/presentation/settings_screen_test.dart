@@ -36,7 +36,7 @@ Future<SettingsRepository> _pump(
   SettingsRepository? repo,
 }) async {
   SharedPreferences.setMockInitialValues({});
-  tester.view.physicalSize = const Size(400, 1400);
+  tester.view.physicalSize = const Size(400, 1600);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   final repository = repo ?? FakeSettingsRepository();
@@ -97,6 +97,7 @@ void main() {
       'Biological Science · A/L 2027',
       'PROFILE',
       'Edit profile',
+      'Study setup',
       'Study goals',
       'Target grade A · A/L 2027',
       'Availability',
