@@ -5,7 +5,7 @@
 | **Owner** | Samni (`@samni`) |
 | **App** | student app (`apps/mobile`) |
 | **Purpose** | Notification center. |
-| **Jira epic** | `BRN-??` *(TODO: add the epic key)* |
+| **Jira epic** | `BRN-??` *(TODO(samni): add the epic key)* |
 | **Git branch** | `feature/notifications` (tickets: `feature/notifications/BRN-xx-short-name`) |
 
 ## Screens

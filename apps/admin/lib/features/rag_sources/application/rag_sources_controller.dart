@@ -1,7 +1,8 @@
 import 'dart:async';
 
-import 'package:brainbox_core/brainbox_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../app/admin_errors.dart';
 
 import '../data/rag_sources_repository.dart';
 import '../domain/rag_sources_models.dart';
@@ -38,7 +39,7 @@ class RagSourcesController extends AsyncNotifier<List<RagSource>> {
       unawaited(_follow(job.jobId));
       return null;
     } catch (e) {
-      return ErrorMessages.of(e);
+      return adminErrorMessage(e);
     }
   }
 

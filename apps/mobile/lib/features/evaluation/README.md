@@ -5,7 +5,7 @@
 | **Owner** | Keshomigha (`@keshomigha`) |
 | **App** | student app (`apps/mobile`) |
 | **Purpose** | Typed answers, handwritten upload + OCR preview, and AI feedback. |
-| **Jira epic** | `BRN-??` *(TODO: add the epic key)* |
+| **Jira epic** | `BRN-??` *(TODO(keshomigha): add the epic key)* |
 | **Git branch** | `feature/evaluation` (tickets: `feature/evaluation/BRN-xx-short-name`) |
 
 ## Screens

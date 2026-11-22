@@ -10,9 +10,10 @@ import 'widgets/achievement_dialog.dart';
 
 /// Profile (Figma F1): who the student is, streak / questions / topics
 /// mastered, achievements and their goal. Edit profile opens the setup
-/// steps; the gear opens Settings.
+/// steps in edit mode.
 ///
-/// Route: `/profile` (opened from the avatar on Home).
+/// Routes: `/settings/profile` (inside the Settings tab, bottom bar kept)
+/// and `/profile` (full screen, from the avatar on Home).
 class ProfileOverviewScreen extends ConsumerWidget {
   const ProfileOverviewScreen({super.key});
 
@@ -50,6 +51,10 @@ class _Body extends StatelessWidget {
   Widget build(BuildContext context) {
     final p = profile;
     final textTheme = Theme.of(context).textTheme;
+    // Inside the Settings tab, Edit profile and Back stay in that tab.
+    final inSettingsTab = GoRouterState.of(
+      context,
+    ).matchedLocation.startsWith(AppRoutes.settings);
     final subtitle = [
       if (p.streamLabel.isNotEmpty) p.streamLabel,
       if (p.examYear != null) 'A/L ${p.examYear}',
@@ -76,14 +81,9 @@ class _Body extends StatelessWidget {
                     icon: const Icon(Icons.arrow_back_ios_new, size: 20),
                     onPressed: () => context.canPop()
                         ? context.pop()
-                        : context.go(AppRoutes.home),
-                  ),
-                  const Spacer(),
-                  IconButton(
-                    tooltip: 'Settings',
-                    color: AppColors.white,
-                    icon: const Icon(Icons.settings_outlined),
-                    onPressed: () => context.push(AppRoutes.settings),
+                        : context.go(
+                            inSettingsTab ? AppRoutes.settings : AppRoutes.home,
+                          ),
                   ),
                 ],
               ),
@@ -148,7 +148,11 @@ class _Body extends StatelessWidget {
                   label: 'Edit profile',
                   icon: Icons.edit_outlined,
                   variant: AppButtonVariant.ghost,
-                  onPressed: () => context.push(AppRoutes.profileSetup),
+                  onPressed: () => context.push(
+                    inSettingsTab
+                        ? AppRoutes.settingsEditProfilePath()
+                        : AppRoutes.profileEditPath(),
+                  ),
                 ),
                 const SizedBox(height: AppSpacing.lg),
                 Row(
@@ -170,17 +174,31 @@ class _Body extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: AppSpacing.sm),
-                GridView.count(
-                  crossAxisCount: 3,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  mainAxisSpacing: AppSpacing.sm,
-                  crossAxisSpacing: AppSpacing.sm,
-                  childAspectRatio: 0.95,
-                  children: [
-                    for (final a in p.achievements) _Badge(achievement: a),
-                  ],
-                ),
+                if (p.achievements.isEmpty)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: AppSpacing.md,
+                    ),
+                    child: Text(
+                      'No achievements yet. Keep practising to earn your '
+                      'first badge.',
+                      style: textTheme.bodyMedium?.copyWith(
+                        color: AppColors.muted,
+                      ),
+                    ),
+                  )
+                else
+                  GridView.count(
+                    crossAxisCount: 3,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    mainAxisSpacing: AppSpacing.sm,
+                    crossAxisSpacing: AppSpacing.sm,
+                    childAspectRatio: 0.95,
+                    children: [
+                      for (final a in p.achievements) _Badge(achievement: a),
+                    ],
+                  ),
                 if (p.targetGrade != null) ...[
                   const SizedBox(height: AppSpacing.lg),
                   _GoalCard(grade: p.targetGrade!, daysToExam: p.daysToExam),

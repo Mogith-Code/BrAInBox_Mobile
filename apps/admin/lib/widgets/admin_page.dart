@@ -1,5 +1,13 @@
 import 'package:brainbox_core/brainbox_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../app/admin_errors.dart';
+import '../features/auth/application/auth_controller.dart';
+import '../features/auth/domain/auth_models.dart';
+
+export '../app/admin_errors.dart';
 
 /// The top of every admin page: a small grey line ("8,942 questions ..."),
 /// the page title and the actions on the right (buttons, search...).
@@ -311,34 +319,107 @@ class TableHeading extends StatelessWidget {
   }
 }
 
-/// True when the backend answered 404 for a whole endpoint, i.e. that admin
-/// area isn't built on the backend yet (not "this item doesn't exist").
-bool isEndpointMissing(Object? error) =>
-    error is ApiException &&
-    error.statusCode == 404 &&
-    !error.code.endsWith('_NOT_FOUND');
+/// "Showing 21–40 of 3,105" with previous / next page buttons.
+class TablePager extends StatelessWidget {
+  const TablePager({
+    super.key,
+    required this.pageSize,
+    required this.page,
+    required this.shown,
+    required this.total,
+    required this.onPage,
+  });
+
+  /// Rows per page (what the backend was asked for).
+  final int pageSize;
+
+  /// 1-based.
+  final int page;
+
+  /// Rows on this page.
+  final int shown;
+  final int total;
+  final ValueChanged<int> onPage;
+
+  @override
+  Widget build(BuildContext context) {
+    final first = (page - 1) * pageSize + 1;
+    final last = first + shown - 1;
+    if (total == 0) return const SizedBox.shrink();
+    final pages = (total / pageSize).ceil().clamp(1, 1 << 31);
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.lg,
+        vertical: AppSpacing.sm,
+      ),
+      child: Row(
+        children: [
+          Text(
+            'Showing $first–$last of ${Formatters.thousands(total)}',
+            style: Theme.of(
+              context,
+            ).textTheme.bodySmall?.copyWith(color: AppColors.muted),
+          ),
+          const Spacer(),
+          IconButton(
+            tooltip: 'Previous page',
+            onPressed: page > 1 ? () => onPage(page - 1) : null,
+            icon: const Icon(Icons.chevron_left),
+          ),
+          Text('$page / $pages'),
+          IconButton(
+            tooltip: 'Next page',
+            onPressed: page < pages ? () => onPage(page + 1) : null,
+            icon: const Icon(Icons.chevron_right),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
 /// What an admin page shows when loading failed. A missing backend
-/// endpoint gets a calm "not connected yet" message instead of an error.
-class AdminLoadError extends StatelessWidget {
+/// endpoint gets a calm "not connected yet" message instead of an error;
+/// a refused or expired sign-in offers Log out.
+class AdminLoadError extends ConsumerWidget {
   const AdminLoadError({super.key, required this.error, required this.onRetry});
 
   final Object error;
   final VoidCallback onRetry;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    void signOut() => ref.read(authControllerProvider.notifier).signOut();
+    if (isForbidden(error)) {
+      return EmptyState(
+        icon: Icons.gpp_bad_outlined,
+        title: NotAdminException.message,
+        message: 'Only BrAInBox admins can see this page.',
+        actionLabel: 'Log out',
+        onAction: signOut,
+      );
+    }
+    if (isSignedOutError(error)) {
+      return EmptyState(
+        icon: Icons.lock_clock_outlined,
+        title: 'Please sign in again',
+        message: adminErrorMessage(error),
+        actionLabel: 'Log out',
+        onAction: signOut,
+      );
+    }
     if (isEndpointMissing(error)) {
       return const EmptyState(
         icon: Icons.construction_outlined,
         title: 'Not connected yet',
-        message:
-            'The backend for this page is not built yet. Run with '
-            '--dart-define=USE_FAKE_API=true to see sample data.',
+        message: kDebugMode
+            ? 'The backend for this page is not built yet. Run with '
+                  '--dart-define=USE_FAKE_API=true to see sample data.'
+            : 'The backend for this page is not built yet.',
       );
     }
     return Center(
-      child: ErrorBanner(message: ErrorMessages.of(error), onRetry: onRetry),
+      child: ErrorBanner(message: adminErrorMessage(error), onRetry: onRetry),
     );
   }
 }

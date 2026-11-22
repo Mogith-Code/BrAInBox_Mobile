@@ -45,9 +45,9 @@ void main() {
 
   /// Starts (or restarts) the controller, kept alive like a screen would.
   Future<ProfileSetupState> load() {
-    final sub = c.listen(profileSetupControllerProvider, (_, _) {});
+    final sub = c.listen(profileSetupControllerProvider(), (_, _) {});
     addTearDown(sub.close);
-    return c.read(profileSetupControllerProvider.future);
+    return c.read(profileSetupControllerProvider().future);
   }
 
   test('a new student starts at step 1 with sensible defaults', () async {
@@ -76,7 +76,7 @@ void main() {
         confidence: 40,
       ),
     );
-    c.invalidate(profileSetupControllerProvider);
+    c.invalidate(profileSetupControllerProvider());
     final s = await load();
     expect(s.step, 2);
     expect(s.confidence, 40);
@@ -86,31 +86,31 @@ void main() {
     when(() => repo.profile()).thenAnswer((_) async => const Profile());
     await load();
     c
-        .read(profileSetupControllerProvider.notifier)
+        .read(profileSetupControllerProvider().notifier)
         .selectSubject(_options.subjects.firstWhere((s) => !s.available));
-    expect(c.read(profileSetupControllerProvider).value!.subject, 'biology');
+    expect(c.read(profileSetupControllerProvider()).value!.subject, 'biology');
   });
 
   test('Continue sends only this step with PATCH, back keeps values', () async {
     when(() => repo.profile()).thenAnswer((_) async => const Profile());
     when(() => repo.update(any())).thenAnswer((_) async => const Profile());
     await load();
-    final ctrl = c.read(profileSetupControllerProvider.notifier);
+    final ctrl = c.read(profileSetupControllerProvider().notifier);
 
     expect(await ctrl.next(), isFalse); // not the last step
     verify(
       () => repo.update({'stream': 'biological_science', 'subject': 'biology'}),
     ).called(1);
-    expect(c.read(profileSetupControllerProvider).value!.step, 1);
+    expect(c.read(profileSetupControllerProvider()).value!.step, 1);
 
     ctrl
       ..setTargetGrade('A')
       ..setConfidence(55)
       ..setExamYear(2028);
     expect(ctrl.back(), isTrue);
-    expect(c.read(profileSetupControllerProvider).value!.step, 0);
+    expect(c.read(profileSetupControllerProvider()).value!.step, 0);
     await ctrl.next();
-    final s = c.read(profileSetupControllerProvider).value!;
+    final s = c.read(profileSetupControllerProvider()).value!;
     expect(s.step, 1);
     expect(s.targetGrade, 'A'); // kept
     expect(s.confidence, 55);
@@ -134,11 +134,11 @@ void main() {
         () => repo.complete(),
       ).thenAnswer((_) async => const Profile(profileCompleted: true));
       await load();
-      final ctrl = c.read(profileSetupControllerProvider.notifier)
+      final ctrl = c.read(profileSetupControllerProvider().notifier)
         ..setStudyDays({'sun', 'mon', 'tue'})
         ..setHoursPerDay(2)
         ..setPreferredTime('evening');
-      expect(c.read(profileSetupControllerProvider).value!.weeklyHours, 6);
+      expect(c.read(profileSetupControllerProvider()).value!.weeklyHours, 6);
 
       expect(await ctrl.next(), isTrue);
       verify(
@@ -160,10 +160,10 @@ void main() {
     ).thenThrow(const ApiException(code: 'network', message: 'offline'));
     await load();
     expect(
-      await c.read(profileSetupControllerProvider.notifier).next(),
+      await c.read(profileSetupControllerProvider().notifier).next(),
       isFalse,
     );
-    final s = c.read(profileSetupControllerProvider).value!;
+    final s = c.read(profileSetupControllerProvider()).value!;
     expect(s.step, 0);
     expect(s.saving, isFalse);
     expect(s.error, 'No internet connection. Check it and try again.');

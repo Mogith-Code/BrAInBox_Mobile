@@ -5,7 +5,7 @@
 | **Owner** | Samni (`@samni`) |
 | **App** | student app (`apps/mobile`) |
 | **Purpose** | Dashboard: next best action and today's study plan. |
-| **Jira epic** | `BRN-??` *(TODO: add the epic key)* |
+| **Jira epic** | `BRN-??` *(TODO(samni): add the epic key)* |
 | **Git branch** | `feature/home` (tickets: `feature/home/BRN-xx-short-name`) |
 
 ## Screens

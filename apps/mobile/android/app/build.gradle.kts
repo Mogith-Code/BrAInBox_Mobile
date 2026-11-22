@@ -24,10 +24,11 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+        // Never change this after the first release: Android treats a new id
+        // as a different app (no update, data lost).
         applicationId = "lk.ac.sab.brainbox"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://flutter.dev/to/review-gradle-config.
+        // minSdk / targetSdk / compileSdk follow the Flutter SDK defaults, which
+        // track the current Play Store requirements.
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode

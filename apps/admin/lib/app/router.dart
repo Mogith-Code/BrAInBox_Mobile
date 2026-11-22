@@ -1,10 +1,12 @@
-import 'package:brainbox_core/brainbox_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../features/analytics/presentation/analytics_screen.dart';
+import '../features/auth/application/admin_session.dart';
 import '../features/auth/presentation/login_screen.dart';
+import '../features/auth/presentation/not_admin_screen.dart';
+import '../features/auth/presentation/session_screen.dart';
 import '../features/content_review/presentation/content_review_screen.dart';
 import '../features/dashboard/presentation/dashboard_screen.dart';
 import '../features/knowledge_base/presentation/knowledge_base_screen.dart';
@@ -24,6 +26,8 @@ part 'router.g.dart';
 /// Every route in the admin portal.
 abstract final class AdminRoutes {
   static const login = '/login'; // Mogith
+  static const session = '/session'; // "Checking your account" / error
+  static const notAdmin = '/not-admin'; // signed in without the admin role
   static const dashboard = '/dashboard'; // Samni
   static const syllabus = '/syllabus'; // Keshomigha
   static const contentReview = '/content-review'; // Samni
@@ -46,24 +50,33 @@ abstract final class AdminRoutes {
 
 /// The admin portal router.
 ///
-/// Guard: only signed-in users with role "admin" can open pages other than
-/// the login page (see [_adminGuard]).
+/// Guard: only signed-in admins can open the pages in the shell (see
+/// [adminRedirect]).
 @Riverpod(keepAlive: true)
 GoRouter router(Ref ref) {
   // Tells GoRouter to re-run the guard when the user signs in or out.
   final authChanges = ValueNotifier<int>(0);
-  ref.listen(currentUserProvider, (_, _) => authChanges.value++);
+  ref.listen(adminSessionProvider, (_, _) => authChanges.value++);
 
   final router = GoRouter(
     initialLocation: AdminRoutes.dashboard,
     debugLogDiagnostics: kDebugMode,
     refreshListenable: authChanges,
-    redirect: (context, state) => _adminGuard(ref, state),
+    redirect: (context, state) =>
+        adminRedirect(ref.read(adminSessionProvider), state.uri),
     routes: [
       GoRoute(path: '/', redirect: (context, state) => AdminRoutes.dashboard),
       GoRoute(
         path: AdminRoutes.login,
         builder: (context, state) => const LoginScreen(),
+      ),
+      GoRoute(
+        path: AdminRoutes.session,
+        builder: (context, state) => const SessionScreen(),
+      ),
+      GoRoute(
+        path: AdminRoutes.notAdmin,
+        builder: (context, state) => const NotAdminScreen(),
       ),
       // Every page below is shown inside the sidebar + top bar layout.
       ShellRoute(
@@ -138,22 +151,49 @@ GoRouter router(Ref ref) {
   return router;
 }
 
-/// Returns a path to redirect to, or `null` to stay.
-String? _adminGuard(Ref ref, GoRouterState state) {
-  // The guard is OFF when Firebase is not configured (nobody could sign in)
-  // or when running with --dart-define=DISABLE_AUTH_GUARD=true (debug only).
-  if (!FirebaseSetup.isReady || Env.disableAuthGuard) return null;
+/// The pages that are not inside the admin shell.
+const _gatePaths = {
+  AdminRoutes.login,
+  AdminRoutes.session,
+  AdminRoutes.notAdmin,
+};
 
-  final user = ref.read(currentUserProvider);
-  if (user.isLoading) return null; // still checking
+/// Where to go for [uri] in [session], or `null` to stay.
+///
+/// - checking / failed -> the session page (spinner, or the error + Retry)
+/// - signed out -> the login page
+/// - signed in without the admin role -> "This account is not an admin"
+/// - admin on a gate page -> back where they wanted to go, or the dashboard
+///
+/// The page the user asked for travels along as `?from=`, so a deep link
+/// still opens after signing in.
+String? adminRedirect(AdminSession session, Uri uri) {
+  final path = uri.path;
+  final onGate = _gatePaths.contains(path);
+  final from = onGate ? _safeFrom(uri.queryParameters['from']) : uri.toString();
 
-  final isAdmin = user.value?.isAdmin ?? false;
-  final onLogin = state.matchedLocation == AdminRoutes.login;
+  String gate(String to) => Uri(
+    path: to,
+    queryParameters: from == null || from == AdminRoutes.dashboard
+        ? null
+        : {'from': from},
+  ).toString();
 
-  // Signed out, or signed in WITHOUT the admin role -> login page.
-  // (The login form itself refuses non-admins: "This account is not an
-  // admin", see AuthRepository.signIn.)
-  if (!isAdmin) return onLogin ? null : AdminRoutes.login;
-  if (onLogin) return AdminRoutes.dashboard;
-  return null;
+  return switch (session.status) {
+    AdminSessionStatus.checking || AdminSessionStatus.failed =>
+      path == AdminRoutes.session ? null : gate(AdminRoutes.session),
+    AdminSessionStatus.signedOut =>
+      path == AdminRoutes.login ? null : gate(AdminRoutes.login),
+    AdminSessionStatus.notAdmin =>
+      path == AdminRoutes.notAdmin ? null : AdminRoutes.notAdmin,
+    AdminSessionStatus.admin => onGate ? from ?? AdminRoutes.dashboard : null,
+  };
+}
+
+/// Only an in-app path (`/users?page=2`), never another site or a gate page.
+String? _safeFrom(String? from) {
+  if (from == null || !from.startsWith('/') || from.startsWith('//')) {
+    return null;
+  }
+  return _gatePaths.contains(Uri.parse(from).path) ? null : from;
 }

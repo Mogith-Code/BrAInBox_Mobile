@@ -59,13 +59,50 @@ abstract class StudentFilter with _$StudentFilter {
     int? examYear,
     StudentStatus? status,
     String? district,
+    @Default(1) int page,
   }) = _StudentFilter;
 
+  /// Rows per page of the table.
+  static const pageSize = 25;
+
+  /// The most the backend sends per page (used by the CSV export).
+  static const maxPageSize = 100;
+
   /// Query string for `GET /admin/users` (empty values left out).
-  Map<String, dynamic> toQuery() => {
+  Map<String, dynamic> toQuery({int pageSize = pageSize}) => {
     if (search.trim().isNotEmpty) 'search': search.trim(),
     'exam_year': ?examYear,
     if (status != null) 'status': status!.name,
     'district': ?district,
+    'page': page,
+    'page_size': pageSize,
   };
+}
+
+/// The CSV the "Export CSV" button saves: one row per student.
+///
+/// Cells that a spreadsheet would run as a formula (`=`, `+`, `-`, `@`)
+/// get a leading `'`, because names and schools are typed by students.
+String studentsCsv(List<AdminStudent> students) {
+  String cell(Object? value) {
+    var text = value?.toString() ?? '';
+    if (text.isNotEmpty && '=+-@\t\r'.contains(text[0])) text = "'$text";
+    final quote = text.contains(RegExp('[",\r\n]'));
+    return quote ? '"${text.replaceAll('"', '""')}"' : text;
+  }
+
+  return [
+    'Name,Email,School,District,A/L year,Average mastery (%),Status,Last active',
+    for (final s in students)
+      [
+        s.fullName,
+        s.email,
+        s.school,
+        s.district,
+        s.examYear,
+        s.avgMastery,
+        s.status.label,
+        s.lastActiveAt?.toUtc().toIso8601String(),
+      ].map(cell).join(','),
+  ].join('\r\n');
 }

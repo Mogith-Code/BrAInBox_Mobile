@@ -5,7 +5,7 @@
 | **Owner** | Samni (`@samni`) |
 | **App** | admin portal (`apps/admin`) |
 | **Purpose** | KPI tiles and recent activity. |
-| **Jira epic** | `BRN-??` *(TODO: add the epic key)* |
+| **Jira epic** | `BRN-??` *(TODO(samni): add the epic key)* |
 | **Git branch** | `feature/admin-dashboard` (tickets: `feature/admin-dashboard/BRN-xx-short-name`) |
 
 ## Screens

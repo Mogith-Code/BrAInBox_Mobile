@@ -90,9 +90,13 @@ void main() {
       final s = _state(diagnostic: true);
       expect(_go(s, AppRoutes.splash), AppRoutes.home);
       expect(_go(s, AppRoutes.login), AppRoutes.home);
-      expect(_go(s, AppRoutes.profileSetup), AppRoutes.home);
       expect(_go(s, AppRoutes.home), isNull);
       expect(_go(s, AppRoutes.settings), isNull);
+      expect(_go(s, AppRoutes.privacy), isNull);
+      expect(_go(s, AppRoutes.settingsProfile), isNull);
+      expect(_go(s, AppRoutes.settingsEditProfile), isNull);
+      // Edit profile reuses the setup screen.
+      expect(_go(s, AppRoutes.profileSetup), isNull);
       // The diagnostic can still be opened later (e.g. from Home).
       expect(_go(s, AppRoutes.diagnostic), isNull);
     });

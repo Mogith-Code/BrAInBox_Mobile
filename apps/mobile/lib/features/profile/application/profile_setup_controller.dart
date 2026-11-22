@@ -4,8 +4,27 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../auth/application/session_controller.dart';
 import '../data/profile_repository.dart';
 import '../domain/profile_models.dart';
+import 'profile_overview_controller.dart';
+import 'saved_profile_provider.dart';
 
 part 'profile_setup_controller.g.dart';
+
+/// What an edit from Settings / My profile opens. Null (no edit) is the
+/// first-run onboarding.
+enum ProfileEditSection {
+  /// All three steps ("Edit profile").
+  all,
+
+  /// Step 2 only: exam year, target grade, confidence ("Study goals").
+  goals,
+
+  /// Step 3 only: days, hours, time of day ("Availability").
+  availability;
+
+  /// `?edit=goals` -> [goals]; unknown or missing -> null.
+  static ProfileEditSection? parse(String? name) =>
+      values.where((v) => v.name == name).firstOrNull;
+}
 
 /// Everything the 3 setup steps show. The draft values stay here while the
 /// student moves back and forth between steps.
@@ -23,7 +42,26 @@ class ProfileSetupState {
     this.preferredTime,
     this.saving = false,
     this.error,
+    this.edit,
   });
+
+  /// Null during onboarding; otherwise the part being edited. Editing
+  /// saves with `PATCH /profile` only (no `POST /profile/complete`).
+  final ProfileEditSection? edit;
+
+  bool get editing => edit != null;
+
+  /// The first and last step this run shows (0-based).
+  int get firstStep => switch (edit) {
+    ProfileEditSection.goals => 1,
+    ProfileEditSection.availability => 2,
+    _ => 0,
+  };
+  int get lastStep => switch (edit) {
+    ProfileEditSection.goals => 1,
+    _ => steps - 1,
+  };
+  bool get isLastStep => step == lastStep;
 
   final ProfileOptions options;
 
@@ -84,6 +122,7 @@ class ProfileSetupState {
     preferredTime: preferredTime ?? this.preferredTime,
     saving: saving ?? this.saving,
     error: clearError ? null : (error ?? this.error),
+    edit: edit,
   );
 
   /// The fields of the current step, as `PATCH /profile` expects them.
@@ -108,16 +147,24 @@ class ProfileSetupState {
 /// Profile setup (3 steps): loads the options and the saved profile, starts
 /// at the first incomplete step, saves each step with `PATCH /profile` and
 /// finishes with `POST /profile/complete`.
+///
+/// With [edit] (from Settings / My profile) the saved answers are filled
+/// in, it starts at that section's first step, and the last step only
+/// saves (`PATCH /profile`): onboarding doesn't start again.
 @riverpod
 class ProfileSetupController extends _$ProfileSetupController {
   @override
-  Future<ProfileSetupState> build() async {
+  Future<ProfileSetupState> build({ProfileEditSection? edit}) async {
     final repo = ref.watch(profileRepositoryProvider);
     final (options, profile) = await (repo.options(), repo.profile()).wait;
-    return _fromSaved(options, profile);
+    return _fromSaved(options, profile, edit);
   }
 
-  static ProfileSetupState _fromSaved(ProfileOptions options, Profile p) {
+  static ProfileSetupState _fromSaved(
+    ProfileOptions options,
+    Profile p,
+    ProfileEditSection? edit,
+  ) {
     // Sensible defaults when nothing is saved yet: the only stream, the
     // first available subject, and next year's exam if it's offered.
     final firstSubject = options.subjects
@@ -141,7 +188,9 @@ class ProfileSetupController extends _$ProfileSetupController {
       studyDays: p.studyDays.toSet(),
       hoursPerDay: p.hoursPerDay ?? 2,
       preferredTime: p.preferredTime,
+      edit: edit,
     );
+    if (state.editing) return state.copyWith(step: state.firstStep);
 
     // Resume at the first step that isn't saved yet.
     final savedStep1 = p.stream != null && p.subject != null;
@@ -178,7 +227,7 @@ class ProfileSetupController extends _$ProfileSetupController {
   /// Back arrow: previous step, values kept. Returns false on step 1.
   bool back() {
     final s = _current;
-    if (s == null || s.step == 0) return false;
+    if (s == null || s.step <= s.firstStep) return false;
     _update((s) => s.copyWith(step: s.step - 1));
     return true;
   }
@@ -186,17 +235,24 @@ class ProfileSetupController extends _$ProfileSetupController {
   /// Continue / Finish setup: saves this step; on the last step also
   /// completes the profile and refreshes the session (the router then goes
   /// to "Let's find your starting point"). Returns true when finished.
+  ///
+  /// When editing, the last step only saves and refreshes what Settings and
+  /// My profile show.
   Future<bool> next() async {
     final s = _current;
     if (s == null || s.saving || !s.stepComplete) return false;
     final repo = ref.read(profileRepositoryProvider);
     final session = ref.read(sessionProvider.notifier);
-    final isLast = s.step == ProfileSetupState.steps - 1;
+    final isLast = s.isLastStep;
 
     state = AsyncData(s.copyWith(saving: true, clearError: true));
     try {
       await repo.update(s.stepFields);
-      if (isLast) {
+      if (isLast && s.editing) {
+        ref
+          ..invalidate(savedProfileProvider)
+          ..invalidate(profileOverviewControllerProvider);
+      } else if (isLast) {
         await repo.complete();
         await session.refresh();
       }

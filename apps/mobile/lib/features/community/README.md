@@ -5,7 +5,7 @@
 | **Owner** | Mogith (`@mogith`) |
 | **App** | student app (`apps/mobile`) |
 | **Purpose** | Study groups, group feed, post detail and create post. |
-| **Jira epic** | `BRN-??` *(TODO: add the epic key)* |
+| **Jira epic** | `BRN-??` *(TODO(mogith): add the epic key)* |
 | **Git branch** | `feature/community` (tickets: `feature/community-BRN-xx-short-name`) |
 
 ## Screens

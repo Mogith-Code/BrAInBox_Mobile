@@ -30,9 +30,14 @@ abstract final class AppRoutes {
   static const newPassword = '/auth/new-password';
 
   // Profile (Mogith)
+  /// Profile setup: onboarding, or an edit with `?edit=all|goals|availability`
+  /// (full screen, e.g. from My profile opened on Home).
   static const profileSetup = '/profile/setup';
+  static String profileEditPath([String section = 'all']) =>
+      _withQuery(profileSetup, {'edit': section});
 
-  /// My profile: stats, achievements and goal (Figma F1).
+  /// My profile: stats, achievements and goal (Figma F1), full screen
+  /// (opened from the avatar on Home).
   static const myProfile = '/profile';
 
   // Home (Samni)
@@ -191,9 +196,19 @@ abstract final class AppRoutes {
   // Notifications (Samni)
   static const notifications = '/notifications';
 
-  // Settings (Samni)
+  // Settings (Samni) - the Settings tab. Its pages open on top inside the
+  // tab, so the bottom bar stays.
   static const settings = '/settings';
   static const privacy = '/settings/privacy';
+
+  /// My profile inside the Settings tab (same screen as [myProfile]).
+  static const settingsProfile = '/settings/profile';
+
+  /// Profile setup in edit mode inside the Settings tab.
+  /// `?edit=all|goals|availability`.
+  static const settingsEditProfile = '/settings/edit-profile';
+  static String settingsEditProfilePath([String section = 'all']) =>
+      _withQuery(settingsEditProfile, {'edit': section});
 
   /// Routes a signed-OUT student may stay on (used by the redirect).
   static const signedOutRoutes = {
@@ -224,6 +239,7 @@ abstract final class AppRoutes {
     (title: 'Set a new password', owner: 'Mogith', path: newPassword),
     (title: 'Profile setup', owner: 'Mogith', path: profileSetup),
     (title: 'My profile', owner: 'Mogith', path: myProfile),
+    (title: 'Edit profile', owner: 'Mogith', path: profileSetup),
     (title: 'Home', owner: 'Samni', path: home),
     (title: 'Learn', owner: 'Keshomigha', path: learn),
     (title: 'Unit detail', owner: 'Keshomigha', path: unitDetailPath('unit-6')),
@@ -286,5 +302,11 @@ abstract final class AppRoutes {
     (title: 'Notifications', owner: 'Samni', path: notifications),
     (title: 'Settings', owner: 'Samni', path: settings),
     (title: 'Data & privacy', owner: 'Samni', path: privacy),
+    (title: 'My profile (Settings)', owner: 'Mogith', path: settingsProfile),
+    (
+      title: 'Edit profile (Settings)',
+      owner: 'Mogith',
+      path: settingsEditProfile,
+    ),
   ];
 }

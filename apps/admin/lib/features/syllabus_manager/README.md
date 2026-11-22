@@ -5,7 +5,7 @@
 | **Owner** | Keshomigha (`@keshomigha`) |
 | **App** | admin portal (`apps/admin`) |
 | **Purpose** | Unit -> Topic -> Concept tree editor. |
-| **Jira epic** | `BRN-??` *(TODO: add the epic key)* |
+| **Jira epic** | `BRN-??` *(TODO(keshomigha): add the epic key)* |
 | **Git branch** | `feature/admin-syllabus-manager` (tickets: `feature/admin-syllabus-manager/BRN-xx-short-name`) |
 
 ## Screens

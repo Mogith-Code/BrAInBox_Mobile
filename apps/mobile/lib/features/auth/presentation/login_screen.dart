@@ -114,7 +114,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             onPressed: () => context.push(AppRoutes.forgotPassword),
             style: TextButton.styleFrom(
               minimumSize: const Size(48, 48),
-              foregroundColor: AppColors.primary,
+              foregroundColor: context.appPrimaryText,
               textStyle: const TextStyle(fontWeight: FontWeight.w700),
             ),
             child: const Text('Forgot password?'),
@@ -141,7 +141,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           textAlign: TextAlign.center,
           style: Theme.of(
             context,
-          ).textTheme.labelSmall?.copyWith(color: AppColors.muted),
+          ).textTheme.labelSmall?.copyWith(color: context.appMuted),
         ),
       ],
     );

@@ -5,7 +5,7 @@
 | **Owner** | Mogith (`@mogith`) |
 | **App** | student app (`apps/mobile`) |
 | **Purpose** | Splash screen and start-up redirect (onboarding / login / home). |
-| **Jira epic** | `BRN-??` *(TODO: add the epic key)* |
+| **Jira epic** | `BRN-??` *(TODO(mogith): add the epic key)* |
 | **Git branch** | `feature/splash` (tickets: `feature/splash/BRN-xx-short-name`) |
 
 ## Screens

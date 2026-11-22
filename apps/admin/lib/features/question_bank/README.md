@@ -5,7 +5,7 @@
 | **Owner** | Udith (`@udith`) |
 | **App** | admin portal (`apps/admin`) |
 | **Purpose** | Question table with filters and bulk import. |
-| **Jira epic** | `BRN-??` *(TODO: add the epic key)* |
+| **Jira epic** | `BRN-??` *(TODO(udith): add the epic key)* |
 | **Git branch** | `feature/admin-question-bank` (tickets: `feature/admin-question-bank/BRN-xx-short-name`) |
 
 ## Screens

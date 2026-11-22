@@ -5,7 +5,7 @@
 | **Owner** | Mogith (`@mogith`) |
 | **App** | admin portal (`apps/admin`) |
 | **Purpose** | Student list and suspend / unsuspend. |
-| **Jira epic** | `BRN-??` *(TODO: add the epic key)* |
+| **Jira epic** | `BRN-??` *(TODO(mogith): add the epic key)* |
 | **Git branch** | `feature/admin-users` (tickets: `feature/admin-users/BRN-xx-short-name`) |
 
 ## Screens

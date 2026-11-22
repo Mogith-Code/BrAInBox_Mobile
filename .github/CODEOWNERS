@@ -1,5 +1,5 @@
 # Code owners: GitHub asks these people to review PRs that touch their folders.
-# TODO: replace the placeholder handles with real GitHub usernames.
+# TODO(mogith): replace the placeholder handles with real GitHub usernames.
 #   @mogith      -> Mogith (22CSE0394)
 #   @samni       -> Samni (22CSE0391)
 #   @udith       -> Udith (22CSE0358)

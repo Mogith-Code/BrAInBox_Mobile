@@ -5,7 +5,7 @@
 | **Owner** | Samni (`@samni`) |
 | **App** | admin portal (`apps/admin`) |
 | **Purpose** | Upload syllabus, teacher guides and approved notes for RAG; ingestion status; re-index. |
-| **Jira epic** | `BRN-??` *(TODO: add the epic key)* |
+| **Jira epic** | `BRN-??` *(TODO(samni): add the epic key)* |
 | **Git branch** | `feature/admin-rag-sources` (tickets: `feature/admin-rag-sources/BRN-xx-short-name`) |
 
 ## Screens

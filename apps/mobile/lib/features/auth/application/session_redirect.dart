@@ -52,7 +52,7 @@ bool isAllowed(SessionState s, String location) {
   if (!s.diagnosticDone) return AppRoutes.diagnosticRoutes.contains(location);
 
   // Fully onboarded: anything except the sign-in / first-run screens.
+  // Profile setup stays open: it is "Edit profile" now (`?edit=...`).
   return !AppRoutes.signedOutRoutes.contains(location) &&
-      location != AppRoutes.verifyEmail &&
-      location != AppRoutes.profileSetup;
+      location != AppRoutes.verifyEmail;
 }

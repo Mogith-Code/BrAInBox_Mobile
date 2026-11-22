@@ -1,7 +1,7 @@
 name: brainbox_admin
 description: BrAInBox Admin - web portal for syllabus, content, questions and moderation.
 publish_to: none
-version: 0.1.0+1
+version: 1.0.0+1
 resolution: workspace
 
 environment:
@@ -23,6 +23,7 @@ dependencies:
   file_picker: ^13.1.0
   flutter_markdown_plus: ^1.0.12
   url_launcher: ^6.3.3
+  web: ^1.1.1
 
 dev_dependencies:
   build_runner: ^2.15.1

@@ -48,15 +48,15 @@ class _AnswerKeyEditorState extends ConsumerState<AnswerKeyEditor> {
   }
 
   Future<void> _saveAndNext(List<PaperQuestion> all, PaperQuestion q) async {
-    final ok = await ref
+    final error = await ref
         .read(answerEditorProvider.notifier)
         .save(
           widget.paper.id,
           q.copyWith(modelAnswer: _answer.text.trim(), keywords: _keywords),
         );
     if (!mounted) return;
-    if (!ok) {
-      showAdminSnack(context, "Couldn't save. Try again.");
+    if (error != null) {
+      showAdminSnack(context, error);
       return;
     }
     _next(all);

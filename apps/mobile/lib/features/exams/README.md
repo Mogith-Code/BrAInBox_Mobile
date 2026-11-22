@@ -5,7 +5,7 @@
 | **Owner** | Udith (`@udith`) |
 | **App** | student app (`apps/mobile`) |
 | **Purpose** | Past papers, model paper generator and exam mode. |
-| **Jira epic** | `BRN-??` *(TODO: add the epic key)* |
+| **Jira epic** | `BRN-??` *(TODO(udith): add the epic key)* |
 | **Git branch** | `feature/exams` (tickets: `feature/exams/BRN-xx-short-name`) |
 
 ## Screens

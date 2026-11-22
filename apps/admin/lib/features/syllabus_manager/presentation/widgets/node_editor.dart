@@ -2,6 +2,7 @@ import 'package:brainbox_core/brainbox_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../widgets/admin_page.dart';
 import '../../application/syllabus_manager_controller.dart';
 import '../../domain/syllabus_manager_models.dart';
 
@@ -39,7 +40,7 @@ class _NodeEditorState extends ConsumerState<NodeEditor> {
 
   Future<void> _save() async {
     if (_name.text.trim().isEmpty) return;
-    final ok = await ref
+    final error = await ref
         .read(syllabusEditorProvider.notifier)
         .save(
           widget.node,
@@ -48,16 +49,19 @@ class _NodeEditorState extends ConsumerState<NodeEditor> {
           text: _text.text,
           isOutdated: _outdated,
         );
-    if (ok && mounted) {
-      widget.onSaved(
-        widget.node.copyWith(
-          name: _name.text.trim(),
-          code: _code.text.trim(),
-          text: _text.text.trim(),
-          isOutdated: _outdated,
-        ),
-      );
+    if (!mounted) return;
+    if (error != null) {
+      showAdminSnack(context, error);
+      return;
     }
+    widget.onSaved(
+      widget.node.copyWith(
+        name: _name.text.trim(),
+        code: _code.text.trim(),
+        text: _text.text.trim(),
+        isOutdated: _outdated,
+      ),
+    );
   }
 
   @override

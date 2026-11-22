@@ -1,5 +1,9 @@
 import 'package:brainbox_core/brainbox_core.dart';
+import 'package:brainbox_mobile/app/dev/fake_backend.dart';
 import 'package:brainbox_mobile/app/routes.dart';
+import 'package:brainbox_mobile/features/profile/data/fake_profile_repository.dart';
+import 'package:brainbox_mobile/features/profile/data/profile_overview_repository.dart';
+import 'package:brainbox_mobile/features/profile/data/profile_repository.dart';
 import 'package:brainbox_mobile/features/settings/data/settings_repository.dart';
 import 'package:brainbox_mobile/features/settings/domain/settings_models.dart';
 import 'package:brainbox_mobile/features/settings/presentation/privacy_screen.dart';
@@ -16,6 +20,16 @@ class _FailingSaves extends FakeSettingsRepository {
       throw const ApiException(code: 'network', message: 'offline');
 }
 
+/// The backend has no `/settings` endpoint yet (FastAPI's 404).
+class _MissingEndpoint extends FakeSettingsRepository {
+  @override
+  Future<NotificationSettings> notifications() => throw const ApiException(
+    code: 'http_404',
+    message: 'Not Found',
+    statusCode: 404,
+  );
+}
+
 Future<SettingsRepository> _pump(
   WidgetTester tester, {
   String location = AppRoutes.settings,
@@ -26,6 +40,8 @@ Future<SettingsRepository> _pump(
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   final repository = repo ?? FakeSettingsRepository();
+  final backend = FakeBackend(latency: Duration.zero);
+  backend.setSignedIn(backend.accounts['nethmi.p@gmail.com']);
   final router = GoRouter(
     initialLocation: location,
     routes: [
@@ -37,15 +53,27 @@ Future<SettingsRepository> _pump(
         path: AppRoutes.privacy,
         builder: (_, _) => const PrivacyScreen(),
       ),
-      GoRoute(
-        path: AppRoutes.profileSetup,
-        builder: (_, s) => Scaffold(body: Text('AT ${s.uri.path}')),
-      ),
+      for (final path in [
+        AppRoutes.settingsProfile,
+        AppRoutes.settingsEditProfile,
+      ])
+        GoRoute(
+          path: path,
+          builder: (_, s) => Scaffold(body: Text('AT ${s.uri}')),
+        ),
     ],
   );
   await tester.pumpWidget(
     ProviderScope(
-      overrides: [settingsRepositoryProvider.overrideWithValue(repository)],
+      overrides: [
+        settingsRepositoryProvider.overrideWithValue(repository),
+        profileRepositoryProvider.overrideWithValue(
+          FakeProfileRepository(backend),
+        ),
+        profileOverviewRepositoryProvider.overrideWithValue(
+          FakeProfileOverviewRepository(backend),
+        ),
+      ],
       child: MaterialApp.router(routerConfig: router),
     ),
   );
@@ -65,11 +93,21 @@ void main() {
     await _pump(tester);
 
     for (final text in [
+      'Nethmi Perera',
+      'Biological Science · A/L 2027',
+      'PROFILE',
+      'Edit profile',
+      'Study goals',
+      'Target grade A · A/L 2027',
+      'Availability',
+      '5 days a week · 2 h a day · Evening',
+      'APP SETTINGS',
       'Dark mode',
       'Study reminders',
-      'Evenings at 8:30 PM',
+      'Every day at 8:30 PM',
+      'Reminder time',
       'Community replies',
-      'Study goals',
+      'TRUST & SUPPORT',
       'Data & privacy',
       'About AI in BrAInBox',
       'Help & feedback',
@@ -78,6 +116,40 @@ void main() {
       expect(find.text(text), findsOneWidget, reason: text);
     }
     expect(find.textContaining('BrAInBox v0.1.0 (fake)'), findsOneWidget);
+  });
+
+  testWidgets('a 404 shows a friendly error with Retry, not a blank page', (
+    tester,
+  ) async {
+    await _pump(tester, repo: _MissingEndpoint());
+
+    expect(
+      find.text("This isn't available yet. Please try again later."),
+      findsOneWidget,
+    );
+    expect(find.text('Not Found'), findsNothing);
+    expect(find.text('Retry'), findsOneWidget);
+    // The rest of Settings still works.
+    expect(find.text('Dark mode'), findsOneWidget);
+    expect(find.text('Study goals'), findsOneWidget);
+    expect(find.text('Log out'), findsOneWidget);
+  });
+
+  testWidgets('links open My profile and the edit sections', (tester) async {
+    await _pump(tester);
+    await tester.tap(find.text('Nethmi Perera'));
+    await tester.pumpAndSettle();
+    expect(find.text('AT ${AppRoutes.settingsProfile}'), findsOneWidget);
+  });
+
+  testWidgets('Availability opens edit mode at that section', (tester) async {
+    await _pump(tester);
+    await tester.tap(find.text('Availability'));
+    await tester.pumpAndSettle();
+    expect(
+      find.text('AT ${AppRoutes.settingsEditProfilePath('availability')}'),
+      findsOneWidget,
+    );
   });
 
   testWidgets('a switch saves, and goes back if saving fails', (tester) async {

@@ -111,4 +111,38 @@ void main() {
     final again = await tester.runAsync(repo.overview);
     expect(again!.unseen, isNull); // marked seen
   });
+
+  testWidgets('Profile says so when there are no achievements', (tester) async {
+    tester.view.physicalSize = const Size(400, 1000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    final router = GoRouter(
+      initialLocation: AppRoutes.myProfile,
+      routes: [
+        GoRoute(
+          path: AppRoutes.myProfile,
+          builder: (_, _) => const ProfileOverviewScreen(),
+        ),
+      ],
+    );
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          profileOverviewRepositoryProvider.overrideWithValue(_Empty()),
+        ],
+        child: MaterialApp.router(routerConfig: router),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.textContaining('No achievements yet'), findsOneWidget);
+  });
+}
+
+class _Empty implements ProfileOverviewRepository {
+  @override
+  Future<ProfileOverview> overview() async =>
+      const ProfileOverview(fullName: 'Nethmi Perera');
+
+  @override
+  Future<void> markSeen(String achievementId) async {}
 }

@@ -3,10 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-/// The bottom navigation bar around the five main tabs.
+/// The bottom navigation bar around the six main tabs.
 ///
 /// The order of the tabs must match the order of the branches in
-/// `router.dart`: Home, Learn, Practice, Insights, Community.
+/// `router.dart`: Home, Learn, Practice, Insights, Community, Settings.
+///
+/// Six tabs at 360 dp leave 60 dp each, so only the selected tab shows its
+/// label and Community is labelled "Groups" (tooltip "Community"). Every
+/// tab stays a full-height, 60 dp wide touch target.
 ///
 /// While the backend can't be reached, "You're offline" shows above every
 /// tab (Figma F6).
@@ -25,6 +29,7 @@ class ShellScaffold extends ConsumerWidget {
       ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: navigationShell.currentIndex,
+        labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
         // Tapping the current tab again goes back to that tab's first screen.
         onDestinationSelected: (index) => navigationShell.goBranch(
           index,
@@ -54,7 +59,14 @@ class ShellScaffold extends ConsumerWidget {
           NavigationDestination(
             icon: Icon(Icons.people_outline),
             selectedIcon: Icon(Icons.people),
-            label: 'Community',
+            // "Community" is too wide for 6 tabs at 360 dp.
+            label: 'Groups',
+            tooltip: 'Community',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.settings_outlined),
+            selectedIcon: Icon(Icons.settings),
+            label: 'Settings',
           ),
         ],
       ),

@@ -39,9 +39,7 @@ class PrivacyScreen extends ConsumerWidget {
     }
 
     return Scaffold(
-      backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: AppColors.background,
         title: const Text('Data & privacy'),
         leading: IconButton(
           tooltip: 'Back',
@@ -135,7 +133,7 @@ class PrivacyScreen extends ConsumerWidget {
                 Padding(
                   padding: AppSpacing.cardPadding,
                   child: ErrorBanner(
-                    message: ErrorMessages.of(error),
+                    message: settingsErrorMessage(error),
                     onRetry: () => ref.invalidate(privacyControllerProvider),
                   ),
                 ),

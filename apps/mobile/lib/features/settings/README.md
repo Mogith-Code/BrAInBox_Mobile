@@ -5,7 +5,7 @@
 | **Owner** | Samni (`@samni`) |
 | **App** | student app (`apps/mobile`) |
 | **Purpose** | Settings, privacy and about. |
-| **Jira epic** | `BRN-??` *(TODO: add the epic key)* |
+| **Jira epic** | `BRN-??` *(TODO(samni): add the epic key)* |
 | **Git branch** | `feature/settings` (tickets: `feature/settings/BRN-xx-short-name`) |
 
 ## Screens

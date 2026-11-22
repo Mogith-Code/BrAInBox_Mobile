@@ -5,7 +5,7 @@
 | **Owner** | Udith (`@udith`) |
 | **App** | admin portal (`apps/admin`) |
 | **Purpose** | Queue of automatic checks on AI-generated questions. |
-| **Jira epic** | `BRN-??` *(TODO: add the epic key)* |
+| **Jira epic** | `BRN-??` *(TODO(udith): add the epic key)* |
 | **Git branch** | `feature/admin-quality-review` (tickets: `feature/admin-quality-review/BRN-xx-short-name`) |
 
 ## Screens

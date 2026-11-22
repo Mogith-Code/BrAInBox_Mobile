@@ -5,7 +5,7 @@
 | **Owner** | Keshomigha (`@keshomigha`) |
 | **App** | student app (`apps/mobile`) |
 | **Purpose** | Units list, unit detail and the topic page with tabs. |
-| **Jira epic** | `BRN-??` *(TODO: add the epic key)* |
+| **Jira epic** | `BRN-??` *(TODO(keshomigha): add the epic key)* |
 | **Git branch** | `feature/syllabus` (tickets: `feature/syllabus/BRN-xx-short-name`) |
 
 ## Screens

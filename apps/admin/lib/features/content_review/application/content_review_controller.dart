@@ -1,6 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../app/admin_errors.dart';
+
 import '../data/content_review_repository.dart';
 import '../domain/content_review_models.dart';
 
@@ -37,30 +39,28 @@ class ContentReviewController extends _$ContentReviewController {
   }
 
   /// Approve / Reject, then show the new status in the row.
-  Future<ContentItem?> review(
-    String id, {
-    required bool approve,
-    String? note,
-  }) => _update(
-    () => ref
-        .read(contentReviewRepositoryProvider)
-        .review(id, approve: approve, note: note),
-  );
+  /// Returns why it failed, or null.
+  Future<String?> review(String id, {required bool approve, String? note}) =>
+      _update(
+        () => ref
+            .read(contentReviewRepositoryProvider)
+            .review(id, approve: approve, note: note),
+      );
 
-  /// Saves an edited note body.
-  Future<ContentItem?> edit(String id, String body) =>
+  /// Saves an edited note body. Returns why it failed, or null.
+  Future<String?> edit(String id, String body) =>
       _update(() => ref.read(contentReviewRepositoryProvider).edit(id, body));
 
-  Future<ContentItem?> _update(Future<ContentItem> Function() call) async {
+  Future<String?> _update(Future<ContentItem> Function() call) async {
     try {
       final saved = await call();
       final now = state.value;
       if (ref.mounted && now != null) {
         state = AsyncData([for (final i in now) i.id == saved.id ? saved : i]);
       }
-      return saved;
-    } catch (_) {
       return null;
+    } catch (e) {
+      return adminErrorMessage(e);
     }
   }
 }

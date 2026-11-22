@@ -18,6 +18,9 @@ abstract final class AppTheme {
     final textColor = isDark ? AppColors.white : AppColors.ink;
     final surface = isDark ? AppColors.darkSurface : AppColors.white;
     final border = isDark ? AppColors.darkBorder : AppColors.border;
+    // Indigo text is 2.3:1 on the dark surfaces; indigo-200 is AA there.
+    final primaryText = isDark ? AppColors.primaryLight : AppColors.primary;
+    final mutedText = isDark ? AppColors.mutedLight : AppColors.muted;
 
     final colorScheme = ColorScheme.fromSeed(
       seedColor: AppColors.primary,
@@ -76,7 +79,13 @@ abstract final class AppTheme {
         focusedBorder: inputBorder(AppColors.primary, 2),
         errorBorder: inputBorder(AppColors.error),
         focusedErrorBorder: inputBorder(AppColors.error, 2),
-        hintStyle: const TextStyle(color: AppColors.muted),
+        hintStyle: TextStyle(color: mutedText),
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(foregroundColor: primaryText),
+      ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(foregroundColor: primaryText),
       ),
       dividerTheme: DividerThemeData(color: border, space: 1),
       navigationBarTheme: NavigationBarThemeData(
@@ -90,15 +99,15 @@ abstract final class AppTheme {
                 ? FontWeight.w600
                 : FontWeight.w500,
             color: states.contains(WidgetState.selected)
-                ? AppColors.primary
-                : AppColors.muted,
+                ? primaryText
+                : mutedText,
           ),
         ),
         iconTheme: WidgetStateProperty.resolveWith(
           (states) => IconThemeData(
             color: states.contains(WidgetState.selected)
-                ? AppColors.primary
-                : AppColors.muted,
+                ? primaryText
+                : mutedText,
           ),
         ),
       ),

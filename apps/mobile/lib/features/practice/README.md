@@ -5,7 +5,7 @@
 | **Owner** | Udith (`@udith`) |
 | **App** | student app (`apps/mobile`) |
 | **Purpose** | Practice hub, quiz setup, MCQ flow, feedback, results and the diagnostic test. |
-| **Jira epic** | `BRN-??` *(TODO: add the epic key)* |
+| **Jira epic** | `BRN-??` *(TODO(udith): add the epic key)* |
 | **Git branch** | `feature/practice` (tickets: `feature/practice/BRN-xx-short-name`) |
 
 ## Screens

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
 import '../theme/app_spacing.dart';
+import '../theme/app_text_colors.dart';
 
 /// The look of an [AppButton].
 enum AppButtonVariant {
@@ -101,8 +102,8 @@ class AppButton extends StatelessWidget {
       AppButtonVariant.secondary => OutlinedButton(
         onPressed: onTap,
         style: OutlinedButton.styleFrom(
-          foregroundColor: AppColors.primary,
-          side: const BorderSide(color: AppColors.primary),
+          foregroundColor: context.appPrimaryText,
+          side: BorderSide(color: context.appPrimaryText),
           minimumSize: _minSize,
           shape: shape,
         ),
@@ -111,7 +112,7 @@ class AppButton extends StatelessWidget {
       AppButtonVariant.ghost => TextButton(
         onPressed: onTap,
         style: TextButton.styleFrom(
-          foregroundColor: AppColors.primary,
+          foregroundColor: context.appPrimaryText,
           minimumSize: _minSize,
           shape: shape,
         ),

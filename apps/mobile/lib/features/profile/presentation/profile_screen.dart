@@ -12,12 +12,20 @@ import 'widgets/setup_steps.dart';
 ///
 /// Route: `/profile/setup`. Resumes at the first unfinished step. The back
 /// arrow (and Android back) goes to the previous step and keeps the values.
+///
+/// With [edit] (`?edit=all|goals|availability`, from Settings or My
+/// profile) the saved answers are filled in, the last step says "Save
+/// changes", saves with `PATCH /profile` and goes back.
 class ProfileSetupScreen extends ConsumerWidget {
-  const ProfileSetupScreen({super.key});
+  const ProfileSetupScreen({super.key, this.edit});
+
+  /// Null = onboarding.
+  final ProfileEditSection? edit;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(profileSetupControllerProvider);
+    final provider = profileSetupControllerProvider(edit: edit);
+    final state = ref.watch(provider);
 
     return Scaffold(
       body: SafeArea(
@@ -26,10 +34,10 @@ class ProfileSetupScreen extends ConsumerWidget {
           error: (error, _) => Center(
             child: ErrorBanner(
               message: ErrorMessages.of(error),
-              onRetry: () => ref.invalidate(profileSetupControllerProvider),
+              onRetry: () => ref.invalidate(provider),
             ),
           ),
-          data: (s) => _SetupBody(state: s),
+          data: (s) => _SetupBody(provider: provider, state: s),
         ),
       ),
     );
@@ -37,15 +45,17 @@ class ProfileSetupScreen extends ConsumerWidget {
 }
 
 class _SetupBody extends ConsumerWidget {
-  const _SetupBody({required this.state});
+  const _SetupBody({required this.provider, required this.state});
 
+  final ProfileSetupControllerProvider provider;
   final ProfileSetupState state;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controller = ref.read(profileSetupControllerProvider.notifier);
-    final isLast = state.step == ProfileSetupState.steps - 1;
-    final canGoBack = state.step > 0 || Navigator.canPop(context);
+    final controller = ref.read(provider.notifier);
+    final isLast = state.isLastStep;
+    final first = state.firstStep;
+    final canGoBack = state.step > first || Navigator.canPop(context);
 
     void back() {
       if (!controller.back() && Navigator.canPop(context)) {
@@ -55,8 +65,16 @@ class _SetupBody extends ConsumerWidget {
 
     Future<void> next() async {
       final finished = await controller.next();
+      if (!finished || !context.mounted) return;
+      if (state.editing) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Profile saved')));
+        context.canPop() ? context.pop() : context.go(AppRoutes.settings);
+        return;
+      }
       // The redirect moves on too; this covers DISABLE_AUTH_GUARD runs.
-      if (finished && context.mounted) context.go(AppRoutes.diagnostic);
+      context.go(AppRoutes.diagnostic);
     }
 
     final step = switch (state.step) {
@@ -81,7 +99,7 @@ class _SetupBody extends ConsumerWidget {
 
     return PopScope(
       // Android back on steps 2-3 = previous step.
-      canPop: state.step == 0,
+      canPop: state.step == first,
       onPopInvokedWithResult: (didPop, _) {
         if (!didPop) controller.back();
       },
@@ -95,8 +113,8 @@ class _SetupBody extends ConsumerWidget {
               0,
             ),
             child: StepProgressHeader(
-              step: state.step + 1,
-              total: ProfileSetupState.steps,
+              step: state.step - first + 1,
+              total: state.lastStep - first + 1,
               onBack: canGoBack ? back : null,
             ),
           ),
@@ -138,8 +156,12 @@ class _SetupBody extends ConsumerWidget {
                     ),
                   ),
                 AppButton(
-                  label: isLast ? 'Finish setup' : 'Continue',
-                  trailingIcon: Icons.arrow_forward,
+                  label: isLast
+                      ? (state.editing ? 'Save changes' : 'Finish setup')
+                      : 'Continue',
+                  trailingIcon: isLast && state.editing
+                      ? null
+                      : Icons.arrow_forward,
                   isLoading: state.saving,
                   onPressed: state.stepComplete ? next : null,
                 ),

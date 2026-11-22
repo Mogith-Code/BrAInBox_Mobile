@@ -1,16 +1,14 @@
 import 'package:brainbox_admin/features/auth/data/auth_repository.dart';
-import 'package:brainbox_admin/features/auth/domain/auth_models.dart';
 import 'package:brainbox_admin/features/auth/presentation/login_screen.dart';
 import 'package:brainbox_admin/features/auth/presentation/widgets/login_brand_panel.dart';
 import 'package:brainbox_admin/widgets/admin_logo.dart';
+import 'package:brainbox_core/brainbox_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 class _MockRepository extends Mock implements AuthRepository {}
-
-const _admin = AppUser(id: 'a1', email: 'tharushi@brainbox.lk', role: 'admin');
 
 void main() {
   late _MockRepository repository;
@@ -38,7 +36,7 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  void answer(Future<AppUser> Function() result) => when(
+  void answer(Future<void> Function() result) => when(
     () => repository.signIn(
       email: any(named: 'email'),
       password: any(named: 'password'),
@@ -82,7 +80,7 @@ void main() {
     tester,
   ) async {
     await pumpLogin(tester, const Size(1400, 900));
-    answer(() async => _admin);
+    answer(() async {});
 
     await tester.tap(find.text('Keep me signed in')); // turns it off
     await fillAndSubmit(tester);
@@ -94,16 +92,25 @@ void main() {
         keepSignedIn: false,
       ),
     ).called(1);
-    expect(find.text(NotAdminException.message), findsNothing);
   });
 
-  testWidgets('a student account is refused', (tester) async {
+  testWidgets('a wrong password shows the reason under the form', (
+    tester,
+  ) async {
     await pumpLogin(tester, const Size(1400, 900));
-    answer(() async => throw const NotAdminException());
+    answer(
+      () async => throw const ApiException(
+        code: 'AUTH_NOT_CONFIGURED',
+        message: 'Firebase is not set up for the admin portal yet.',
+      ),
+    );
 
     await fillAndSubmit(tester);
 
-    expect(find.text('This account is not an admin.'), findsOneWidget);
+    expect(
+      find.text('Firebase is not set up for the admin portal yet.'),
+      findsOneWidget,
+    );
   });
 
   testWidgets('Forgot password explains the reset through the app', (

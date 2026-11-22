@@ -31,14 +31,21 @@ Future<void> _pump(WidgetTester tester, UsersRepository repo) async {
 
 void main() {
   test('the filter becomes the query string', () {
-    expect(const StudentFilter().toQuery(), isEmpty);
+    expect(const StudentFilter().toQuery(), {'page': 1, 'page_size': 25});
     expect(
       const StudentFilter(
         search: ' nethmi ',
         examYear: 2027,
         status: StudentStatus.suspended,
-      ).toQuery(),
-      {'search': 'nethmi', 'exam_year': 2027, 'status': 'suspended'},
+        page: 3,
+      ).toQuery(pageSize: 100),
+      {
+        'search': 'nethmi',
+        'exam_year': 2027,
+        'status': 'suspended',
+        'page': 3,
+        'page_size': 100,
+      },
     );
   });
 
@@ -46,7 +53,7 @@ void main() {
     await _pump(tester, FakeUsersRepository());
 
     expect(find.text('Students'), findsOneWidget);
-    expect(find.text('2,418 active · 3,105 total'), findsOneWidget);
+    expect(find.text('6 active · 8 total'), findsOneWidget);
     expect(find.text('Nethmi Perera'), findsOneWidget);
     expect(find.text('74%'), findsOneWidget);
     expect(find.text('Suspended'), findsOneWidget); // Ruwan
@@ -102,10 +109,12 @@ void main() {
 
 class _MissingEndpoint extends FakeUsersRepository {
   @override
-  Future<StudentPage> students(StudentFilter filter) =>
-      throw const ApiException(
-        code: 'http_404',
-        message: 'Not Found',
-        statusCode: 404,
-      );
+  Future<StudentPage> students(
+    StudentFilter filter, {
+    int pageSize = StudentFilter.pageSize,
+  }) => throw const ApiException(
+    code: 'http_404',
+    message: 'Not Found',
+    statusCode: 404,
+  );
 }

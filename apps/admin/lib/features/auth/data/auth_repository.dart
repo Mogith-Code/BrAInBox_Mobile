@@ -3,16 +3,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../domain/auth_models.dart';
-
 part 'auth_repository.g.dart';
 
-/// Admin sign-in: Firebase checks the email + password, then the backend
-/// says who the user is (`GET /auth/me`). Only role "admin" may stay in.
+/// Admin sign-in with Firebase email + password.
+///
+/// Whether the account is an admin is decided afterwards by
+/// `adminSessionProvider` (`GET /auth/me`): a non-admin stays signed in and
+/// sees "This account is not an admin" with a Log out button.
 abstract interface class AuthRepository {
-  /// Returns the admin, or throws [NotAdminException] (after signing out)
-  /// or a [FirebaseAuthException] / [ApiException].
-  Future<AppUser> signIn({
+  /// Throws a [FirebaseAuthException] (wrong password...) or [ApiException].
+  Future<void> signIn({
     required String email,
     required String password,
     required bool keepSignedIn,
@@ -22,14 +22,10 @@ abstract interface class AuthRepository {
 }
 
 class FirebaseAuthRepository implements AuthRepository {
-  FirebaseAuthRepository(this.api);
-
-  final ApiClient api;
-
   FirebaseAuth get _auth => FirebaseAuth.instance;
 
   @override
-  Future<AppUser> signIn({
+  Future<void> signIn({
     required String email,
     required String password,
     required bool keepSignedIn,
@@ -50,18 +46,6 @@ class FirebaseAuthRepository implements AuthRepository {
       email: email.trim(),
       password: password,
     );
-    final AppUser user;
-    try {
-      user = AppUser.fromJson(await api.get<Map<String, dynamic>>('/auth/me'));
-    } catch (_) {
-      await _auth.signOut(); // never stay half signed in
-      rethrow;
-    }
-    if (!user.isAdmin) {
-      await _auth.signOut();
-      throw const NotAdminException();
-    }
-    return user;
   }
 
   @override
@@ -71,5 +55,4 @@ class FirebaseAuthRepository implements AuthRepository {
 }
 
 @riverpod
-AuthRepository authRepository(Ref ref) =>
-    FirebaseAuthRepository(ref.watch(apiClientProvider));
+AuthRepository authRepository(Ref ref) => FirebaseAuthRepository();

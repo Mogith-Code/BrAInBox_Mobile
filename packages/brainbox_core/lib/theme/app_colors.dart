@@ -52,6 +52,10 @@ abstract final class AppColors {
   static const Color darkSurface = Color(0xFF1B1A3A);
   static const Color darkBorder = Color(0xFF2E2C5A);
 
+  /// Main text on [darkBackground] / [darkSurface] (slate-100).
+  /// Prefer `context.appInk`, which picks this in dark mode.
+  static const Color darkInk = Color(0xFFF1F5F9);
+
   /// Brand gradient: secondary -> primary at 135 degrees
   /// (top-left to bottom-right).
   static const LinearGradient brandGradient = LinearGradient(
