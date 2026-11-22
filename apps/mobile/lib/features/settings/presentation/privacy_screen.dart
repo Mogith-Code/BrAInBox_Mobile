@@ -39,9 +39,7 @@ class PrivacyScreen extends ConsumerWidget {
     }
 
     return Scaffold(
-      backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: AppColors.background,
         title: const Text('Data & privacy'),
         leading: IconButton(
           tooltip: 'Back',

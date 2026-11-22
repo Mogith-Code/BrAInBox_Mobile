@@ -31,9 +31,7 @@ class SettingsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: AppColors.background,
         automaticallyImplyLeading: false,
         title: const Text('Settings'),
       ),
@@ -187,7 +185,7 @@ class _AboutSection extends ConsumerWidget {
             versionText,
             style: Theme.of(
               context,
-            ).textTheme.bodySmall?.copyWith(color: AppColors.muted),
+            ).textTheme.bodySmall?.copyWith(color: context.appMuted),
           ),
         ],
       ),
@@ -225,7 +223,7 @@ class _SectionLoading extends StatelessWidget {
           label,
           style: Theme.of(
             context,
-          ).textTheme.bodySmall?.copyWith(color: AppColors.muted),
+          ).textTheme.bodySmall?.copyWith(color: context.appMuted),
         ),
         const SizedBox(height: AppSpacing.sm),
         const LinearProgressIndicator(minHeight: 2),

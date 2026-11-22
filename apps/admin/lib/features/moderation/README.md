@@ -5,7 +5,7 @@
 | **Owner** | Mogith (`@mogith`) |
 | **App** | admin portal (`apps/admin`) |
 | **Purpose** | Reported / flagged posts and groups. |
-| **Jira epic** | `BRN-??` *(TODO: add the epic key)* |
+| **Jira epic** | `BRN-??` *(TODO(mogith): add the epic key)* |
 | **Git branch** | `feature/admin-moderation` (tickets: `feature/admin-moderation/BRN-xx-short-name`) |
 
 ## Screens

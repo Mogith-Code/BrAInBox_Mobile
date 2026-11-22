@@ -20,6 +20,14 @@ the **admin web app to Firebase Hosting**. Run it from
 | `ADMIN_FIREBASE_OPTIONS_BASE64` | `apps/admin/lib/firebase_options.dart` | same, for the web app |
 | `FIREBASE_SERVICE_ACCOUNT` | Service account JSON with *Firebase Hosting Admin* | Firebase console > Project settings > Service accounts > Generate new private key (paste the whole JSON) |
 
+On Windows (PowerShell) make the base64 text with:
+
+```powershell
+[Convert]::ToBase64String([IO.File]::ReadAllBytes("upload-keystore.jks")) | Set-Clipboard
+```
+
+then paste it as the secret value (same for the other files).
+
 ### Repository variables (*... > Variables*)
 
 | Variable | Example |
@@ -29,7 +37,7 @@ the **admin web app to Firebase Hosting**. Run it from
 
 ## The keystore (once)
 
-```bash
+```powershell
 keytool -genkey -v -keystore upload-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload
 ```
 
@@ -47,12 +55,23 @@ keyPassword=...
 keyAlias=upload
 ```
 
-Put `upload-keystore.jks` in `apps/mobile/android/` (`*.jks` is git-ignored), then:
+Put `upload-keystore.jks` in `apps/mobile/android/` (`*.jks` is git-ignored), then
+(PowerShell):
 
-```bash
-cd apps/mobile
+```powershell
+cd apps\mobile
 flutter build apk --release --dart-define=API_BASE_URL=https://api.brainbox.lk/api/v1
 ```
+
+The APK is `apps\mobile\build\app\outputs\flutter-apk\app-release.apk`.
+Release builds use R8 (code shrinking); no extra ProGuard rules are needed for
+the current plugins. They allow HTTPS only: `http://` is enabled in debug
+builds only (`android/app/src/debug/AndroidManifest.xml`).
+
+The first release build downloads the Android NDK version Flutter asks for.
+If that fails ("sdkmanager did not install NDK"), install it yourself:
+Android Studio → SDK Manager → SDK Tools → NDK (Side by side), or
+`android sdk install ndk/<version>` with the version from the error.
 
 Without `key.properties` the release build is signed with the debug key
 (fine for testing, not for distribution).

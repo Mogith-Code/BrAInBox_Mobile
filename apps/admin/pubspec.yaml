@@ -1,7 +1,7 @@
 name: brainbox_admin
 description: BrAInBox Admin - web portal for syllabus, content, questions and moderation.
 publish_to: none
-version: 0.1.0+1
+version: 1.0.0+1
 resolution: workspace
 
 environment:

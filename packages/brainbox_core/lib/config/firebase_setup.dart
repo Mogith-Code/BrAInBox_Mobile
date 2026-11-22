@@ -22,10 +22,12 @@ abstract final class FirebaseSetup {
       _isReady = true;
     } catch (error) {
       _isReady = false;
-      debugPrint(
-        '[BrAInBox] Firebase not configured, auth is disabled. '
-        'Run `flutterfire configure` (see README). Details: $error',
-      );
+      if (kDebugMode) {
+        debugPrint(
+          '[BrAInBox] Firebase not configured, auth is disabled. '
+          'Run `flutterfire configure` (see README). Details: $error',
+        );
+      }
     }
     return _isReady;
   }

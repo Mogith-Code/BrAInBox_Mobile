@@ -5,7 +5,7 @@
 | **Owner** | Samni (`@samni`) |
 | **App** | student app (`apps/mobile`) |
 | **Purpose** | AI notes, short notes, the generate-notes sheet and the notes library. |
-| **Jira epic** | `BRN-??` *(TODO: add the epic key)* |
+| **Jira epic** | `BRN-??` *(TODO(samni): add the epic key)* |
 | **Git branch** | `feature/notes` (tickets: `feature/notes/BRN-xx-short-name`) |
 
 ## Screens

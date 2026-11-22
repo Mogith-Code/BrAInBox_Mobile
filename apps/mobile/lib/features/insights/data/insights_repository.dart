@@ -113,10 +113,12 @@ class InsightsRepository {
     if (status == 403 || status == 404) return const InsightsUnavailable();
     if (status == 422) {
       // The app built a bad request (e.g. a malformed attempt id): a bug.
-      debugPrint(
-        'BUG insights: 422 for attempt_id=$attemptId '
-        '(${e.code}: ${e.message})',
-      );
+      if (kDebugMode) {
+        debugPrint(
+          'BUG insights: 422 for attempt_id=$attemptId '
+          '(${e.code}: ${e.message})',
+        );
+      }
       return const InsightsServerError(_genericMessage);
     }
     if (e.code == 'network' || e.code == 'timeout') {

@@ -5,7 +5,7 @@
 | **Owner** | Mogith (`@mogith`) |
 | **App** | student app (`apps/mobile`) |
 | **Purpose** | Profile setup: stream, exam year, goals, daily study time. |
-| **Jira epic** | `BRN-??` *(TODO: add the epic key)* |
+| **Jira epic** | `BRN-??` *(TODO(mogith): add the epic key)* |
 | **Git branch** | `feature/profile` (tickets: `feature/profile/BRN-xx-short-name`) |
 
 ## Screens

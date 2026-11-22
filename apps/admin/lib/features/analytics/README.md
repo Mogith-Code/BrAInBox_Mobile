@@ -5,7 +5,7 @@
 | **Owner** | Keshomigha (`@keshomigha`) |
 | **App** | admin portal (`apps/admin`) |
 | **Purpose** | Most-missed topics and most common misconceptions. |
-| **Jira epic** | `BRN-??` *(TODO: add the epic key)* |
+| **Jira epic** | `BRN-??` *(TODO(keshomigha): add the epic key)* |
 | **Git branch** | `feature/admin-analytics` (tickets: `feature/admin-analytics/BRN-xx-short-name`) |
 
 ## Screens

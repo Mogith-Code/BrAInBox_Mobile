@@ -5,7 +5,7 @@
 | **Owner** | Samni (`@samni`) |
 | **App** | student app (`apps/mobile`) |
 | **Purpose** | Upload notes (PDF / photo), show processing, then the AI summary. |
-| **Jira epic** | `BRN-??` *(TODO: add the epic key)* |
+| **Jira epic** | `BRN-??` *(TODO(samni): add the epic key)* |
 | **Git branch** | `feature/upload` (tickets: `feature/upload/BRN-xx-short-name`) |
 
 ## Screens

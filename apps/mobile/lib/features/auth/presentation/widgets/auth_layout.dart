@@ -50,7 +50,7 @@ class AuthLayout extends StatelessWidget {
                           tooltip: 'Back',
                           onPressed: onBack,
                           icon: const Icon(Icons.chevron_left, size: 28),
-                          color: AppColors.ink,
+                          color: context.appInk,
                           style: IconButton.styleFrom(
                             padding: EdgeInsets.zero,
                             minimumSize: const Size(48, 48),

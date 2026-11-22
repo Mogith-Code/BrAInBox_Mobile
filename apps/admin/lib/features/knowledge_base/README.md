@@ -5,7 +5,7 @@
 | **Owner** | Keshomigha (`@keshomigha`) |
 | **App** | admin portal (`apps/admin`) |
 | **Purpose** | Model answers and marking keywords used by evaluation. |
-| **Jira epic** | `BRN-??` *(TODO: add the epic key)* |
+| **Jira epic** | `BRN-??` *(TODO(keshomigha): add the epic key)* |
 | **Git branch** | `feature/admin-knowledge-base` (tickets: `feature/admin-knowledge-base/BRN-xx-short-name`) |
 
 ## Screens

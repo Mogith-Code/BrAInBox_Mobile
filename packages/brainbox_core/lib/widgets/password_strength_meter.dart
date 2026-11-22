@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
 import '../theme/app_spacing.dart';
+import '../theme/app_text_colors.dart';
 import '../utils/password_strength.dart';
 
 /// Four bars under a password field, plus "Good · Add a symbol to make it
@@ -59,7 +60,7 @@ class PasswordStrengthMeter extends StatelessWidget {
                   Text(
                     strength.label,
                     style: textTheme.labelMedium?.copyWith(
-                      color: AppColors.ink,
+                      color: context.appInk,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -69,7 +70,7 @@ class PasswordStrengthMeter extends StatelessWidget {
                     hint,
                     textAlign: TextAlign.end,
                     style: textTheme.labelMedium?.copyWith(
-                      color: AppColors.muted,
+                      color: context.appMuted,
                     ),
                   ),
                 ),
