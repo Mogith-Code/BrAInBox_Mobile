@@ -1,5 +1,4 @@
 import 'package:brainbox_core/brainbox_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -98,28 +97,11 @@ class _Bottom extends ConsumerWidget {
     }
 
     // No redirect (no Firebase and no fake API, or DISABLE_AUTH_GUARD):
-    // let the developer move on by hand.
+    // nothing moves on by itself, so offer a button.
     if (!guardOn) {
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _WhiteButton(
-            label: 'Get started',
-            onPressed: () => context.go(AppRoutes.onboarding),
-          ),
-          if (kDebugMode) ...[
-            const SizedBox(height: AppSpacing.sm),
-            TextButton.icon(
-              onPressed: () => context.push(AppRoutes.devMenu),
-              style: TextButton.styleFrom(
-                foregroundColor: AppColors.white,
-                minimumSize: const Size(48, 48),
-              ),
-              icon: const Icon(Icons.developer_mode),
-              label: const Text('Dev menu'),
-            ),
-          ],
-        ],
+      return _WhiteButton(
+        label: 'Get started',
+        onPressed: () => context.go(AppRoutes.onboarding),
       );
     }
 

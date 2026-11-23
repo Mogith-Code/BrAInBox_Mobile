@@ -12,8 +12,8 @@ import 'widgets/achievement_dialog.dart';
 /// mastered, achievements and their goal. Edit profile opens the setup
 /// steps in edit mode.
 ///
-/// Routes: `/settings/profile` (inside the Settings tab, bottom bar kept)
-/// and `/profile` (full screen, from the avatar on Home).
+/// Route: `/settings/profile` (inside the Settings tab, bottom bar kept).
+/// The avatar on Home opens it, and the old `/profile` link redirects here.
 class ProfileOverviewScreen extends ConsumerWidget {
   const ProfileOverviewScreen({super.key});
 
@@ -148,11 +148,8 @@ class _Body extends StatelessWidget {
                   label: 'Edit profile',
                   icon: Icons.edit_outlined,
                   variant: AppButtonVariant.ghost,
-                  onPressed: () => context.push(
-                    inSettingsTab
-                        ? AppRoutes.settingsEditProfilePath()
-                        : AppRoutes.profileEditPath(),
-                  ),
+                  onPressed: () =>
+                      context.push(AppRoutes.settingsPersonalDetails),
                 ),
                 const SizedBox(height: AppSpacing.lg),
                 Row(

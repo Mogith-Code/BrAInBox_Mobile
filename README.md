@@ -72,7 +72,7 @@ flutter run --dart-define=USE_FAKE_API=true
 ```
 
 Log in with **`nethmi.p@gmail.com` / `Mito2027`**, a sample student with
-progress. Tap **Dev menu** on the splash or home screen to jump to any screen.
+progress.
 
 ```powershell
 # Admin portal, in a second PowerShell window
@@ -202,7 +202,7 @@ brainbox-mobile/
 ├── apps/
 │   ├── mobile/lib/
 │   │   ├── main.dart            Firebase + Hive init, ProviderScope
-│   │   ├── app/                 MaterialApp, router, routes, bottom-nav shell, dev menu, fake backend
+│   │   ├── app/                 MaterialApp, router, routes, bottom-nav shell, fake backend
 │   │   └── features/<feature>/  one folder per feature
 │   └── admin/lib/
 │       ├── main.dart

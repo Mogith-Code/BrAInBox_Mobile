@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:brainbox_core/brainbox_core.dart';
 import 'package:dio/dio.dart';
 
@@ -62,6 +64,19 @@ class ApiLearnRepository implements LearnRepository {
       rethrow;
     }
   }
+
+  @override
+  Future<OfficialNotes> fetchOfficialNotes(String topicId) async =>
+      OfficialNotes.fromJson(
+        await api.get<Map<String, dynamic>>(
+          '$_base/topics/$topicId/official-notes',
+        ),
+      );
+
+  // Uses ApiClient (not Image.network) so the login token is sent.
+  @override
+  Future<Uint8List> fetchOfficialPage(String documentId, int page) =>
+      api.getBytes('$_base/official-notes/$documentId/pages/$page');
 
   @override
   Future<String> startNoteGeneration(

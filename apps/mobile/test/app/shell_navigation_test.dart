@@ -185,12 +185,12 @@ void main() {
     expect(find.text('Profile saved'), findsOneWidget);
   });
 
-  testWidgets('Edit profile walks the 3 steps and saves each one', (
+  testWidgets('Study setup walks the 3 steps and saves each one', (
     tester,
   ) async {
     final (router, profiles) = await _pump(tester);
 
-    await tester.tap(find.text('Edit profile'));
+    await tester.tap(find.text('Study setup'));
     await tester.pumpAndSettle();
     expect(find.text('Continue'), findsOneWidget);
     await tester.tap(find.text('Continue'));

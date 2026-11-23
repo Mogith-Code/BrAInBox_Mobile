@@ -1,66 +1,73 @@
-import 'package:brainbox_mobile/app/routes.dart';
+import 'package:brainbox_mobile/features/tutor/data/tutor_repository.dart';
 import 'package:brainbox_mobile/features/tutor/presentation/ask_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:go_router/go_router.dart';
 
-Future<void> _pump(WidgetTester tester, String location) async {
-  tester.view.physicalSize = const Size(400, 900);
-  tester.view.devicePixelRatio = 1;
-  addTearDown(tester.view.reset);
-  Widget at(GoRouterState s) => Scaffold(body: Text('AT ${s.uri}'));
-  final router = GoRouter(
-    initialLocation: location,
-    routes: [
-      GoRoute(
-        path: AppRoutes.ask,
-        builder: (_, s) => AskScreen(topicId: s.uri.queryParameters['topicId']),
-      ),
-      for (final path in [
-        AppRoutes.home,
-        AppRoutes.learn,
-        AppRoutes.nextSteps,
-        AppRoutes.quizSetup,
-        AppRoutes.topic,
-      ])
-        GoRoute(path: path, builder: (_, s) => at(s)),
-    ],
+class _FakeTutor implements TutorRepository {
+  _FakeTutor({this.fail = false});
+
+  final bool fail;
+  String? askedTopic;
+
+  @override
+  Future<TutorAnswer> ask(String question, {String? topicId}) async {
+    askedTopic = topicId;
+    if (fail) throw Exception('down');
+    return const TutorAnswer(
+      answer: 'Water moves towards the lower water potential.',
+      grounded: true,
+      sources: [TutorSource(title: 'Unit04 Plants', page: 12)],
+    );
+  }
+}
+
+Future<void> _pump(
+  WidgetTester tester,
+  TutorRepository repo, {
+  String? topicId,
+}) async {
+  await tester.pumpWidget(
+    ProviderScope(
+      overrides: [tutorRepositoryProvider.overrideWithValue(repo)],
+      child: MaterialApp(home: AskScreen(topicId: topicId)),
+    ),
   );
-  await tester.pumpWidget(MaterialApp.router(routerConfig: router));
+  await tester.pump();
+}
+
+Future<void> _ask(WidgetTester tester) async {
+  await tester.enterText(find.byType(TextField), 'What is osmosis?');
+  await tester.tap(find.byTooltip('Send'));
   await tester.pumpAndSettle();
 }
 
 void main() {
-  testWidgets('says coming soon and has no chat input', (tester) async {
-    await _pump(tester, AppRoutes.ask);
-
-    expect(find.text('Coming soon'), findsOneWidget);
-    expect(find.byType(TextField), findsNothing);
-    expect(find.textContaining('topicId'), findsNothing);
-
-    await tester.tap(find.text('See my next steps'));
-    await tester.pumpAndSettle();
-    expect(find.text('AT ${AppRoutes.nextSteps}'), findsOneWidget);
-  });
-
-  testWidgets('with a topic, links back to it and to practice', (tester) async {
-    await _pump(tester, AppRoutes.askPath(topicId: 't-1'));
-
-    await tester.tap(find.text('Practise this topic'));
-    await tester.pumpAndSettle();
-    expect(
-      find.text('AT ${AppRoutes.quizSetupPath(topicId: 't-1', mode: 'quick')}'),
-      findsOneWidget,
-    );
-  });
-
-  testWidgets('Back to the topic opens it when there is nothing to pop', (
+  testWidgets('shows the answer with its source, for the topic', (
     tester,
   ) async {
-    await _pump(tester, AppRoutes.askPath(topicId: 't-1'));
+    final repo = _FakeTutor();
+    await _pump(tester, repo, topicId: 't-1');
 
-    await tester.tap(find.text('Back to the topic'));
-    await tester.pumpAndSettle();
-    expect(find.text('AT ${AppRoutes.topicPath('t-1')}'), findsOneWidget);
+    await _ask(tester);
+
+    expect(find.text('What is osmosis?'), findsOneWidget);
+    expect(
+      find.text('Water moves towards the lower water potential.'),
+      findsOneWidget,
+    );
+    expect(find.text('Sources: Unit04 Plants, p. 12'), findsOneWidget);
+    expect(repo.askedTopic, 't-1');
+  });
+
+  testWidgets('a failed request shows a friendly error', (tester) async {
+    await _pump(tester, _FakeTutor(fail: true));
+
+    await _ask(tester);
+
+    expect(
+      find.text('Something went wrong. Please try again.'),
+      findsOneWidget,
+    );
   });
 }

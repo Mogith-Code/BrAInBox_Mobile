@@ -18,7 +18,7 @@ The splash has no data layer of its own. It watches `sessionProvider`
 (auth feature): dots while loading, the error + Retry if loading fails, and
 the router's onboarding redirect moves on as soon as the session is known.
 With the redirect off (no Firebase / fake API, or `DISABLE_AUTH_GUARD`) it
-shows "Get started" and the Dev menu button instead.
+shows "Get started" instead.
 
 Decorations are drawn in `presentation/widgets/splash_decorations.dart`.
 

@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:brainbox_core/brainbox_core.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -13,6 +15,59 @@ part 'notes_controller.g.dart';
 @riverpod
 Future<TopicNote?> topicNote(Ref ref, String topicId, NoteType type) =>
     ref.watch(learnRepositoryProvider).fetchNote(topicId, type);
+
+/// The government books for a topic and the page to open first.
+@riverpod
+Future<OfficialNotes> officialNotes(Ref ref, String topicId) =>
+    ref.watch(learnRepositoryProvider).fetchOfficialNotes(topicId);
+
+/// Keeps the most recently read book pages in memory, so scrolling back
+/// doesn't download them again.
+class OfficialPageCache {
+  OfficialPageCache(this._repository);
+
+  /// Small on purpose: scanned pages are large.
+  static const maxPages = 12;
+
+  final LearnRepository _repository;
+
+  // A LinkedHashMap keeps insertion order, so the first key is the oldest.
+  final _pages = <String, Uint8List>{};
+
+  // Pages being downloaded, so one page is never requested twice at once.
+  final _loading = <String, Future<Uint8List>>{};
+
+  /// The page if it is already in memory.
+  Uint8List? peek(String documentId, int page) => _pages['$documentId/$page'];
+
+  /// The page from memory, or downloaded. A failed download isn't kept, so
+  /// calling this again retries it.
+  Future<Uint8List> load(String documentId, int page) {
+    final key = '$documentId/$page';
+    final cached = _pages.remove(key);
+    if (cached != null) {
+      _pages[key] = cached; // move to the "newest" end
+      return Future.value(cached);
+    }
+    return _loading[key] ??= _repository
+        .fetchOfficialPage(documentId, page)
+        .then((bytes) {
+          _pages[key] = bytes;
+          if (_pages.length > maxPages) _pages.remove(_pages.keys.first);
+          return bytes;
+        })
+        .whenComplete(() {
+          // A block, not an arrow: returning the removed future here would
+          // make this future wait for itself forever.
+          _loading.remove(key);
+        });
+  }
+}
+
+/// One page cache for the whole app.
+@Riverpod(keepAlive: true)
+OfficialPageCache officialPageCache(Ref ref) =>
+    OfficialPageCache(ref.watch(learnRepositoryProvider));
 
 /// Where the Generate notes sheet is.
 sealed class NoteGenerationState {

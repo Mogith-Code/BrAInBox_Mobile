@@ -68,7 +68,7 @@ class DiagnosticIntroScreen extends ConsumerWidget {
                     ),
                     const SizedBox(height: AppSpacing.md),
                     Text(
-                      'A quick check across all 10 units so your plan starts '
+                      'A quick check across the syllabus so your plan starts '
                       "where you actually are. No pressure — it's not graded.",
                       style: textTheme.bodyLarge?.copyWith(
                         color: context.appMuted,

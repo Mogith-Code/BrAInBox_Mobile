@@ -46,6 +46,14 @@ abstract interface class LearnRepository {
   /// yet (404).
   Future<TopicNote?> fetchNote(String topicId, NoteType type);
 
+  /// `GET /topics/{topicId}/official-notes` - the government books for this
+  /// topic and the page to open first.
+  Future<OfficialNotes> fetchOfficialNotes(String topicId);
+
+  /// `GET /official-notes/{documentId}/pages/{page}` - one JPEG page.
+  /// Pages start at 1.
+  Future<Uint8List> fetchOfficialPage(String documentId, int page);
+
   /// `POST /topics/{topicId}/notes/generate` - returns the job id.
   Future<String> startNoteGeneration(
     String topicId,

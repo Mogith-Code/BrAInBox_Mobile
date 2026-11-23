@@ -39,7 +39,10 @@ Future<FakeProfileOverviewRepository> _pump(
         path: AppRoutes.myProfile,
         builder: (_, _) => const ProfileOverviewScreen(),
       ),
-      for (final path in [AppRoutes.settings, AppRoutes.profileSetup])
+      for (final path in [
+        AppRoutes.settings,
+        AppRoutes.settingsPersonalDetails,
+      ])
         GoRoute(
           path: path,
           builder: (_, s) => Scaffold(body: Text('AT ${s.uri.path}')),
@@ -92,7 +95,10 @@ void main() {
 
     await tester.tap(find.text('Edit profile'));
     await tester.pumpAndSettle();
-    expect(find.text('AT ${AppRoutes.profileSetup}'), findsOneWidget);
+    expect(
+      find.text('AT ${AppRoutes.settingsPersonalDetails}'),
+      findsOneWidget,
+    );
   });
 
   testWidgets('Home shows a new achievement once (F8)', (tester) async {

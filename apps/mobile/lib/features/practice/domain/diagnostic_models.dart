@@ -116,6 +116,11 @@ abstract class DiagnosticResult with _$DiagnosticResult {
     UnitRef? strongest,
     UnitRef? needsWork,
     @Default(<UnitResult>[]) List<UnitResult> units,
+
+    /// Units left out because they have no approved questions yet.
+    @JsonKey(name: 'units_not_checked')
+    @Default(<UnitRef>[])
+    List<UnitRef> unitsNotChecked,
     @Default('') String summary,
     @Default(true) bool summaryAiGenerated,
     @Default('Formative feedback — not an official exam mark.')

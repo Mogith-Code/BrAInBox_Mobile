@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:brainbox_core/brainbox_core.dart';
 
 import 'learn_repository.dart';
@@ -100,6 +103,49 @@ class MockLearnRepository implements LearnRepository {
     await _wait();
     _topic(topicId);
     return _notes[(topicId, type)];
+  }
+
+  /// Unit 1 has one book, Unit 5 has two, and the rest have none yet, so
+  /// every state of the Government notes viewer can be seen.
+  @override
+  Future<OfficialNotes> fetchOfficialNotes(String topicId) async {
+    await _wait();
+    final unitId = _topic(topicId).unitId;
+    final books = switch (unitId) {
+      'unit-1' => const [
+        OfficialBook(
+          documentId: 'book-1',
+          title: 'Unit 1: Introduction To Biology',
+          pageCount: 5,
+        ),
+      ],
+      'unit-5' => const [
+        OfficialBook(
+          documentId: 'book-5a',
+          title: 'Unit 5: Animal Form And Function (Part 1)',
+          pageCount: 3,
+        ),
+        OfficialBook(
+          documentId: 'book-5b',
+          title: 'Unit 5: Animal Form And Function (Part 2)',
+          pageCount: 2,
+        ),
+      ],
+      _ => const <OfficialBook>[],
+    };
+    return OfficialNotes(
+      topicId: topicId,
+      available: books.isNotEmpty,
+      books: books,
+      openDocumentId: books.firstOrNull?.documentId,
+      exactMatch: unitId == 'unit-1',
+    );
+  }
+
+  @override
+  Future<Uint8List> fetchOfficialPage(String documentId, int page) async {
+    await _wait();
+    return _samplePage;
   }
 
   @override
@@ -799,6 +845,12 @@ const mendelianDiagrams = [
     aiGenerated: true,
   ),
 ];
+
+/// A 1x1 white PNG that stands in for a scanned book page.
+final _samplePage = base64Decode(
+  'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/'
+  'PchI7wAAAABJRU5ErkJggg==',
+);
 
 const _uploadSummary =
     'These tuition notes cover Mendel\'s two laws. The law of segregation '
