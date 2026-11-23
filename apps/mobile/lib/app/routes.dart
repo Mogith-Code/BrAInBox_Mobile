@@ -6,11 +6,8 @@
 /// context.push(AppRoutes.unitDetailPath(unit.id));
 /// ```
 /// When you add a screen: add its path here, register it in `router.dart`,
-/// and add it to [catalog] so it shows up in the dev menu.
+/// and add it to [catalog] so the router test opens it.
 abstract final class AppRoutes {
-  /// DEBUG ONLY: list of every screen (see `dev_menu_screen.dart`).
-  static const devMenu = '/dev';
-
   // Splash (Mogith)
   static const splash = '/';
 
@@ -228,7 +225,7 @@ abstract final class AppRoutes {
     diagnosticResult,
   };
 
-  /// Every screen with a sample path. Used by the dev menu and router test.
+  /// Every screen with a sample path. Used by the router test.
   static final List<({String title, String owner, String path})> catalog = [
     (title: 'Splash', owner: 'Mogith', path: splash),
     (title: 'Onboarding', owner: 'Mogith', path: onboarding),

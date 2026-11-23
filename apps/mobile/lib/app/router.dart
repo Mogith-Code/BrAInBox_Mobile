@@ -60,7 +60,6 @@ import '../features/visuals/presentation/diagram_gallery_screen.dart';
 import '../features/visuals/presentation/diagram_viewer_screen.dart';
 import '../features/visuals/presentation/generate_visual_screen.dart';
 import '../features/visuals/presentation/my_visuals_screen.dart';
-import 'dev_menu_screen.dart';
 import 'routes.dart';
 import 'shell_scaffold.dart';
 
@@ -270,13 +269,6 @@ GoRouter router(Ref ref) {
         path: AppRoutes.notifications,
         builder: (context, state) => const NotificationsScreen(),
       ),
-      // DEBUG ONLY: the dev menu doesn't exist in release builds (the route
-      // isn't registered, so /dev shows "page not found").
-      if (kDebugMode)
-        GoRoute(
-          path: AppRoutes.devMenu,
-          builder: (context, state) => const DevMenuScreen(),
-        ),
 
       // Bottom navigation: Home, Learn, Practice, Insights, Community,
       // Settings.

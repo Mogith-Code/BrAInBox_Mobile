@@ -43,7 +43,6 @@ Future<void> _pump(WidgetTester tester, ProviderContainer c) async {
         AppRoutes.diagnostic,
         AppRoutes.learn,
         AppRoutes.topic,
-        AppRoutes.devMenu,
         AppRoutes.nextSteps,
         AppRoutes.studyPlan,
         AppRoutes.quizSetup,

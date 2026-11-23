@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:brainbox_core/brainbox_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -56,14 +55,6 @@ class HomeScreen extends ConsumerWidget {
           _ => const HomeSkeleton(),
         },
       ),
-      // DEBUG ONLY: jump to any screen while features are being built.
-      floatingActionButton: kDebugMode
-          ? FloatingActionButton.small(
-              tooltip: 'Dev menu',
-              onPressed: () => context.push(AppRoutes.devMenu),
-              child: const Icon(Icons.developer_mode),
-            )
-          : null,
     );
   }
 }
