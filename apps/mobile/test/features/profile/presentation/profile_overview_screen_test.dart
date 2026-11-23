@@ -95,7 +95,10 @@ void main() {
 
     await tester.tap(find.text('Edit profile'));
     await tester.pumpAndSettle();
-    expect(find.text('AT ${AppRoutes.settingsPersonalDetails}'), findsOneWidget);
+    expect(
+      find.text('AT ${AppRoutes.settingsPersonalDetails}'),
+      findsOneWidget,
+    );
   });
 
   testWidgets('Home shows a new achievement once (F8)', (tester) async {
