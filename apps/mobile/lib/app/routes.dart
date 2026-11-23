@@ -33,8 +33,7 @@ abstract final class AppRoutes {
   static String profileEditPath([String section = 'all']) =>
       _withQuery(profileSetup, {'edit': section});
 
-  /// My profile: stats, achievements and goal (Figma F1), full screen
-  /// (opened from the avatar on Home).
+  /// Old path, kept as a redirect to [settingsProfile].
   static const myProfile = '/profile';
 
   // Home (Samni)
@@ -198,7 +197,8 @@ abstract final class AppRoutes {
   static const settings = '/settings';
   static const privacy = '/settings/privacy';
 
-  /// My profile inside the Settings tab (same screen as [myProfile]).
+  /// My profile: stats, achievements and goal (Figma F1), inside the
+  /// Settings tab. The avatar on Home opens it too.
   static const settingsProfile = '/settings/profile';
 
   /// Profile setup in edit mode inside the Settings tab.
@@ -236,7 +236,6 @@ abstract final class AppRoutes {
     (title: 'Check your inbox (reset)', owner: 'Mogith', path: resetCode),
     (title: 'Set a new password', owner: 'Mogith', path: newPassword),
     (title: 'Profile setup', owner: 'Mogith', path: profileSetup),
-    (title: 'My profile', owner: 'Mogith', path: myProfile),
     (title: 'Edit profile', owner: 'Mogith', path: profileSetup),
     (title: 'Home', owner: 'Samni', path: home),
     (title: 'Learn', owner: 'Keshomigha', path: learn),

@@ -80,13 +80,8 @@ class NextStepsScreen extends ConsumerWidget {
                           target: step.target,
                           topicId: step.topicId,
                           conceptId: step.conceptId,
-                          recommendationId:
-                              step.action == 'practice_quiz' ||
-                                  step.action == 'reassess'
-                              ? step.id
-                              : null,
                         );
-                        ref.invalidate(nextStepsProvider);
+                        if (context.mounted) ref.invalidate(nextStepsProvider);
                       },
                       onDismiss: () => _dismiss(ref, step),
                     );

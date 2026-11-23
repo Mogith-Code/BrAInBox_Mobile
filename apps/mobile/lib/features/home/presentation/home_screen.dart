@@ -113,7 +113,9 @@ class _Dashboard extends ConsumerWidget {
           HomeHeader(
             summary: summary,
             now: now,
-            onAvatarTap: () => context.push(AppRoutes.myProfile),
+            // `go`, not `push`: Profile lives in the Settings tab, and pushing
+            // it could put the tab shell on the stack twice.
+            onAvatarTap: () => context.go(AppRoutes.settingsProfile),
           ),
           const SizedBox(height: AppSpacing.lg),
           if (action != null) ...[

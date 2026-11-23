@@ -39,7 +39,7 @@ Future<void> _pump(WidgetTester tester, ProviderContainer c) async {
       ),
       for (final path in [
         AppRoutes.settings,
-        AppRoutes.myProfile,
+        AppRoutes.settingsProfile,
         AppRoutes.diagnostic,
         AppRoutes.learn,
         AppRoutes.topic,
@@ -192,7 +192,7 @@ void main() {
       // The avatar opens the Profile.
       await tester.tap(find.text('NP'));
       await tester.pumpAndSettle();
-      expect(find.text('AT ${AppRoutes.myProfile}'), findsOneWidget);
+      expect(find.text('AT ${AppRoutes.settingsProfile}'), findsOneWidget);
     });
 
     // One pump per test: re-pumping a new container leaves Riverpod

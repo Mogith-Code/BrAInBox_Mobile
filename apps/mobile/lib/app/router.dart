@@ -130,9 +130,10 @@ GoRouter router(Ref ref) {
           edit: ProfileEditSection.parse(state.uri.queryParameters['edit']),
         ),
       ),
+      // Old profile link: Profile now lives in the Settings tab.
       GoRoute(
         path: AppRoutes.myProfile,
-        builder: (context, state) => const ProfileOverviewScreen(),
+        redirect: (context, state) => AppRoutes.settingsProfile,
       ),
       GoRoute(
         path: AppRoutes.topicNotes,
