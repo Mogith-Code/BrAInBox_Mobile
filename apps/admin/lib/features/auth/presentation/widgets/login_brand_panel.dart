@@ -1,29 +1,49 @@
 import 'package:brainbox_core/brainbox_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../widgets/admin_logo.dart';
+import '../../data/console_stats_repository.dart';
 
 /// The gradient panel on the left of the login page (wide screens only):
 /// logo, headline, three stat tiles and the access notice.
-class LoginBrandPanel extends StatelessWidget {
+class LoginBrandPanel extends ConsumerWidget {
   const LoginBrandPanel({super.key});
 
-  /// The stat tiles under the headline.
-  ///
-  // TODO(mogith): the Figma mock shows sample figures (14, 2,418, 96.2%).
-  // Show real numbers here only once an endpoint provides them; until then
-  // the tiles show a dash so nobody mistakes mock figures for live data.
-  static const List<({String value, String label})> stats = [
-    (value: '—', label: 'AI items to review'),
-    (value: '—', label: 'active students'),
-    (value: '—', label: 'eval. accuracy'),
-  ];
+  /// Shown while loading, on any error, and for a value that doesn't exist.
+  static const String _noValue = '—';
 
   static const Color _textOnDark = AppColors.taglineOnDark;
 
+  /// The stat tiles under the headline. [stats] is null until they load, or
+  /// if loading failed, so a failure never gets in the way of signing in.
+  static List<({String value, String label})> _tiles(ConsoleStats? stats) {
+    final accuracy = stats?.evalAccuracyPercent;
+    return [
+      (
+        value: stats == null
+            ? _noValue
+            : Formatters.thousands(stats.aiItemsToReview),
+        label: 'AI items to review',
+      ),
+      (
+        value: stats == null ? _noValue : Formatters.thousands(stats.students),
+        label: 'students',
+      ),
+      (
+        // 96.25 -> "96.3%", 96.0 -> "96%".
+        value: accuracy == null
+            ? _noValue
+            : '${accuracy.toStringAsFixed(1).replaceAll('.0', '')}%',
+        label: 'eval. accuracy',
+      ),
+    ];
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final textTheme = Theme.of(context).textTheme;
+    final stats = ref.watch(consoleStatsProvider).value;
     return DecoratedBox(
       decoration: const BoxDecoration(gradient: AppColors.brandGradient),
       child: Stack(
@@ -66,8 +86,8 @@ class LoginBrandPanel extends StatelessWidget {
                   spacing: AppSpacing.sm,
                   runSpacing: AppSpacing.sm,
                   children: [
-                    for (final stat in stats)
-                      _StatTile(value: stat.value, label: stat.label),
+                    for (final tile in _tiles(stats))
+                      _StatTile(value: tile.value, label: tile.label),
                   ],
                 ),
                 const Spacer(),
