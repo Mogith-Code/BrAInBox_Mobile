@@ -6,20 +6,71 @@ import '../../syllabus/data/learn_repository.dart';
 import '../../syllabus/presentation/widgets/learn_widgets.dart';
 import '../application/notes_controller.dart';
 import 'generate_notes_sheet.dart';
+import 'official_notes_view.dart';
 import 'widgets/note_blocks.dart';
 
-/// The Notes tab (full notes) of the Topic screen.
+/// The two kinds of notes in the Notes tab.
+enum _NotesSource { government, ai }
+
+/// The Notes tab of the Topic screen: **Government notes** (the real book
+/// pages, shown first) or **AI notes**.
 ///
-/// Tracks reading: when the student scrolls to the end (or leaves the tab)
-/// it sends `POST /progress {event: read, seconds, completed}`.
-class NotesTab extends StatelessWidget {
+/// Both track reading: when the student reaches the end (or leaves the tab)
+/// they send `POST /progress {event: read, seconds, completed}`.
+class NotesTab extends StatefulWidget {
   const NotesTab({super.key, required this.detail});
 
   final TopicDetail detail;
 
   @override
-  Widget build(BuildContext context) =>
-      _NoteTabBody(detail: detail, type: NoteType.full, trackReading: true);
+  State<NotesTab> createState() => _NotesTabState();
+}
+
+class _NotesTabState extends State<NotesTab> {
+  _NotesSource _source = _NotesSource.government;
+
+  void _select(_NotesSource source) {
+    // The book viewer is about to close: free the tab swipe if it was zoomed.
+    const NotesZoomNotification(active: false).dispatch(context);
+    setState(() => _source = source);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(AppSpacing.md),
+          child: SegmentedButton<_NotesSource>(
+            showSelectedIcon: false,
+            segments: const [
+              ButtonSegment(
+                value: _NotesSource.government,
+                label: Text('Government notes'),
+              ),
+              ButtonSegment(value: _NotesSource.ai, label: Text('AI notes')),
+            ],
+            selected: {_source},
+            onSelectionChanged: (selection) => _select(selection.first),
+          ),
+        ),
+        Expanded(
+          child: switch (_source) {
+            _NotesSource.government => OfficialNotesView(
+              detail: widget.detail,
+              onOpenAiNotes: () => _select(_NotesSource.ai),
+            ),
+            _NotesSource.ai => _NoteTabBody(
+              detail: widget.detail,
+              type: NoteType.full,
+              trackReading: true,
+            ),
+          },
+        ),
+      ],
+    );
+  }
 }
 
 /// The Short Notes tab: bullet-point revision summary.
