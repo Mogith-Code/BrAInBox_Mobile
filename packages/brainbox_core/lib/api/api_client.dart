@@ -20,6 +20,7 @@ class ApiClient {
     Dio? dio,
     IdTokenGetter? getIdToken,
     void Function(bool online)? onNetworkStatus,
+    List<Interceptor> leadingInterceptors = const [],
   }) : dio =
            dio ??
            Dio(
@@ -31,6 +32,9 @@ class ApiClient {
                headers: {'Accept': 'application/json'},
              ),
            ) {
+    // Run before auth and the network, so a request they answer themselves
+    // (the student app's demo mode) sends no token and opens no connection.
+    this.dio.interceptors.addAll(leadingInterceptors);
     this.dio.interceptors.add(
       AuthInterceptor(dio: this.dio, getIdToken: getIdToken),
     );
