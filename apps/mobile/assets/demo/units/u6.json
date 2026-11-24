@@ -1,0 +1,1104 @@
+{
+ "schema_version": 1,
+ "unit": 6,
+ "notes": [
+  {
+   "id": "demo-note-u6-1",
+   "topic_code": "bio-6.1",
+   "full": [
+    {
+     "type": "heading",
+     "text": "Mendelian inheritance",
+     "level": 2
+    },
+    {
+     "type": "paragraph",
+     "text": "Gregor Mendel studied inheritance in garden peas and found that characters are controlled by inherited factors, now called genes.",
+     "highlights": [
+      "genes"
+     ]
+    },
+    {
+     "type": "definition",
+     "term": "Allele",
+     "text": "One of two or more alternative forms of a gene found at the same locus on homologous chromosomes."
+    },
+    {
+     "type": "definition",
+     "term": "Genotype",
+     "text": "The alleles an organism has, for example Tt."
+    },
+    {
+     "type": "definition",
+     "term": "Phenotype",
+     "text": "The observable characteristic, resulting from the genotype and the environment."
+    },
+    {
+     "type": "heading",
+     "text": "Mendel's laws",
+     "level": 3
+    },
+    {
+     "type": "bullet_list",
+     "items": [
+      "Law of segregation: the two alleles of a gene separate during gamete formation, so each gamete carries one allele",
+      "Law of independent assortment: alleles of different genes on different chromosomes assort independently"
+     ]
+    },
+    {
+     "type": "paragraph",
+     "text": "A dominant allele is expressed in the heterozygote; a recessive allele is expressed only when homozygous.",
+     "highlights": [
+      "dominant",
+      "recessive"
+     ]
+    },
+    {
+     "type": "tip",
+     "title": "Past-paper tip",
+     "text": "Always show the parental genotypes, the gametes and a Punnett square, then state the phenotypic ratio."
+    }
+   ],
+   "short": [
+    {
+     "type": "bullet_list",
+     "items": [
+      "Gene: unit of inheritance; allele: alternative form",
+      "Genotype (Tt) vs phenotype (tall)",
+      "Homozygous TT/tt; heterozygous Tt",
+      "Segregation: one allele per gamete",
+      "Independent assortment for unlinked genes",
+      "Monohybrid F2 ratio 3:1"
+     ]
+    }
+   ],
+   "read_minutes": 7,
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-note-u6-2",
+   "topic_code": "bio-6.4",
+   "full": [
+    {
+     "type": "heading",
+     "text": "Incomplete dominance and codominance",
+     "level": 2
+    },
+    {
+     "type": "definition",
+     "term": "Incomplete dominance",
+     "text": "Neither allele is fully dominant, so the heterozygote has an intermediate phenotype."
+    },
+    {
+     "type": "paragraph",
+     "text": "Example: in snapdragons, red (RR) x white (WW) gives pink (RW). The F2 ratio is 1 red : 2 pink : 1 white.",
+     "highlights": []
+    },
+    {
+     "type": "definition",
+     "term": "Codominance",
+     "text": "Both alleles are fully expressed in the heterozygote."
+    },
+    {
+     "type": "paragraph",
+     "text": "Example: in the ABO blood groups, alleles IA and IB are codominant, so a person with IAIB has blood group AB. Roan coat colour in cattle is another example.",
+     "highlights": []
+    },
+    {
+     "type": "tip",
+     "title": "Past-paper tip",
+     "text": "In both cases the phenotypic ratio equals the genotypic ratio, 1:2:1, because each genotype has its own phenotype."
+    }
+   ],
+   "short": [
+    {
+     "type": "bullet_list",
+     "items": [
+      "Incomplete dominance: blended intermediate (pink snapdragon)",
+      "Codominance: both expressed (blood group AB, roan cattle)",
+      "F2 ratio 1:2:1 for both",
+      "Phenotypic ratio = genotypic ratio"
+     ]
+    }
+   ],
+   "read_minutes": 5,
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-note-u6-3",
+   "topic_code": "bio-6.6",
+   "full": [
+    {
+     "type": "heading",
+     "text": "Sex linkage",
+     "level": 2
+    },
+    {
+     "type": "paragraph",
+     "text": "In humans females are XX and males are XY. Genes carried on the X chromosome but not on the Y are sex-linked.",
+     "highlights": [
+      "sex-linked"
+     ]
+    },
+    {
+     "type": "paragraph",
+     "text": "Males have only one X, so a single recessive X-linked allele is expressed. Females need two copies, so heterozygous females are carriers.",
+     "highlights": [
+      "carriers"
+     ]
+    },
+    {
+     "type": "bullet_list",
+     "items": [
+      "Examples: red-green colour blindness and haemophilia",
+      "A carrier mother (XHXh) and a normal father (XHY): half of the sons are expected to be affected",
+      "An affected father passes the allele to all his daughters but none of his sons"
+     ]
+    },
+    {
+     "type": "definition",
+     "term": "Carrier",
+     "text": "A heterozygous individual who has a recessive allele but does not show the condition."
+    },
+    {
+     "type": "tip",
+     "title": "Past-paper tip",
+     "text": "Write sex-linked genotypes with the allele as a superscript on the X, for example XhY."
+    }
+   ],
+   "short": [
+    {
+     "type": "bullet_list",
+     "items": [
+      "Sex-linked genes on X chromosome",
+      "Males XY: one recessive allele is expressed",
+      "Females XX: heterozygotes are carriers",
+      "Examples: haemophilia, colour blindness",
+      "Father to son transmission does not occur"
+     ]
+    }
+   ],
+   "read_minutes": 6,
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "mcqs": [
+  {
+   "id": "demo-mcq-u6-01",
+   "topic_code": "bio-6.1",
+   "stem": "Alternative forms of the same gene are called",
+   "options": [
+    "chromatids",
+    "alleles",
+    "loci",
+    "genomes",
+    "codons"
+   ],
+   "answer": 1,
+   "explanation": "Alleles are different forms of a gene at one locus.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u6-02",
+   "topic_code": "bio-6.1",
+   "stem": "An organism with genotype Tt is",
+   "options": [
+    "homozygous dominant",
+    "homozygous recessive",
+    "heterozygous",
+    "haploid",
+    "polyploid"
+   ],
+   "answer": 2,
+   "explanation": "It has two different alleles.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u6-03",
+   "topic_code": "bio-6.1",
+   "stem": "Mendel's law of segregation states that",
+   "options": [
+    "genes are linked",
+    "the two alleles of a gene separate into different gametes",
+    "dominant alleles are always common",
+    "mutations are random",
+    "chromosomes cross over"
+   ],
+   "answer": 1,
+   "explanation": "Each gamete receives one allele of each gene.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u6-04",
+   "topic_code": "bio-6.1",
+   "stem": "The observable characteristic of an organism is its",
+   "options": [
+    "genotype",
+    "phenotype",
+    "allele",
+    "karyotype",
+    "genome"
+   ],
+   "answer": 1,
+   "explanation": "Phenotype is the visible or measurable trait.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u6-05",
+   "topic_code": "bio-6.2",
+   "stem": "The F2 phenotypic ratio of a monohybrid cross with complete dominance is",
+   "options": [
+    "1:1",
+    "1:2:1",
+    "3:1",
+    "9:3:3:1",
+    "2:1"
+   ],
+   "answer": 2,
+   "explanation": "Tt x Tt gives 3 dominant : 1 recessive.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u6-06",
+   "topic_code": "bio-6.2",
+   "stem": "The F2 phenotypic ratio of a dihybrid cross of two unlinked genes is",
+   "options": [
+    "3:1",
+    "1:1:1:1",
+    "9:3:3:1",
+    "1:2:1",
+    "12:3:1"
+   ],
+   "answer": 2,
+   "explanation": "Independent assortment gives 9:3:3:1.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u6-07",
+   "topic_code": "bio-6.2",
+   "stem": "How many types of gamete can an organism of genotype AaBb (unlinked) make?",
+   "options": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "8"
+   ],
+   "answer": 3,
+   "explanation": "AB, Ab, aB and ab.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u6-08",
+   "topic_code": "bio-6.3",
+   "stem": "A test cross is a cross between an individual of unknown genotype and",
+   "options": [
+    "a homozygous dominant individual",
+    "a heterozygous individual",
+    "a homozygous recessive individual",
+    "its parent",
+    "an F1 hybrid"
+   ],
+   "answer": 2,
+   "explanation": "The homozygous recessive reveals the unknown alleles.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u6-09",
+   "topic_code": "bio-6.3",
+   "stem": "A test cross giving 1:1 offspring shows that the unknown parent is",
+   "options": [
+    "homozygous dominant",
+    "heterozygous",
+    "homozygous recessive",
+    "polyploid",
+    "sex-linked"
+   ],
+   "answer": 1,
+   "explanation": "Tt x tt gives 1 Tt : 1 tt.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u6-10",
+   "topic_code": "bio-6.4",
+   "stem": "Red x white snapdragons give pink offspring. This shows",
+   "options": [
+    "complete dominance",
+    "incomplete dominance",
+    "codominance",
+    "sex linkage",
+    "epistasis"
+   ],
+   "answer": 1,
+   "explanation": "The heterozygote is intermediate.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u6-11",
+   "topic_code": "bio-6.4",
+   "stem": "Blood group AB is an example of",
+   "options": [
+    "incomplete dominance",
+    "codominance",
+    "recessive inheritance",
+    "polygenic inheritance",
+    "linkage"
+   ],
+   "answer": 1,
+   "explanation": "IA and IB are both expressed.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u6-12",
+   "topic_code": "bio-6.4",
+   "stem": "The F2 ratio when F1 pink snapdragons are crossed is",
+   "options": [
+    "3:1",
+    "1:2:1",
+    "9:3:3:1",
+    "1:1",
+    "all pink"
+   ],
+   "answer": 1,
+   "explanation": "1 red : 2 pink : 1 white.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u6-13",
+   "topic_code": "bio-6.5",
+   "stem": "How many alleles control the ABO blood group system?",
+   "options": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "6"
+   ],
+   "answer": 2,
+   "explanation": "IA, IB and i.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u6-14",
+   "topic_code": "bio-6.5",
+   "stem": "A person with genotype IAi has blood group",
+   "options": [
+    "A",
+    "B",
+    "AB",
+    "O",
+    "Rh negative"
+   ],
+   "answer": 0,
+   "explanation": "IA is dominant over i.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u6-15",
+   "topic_code": "bio-6.5",
+   "stem": "Parents with blood groups A (IAi) and B (IBi) can have children of",
+   "options": [
+    "only A or B",
+    "only AB",
+    "A, B, AB or O",
+    "only O",
+    "only A, B or AB"
+   ],
+   "answer": 2,
+   "explanation": "All four genotypes are possible.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u6-16",
+   "topic_code": "bio-6.6",
+   "stem": "Haemophilia is more common in males because",
+   "options": [
+    "it is dominant",
+    "males have only one X chromosome",
+    "it is on the Y chromosome",
+    "males have two X chromosomes",
+    "it is autosomal"
+   ],
+   "answer": 1,
+   "explanation": "One recessive X-linked allele is enough in males.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u6-17",
+   "topic_code": "bio-6.6",
+   "stem": "A carrier female for colour blindness has genotype",
+   "options": [
+    "XCXC",
+    "XCXc",
+    "XcXc",
+    "XCY",
+    "XcY"
+   ],
+   "answer": 1,
+   "explanation": "She is heterozygous.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u6-18",
+   "topic_code": "bio-6.6",
+   "stem": "A colour-blind man and a homozygous normal woman will have",
+   "options": [
+    "all sons colour blind",
+    "all daughters carriers",
+    "all daughters colour blind",
+    "half sons colour blind",
+    "no carriers"
+   ],
+   "answer": 1,
+   "explanation": "Every daughter receives his Xc.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u6-19",
+   "topic_code": "bio-6.7",
+   "stem": "In a pedigree chart a shaded square represents",
+   "options": [
+    "an unaffected female",
+    "an affected male",
+    "a carrier female",
+    "an unaffected male",
+    "a twin"
+   ],
+   "answer": 1,
+   "explanation": "Squares are males; shading shows the trait.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u6-20",
+   "topic_code": "bio-6.7",
+   "stem": "Two unaffected parents with an affected child suggest the trait is",
+   "options": [
+    "dominant",
+    "recessive",
+    "Y-linked",
+    "codominant",
+    "polygenic"
+   ],
+   "answer": 1,
+   "explanation": "Both parents must be carriers of a recessive allele.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u6-21",
+   "topic_code": "bio-6.8",
+   "stem": "Down syndrome is caused by",
+   "options": [
+    "trisomy 21",
+    "monosomy X",
+    "a point mutation",
+    "deletion of chromosome 5",
+    "XXY"
+   ],
+   "answer": 0,
+   "explanation": "Three copies of chromosome 21.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u6-22",
+   "topic_code": "bio-6.8",
+   "stem": "Failure of chromosomes to separate during meiosis is called",
+   "options": [
+    "crossing over",
+    "non-disjunction",
+    "translocation",
+    "inversion",
+    "duplication"
+   ],
+   "answer": 1,
+   "explanation": "Non-disjunction gives gametes with extra or missing chromosomes.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u6-23",
+   "topic_code": "bio-6.8",
+   "stem": "Turner syndrome has the karyotype",
+   "options": [
+    "47, XXY",
+    "45, X",
+    "47, XYY",
+    "47, +21",
+    "46, XX"
+   ],
+   "answer": 1,
+   "explanation": "Only one X chromosome.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u6-24",
+   "topic_code": "bio-6.9",
+   "stem": "Human height and skin colour show continuous variation because they are",
+   "options": [
+    "controlled by one gene",
+    "polygenic",
+    "sex-linked",
+    "codominant",
+    "caused by one mutation"
+   ],
+   "answer": 1,
+   "explanation": "Many genes plus the environment give a range.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u6-25",
+   "topic_code": "bio-6.9",
+   "stem": "A graph of a polygenic character in a population usually shows",
+   "options": [
+    "two separate bars",
+    "a normal (bell-shaped) distribution",
+    "a 3:1 ratio",
+    "no variation",
+    "only two phenotypes"
+   ],
+   "answer": 1,
+   "explanation": "Continuous variation gives a bell curve.",
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "written": [
+  {
+   "id": "demo-s-u6-1",
+   "topic_code": "bio-6.1",
+   "type": "structured",
+   "stem": "State Mendel's law of segregation and explain it using a monohybrid cross.",
+   "marks": 4,
+   "model_answer": "The two alleles of a gene separate during gamete formation so each gamete has one allele. Tt x Tt gives gametes T and t from each parent; the offspring are 1 TT : 2 Tt : 1 tt, a 3 tall : 1 dwarf phenotypic ratio.",
+   "points": [
+    {
+     "text": "Alleles separate into gametes",
+     "marks": 1,
+     "keywords": [
+      "allele",
+      "separate",
+      "gamete"
+     ]
+    },
+    {
+     "text": "Each gamete has one allele",
+     "marks": 1,
+     "keywords": [
+      "one allele"
+     ]
+    },
+    {
+     "text": "Correct cross / Punnett square Tt x Tt",
+     "marks": 1,
+     "keywords": [
+      "tt",
+      "punnett"
+     ]
+    },
+    {
+     "text": "Ratio 3:1",
+     "marks": 1,
+     "keywords": [
+      "3 1"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-s-u6-2",
+   "topic_code": "bio-6.4",
+   "type": "structured",
+   "stem": "Distinguish between incomplete dominance and codominance with an example of each.",
+   "marks": 4,
+   "model_answer": "In incomplete dominance the heterozygote is intermediate, for example pink snapdragons from red and white. In codominance both alleles are fully expressed, for example blood group AB (IAIB).",
+   "points": [
+    {
+     "text": "Incomplete dominance: intermediate phenotype",
+     "marks": 1,
+     "keywords": [
+      "intermediate"
+     ]
+    },
+    {
+     "text": "Example: pink snapdragon",
+     "marks": 1,
+     "keywords": [
+      "pink",
+      "snapdragon"
+     ]
+    },
+    {
+     "text": "Codominance: both alleles expressed",
+     "marks": 1,
+     "keywords": [
+      "both",
+      "expressed"
+     ]
+    },
+    {
+     "text": "Example: blood group AB / roan",
+     "marks": 1,
+     "keywords": [
+      "ab",
+      "roan"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-s-u6-3",
+   "topic_code": "bio-6.6",
+   "type": "structured",
+   "stem": "Explain why haemophilia is more common in males than in females.",
+   "marks": 4,
+   "model_answer": "Haemophilia is caused by a recessive allele on the X chromosome. Males have one X and a Y, which has no matching allele, so one recessive allele causes the condition. Females need two recessive alleles; with one they are carriers.",
+   "points": [
+    {
+     "text": "Recessive allele on X chromosome",
+     "marks": 1,
+     "keywords": [
+      "recessive",
+      "x chromosome"
+     ]
+    },
+    {
+     "text": "Males have only one X / Y has no allele",
+     "marks": 1,
+     "keywords": [
+      "one x",
+      "y"
+     ]
+    },
+    {
+     "text": "One allele expressed in males",
+     "marks": 1,
+     "keywords": [
+      "male",
+      "express"
+     ]
+    },
+    {
+     "text": "Females need two alleles; heterozygotes are carriers",
+     "marks": 1,
+     "keywords": [
+      "carrier",
+      "female"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-s-u6-4",
+   "topic_code": "bio-6.3",
+   "type": "structured",
+   "stem": "What is a test cross? Explain how it shows the genotype of a tall pea plant.",
+   "marks": 4,
+   "model_answer": "A test cross crosses an individual showing the dominant phenotype with a homozygous recessive individual. If all offspring are tall the plant is TT; if half are tall and half dwarf the plant is Tt.",
+   "points": [
+    {
+     "text": "Cross with homozygous recessive",
+     "marks": 1,
+     "keywords": [
+      "homozygous recessive"
+     ]
+    },
+    {
+     "text": "Unknown has dominant phenotype",
+     "marks": 1,
+     "keywords": [
+      "dominant"
+     ]
+    },
+    {
+     "text": "All tall means TT",
+     "marks": 1,
+     "keywords": [
+      "all",
+      "homozygous"
+     ]
+    },
+    {
+     "text": "1:1 means Tt / heterozygous",
+     "marks": 1,
+     "keywords": [
+      "heterozygous",
+      "half"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-e-u6-5",
+   "topic_code": "bio-6.2",
+   "type": "essay",
+   "stem": "Explain a dihybrid cross in peas and how it supports the law of independent assortment.",
+   "marks": 10,
+   "model_answer": "Round yellow (RRYY) is crossed with wrinkled green (rryy); the F1 are all RrYy round yellow. The F1 produce four kinds of gametes, RY, Ry, rY and ry, in equal numbers because the two genes assort independently. Selfing gives a 16-square Punnett square and an F2 ratio of 9 round yellow : 3 round green : 3 wrinkled yellow : 1 wrinkled green. New combinations appear, showing that alleles of different genes assort independently.",
+   "points": [
+    {
+     "text": "Parental genotypes and F1 RrYy",
+     "marks": 2,
+     "keywords": [
+      "rryy",
+      "f1"
+     ]
+    },
+    {
+     "text": "Four gamete types in equal numbers",
+     "marks": 2,
+     "keywords": [
+      "four",
+      "gamete"
+     ]
+    },
+    {
+     "text": "Punnett square / F2",
+     "marks": 2,
+     "keywords": [
+      "punnett",
+      "f2"
+     ]
+    },
+    {
+     "text": "Ratio 9:3:3:1",
+     "marks": 2,
+     "keywords": [
+      "9 3 3 1"
+     ]
+    },
+    {
+     "text": "Independent assortment explained",
+     "marks": 2,
+     "keywords": [
+      "independent",
+      "assortment"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-e-u6-6",
+   "topic_code": "bio-6.8",
+   "type": "essay",
+   "stem": "Describe how chromosomal mutations arise and give examples of their effects in humans.",
+   "marks": 10,
+   "model_answer": "Changes in chromosome structure include deletion, duplication, inversion and translocation, often from errors in crossing over. Changes in number arise by non-disjunction, when chromosomes fail to separate in meiosis, giving gametes with an extra or missing chromosome. Examples are Down syndrome (trisomy 21), Turner syndrome (45, X) and Klinefelter syndrome (47, XXY).",
+   "points": [
+    {
+     "text": "Structural changes: deletion, duplication, inversion, translocation",
+     "marks": 3,
+     "keywords": [
+      "deletion",
+      "duplication",
+      "inversion",
+      "translocation"
+     ]
+    },
+    {
+     "text": "Non-disjunction in meiosis",
+     "marks": 3,
+     "keywords": [
+      "non disjunction",
+      "meiosis"
+     ]
+    },
+    {
+     "text": "Down syndrome / trisomy 21",
+     "marks": 2,
+     "keywords": [
+      "down",
+      "trisomy"
+     ]
+    },
+    {
+     "text": "Turner or Klinefelter",
+     "marks": 2,
+     "keywords": [
+      "turner",
+      "klinefelter"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "ask": [
+  {
+   "id": "demo-ask-u6-1",
+   "topic_code": "bio-6.1",
+   "question": "What is the difference between genotype and phenotype?",
+   "aliases": [
+    "genotype vs phenotype"
+   ],
+   "keywords": [
+    "genotype",
+    "phenotype",
+    "allele"
+   ],
+   "answer": "The genotype is the set of alleles an organism has for a character, for example Tt. The phenotype is the observable characteristic, for example tall, which results from the genotype and the environment.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 6.1: Mendelian inheritance"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u6-2",
+   "topic_code": "bio-6.2",
+   "question": "What is the F2 ratio of a dihybrid cross?",
+   "aliases": [
+    "dihybrid ratio",
+    "9 3 3 1"
+   ],
+   "keywords": [
+    "dihybrid",
+    "ratio",
+    "cross"
+   ],
+   "answer": "For two unlinked genes with complete dominance, crossing two double heterozygotes (AaBb x AaBb) gives an F2 phenotypic ratio of 9:3:3:1.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 6.2: Monohybrid & dihybrid crosses"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u6-3",
+   "topic_code": "bio-6.4",
+   "question": "What is codominance?",
+   "aliases": [
+    "define codominance"
+   ],
+   "keywords": [
+    "codominance",
+    "blood group",
+    "allele"
+   ],
+   "answer": "In codominance both alleles are fully expressed in the heterozygote. For example, a person with alleles IA and IB has blood group AB.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 6.4: Incomplete dominance & codominance"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u6-4",
+   "topic_code": "bio-6.6",
+   "question": "Why is colour blindness more common in boys?",
+   "aliases": [
+    "sex linked inheritance",
+    "colour blindness"
+   ],
+   "keywords": [
+    "sex linked",
+    "colour blindness",
+    "x chromosome"
+   ],
+   "answer": "Red-green colour blindness is caused by a recessive allele on the X chromosome. Boys have only one X, so one recessive allele is enough. Girls need two, and heterozygous girls are carriers.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 6.6: Sex linkage"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u6-5",
+   "topic_code": "bio-6.3",
+   "question": "What is a test cross used for?",
+   "aliases": [
+    "test cross"
+   ],
+   "keywords": [
+    "test cross",
+    "homozygous recessive"
+   ],
+   "answer": "A test cross finds the genotype of an individual with a dominant phenotype. It is crossed with a homozygous recessive. All dominant offspring means it is homozygous; a 1:1 ratio means it is heterozygous.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 6.3: Test cross & back cross"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "uploads": [
+  {
+   "id": "demo-upload-u6-1",
+   "topic_code": "bio-6.1",
+   "title": "Mendelian genetics",
+   "aliases": [
+    "genetics notes",
+    "inheritance notes"
+   ],
+   "keywords": [
+    "genetics",
+    "mendel",
+    "inheritance",
+    "allele",
+    "cross"
+   ],
+   "summary": "These notes explain Mendel's experiments with peas, the meaning of genes, alleles, genotype and phenotype, and how to solve monohybrid and dihybrid crosses.",
+   "key_points": [
+    "Law of segregation: one allele per gamete",
+    "Monohybrid F2 ratio 3:1",
+    "Dihybrid F2 ratio 9:3:3:1",
+    "A test cross reveals an unknown genotype"
+   ],
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "visuals": [
+  {
+   "id": "demo-visual-u6-1",
+   "topic_code": "bio-6.2",
+   "title": "Monohybrid cross Tt x Tt",
+   "aliases": [
+    "monohybrid cross",
+    "punnett square"
+   ],
+   "keywords": [
+    "monohybrid",
+    "punnett",
+    "cross",
+    "allele",
+    "mendel"
+   ],
+   "kind": "table",
+   "alt_text": "Punnett square outcomes of Tt x Tt.",
+   "image": "assets/demo/visuals/u6_monohybrid.png",
+   "width": 1000,
+   "height": 750,
+   "style": "flat_colour",
+   "labels": [
+    {
+     "number": 1,
+     "name": "TT (1/4) / Tall",
+     "description": "",
+     "x": null,
+     "y": null
+    },
+    {
+     "number": 2,
+     "name": "Tt (2/4) / Tall",
+     "description": "",
+     "x": null,
+     "y": null
+    },
+    {
+     "number": 3,
+     "name": "tt (1/4) / Dwarf",
+     "description": "",
+     "x": null,
+     "y": null
+    },
+    {
+     "number": 4,
+     "name": "Ratio 1 : 2 : 1 / Ratio 3 tall : 1 dwarf",
+     "description": "",
+     "x": null,
+     "y": null
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-visual-u6-2",
+   "topic_code": "bio-6.4",
+   "title": "Incomplete dominance vs codominance",
+   "aliases": [
+    "codominance",
+    "incomplete dominance"
+   ],
+   "keywords": [
+    "codominance",
+    "incomplete dominance",
+    "blood group",
+    "snapdragon"
+   ],
+   "kind": "table",
+   "alt_text": "Comparison of incomplete dominance and codominance.",
+   "image": "assets/demo/visuals/u6_dominance.png",
+   "width": 1000,
+   "height": 750,
+   "style": "flat_colour",
+   "labels": [
+    {
+     "number": 1,
+     "name": "Heterozygote is intermediate / Both alleles fully shown",
+     "description": "",
+     "x": null,
+     "y": null
+    },
+    {
+     "number": 2,
+     "name": "Red x white gives pink / IA IB gives blood group AB",
+     "description": "",
+     "x": null,
+     "y": null
+    },
+    {
+     "number": 3,
+     "name": "F2 1 : 2 : 1 / F2 1 : 2 : 1",
+     "description": "",
+     "x": null,
+     "y": null
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  }
+ ]
+}

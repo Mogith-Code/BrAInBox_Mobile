@@ -1,0 +1,1158 @@
+{
+ "schema_version": 1,
+ "unit": 1,
+ "notes": [
+  {
+   "id": "demo-note-u1-1",
+   "topic_code": "bio-1.1",
+   "full": [
+    {
+     "type": "heading",
+     "text": "What biology studies",
+     "level": 2
+    },
+    {
+     "type": "definition",
+     "term": "Biology",
+     "text": "The scientific study of living organisms, their structure, function, growth, evolution and interactions with the environment."
+    },
+    {
+     "type": "paragraph",
+     "text": "Biology is studied at many levels, from molecules and cells to whole ecosystems and the biosphere.",
+     "highlights": [
+      "molecules",
+      "cells",
+      "ecosystems",
+      "biosphere"
+     ]
+    },
+    {
+     "type": "heading",
+     "text": "Main branches",
+     "level": 3
+    },
+    {
+     "type": "bullet_list",
+     "items": [
+      "Botany: the study of plants",
+      "Zoology: the study of animals",
+      "Microbiology: the study of microorganisms",
+      "Genetics, ecology, physiology, biochemistry and molecular biology"
+     ]
+    },
+    {
+     "type": "heading",
+     "text": "The scientific method",
+     "level": 3
+    },
+    {
+     "type": "paragraph",
+     "text": "Biologists observe, ask a question, form a hypothesis, test it with a controlled experiment, analyse the results and draw a conclusion. A hypothesis must be testable and can be rejected by evidence.",
+     "highlights": [
+      "hypothesis",
+      "experiment"
+     ]
+    },
+    {
+     "type": "tip",
+     "title": "Past-paper tip",
+     "text": "Exam questions often ask you to identify the independent, dependent and controlled variables of an experiment. Name each one clearly."
+    }
+   ],
+   "short": [
+    {
+     "type": "bullet_list",
+     "items": [
+      "Biology = scientific study of living organisms",
+      "Levels: molecule, cell, tissue, organ, organism, population, community, ecosystem, biosphere",
+      "Branches: botany, zoology, microbiology, genetics, ecology, physiology",
+      "Scientific method: observation, question, hypothesis, experiment, analysis, conclusion",
+      "A hypothesis must be testable"
+     ]
+    }
+   ],
+   "read_minutes": 5,
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-note-u1-2",
+   "topic_code": "bio-1.3",
+   "full": [
+    {
+     "type": "heading",
+     "text": "Characteristics of living organisms",
+     "level": 2
+    },
+    {
+     "type": "paragraph",
+     "text": "All living organisms share a set of features that non-living things do not show together.",
+     "highlights": []
+    },
+    {
+     "type": "bullet_list",
+     "items": [
+      "Cellular organisation: made of one or more *cells*",
+      "Metabolism: chemical reactions that release and use energy",
+      "Growth and development",
+      "Reproduction: producing offspring",
+      "Responsiveness (irritability) to *stimuli*",
+      "Homeostasis: keeping the internal environment constant",
+      "Heredity and the ability to evolve (adaptation)"
+     ]
+    },
+    {
+     "type": "definition",
+     "term": "Homeostasis",
+     "text": "Maintaining a stable internal environment despite changes outside."
+    },
+    {
+     "type": "heading",
+     "text": "Viruses",
+     "level": 3
+    },
+    {
+     "type": "paragraph",
+     "text": "Viruses reproduce only inside host cells and have no metabolism of their own, so they are usually described as being at the border of living and non-living.",
+     "highlights": []
+    },
+    {
+     "type": "tip",
+     "title": "Past-paper tip",
+     "text": "When asked why a virus is not considered fully living, mention that it lacks cellular structure and independent metabolism."
+    }
+   ],
+   "short": [
+    {
+     "type": "bullet_list",
+     "items": [
+      "Made of cells",
+      "Metabolism and energy use",
+      "Growth, development and reproduction",
+      "Respond to stimuli",
+      "Homeostasis",
+      "Heredity, adaptation and evolution",
+      "Viruses: no cells, no own metabolism"
+     ]
+    }
+   ],
+   "read_minutes": 5,
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-note-u1-3",
+   "topic_code": "bio-1.4",
+   "full": [
+    {
+     "type": "heading",
+     "text": "Levels of organisation of life",
+     "level": 2
+    },
+    {
+     "type": "paragraph",
+     "text": "Life is organised in a hierarchy. Each level is built from the level below and shows new (emergent) properties.",
+     "highlights": [
+      "emergent"
+     ]
+    },
+    {
+     "type": "bullet_list",
+     "items": [
+      "Atom and molecule",
+      "Organelle",
+      "Cell: the basic unit of life",
+      "Tissue: similar cells working together",
+      "Organ: different tissues with one function",
+      "Organ system",
+      "Organism",
+      "Population, community, ecosystem, biosphere"
+     ]
+    },
+    {
+     "type": "definition",
+     "term": "Population",
+     "text": "All the individuals of one species living in one area at the same time."
+    },
+    {
+     "type": "definition",
+     "term": "Community",
+     "text": "All the populations of different species living and interacting in one area."
+    },
+    {
+     "type": "tip",
+     "title": "Past-paper tip",
+     "text": "Learn the difference between population, community and ecosystem: an ecosystem also includes the non-living (abiotic) environment."
+    }
+   ],
+   "short": [
+    {
+     "type": "bullet_list",
+     "items": [
+      "Molecule, organelle, cell, tissue, organ, organ system, organism",
+      "Population = one species in one area",
+      "Community = all species in one area",
+      "Ecosystem = community + abiotic environment",
+      "Each level shows emergent properties"
+     ]
+    }
+   ],
+   "read_minutes": 4,
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "mcqs": [
+  {
+   "id": "demo-mcq-u1-01",
+   "topic_code": "bio-1.1",
+   "stem": "Which branch of biology studies microorganisms?",
+   "options": [
+    "Botany",
+    "Zoology",
+    "Microbiology",
+    "Ecology",
+    "Anatomy"
+   ],
+   "answer": 2,
+   "explanation": "Microbiology is the study of microorganisms such as bacteria, fungi and viruses.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u1-02",
+   "topic_code": "bio-1.1",
+   "stem": "A testable explanation proposed for an observation is called a",
+   "options": [
+    "theory",
+    "law",
+    "conclusion",
+    "hypothesis",
+    "variable"
+   ],
+   "answer": 3,
+   "explanation": "A hypothesis is a testable proposed explanation; a theory is a well-supported explanation built from much evidence.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u1-03",
+   "topic_code": "bio-1.1",
+   "stem": "In an experiment, the factor that the investigator changes on purpose is the",
+   "options": [
+    "dependent variable",
+    "independent variable",
+    "controlled variable",
+    "control group",
+    "result"
+   ],
+   "answer": 1,
+   "explanation": "The independent variable is changed deliberately; the dependent variable is measured.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u1-04",
+   "topic_code": "bio-1.1",
+   "stem": "Why is a control set up in an experiment?",
+   "options": [
+    "To increase the sample size",
+    "To change two variables at once",
+    "To compare results with a set-up that lacks the tested factor",
+    "To avoid recording data",
+    "To make the hypothesis true"
+   ],
+   "answer": 2,
+   "explanation": "A control lets you compare and show that the result is caused by the tested factor.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u1-05",
+   "topic_code": "bio-1.1",
+   "stem": "The study of the interactions between organisms and their environment is",
+   "options": [
+    "ecology",
+    "physiology",
+    "cytology",
+    "taxonomy",
+    "histology"
+   ],
+   "answer": 0,
+   "explanation": "Ecology studies the relationships between organisms and their environment.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u1-06",
+   "topic_code": "bio-1.2",
+   "stem": "Which of the following is a major challenge that biology helps humanity address?",
+   "options": [
+    "Food security",
+    "Planetary motion",
+    "Volcanic eruptions only",
+    "Ocean tides",
+    "Lunar phases"
+   ],
+   "answer": 0,
+   "explanation": "Biology contributes to food security through crop improvement, pest control and sustainable agriculture.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u1-07",
+   "topic_code": "bio-1.2",
+   "stem": "The spread of antibiotic resistance in bacteria is mainly a result of",
+   "options": [
+    "mutation and natural selection",
+    "photosynthesis",
+    "osmosis",
+    "hibernation",
+    "transpiration"
+   ],
+   "answer": 0,
+   "explanation": "Overuse of antibiotics selects resistant bacteria that arise by mutation.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u1-08",
+   "topic_code": "bio-1.2",
+   "stem": "Which human activity most directly reduces biodiversity?",
+   "options": [
+    "Habitat destruction",
+    "Bird watching",
+    "Planting native trees",
+    "Creating national parks",
+    "Seed banking"
+   ],
+   "answer": 0,
+   "explanation": "Habitat destruction is the leading cause of biodiversity loss.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u1-09",
+   "topic_code": "bio-1.3",
+   "stem": "Which feature is shown by all living organisms?",
+   "options": [
+    "Photosynthesis",
+    "Locomotion",
+    "Cellular organisation",
+    "A nervous system",
+    "Sexual reproduction"
+   ],
+   "answer": 2,
+   "explanation": "All living organisms are made of one or more cells; not all photosynthesise, move or reproduce sexually.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u1-10",
+   "topic_code": "bio-1.3",
+   "stem": "Maintaining a constant internal environment is called",
+   "options": [
+    "metabolism",
+    "homeostasis",
+    "irritability",
+    "growth",
+    "excretion"
+   ],
+   "answer": 1,
+   "explanation": "Homeostasis keeps internal conditions such as temperature and water balance stable.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u1-11",
+   "topic_code": "bio-1.3",
+   "stem": "Viruses are often considered non-living because they",
+   "options": [
+    "contain nucleic acid",
+    "lack independent metabolism",
+    "can mutate",
+    "infect cells",
+    "have proteins"
+   ],
+   "answer": 1,
+   "explanation": "Viruses have no metabolism of their own and reproduce only inside host cells.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u1-12",
+   "topic_code": "bio-1.3",
+   "stem": "The ability of an organism to detect and react to a stimulus is",
+   "options": [
+    "responsiveness",
+    "nutrition",
+    "excretion",
+    "growth",
+    "reproduction"
+   ],
+   "answer": 0,
+   "explanation": "Responsiveness (irritability) is reacting to changes in the environment.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u1-13",
+   "topic_code": "bio-1.3",
+   "stem": "The sum of all chemical reactions in an organism is its",
+   "options": [
+    "anabolism",
+    "catabolism",
+    "metabolism",
+    "respiration",
+    "digestion"
+   ],
+   "answer": 2,
+   "explanation": "Metabolism includes both anabolism (building up) and catabolism (breaking down).",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u1-14",
+   "topic_code": "bio-1.3",
+   "stem": "Removal of metabolic waste from the body is called",
+   "options": [
+    "egestion",
+    "excretion",
+    "secretion",
+    "digestion",
+    "absorption"
+   ],
+   "answer": 1,
+   "explanation": "Excretion removes metabolic wastes; egestion removes undigested food.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u1-15",
+   "topic_code": "bio-1.3",
+   "stem": "Which characteristic allows populations to change over many generations?",
+   "options": [
+    "Homeostasis",
+    "Growth",
+    "Evolution by adaptation",
+    "Movement",
+    "Respiration"
+   ],
+   "answer": 2,
+   "explanation": "Heredity with variation allows populations to adapt and evolve.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u1-16",
+   "topic_code": "bio-1.4",
+   "stem": "The basic structural and functional unit of life is the",
+   "options": [
+    "tissue",
+    "organ",
+    "cell",
+    "molecule",
+    "organelle"
+   ],
+   "answer": 2,
+   "explanation": "The cell is the smallest unit that shows all characteristics of life.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u1-17",
+   "topic_code": "bio-1.4",
+   "stem": "A group of similar cells performing a common function forms a",
+   "options": [
+    "tissue",
+    "organ",
+    "system",
+    "population",
+    "community"
+   ],
+   "answer": 0,
+   "explanation": "A tissue is a group of similar cells working together.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u1-18",
+   "topic_code": "bio-1.4",
+   "stem": "All the individuals of one species living in an area form a",
+   "options": [
+    "community",
+    "population",
+    "ecosystem",
+    "biome",
+    "biosphere"
+   ],
+   "answer": 1,
+   "explanation": "A population is one species in one place at one time.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u1-19",
+   "topic_code": "bio-1.4",
+   "stem": "A community together with its non-living environment forms",
+   "options": [
+    "a population",
+    "an ecosystem",
+    "an organ system",
+    "a tissue",
+    "a species"
+   ],
+   "answer": 1,
+   "explanation": "An ecosystem includes biotic and abiotic components.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u1-20",
+   "topic_code": "bio-1.4",
+   "stem": "Which is the correct increasing order of organisation?",
+   "options": [
+    "Cell, organ, tissue, system",
+    "Tissue, cell, organ, system",
+    "Cell, tissue, organ, organ system",
+    "Organ, tissue, cell, system",
+    "System, organ, tissue, cell"
+   ],
+   "answer": 2,
+   "explanation": "Cells form tissues, tissues form organs, organs form organ systems.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u1-21",
+   "topic_code": "bio-1.4",
+   "stem": "The heart is an example of",
+   "options": [
+    "a tissue",
+    "an organ",
+    "a cell",
+    "an organelle",
+    "a population"
+   ],
+   "answer": 1,
+   "explanation": "The heart is an organ made of muscle, nervous and connective tissues.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u1-22",
+   "topic_code": "bio-1.4",
+   "stem": "New properties that appear at each higher level of organisation are called",
+   "options": [
+    "emergent properties",
+    "inherited properties",
+    "acquired characters",
+    "mutations",
+    "adaptations"
+   ],
+   "answer": 0,
+   "explanation": "Emergent properties arise from interactions between parts at a level.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u1-23",
+   "topic_code": "bio-1.4",
+   "stem": "The largest level of biological organisation is the",
+   "options": [
+    "biome",
+    "ecosystem",
+    "biosphere",
+    "community",
+    "population"
+   ],
+   "answer": 2,
+   "explanation": "The biosphere includes all ecosystems on Earth.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u1-24",
+   "topic_code": "bio-1.4",
+   "stem": "Mitochondria belong to which level of organisation?",
+   "options": [
+    "Organelle",
+    "Tissue",
+    "Organ",
+    "Organism",
+    "Population"
+   ],
+   "answer": 0,
+   "explanation": "Mitochondria are organelles inside cells.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u1-25",
+   "topic_code": "bio-1.1",
+   "stem": "Data that can be measured as numbers is called",
+   "options": [
+    "qualitative data",
+    "quantitative data",
+    "a hypothesis",
+    "an inference",
+    "a theory"
+   ],
+   "answer": 1,
+   "explanation": "Quantitative data are numerical measurements.",
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "written": [
+  {
+   "id": "demo-s-u1-1",
+   "topic_code": "bio-1.3",
+   "type": "structured",
+   "stem": "State four characteristics of living organisms and explain one of them.",
+   "marks": 4,
+   "model_answer": "Living organisms are made of cells, carry out metabolism, grow and reproduce, respond to stimuli and maintain homeostasis. Homeostasis is keeping the internal environment constant, for example body temperature.",
+   "points": [
+    {
+     "text": "Made of cells (cellular organisation)",
+     "marks": 1,
+     "keywords": [
+      "cell"
+     ]
+    },
+    {
+     "text": "Metabolism / use of energy",
+     "marks": 1,
+     "keywords": [
+      "metabolism"
+     ]
+    },
+    {
+     "text": "Growth, development or reproduction",
+     "marks": 1,
+     "keywords": [
+      "reproduce",
+      "growth"
+     ]
+    },
+    {
+     "text": "Explains one characteristic (e.g. homeostasis keeps internal environment constant)",
+     "marks": 1,
+     "keywords": [
+      "homeostasis",
+      "internal",
+      "constant"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-s-u1-2",
+   "topic_code": "bio-1.4",
+   "type": "structured",
+   "stem": "Distinguish between a population, a community and an ecosystem.",
+   "marks": 4,
+   "model_answer": "A population is all individuals of one species in an area. A community is all populations of different species living together in an area. An ecosystem is a community together with its non-living (abiotic) environment.",
+   "points": [
+    {
+     "text": "Population: one species in an area",
+     "marks": 1,
+     "keywords": [
+      "population",
+      "one species"
+     ]
+    },
+    {
+     "text": "Community: different species living together",
+     "marks": 1,
+     "keywords": [
+      "community",
+      "different species"
+     ]
+    },
+    {
+     "text": "Ecosystem includes the abiotic / non-living environment",
+     "marks": 2,
+     "keywords": [
+      "ecosystem",
+      "abiotic",
+      "non living"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-s-u1-3",
+   "topic_code": "bio-1.1",
+   "type": "structured",
+   "stem": "Describe the steps of the scientific method used in a biological investigation.",
+   "marks": 4,
+   "model_answer": "Make an observation and ask a question, propose a testable hypothesis, design a controlled experiment changing one independent variable, collect and analyse data, then draw a conclusion that supports or rejects the hypothesis.",
+   "points": [
+    {
+     "text": "Observation and question",
+     "marks": 1,
+     "keywords": [
+      "observation",
+      "question"
+     ]
+    },
+    {
+     "text": "Testable hypothesis",
+     "marks": 1,
+     "keywords": [
+      "hypothesis"
+     ]
+    },
+    {
+     "text": "Controlled experiment with variables",
+     "marks": 1,
+     "keywords": [
+      "experiment",
+      "control",
+      "variable"
+     ]
+    },
+    {
+     "text": "Analyse data and conclude",
+     "marks": 1,
+     "keywords": [
+      "data",
+      "conclusion"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-s-u1-4",
+   "topic_code": "bio-1.3",
+   "type": "structured",
+   "stem": "Explain why viruses are considered to be at the border of living and non-living.",
+   "marks": 4,
+   "model_answer": "Viruses contain nucleic acid and can reproduce and mutate, which are features of life, but they have no cellular structure and no independent metabolism, so they can reproduce only inside a host cell.",
+   "points": [
+    {
+     "text": "Living feature: nucleic acid / reproduce / mutate",
+     "marks": 1,
+     "keywords": [
+      "nucleic acid",
+      "reproduce"
+     ]
+    },
+    {
+     "text": "No cellular structure",
+     "marks": 1,
+     "keywords": [
+      "cell",
+      "no"
+     ]
+    },
+    {
+     "text": "No independent metabolism",
+     "marks": 1,
+     "keywords": [
+      "metabolism"
+     ]
+    },
+    {
+     "text": "Reproduce only inside host cells",
+     "marks": 1,
+     "keywords": [
+      "host",
+      "inside"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-e-u1-5",
+   "topic_code": "bio-1.2",
+   "type": "essay",
+   "stem": "Discuss how biology helps humanity face major challenges such as food security, disease and environmental change.",
+   "marks": 10,
+   "model_answer": "Biology improves food security through crop breeding, biotechnology and pest control. It fights disease through vaccines, antibiotics, diagnostics and understanding pathogens. It addresses environmental change by studying ecosystems, conserving biodiversity and developing sustainable practices.",
+   "points": [
+    {
+     "text": "Food security: crop improvement / breeding / pest control",
+     "marks": 3,
+     "keywords": [
+      "crop",
+      "breeding",
+      "pest"
+     ]
+    },
+    {
+     "text": "Disease: vaccines / antibiotics / diagnosis",
+     "marks": 3,
+     "keywords": [
+      "vaccine",
+      "antibiotic",
+      "disease"
+     ]
+    },
+    {
+     "text": "Environment: conservation / biodiversity / sustainability",
+     "marks": 3,
+     "keywords": [
+      "conservation",
+      "biodiversity",
+      "sustainable"
+     ]
+    },
+    {
+     "text": "Clear conclusion linking biology to human welfare",
+     "marks": 1,
+     "keywords": [
+      "human",
+      "welfare"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-e-u1-6",
+   "topic_code": "bio-1.4",
+   "type": "essay",
+   "stem": "Describe the levels of organisation of life from molecules to the biosphere, giving an example of each.",
+   "marks": 10,
+   "model_answer": "Molecules such as DNA form organelles such as mitochondria; organelles make up cells such as neurons; similar cells form tissues such as muscle; tissues form organs such as the heart; organs form systems such as the circulatory system; systems form an organism; individuals form a population, populations form a community, a community with its abiotic environment forms an ecosystem, and all ecosystems form the biosphere.",
+   "points": [
+    {
+     "text": "Molecule and organelle levels with examples",
+     "marks": 2,
+     "keywords": [
+      "molecule",
+      "organelle"
+     ]
+    },
+    {
+     "text": "Cell, tissue and organ with examples",
+     "marks": 3,
+     "keywords": [
+      "cell",
+      "tissue",
+      "organ"
+     ]
+    },
+    {
+     "text": "Organ system and organism",
+     "marks": 2,
+     "keywords": [
+      "system",
+      "organism"
+     ]
+    },
+    {
+     "text": "Population, community, ecosystem and biosphere",
+     "marks": 3,
+     "keywords": [
+      "population",
+      "community",
+      "ecosystem",
+      "biosphere"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "ask": [
+  {
+   "id": "demo-ask-u1-1",
+   "topic_code": "bio-1.3",
+   "question": "What are the characteristics of living organisms?",
+   "aliases": [
+    "features of living things",
+    "signs of life"
+   ],
+   "keywords": [
+    "characteristic",
+    "living",
+    "organism"
+   ],
+   "answer": "Living organisms are made of cells, carry out metabolism, grow and develop, reproduce, respond to stimuli, maintain homeostasis and pass on hereditary information, which allows populations to adapt and evolve.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 1.3: Characteristics of living organisms"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u1-2",
+   "topic_code": "bio-1.3",
+   "question": "Why are viruses not considered fully living?",
+   "aliases": [
+    "are viruses alive"
+   ],
+   "keywords": [
+    "virus",
+    "living"
+   ],
+   "answer": "Viruses contain nucleic acid and can reproduce, but they have no cells and no metabolism of their own. They can reproduce only inside a host cell, so they are often described as being at the border of living and non-living.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 1.3: Characteristics of living organisms"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u1-3",
+   "topic_code": "bio-1.4",
+   "question": "What is the difference between a population and a community?",
+   "aliases": [
+    "population vs community"
+   ],
+   "keywords": [
+    "population",
+    "community"
+   ],
+   "answer": "A population is all the individuals of one species in an area at one time. A community is all the populations of different species that live and interact in that area.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 1.4: Levels of organisation of life"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u1-4",
+   "topic_code": "bio-1.1",
+   "question": "What is a hypothesis?",
+   "aliases": [
+    "define hypothesis"
+   ],
+   "keywords": [
+    "hypothesis",
+    "scientific method"
+   ],
+   "answer": "A hypothesis is a testable explanation for an observation. It is tested with a controlled experiment and is supported or rejected by the evidence.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 1.1: Nature and scope of biology"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u1-5",
+   "topic_code": "bio-1.4",
+   "question": "What are the levels of organisation of life?",
+   "aliases": [
+    "hierarchy of life"
+   ],
+   "keywords": [
+    "level",
+    "organisation",
+    "hierarchy"
+   ],
+   "answer": "From smallest to largest: molecule, organelle, cell, tissue, organ, organ system, organism, population, community, ecosystem and biosphere. Each level shows new emergent properties.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 1.4: Levels of organisation of life"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "uploads": [
+  {
+   "id": "demo-upload-u1-1",
+   "topic_code": "bio-1.3",
+   "title": "Characteristics of life",
+   "aliases": [
+    "living things notes",
+    "introduction to biology"
+   ],
+   "keywords": [
+    "characteristic",
+    "living",
+    "life",
+    "introduction"
+   ],
+   "summary": "These notes introduce biology as the study of living organisms and list the characteristics that all living things share: cellular organisation, metabolism, growth, reproduction, responsiveness, homeostasis and heredity.",
+   "key_points": [
+    "All living things are made of cells",
+    "Metabolism includes anabolism and catabolism",
+    "Homeostasis keeps the internal environment stable",
+    "Viruses lack cells and independent metabolism"
+   ],
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "visuals": [
+  {
+   "id": "demo-visual-u1-1",
+   "topic_code": "bio-1.4",
+   "title": "Levels of organisation",
+   "aliases": [
+    "hierarchy of life",
+    "organisation of life"
+   ],
+   "keywords": [
+    "level",
+    "organisation",
+    "cell",
+    "tissue",
+    "organ",
+    "ecosystem"
+   ],
+   "kind": "flowchart",
+   "alt_text": "Flow chart from cell to biosphere.",
+   "image": "assets/demo/visuals/u1_levels.png",
+   "width": 1000,
+   "height": 750,
+   "style": "flat_colour",
+   "labels": [
+    {
+     "number": 1,
+     "name": "Cell",
+     "description": "Basic unit of life",
+     "x": 0.054,
+     "y": 0.169
+    },
+    {
+     "number": 2,
+     "name": "Tissue",
+     "description": "Similar cells together",
+     "x": 0.054,
+     "y": 0.376
+    },
+    {
+     "number": 3,
+     "name": "Organ",
+     "description": "Tissues with one function",
+     "x": 0.054,
+     "y": 0.582
+    },
+    {
+     "number": 4,
+     "name": "Organ system",
+     "description": "Organs working together",
+     "x": 0.054,
+     "y": 0.789
+    },
+    {
+     "number": 5,
+     "name": "Organism",
+     "description": "One living individual",
+     "x": 0.534,
+     "y": 0.169
+    },
+    {
+     "number": 6,
+     "name": "Population",
+     "description": "One species in an area",
+     "x": 0.534,
+     "y": 0.376
+    },
+    {
+     "number": 7,
+     "name": "Ecosystem",
+     "description": "Community + abiotic factors",
+     "x": 0.534,
+     "y": 0.582
+    },
+    {
+     "number": 8,
+     "name": "Biosphere",
+     "description": "All ecosystems on Earth",
+     "x": 0.534,
+     "y": 0.789
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-visual-u1-2",
+   "topic_code": "bio-1.1",
+   "title": "The scientific method",
+   "aliases": [
+    "steps of scientific method"
+   ],
+   "keywords": [
+    "scientific",
+    "method",
+    "hypothesis",
+    "experiment"
+   ],
+   "kind": "flowchart",
+   "alt_text": "Steps of the scientific method.",
+   "image": "assets/demo/visuals/u1_method.png",
+   "width": 1000,
+   "height": 750,
+   "style": "flat_colour",
+   "labels": [
+    {
+     "number": 1,
+     "name": "Observation",
+     "description": "Notice something",
+     "x": 0.054,
+     "y": 0.196
+    },
+    {
+     "number": 2,
+     "name": "Question",
+     "description": "Ask why or how",
+     "x": 0.054,
+     "y": 0.472
+    },
+    {
+     "number": 3,
+     "name": "Hypothesis",
+     "description": "A testable explanation",
+     "x": 0.054,
+     "y": 0.748
+    },
+    {
+     "number": 4,
+     "name": "Experiment",
+     "description": "Change one variable, keep a control",
+     "x": 0.534,
+     "y": 0.196
+    },
+    {
+     "number": 5,
+     "name": "Analysis",
+     "description": "Look at the data",
+     "x": 0.534,
+     "y": 0.472
+    },
+    {
+     "number": 6,
+     "name": "Conclusion",
+     "description": "Support or reject the hypothesis",
+     "x": 0.534,
+     "y": 0.748
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  }
+ ]
+}
