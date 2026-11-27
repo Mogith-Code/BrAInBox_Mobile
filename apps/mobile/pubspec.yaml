@@ -55,3 +55,8 @@ flutter:
     - assets/icons/
     - assets/logo/
     - assets/illustrations/
+    # Saved AI outputs, read only when built with --dart-define=DEMO_AI=true.
+    - assets/demo/
+    - assets/demo/units/
+    - assets/demo/visuals/
+    - assets/demo/ocr/

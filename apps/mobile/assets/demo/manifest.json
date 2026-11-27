@@ -1,0 +1,482 @@
+{
+ "schema_version": 1,
+ "content_version": "2026-11-24",
+ "note": "Demo AI data for DEMO_AI=true. Units and topic codes come from the backend's data/syllabus/learn_biology_2025.json. All biology content is authored and NOT yet reviewed: see docs/demo/content-review.md.",
+ "units": [
+  {
+   "number": 1,
+   "code": "u1",
+   "title": "Introduction to Biology",
+   "topics": [
+    {
+     "code": "bio-1.1",
+     "title": "Nature and scope of biology"
+    },
+    {
+     "code": "bio-1.2",
+     "title": "Biology and challenges facing humanity"
+    },
+    {
+     "code": "bio-1.3",
+     "title": "Characteristics of living organisms"
+    },
+    {
+     "code": "bio-1.4",
+     "title": "Levels of organisation of life"
+    }
+   ]
+  },
+  {
+   "number": 2,
+   "code": "u2",
+   "title": "Chemical and Cellular Basis of Life",
+   "topics": [
+    {
+     "code": "bio-2.1",
+     "title": "Elements and water in living systems"
+    },
+    {
+     "code": "bio-2.2",
+     "title": "Carbohydrates"
+    },
+    {
+     "code": "bio-2.3",
+     "title": "Lipids"
+    },
+    {
+     "code": "bio-2.4",
+     "title": "Proteins"
+    },
+    {
+     "code": "bio-2.5",
+     "title": "Nucleic acids"
+    },
+    {
+     "code": "bio-2.6",
+     "title": "Microscopy and the cell theory"
+    },
+    {
+     "code": "bio-2.7",
+     "title": "Prokaryotic and eukaryotic cell structure"
+    },
+    {
+     "code": "bio-2.8",
+     "title": "Cell membrane and membrane transport"
+    },
+    {
+     "code": "bio-2.9",
+     "title": "Cell cycle and mitosis"
+    },
+    {
+     "code": "bio-2.10",
+     "title": "Meiosis"
+    },
+    {
+     "code": "bio-2.11",
+     "title": "Energy, metabolism and enzymes"
+    },
+    {
+     "code": "bio-2.12",
+     "title": "Photosynthesis: light-dependent reactions"
+    },
+    {
+     "code": "bio-2.13",
+     "title": "Photosynthesis: Calvin cycle, C4 and CAM plants"
+    },
+    {
+     "code": "bio-2.14",
+     "title": "Cellular respiration"
+    }
+   ]
+  },
+  {
+   "number": 3,
+   "code": "u3",
+   "title": "Evolution and Diversity of Organisms",
+   "topics": [
+    {
+     "code": "bio-3.1",
+     "title": "Origin of life"
+    },
+    {
+     "code": "bio-3.2",
+     "title": "Evidence for evolution"
+    },
+    {
+     "code": "bio-3.3",
+     "title": "Natural selection and Darwinian theory"
+    },
+    {
+     "code": "bio-3.4",
+     "title": "Speciation"
+    },
+    {
+     "code": "bio-3.5",
+     "title": "Classification and binomial nomenclature"
+    },
+    {
+     "code": "bio-3.6",
+     "title": "Three domains of life"
+    },
+    {
+     "code": "bio-3.7",
+     "title": "Kingdom Protista"
+    },
+    {
+     "code": "bio-3.8",
+     "title": "Kingdom Fungi"
+    },
+    {
+     "code": "bio-3.9",
+     "title": "Kingdom Plantae"
+    },
+    {
+     "code": "bio-3.10",
+     "title": "Kingdom Animalia: invertebrates"
+    },
+    {
+     "code": "bio-3.11",
+     "title": "Kingdom Animalia: chordates"
+    }
+   ]
+  },
+  {
+   "number": 4,
+   "code": "u4",
+   "title": "Plant Form and Function",
+   "topics": [
+    {
+     "code": "bio-4.1",
+     "title": "Plant tissues"
+    },
+    {
+     "code": "bio-4.2",
+     "title": "Primary and secondary growth"
+    },
+    {
+     "code": "bio-4.3",
+     "title": "Plant growth regulators"
+    },
+    {
+     "code": "bio-4.4",
+     "title": "Water and mineral absorption"
+    },
+    {
+     "code": "bio-4.5",
+     "title": "Transpiration"
+    },
+    {
+     "code": "bio-4.6",
+     "title": "Translocation in the phloem"
+    },
+    {
+     "code": "bio-4.7",
+     "title": "Gaseous exchange in plants"
+    },
+    {
+     "code": "bio-4.8",
+     "title": "Plant nutrition and essential elements"
+    },
+    {
+     "code": "bio-4.9",
+     "title": "Reproduction in flowering plants"
+    },
+    {
+     "code": "bio-4.10",
+     "title": "Seed and fruit development and dispersal"
+    },
+    {
+     "code": "bio-4.11",
+     "title": "Alternation of generations in plants"
+    },
+    {
+     "code": "bio-4.12",
+     "title": "Plant responses to stimuli"
+    }
+   ]
+  },
+  {
+   "number": 5,
+   "code": "u5",
+   "title": "Animal Form and Function",
+   "topics": [
+    {
+     "code": "bio-5.1",
+     "title": "Animal tissues"
+    },
+    {
+     "code": "bio-5.2",
+     "title": "Nutrition and the human digestive system"
+    },
+    {
+     "code": "bio-5.3",
+     "title": "Absorption, assimilation and nutritional disorders"
+    },
+    {
+     "code": "bio-5.4",
+     "title": "Circulatory systems in animals"
+    },
+    {
+     "code": "bio-5.5",
+     "title": "The human heart and blood vessels"
+    },
+    {
+     "code": "bio-5.6",
+     "title": "Blood and lymph"
+    },
+    {
+     "code": "bio-5.7",
+     "title": "Gas exchange in animals"
+    },
+    {
+     "code": "bio-5.8",
+     "title": "The human respiratory system"
+    },
+    {
+     "code": "bio-5.9",
+     "title": "Immunity"
+    },
+    {
+     "code": "bio-5.10",
+     "title": "Osmoregulation and excretion"
+    },
+    {
+     "code": "bio-5.11",
+     "title": "The human kidney"
+    },
+    {
+     "code": "bio-5.12",
+     "title": "Nervous coordination and the neuron"
+    },
+    {
+     "code": "bio-5.13",
+     "title": "The human nervous system"
+    },
+    {
+     "code": "bio-5.14",
+     "title": "Sense organs"
+    },
+    {
+     "code": "bio-5.15",
+     "title": "Endocrine system"
+    },
+    {
+     "code": "bio-5.16",
+     "title": "Homeostasis"
+    },
+    {
+     "code": "bio-5.17",
+     "title": "Human reproduction"
+    },
+    {
+     "code": "bio-5.18",
+     "title": "Skeletal system and movement"
+    }
+   ]
+  },
+  {
+   "number": 6,
+   "code": "u6",
+   "title": "Genetics",
+   "topics": [
+    {
+     "code": "bio-6.1",
+     "title": "Mendelian inheritance"
+    },
+    {
+     "code": "bio-6.2",
+     "title": "Monohybrid & dihybrid crosses"
+    },
+    {
+     "code": "bio-6.3",
+     "title": "Test cross & back cross"
+    },
+    {
+     "code": "bio-6.4",
+     "title": "Incomplete dominance & codominance"
+    },
+    {
+     "code": "bio-6.5",
+     "title": "Multiple alleles & blood groups"
+    },
+    {
+     "code": "bio-6.6",
+     "title": "Sex linkage"
+    },
+    {
+     "code": "bio-6.7",
+     "title": "Pedigree analysis"
+    },
+    {
+     "code": "bio-6.8",
+     "title": "Chromosomal mutations"
+    },
+    {
+     "code": "bio-6.9",
+     "title": "Polygenic inheritance"
+    }
+   ]
+  },
+  {
+   "number": 7,
+   "code": "u7",
+   "title": "Molecular Biology and Recombinant DNA Technology",
+   "topics": [
+    {
+     "code": "bio-7.1",
+     "title": "Structure of DNA and RNA"
+    },
+    {
+     "code": "bio-7.2",
+     "title": "DNA replication"
+    },
+    {
+     "code": "bio-7.3",
+     "title": "Transcription"
+    },
+    {
+     "code": "bio-7.4",
+     "title": "Translation and the genetic code"
+    },
+    {
+     "code": "bio-7.5",
+     "title": "Regulation of gene expression"
+    },
+    {
+     "code": "bio-7.6",
+     "title": "Gene mutations"
+    },
+    {
+     "code": "bio-7.7",
+     "title": "Recombinant DNA technology"
+    },
+    {
+     "code": "bio-7.8",
+     "title": "PCR, gel electrophoresis and DNA analysis"
+    },
+    {
+     "code": "bio-7.9",
+     "title": "Applications of biotechnology and GMOs"
+    }
+   ]
+  },
+  {
+   "number": 8,
+   "code": "u8",
+   "title": "Environmental Biology",
+   "topics": [
+    {
+     "code": "bio-8.1",
+     "title": "Ecosystem structure and energy flow"
+    },
+    {
+     "code": "bio-8.2",
+     "title": "Biogeochemical cycles"
+    },
+    {
+     "code": "bio-8.3",
+     "title": "Population and community ecology"
+    },
+    {
+     "code": "bio-8.4",
+     "title": "Biomes of the world"
+    },
+    {
+     "code": "bio-8.5",
+     "title": "Ecosystems of Sri Lanka"
+    },
+    {
+     "code": "bio-8.6",
+     "title": "Biodiversity and its threats"
+    },
+    {
+     "code": "bio-8.7",
+     "title": "Global environmental problems"
+    },
+    {
+     "code": "bio-8.8",
+     "title": "Conservation of biodiversity"
+    }
+   ]
+  },
+  {
+   "number": 9,
+   "code": "u9",
+   "title": "Microbiology",
+   "topics": [
+    {
+     "code": "bio-9.1",
+     "title": "Diversity of microorganisms"
+    },
+    {
+     "code": "bio-9.2",
+     "title": "Handling microorganisms and aseptic technique"
+    },
+    {
+     "code": "bio-9.3",
+     "title": "Microbial growth and its control"
+    },
+    {
+     "code": "bio-9.4",
+     "title": "Viruses"
+    },
+    {
+     "code": "bio-9.5",
+     "title": "Microbial diseases of humans"
+    },
+    {
+     "code": "bio-9.6",
+     "title": "Microbes in industry and food"
+    },
+    {
+     "code": "bio-9.7",
+     "title": "Microbes in agriculture and the environment"
+    }
+   ]
+  },
+  {
+   "number": 10,
+   "code": "u10",
+   "title": "Applied Biology",
+   "topics": [
+    {
+     "code": "bio-10.1",
+     "title": "Ornamental fish culture"
+    },
+    {
+     "code": "bio-10.2",
+     "title": "Plant tissue culture and nursery management"
+    },
+    {
+     "code": "bio-10.3",
+     "title": "Hydroponics and horticulture"
+    },
+    {
+     "code": "bio-10.4",
+     "title": "Vector-borne diseases and their control"
+    },
+    {
+     "code": "bio-10.5",
+     "title": "Food preservation and postharvest technology"
+    },
+    {
+     "code": "bio-10.6",
+     "title": "Emerging technologies in biology"
+    }
+   ]
+  }
+ ],
+ "unit_files": [
+  "assets/demo/units/u1.json",
+  "assets/demo/units/u2.json",
+  "assets/demo/units/u3.json",
+  "assets/demo/units/u4.json",
+  "assets/demo/units/u5.json",
+  "assets/demo/units/u6.json",
+  "assets/demo/units/u7.json",
+  "assets/demo/units/u8.json",
+  "assets/demo/units/u9.json",
+  "assets/demo/units/u10.json"
+ ],
+ "viva_file": "assets/demo/viva.json"
+}

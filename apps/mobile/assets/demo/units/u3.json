@@ -1,0 +1,1129 @@
+{
+ "schema_version": 1,
+ "unit": 3,
+ "notes": [
+  {
+   "id": "demo-note-u3-1",
+   "topic_code": "bio-3.3",
+   "full": [
+    {
+     "type": "heading",
+     "text": "Natural selection",
+     "level": 2
+    },
+    {
+     "type": "paragraph",
+     "text": "Charles Darwin and Alfred Russel Wallace proposed that species change over time by natural selection.",
+     "highlights": [
+      "natural selection"
+     ]
+    },
+    {
+     "type": "bullet_list",
+     "items": [
+      "Organisms produce more offspring than can survive",
+      "Individuals in a population show *variation*, much of it inherited",
+      "There is competition for limited resources (struggle for existence)",
+      "Individuals with favourable variations survive and reproduce more (survival of the fittest)",
+      "Favourable alleles become more common over generations"
+     ]
+    },
+    {
+     "type": "definition",
+     "term": "Natural selection",
+     "text": "The process by which organisms better adapted to their environment survive and reproduce more, so their inherited traits become more common."
+    },
+    {
+     "type": "heading",
+     "text": "Example",
+     "level": 3
+    },
+    {
+     "type": "paragraph",
+     "text": "Antibiotic resistance: bacteria with a resistance mutation survive treatment and multiply, so the resistant form spreads.",
+     "highlights": []
+    },
+    {
+     "type": "tip",
+     "title": "Past-paper tip",
+     "text": "Selection acts on the phenotype of individuals, but it is the population that evolves. Do not write that an individual adapts by choice."
+    }
+   ],
+   "short": [
+    {
+     "type": "bullet_list",
+     "items": [
+      "Overproduction of offspring",
+      "Inherited variation",
+      "Struggle for existence",
+      "Survival of the fittest",
+      "Favourable alleles increase in frequency",
+      "Example: antibiotic resistance"
+     ]
+    }
+   ],
+   "read_minutes": 6,
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-note-u3-2",
+   "topic_code": "bio-3.5",
+   "full": [
+    {
+     "type": "heading",
+     "text": "Classification",
+     "level": 2
+    },
+    {
+     "type": "paragraph",
+     "text": "Organisms are grouped into a hierarchy of taxa: domain, kingdom, phylum, class, order, family, genus and species.",
+     "highlights": [
+      "taxa"
+     ]
+    },
+    {
+     "type": "definition",
+     "term": "Species",
+     "text": "A group of organisms that can interbreed to produce fertile offspring."
+    },
+    {
+     "type": "heading",
+     "text": "Binomial nomenclature",
+     "level": 2
+    },
+    {
+     "type": "paragraph",
+     "text": "Linnaeus introduced the two-part scientific name: genus name (capital letter) and specific epithet (small letter), written in italics or underlined when handwritten.",
+     "highlights": [
+      "genus",
+      "specific epithet"
+     ]
+    },
+    {
+     "type": "bullet_list",
+     "items": [
+      "Example: Homo sapiens",
+      "Example: Oryza sativa (rice)"
+     ]
+    },
+    {
+     "type": "paragraph",
+     "text": "Scientific names are universal, so scientists everywhere know which organism is meant.",
+     "highlights": []
+    },
+    {
+     "type": "tip",
+     "title": "Past-paper tip",
+     "text": "When you write a binomial name by hand, underline the genus and species separately."
+    }
+   ],
+   "short": [
+    {
+     "type": "bullet_list",
+     "items": [
+      "Hierarchy: domain, kingdom, phylum, class, order, family, genus, species",
+      "Species: interbreed to give fertile offspring",
+      "Binomial name: Genus species, italics or underlined",
+      "Genus capitalised, species lower case",
+      "Introduced by Linnaeus"
+     ]
+    }
+   ],
+   "read_minutes": 5,
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-note-u3-3",
+   "topic_code": "bio-3.8",
+   "full": [
+    {
+     "type": "heading",
+     "text": "Kingdom Fungi",
+     "level": 2
+    },
+    {
+     "type": "paragraph",
+     "text": "Fungi are eukaryotic, heterotrophic organisms that absorb food after external digestion.",
+     "highlights": [
+      "heterotrophic"
+     ]
+    },
+    {
+     "type": "bullet_list",
+     "items": [
+      "Cell walls made of *chitin*",
+      "Body made of thread-like *hyphae* forming a *mycelium* (except yeasts, which are unicellular)",
+      "Store food as glycogen and lipids",
+      "Reproduce by spores, asexually and sexually"
+     ]
+    },
+    {
+     "type": "definition",
+     "term": "Saprotroph",
+     "text": "An organism that feeds on dead organic matter by secreting enzymes and absorbing the products."
+    },
+    {
+     "type": "heading",
+     "text": "Importance",
+     "level": 3
+    },
+    {
+     "type": "paragraph",
+     "text": "Fungi are decomposers that recycle nutrients. Yeast is used in baking and brewing, and Penicillium gives penicillin. Some fungi cause diseases of crops and humans.",
+     "highlights": []
+    },
+    {
+     "type": "tip",
+     "title": "Past-paper tip",
+     "text": "Mention chitin and absorptive nutrition when comparing fungi with plants."
+    }
+   ],
+   "short": [
+    {
+     "type": "bullet_list",
+     "items": [
+      "Eukaryotic heterotrophs",
+      "Cell wall of chitin",
+      "Hyphae form mycelium; yeast is unicellular",
+      "Saprotrophic, parasitic or mutualistic",
+      "Reproduce by spores",
+      "Uses: yeast, penicillin; decomposers"
+     ]
+    }
+   ],
+   "read_minutes": 5,
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "mcqs": [
+  {
+   "id": "demo-mcq-u3-01",
+   "topic_code": "bio-3.1",
+   "stem": "Which gas was largely absent from the early atmosphere of the Earth?",
+   "options": [
+    "Water vapour",
+    "Methane",
+    "Oxygen",
+    "Ammonia",
+    "Hydrogen"
+   ],
+   "answer": 2,
+   "explanation": "Free oxygen built up only after photosynthetic organisms evolved.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u3-02",
+   "topic_code": "bio-3.1",
+   "stem": "The Miller-Urey experiment showed that",
+   "options": [
+    "life arose from space",
+    "organic molecules can form from simple gases with energy",
+    "cells can form spontaneously",
+    "DNA came before proteins",
+    "oxygen is needed for life"
+   ],
+   "answer": 1,
+   "explanation": "Amino acids formed from simple gases with electric sparks.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u3-03",
+   "topic_code": "bio-3.2",
+   "stem": "Structures that have the same origin but different functions are",
+   "options": [
+    "analogous",
+    "homologous",
+    "vestigial",
+    "convergent",
+    "fossilised"
+   ],
+   "answer": 1,
+   "explanation": "Homologous structures, such as the vertebrate forelimb, share an origin.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u3-04",
+   "topic_code": "bio-3.2",
+   "stem": "The wings of a bird and of an insect are examples of",
+   "options": [
+    "homologous structures",
+    "analogous structures",
+    "vestigial structures",
+    "embryonic structures",
+    "fossils"
+   ],
+   "answer": 1,
+   "explanation": "They have the same function but different origins.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u3-05",
+   "topic_code": "bio-3.3",
+   "stem": "According to Darwin, the raw material for natural selection is",
+   "options": [
+    "inherited variation",
+    "acquired characteristics",
+    "use and disuse",
+    "mutagens",
+    "the environment"
+   ],
+   "answer": 0,
+   "explanation": "Natural selection acts on inherited variation in a population.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u3-06",
+   "topic_code": "bio-3.3",
+   "stem": "Which is an example of natural selection in action?",
+   "options": [
+    "A body builder gaining muscle",
+    "Bacteria becoming resistant to antibiotics",
+    "A plant growing towards light",
+    "A child learning a language",
+    "Sun tanning"
+   ],
+   "answer": 1,
+   "explanation": "Resistant bacteria survive and reproduce, so resistance spreads.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u3-07",
+   "topic_code": "bio-3.3",
+   "stem": "'Survival of the fittest' means",
+   "options": [
+    "the strongest always survive",
+    "individuals best adapted to the environment reproduce more",
+    "only large animals survive",
+    "individuals change during life",
+    "competition is absent"
+   ],
+   "answer": 1,
+   "explanation": "Fitness refers to reproductive success in a given environment.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u3-08",
+   "topic_code": "bio-3.4",
+   "stem": "The formation of new species due to geographical isolation is",
+   "options": [
+    "sympatric speciation",
+    "allopatric speciation",
+    "polyploidy",
+    "hybridisation only",
+    "artificial selection"
+   ],
+   "answer": 1,
+   "explanation": "Allopatric speciation follows physical separation of populations.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u3-09",
+   "topic_code": "bio-3.4",
+   "stem": "A mechanism that prevents members of two species from mating is",
+   "options": [
+    "a reproductive isolating mechanism",
+    "a mutation",
+    "a niche",
+    "an adaptation to climate",
+    "a food chain"
+   ],
+   "answer": 0,
+   "explanation": "Reproductive isolation keeps species separate.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u3-10",
+   "topic_code": "bio-3.5",
+   "stem": "In the binomial name Homo sapiens, 'Homo' is the",
+   "options": [
+    "species",
+    "genus",
+    "family",
+    "order",
+    "kingdom"
+   ],
+   "answer": 1,
+   "explanation": "The first part is the genus name.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u3-11",
+   "topic_code": "bio-3.5",
+   "stem": "Which taxon contains the largest number of different organisms?",
+   "options": [
+    "Species",
+    "Genus",
+    "Family",
+    "Kingdom",
+    "Order"
+   ],
+   "answer": 3,
+   "explanation": "Higher taxa contain more organisms; kingdom is the highest of these options.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u3-12",
+   "topic_code": "bio-3.5",
+   "stem": "Binomial nomenclature was introduced by",
+   "options": [
+    "Darwin",
+    "Mendel",
+    "Linnaeus",
+    "Pasteur",
+    "Hooke"
+   ],
+   "answer": 2,
+   "explanation": "Carl Linnaeus introduced the two-name system.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u3-13",
+   "topic_code": "bio-3.5",
+   "stem": "Organisms of the same species can",
+   "options": [
+    "interbreed to produce fertile offspring",
+    "never interbreed",
+    "produce only sterile offspring",
+    "belong to different genera",
+    "only reproduce asexually"
+   ],
+   "answer": 0,
+   "explanation": "This is the biological species concept.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u3-14",
+   "topic_code": "bio-3.6",
+   "stem": "The three domains of life are",
+   "options": [
+    "Plants, Animals, Fungi",
+    "Bacteria, Archaea, Eukarya",
+    "Prokaryota, Protista, Monera",
+    "Viruses, Bacteria, Eukarya",
+    "Archaea, Fungi, Plantae"
+   ],
+   "answer": 1,
+   "explanation": "Woese divided life into Bacteria, Archaea and Eukarya.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u3-15",
+   "topic_code": "bio-3.6",
+   "stem": "Archaea differ from Bacteria in that they",
+   "options": [
+    "have a nucleus",
+    "lack peptidoglycan in their cell walls",
+    "are multicellular",
+    "have mitochondria",
+    "photosynthesise using chloroplasts"
+   ],
+   "answer": 1,
+   "explanation": "Archaean cell walls lack peptidoglycan.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u3-16",
+   "topic_code": "bio-3.7",
+   "stem": "Which organism belongs to Kingdom Protista?",
+   "options": [
+    "Amoeba",
+    "Yeast",
+    "Moss",
+    "Earthworm",
+    "Mushroom"
+   ],
+   "answer": 0,
+   "explanation": "Amoeba is a unicellular eukaryote in Protista.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u3-17",
+   "topic_code": "bio-3.7",
+   "stem": "Plasmodium, which causes malaria, belongs to",
+   "options": [
+    "Bacteria",
+    "Fungi",
+    "Protista",
+    "Plantae",
+    "Animalia"
+   ],
+   "answer": 2,
+   "explanation": "Plasmodium is a protist (an apicomplexan).",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u3-18",
+   "topic_code": "bio-3.8",
+   "stem": "The cell walls of fungi are made mainly of",
+   "options": [
+    "cellulose",
+    "chitin",
+    "peptidoglycan",
+    "lignin",
+    "pectin"
+   ],
+   "answer": 1,
+   "explanation": "Chitin is the main wall material in fungi.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u3-19",
+   "topic_code": "bio-3.8",
+   "stem": "Fungi obtain food by",
+   "options": [
+    "photosynthesis",
+    "absorption after external digestion",
+    "ingestion",
+    "chemosynthesis",
+    "phagocytosis only"
+   ],
+   "answer": 1,
+   "explanation": "Fungi secrete enzymes and absorb the digested products.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u3-20",
+   "topic_code": "bio-3.8",
+   "stem": "A network of fungal hyphae is called a",
+   "options": [
+    "thallus",
+    "mycelium",
+    "sporangium",
+    "rhizoid",
+    "colony"
+   ],
+   "answer": 1,
+   "explanation": "Hyphae together form the mycelium.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u3-21",
+   "topic_code": "bio-3.9",
+   "stem": "Which plant group has seeds that are not enclosed in a fruit?",
+   "options": [
+    "Angiosperms",
+    "Gymnosperms",
+    "Bryophytes",
+    "Ferns",
+    "Algae"
+   ],
+   "answer": 1,
+   "explanation": "Gymnosperms have naked seeds, for example Cycas and Pinus.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u3-22",
+   "topic_code": "bio-3.9",
+   "stem": "In mosses, the dominant generation is the",
+   "options": [
+    "sporophyte",
+    "gametophyte",
+    "seed",
+    "embryo",
+    "flower"
+   ],
+   "answer": 1,
+   "explanation": "In bryophytes the gametophyte is dominant.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u3-23",
+   "topic_code": "bio-3.10",
+   "stem": "Which phylum has a body with jointed appendages and an exoskeleton?",
+   "options": [
+    "Annelida",
+    "Mollusca",
+    "Arthropoda",
+    "Cnidaria",
+    "Platyhelminthes"
+   ],
+   "answer": 2,
+   "explanation": "Arthropods have jointed legs and a chitin exoskeleton.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u3-24",
+   "topic_code": "bio-3.10",
+   "stem": "Animals with radial symmetry and stinging cells belong to",
+   "options": [
+    "Cnidaria",
+    "Annelida",
+    "Nematoda",
+    "Echinodermata only",
+    "Chordata"
+   ],
+   "answer": 0,
+   "explanation": "Cnidarians such as Hydra have cnidocytes.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u3-25",
+   "topic_code": "bio-3.11",
+   "stem": "A feature found in all chordates at some stage of life is a",
+   "options": [
+    "backbone",
+    "notochord",
+    "four limbs",
+    "feathers",
+    "lungs"
+   ],
+   "answer": 1,
+   "explanation": "All chordates have a notochord at some stage.",
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "written": [
+  {
+   "id": "demo-s-u3-1",
+   "topic_code": "bio-3.3",
+   "type": "structured",
+   "stem": "Outline Darwin's theory of evolution by natural selection.",
+   "marks": 4,
+   "model_answer": "Organisms overproduce offspring; individuals show inherited variation; there is a struggle for existence; those with favourable variations survive and reproduce; so favourable traits become more common over generations.",
+   "points": [
+    {
+     "text": "Overproduction of offspring",
+     "marks": 1,
+     "keywords": [
+      "offspring"
+     ]
+    },
+    {
+     "text": "Inherited variation",
+     "marks": 1,
+     "keywords": [
+      "variation"
+     ]
+    },
+    {
+     "text": "Struggle / competition for resources",
+     "marks": 1,
+     "keywords": [
+      "competition",
+      "struggle"
+     ]
+    },
+    {
+     "text": "Favourable traits survive, reproduce and increase",
+     "marks": 1,
+     "keywords": [
+      "survive",
+      "reproduce"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-s-u3-2",
+   "topic_code": "bio-3.5",
+   "type": "structured",
+   "stem": "Explain the rules of binomial nomenclature with an example.",
+   "marks": 4,
+   "model_answer": "Each organism has two names: genus (capital first letter) and species (small letter), written in italics or underlined separately when handwritten, for example Homo sapiens.",
+   "points": [
+    {
+     "text": "Two names: genus and species",
+     "marks": 2,
+     "keywords": [
+      "genus",
+      "species"
+     ]
+    },
+    {
+     "text": "Genus starts with a capital letter",
+     "marks": 1,
+     "keywords": [
+      "capital"
+     ]
+    },
+    {
+     "text": "Italics or underlined, with an example",
+     "marks": 1,
+     "keywords": [
+      "italic",
+      "underline"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-s-u3-3",
+   "topic_code": "bio-3.8",
+   "type": "structured",
+   "stem": "List four features that distinguish fungi from plants.",
+   "marks": 4,
+   "model_answer": "Fungi have cell walls of chitin, not cellulose; they are heterotrophic with no chlorophyll; they absorb food after external digestion; they store glycogen, not starch; their body is made of hyphae.",
+   "points": [
+    {
+     "text": "Chitin cell wall",
+     "marks": 1,
+     "keywords": [
+      "chitin"
+     ]
+    },
+    {
+     "text": "No chlorophyll / heterotrophic",
+     "marks": 1,
+     "keywords": [
+      "heterotroph",
+      "chlorophyll"
+     ]
+    },
+    {
+     "text": "Absorptive nutrition",
+     "marks": 1,
+     "keywords": [
+      "absorb"
+     ]
+    },
+    {
+     "text": "Store glycogen / hyphae",
+     "marks": 1,
+     "keywords": [
+      "glycogen",
+      "hyphae"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-s-u3-4",
+   "topic_code": "bio-3.2",
+   "type": "structured",
+   "stem": "Distinguish between homologous and analogous structures, giving one example of each.",
+   "marks": 4,
+   "model_answer": "Homologous structures have the same origin but may have different functions, for example the forelimbs of humans, whales and bats. Analogous structures have the same function but different origins, for example the wings of birds and insects.",
+   "points": [
+    {
+     "text": "Homologous: same origin",
+     "marks": 1,
+     "keywords": [
+      "homologous",
+      "origin"
+     ]
+    },
+    {
+     "text": "Example of homologous (forelimb)",
+     "marks": 1,
+     "keywords": [
+      "forelimb",
+      "limb"
+     ]
+    },
+    {
+     "text": "Analogous: same function, different origin",
+     "marks": 1,
+     "keywords": [
+      "analogous",
+      "function"
+     ]
+    },
+    {
+     "text": "Example of analogous (wings of bird and insect)",
+     "marks": 1,
+     "keywords": [
+      "wing",
+      "insect"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-e-u3-5",
+   "topic_code": "bio-3.3",
+   "type": "essay",
+   "stem": "Explain how natural selection can lead to the formation of a new species.",
+   "marks": 10,
+   "model_answer": "A population becomes separated, for example by a geographical barrier. Each group shows variation and faces different selection pressures, so different alleles are favoured. Mutations and genetic drift add differences. Over many generations the groups become so different that they can no longer interbreed to produce fertile offspring, so a new species has formed (allopatric speciation).",
+   "points": [
+    {
+     "text": "Population isolated / barrier",
+     "marks": 2,
+     "keywords": [
+      "isolate",
+      "barrier"
+     ]
+    },
+    {
+     "text": "Variation and different selection pressures",
+     "marks": 2,
+     "keywords": [
+      "variation",
+      "selection"
+     ]
+    },
+    {
+     "text": "Allele frequencies change / mutation / drift",
+     "marks": 2,
+     "keywords": [
+      "allele",
+      "mutation"
+     ]
+    },
+    {
+     "text": "Reproductive isolation: cannot interbreed fertile offspring",
+     "marks": 3,
+     "keywords": [
+      "interbreed",
+      "fertile"
+     ]
+    },
+    {
+     "text": "Names allopatric speciation",
+     "marks": 1,
+     "keywords": [
+      "allopatric"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-e-u3-6",
+   "topic_code": "bio-3.6",
+   "type": "essay",
+   "stem": "Describe the main features of the three domains of life.",
+   "marks": 10,
+   "model_answer": "Bacteria are prokaryotes with peptidoglycan walls and 70S ribosomes. Archaea are prokaryotes without peptidoglycan, often in extreme habitats, with membrane lipids different from bacteria. Eukarya have a nucleus and membrane-bound organelles, 80S ribosomes, and include protists, fungi, plants and animals.",
+   "points": [
+    {
+     "text": "Bacteria: prokaryotic, peptidoglycan wall",
+     "marks": 3,
+     "keywords": [
+      "bacteria",
+      "peptidoglycan"
+     ]
+    },
+    {
+     "text": "Archaea: prokaryotic, no peptidoglycan, extreme habitats",
+     "marks": 3,
+     "keywords": [
+      "archaea",
+      "extreme"
+     ]
+    },
+    {
+     "text": "Eukarya: nucleus and membrane-bound organelles",
+     "marks": 3,
+     "keywords": [
+      "eukarya",
+      "nucleus"
+     ]
+    },
+    {
+     "text": "Examples of eukaryotic kingdoms",
+     "marks": 1,
+     "keywords": [
+      "plant",
+      "animal",
+      "fungi"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "ask": [
+  {
+   "id": "demo-ask-u3-1",
+   "topic_code": "bio-3.3",
+   "question": "What is natural selection?",
+   "aliases": [
+    "explain natural selection",
+    "darwin theory"
+   ],
+   "keywords": [
+    "natural selection",
+    "darwin",
+    "evolution"
+   ],
+   "answer": "Natural selection is the process by which individuals with inherited variations that suit their environment survive and reproduce more, so those variations become more common in the population over generations.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 3.3: Natural selection and Darwinian theory"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u3-2",
+   "topic_code": "bio-3.5",
+   "question": "What is binomial nomenclature?",
+   "aliases": [
+    "scientific naming",
+    "two name system"
+   ],
+   "keywords": [
+    "binomial",
+    "nomenclature",
+    "scientific name"
+   ],
+   "answer": "Binomial nomenclature gives each organism a two-part scientific name: the genus (with a capital letter) and the species (in small letters), written in italics, for example Homo sapiens. It was introduced by Linnaeus.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 3.5: Classification and binomial nomenclature"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u3-3",
+   "topic_code": "bio-3.8",
+   "question": "What are the features of fungi?",
+   "aliases": [
+    "characteristics of fungi"
+   ],
+   "keywords": [
+    "fungi",
+    "chitin",
+    "hyphae"
+   ],
+   "answer": "Fungi are eukaryotic heterotrophs with cell walls of chitin. Most are made of hyphae forming a mycelium, they digest food outside the body and absorb it, store glycogen and reproduce by spores.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 3.8: Kingdom Fungi"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u3-4",
+   "topic_code": "bio-3.6",
+   "question": "What are the three domains of life?",
+   "aliases": [
+    "domains of life"
+   ],
+   "keywords": [
+    "domain",
+    "archaea",
+    "bacteria",
+    "eukarya"
+   ],
+   "answer": "The three domains are Bacteria, Archaea and Eukarya. Bacteria and Archaea are prokaryotes; Archaea lack peptidoglycan in their cell walls. Eukarya have a nucleus and membrane-bound organelles.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 3.6: Three domains of life"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u3-5",
+   "topic_code": "bio-3.4",
+   "question": "How do new species form?",
+   "aliases": [
+    "what is speciation"
+   ],
+   "keywords": [
+    "speciation",
+    "species",
+    "isolation"
+   ],
+   "answer": "New species form when populations become reproductively isolated, for example by a geographical barrier. Different selection pressures and mutations change each population until they can no longer interbreed to produce fertile offspring.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 3.4: Speciation"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "uploads": [
+  {
+   "id": "demo-upload-u3-1",
+   "topic_code": "bio-3.3",
+   "title": "Evolution by natural selection",
+   "aliases": [
+    "evolution notes",
+    "darwin notes"
+   ],
+   "keywords": [
+    "evolution",
+    "darwin",
+    "selection",
+    "species"
+   ],
+   "summary": "These notes explain Darwin and Wallace's theory of natural selection, the evidence for evolution and how new species can form.",
+   "key_points": [
+    "Variation is inherited and selection acts on it",
+    "Fossils, homologous structures and molecular data are evidence",
+    "Isolation can lead to new species",
+    "Antibiotic resistance is a modern example"
+   ],
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "visuals": [
+  {
+   "id": "demo-visual-u3-1",
+   "topic_code": "bio-3.3",
+   "title": "Natural selection",
+   "aliases": [
+    "darwin natural selection",
+    "how evolution works"
+   ],
+   "keywords": [
+    "natural selection",
+    "evolution",
+    "variation",
+    "darwin"
+   ],
+   "kind": "flowchart",
+   "alt_text": "Steps of natural selection.",
+   "image": "assets/demo/visuals/u3_selection.png",
+   "width": 1000,
+   "height": 750,
+   "style": "flat_colour",
+   "labels": [
+    {
+     "number": 1,
+     "name": "Overproduction",
+     "description": "More offspring than can survive",
+     "x": 0.054,
+     "y": 0.196
+    },
+    {
+     "number": 2,
+     "name": "Variation",
+     "description": "Inherited differences",
+     "x": 0.054,
+     "y": 0.472
+    },
+    {
+     "number": 3,
+     "name": "Competition",
+     "description": "Limited resources",
+     "x": 0.054,
+     "y": 0.748
+    },
+    {
+     "number": 4,
+     "name": "Survival",
+     "description": "Best adapted survive",
+     "x": 0.534,
+     "y": 0.196
+    },
+    {
+     "number": 5,
+     "name": "Reproduction",
+     "description": "Pass on favourable alleles",
+     "x": 0.534,
+     "y": 0.472
+    },
+    {
+     "number": 6,
+     "name": "Change",
+     "description": "Allele frequencies shift",
+     "x": 0.534,
+     "y": 0.748
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-visual-u3-2",
+   "topic_code": "bio-3.6",
+   "title": "Three domains of life",
+   "aliases": [
+    "domains",
+    "classification of life"
+   ],
+   "keywords": [
+    "domain",
+    "archaea",
+    "bacteria",
+    "eukarya",
+    "classification"
+   ],
+   "kind": "diagram",
+   "alt_text": "Life divided into three domains.",
+   "image": "assets/demo/visuals/u3_domains.png",
+   "width": 1000,
+   "height": 750,
+   "style": "flat_colour",
+   "labels": [
+    {
+     "number": 1,
+     "name": "Life",
+     "description": "All organisms",
+     "x": 0.314,
+     "y": 0.156
+    },
+    {
+     "number": 2,
+     "name": "Bacteria",
+     "description": "Prokaryotes, peptidoglycan",
+     "x": 0.034,
+     "y": 0.616
+    },
+    {
+     "number": 3,
+     "name": "Archaea",
+     "description": "Prokaryotes, extreme habitats",
+     "x": 0.354,
+     "y": 0.616
+    },
+    {
+     "number": 4,
+     "name": "Eukarya",
+     "description": "Nucleus, organelles",
+     "x": 0.674,
+     "y": 0.616
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  }
+ ]
+}

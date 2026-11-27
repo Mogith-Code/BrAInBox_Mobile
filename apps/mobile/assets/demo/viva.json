@@ -1,0 +1,604 @@
+{
+ "schema_version": 1,
+ "unit": null,
+ "notes": [],
+ "mcqs": [],
+ "written": [
+  {
+   "id": "demo-viva-1",
+   "topic_code": "bio-2.14",
+   "type": "structured",
+   "stem": "Describe the stages of aerobic respiration and state where each takes place in the cell.",
+   "marks": 5,
+   "model_answer": "Glycolysis takes place in the cytoplasm, where glucose is split into two pyruvate with a net gain of 2 ATP. In the link reaction in the mitochondrial matrix, pyruvate is converted to acetyl CoA and carbon dioxide is released. The Krebs cycle in the matrix releases carbon dioxide and produces NADH and FADH2. Oxidative phosphorylation on the inner mitochondrial membrane uses an electron transport chain with oxygen as the final electron acceptor and produces most of the ATP.",
+   "points": [
+    {
+     "text": "Glycolysis in the cytoplasm: glucose to pyruvate",
+     "marks": 1,
+     "keywords": [
+      "glycolysis",
+      "cytoplasm",
+      "pyruvate"
+     ]
+    },
+    {
+     "text": "Link reaction in the matrix: acetyl CoA and CO2",
+     "marks": 1,
+     "keywords": [
+      "link reaction",
+      "acetyl",
+      "matrix"
+     ]
+    },
+    {
+     "text": "Krebs cycle in the matrix: CO2, NADH, FADH2",
+     "marks": 1,
+     "keywords": [
+      "krebs",
+      "nadh",
+      "carbon dioxide"
+     ]
+    },
+    {
+     "text": "Electron transport chain on the inner membrane",
+     "marks": 1,
+     "keywords": [
+      "electron transport",
+      "inner membrane"
+     ]
+    },
+    {
+     "text": "Oxygen is the final electron acceptor; most ATP made",
+     "marks": 1,
+     "keywords": [
+      "oxygen",
+      "final",
+      "atp"
+     ]
+    }
+   ],
+   "samples": {
+    "good": "Glycolysis happens in the cytoplasm and splits glucose into two pyruvate, giving 2 ATP. In the link reaction in the mitochondrial matrix pyruvate becomes acetyl CoA and carbon dioxide is released. The Krebs cycle in the matrix releases carbon dioxide and makes NADH and FADH2. The electron transport chain on the inner membrane uses oxygen as the final electron acceptor and makes most of the ATP.",
+    "partial": "First glycolysis breaks glucose into pyruvate in the cytoplasm. Then the Krebs cycle happens in the mitochondria and makes carbon dioxide. At the end a lot of ATP is made.",
+    "poor": "Respiration is when we breathe in air and breathe out. It gives the body energy."
+   },
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-viva-2",
+   "topic_code": "bio-5.11",
+   "type": "structured",
+   "stem": "Explain how urine is formed in a nephron of the human kidney.",
+   "marks": 5,
+   "model_answer": "Blood enters the glomerulus at high pressure and small molecules such as water, glucose, urea and salts are forced into Bowman's capsule (ultrafiltration); blood cells and large proteins stay behind. In the proximal convoluted tubule all glucose and amino acids and much water and salt are selectively reabsorbed. The loop of Henle makes the medulla salty. In the distal tubule and collecting duct water is reabsorbed under the control of ADH, and the remaining fluid is urine.",
+   "points": [
+    {
+     "text": "Ultrafiltration in glomerulus into Bowman's capsule",
+     "marks": 1,
+     "keywords": [
+      "ultrafiltration",
+      "glomerulus",
+      "bowman"
+     ]
+    },
+    {
+     "text": "Cells and large proteins not filtered",
+     "marks": 1,
+     "keywords": [
+      "protein",
+      "cell"
+     ]
+    },
+    {
+     "text": "Selective reabsorption of glucose in the proximal tubule",
+     "marks": 1,
+     "keywords": [
+      "reabsorption",
+      "glucose",
+      "proximal"
+     ]
+    },
+    {
+     "text": "Loop of Henle makes the medulla salty",
+     "marks": 1,
+     "keywords": [
+      "loop of henle",
+      "medulla"
+     ]
+    },
+    {
+     "text": "Collecting duct reabsorbs water under ADH",
+     "marks": 1,
+     "keywords": [
+      "collecting duct",
+      "adh",
+      "water"
+     ]
+    }
+   ],
+   "samples": {
+    "good": "In ultrafiltration blood at high pressure in the glomerulus forces water, glucose, urea and salts into Bowman's capsule, but blood cells and large proteins stay in the blood. In the proximal tubule all the glucose and much water are reabsorbed by selective reabsorption. The loop of Henle makes the medulla salty. Water is reabsorbed from the collecting duct under the control of ADH, so concentrated urine is left.",
+    "partial": "Blood is filtered in the glomerulus into Bowman's capsule. Then glucose is reabsorbed back into the blood. The rest goes out as urine.",
+    "poor": "The kidney cleans the blood and makes urine which goes to the bladder."
+   },
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-viva-3",
+   "topic_code": "bio-6.2",
+   "type": "essay",
+   "stem": "Explain a dihybrid cross between pure-breeding round yellow and wrinkled green pea plants, and how it supports Mendel's law of independent assortment.",
+   "marks": 10,
+   "model_answer": "The parents RRYY and rryy produce gametes RY and ry, so the F1 are all RrYy with round yellow seeds. Each F1 plant produces four types of gamete, RY, Ry, rY and ry, in equal numbers because the alleles of the two genes assort independently. A 4 x 4 Punnett square gives an F2 phenotypic ratio of 9 round yellow : 3 round green : 3 wrinkled yellow : 1 wrinkled green. The appearance of new combinations (round green and wrinkled yellow) in this ratio supports the law of independent assortment.",
+   "points": [
+    {
+     "text": "Parental genotypes RRYY x rryy and F1 RrYy round yellow",
+     "marks": 2,
+     "keywords": [
+      "rryy",
+      "f1",
+      "round yellow"
+     ]
+    },
+    {
+     "text": "Four gamete types in equal proportion",
+     "marks": 2,
+     "keywords": [
+      "four",
+      "gamete"
+     ]
+    },
+    {
+     "text": "Punnett square for F2",
+     "marks": 2,
+     "keywords": [
+      "punnett",
+      "f2"
+     ]
+    },
+    {
+     "text": "Ratio 9:3:3:1 with phenotypes",
+     "marks": 2,
+     "keywords": [
+      "9 3 3 1"
+     ]
+    },
+    {
+     "text": "New combinations show independent assortment",
+     "marks": 2,
+     "keywords": [
+      "independent assortment",
+      "combination"
+     ]
+    }
+   ],
+   "samples": {
+    "good": "Round yellow RRYY is crossed with wrinkled green rryy. All F1 are RrYy round yellow. The F1 make four types of gamete, RY, Ry, rY and ry, in equal numbers because the genes assort independently. A Punnett square of the F2 gives 9 round yellow, 3 round green, 3 wrinkled yellow and 1 wrinkled green, a 9:3:3:1 ratio. The new combinations round green and wrinkled yellow show independent assortment.",
+    "partial": "The F1 plants are all round and yellow. When they are crossed the F2 has a ratio of 9:3:3:1.",
+    "poor": "Mendel used peas. Some were round and some were wrinkled."
+   },
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "ask": [],
+ "uploads": [
+  {
+   "id": "demo-upload-viva-1",
+   "topic_code": "bio-2.12",
+   "title": "Photosynthesis overview",
+   "aliases": [
+    "photosynthesis notes",
+    "light reactions and calvin cycle"
+   ],
+   "keywords": [
+    "photosynthesis",
+    "light",
+    "calvin",
+    "chloroplast"
+   ],
+   "summary": "These notes explain photosynthesis in two stages. The light-dependent reactions on the thylakoid membranes split water, release oxygen and make ATP and NADPH. The Calvin cycle in the stroma uses that ATP and NADPH to fix carbon dioxide with the enzyme Rubisco and make sugars. Light intensity, carbon dioxide concentration and temperature are limiting factors.",
+   "key_points": [
+    "Light-dependent reactions: thylakoids, photolysis of water, O2 released",
+    "ATP and NADPH carry energy to the Calvin cycle",
+    "Rubisco fixes CO2 to RuBP in the stroma",
+    "Limiting factors: light, CO2, temperature"
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-upload-viva-2",
+   "topic_code": "bio-5.12",
+   "title": "Nerve impulses and synapses",
+   "aliases": [
+    "nervous system notes",
+    "neuron notes"
+   ],
+   "keywords": [
+    "neuron",
+    "nerve",
+    "impulse",
+    "synapse",
+    "action potential"
+   ],
+   "summary": "These notes describe the structure of a neuron, how a resting potential is kept by the sodium-potassium pump, how an action potential is produced by sodium and potassium ion movement, and how impulses cross a synapse using neurotransmitters.",
+   "key_points": [
+    "Resting potential about -70 mV",
+    "Depolarisation by Na+ entry; repolarisation by K+ exit",
+    "Myelin gives faster saltatory conduction",
+    "Neurotransmitters make synapses one-way"
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-upload-viva-3",
+   "topic_code": "bio-7.3",
+   "title": "Protein synthesis",
+   "aliases": [
+    "transcription and translation notes",
+    "protein synthesis notes"
+   ],
+   "keywords": [
+    "protein synthesis",
+    "transcription",
+    "translation",
+    "mrna",
+    "ribosome"
+   ],
+   "summary": "These notes explain how the base sequence of a gene is used to make a protein. In transcription RNA polymerase makes mRNA from the template strand in the nucleus. In translation ribosomes read the mRNA codons and tRNA molecules bring the matching amino acids, which are joined by peptide bonds.",
+   "key_points": [
+    "Transcription in the nucleus by RNA polymerase",
+    "Introns removed before mRNA leaves",
+    "Codons are triplets; AUG starts translation",
+    "tRNA anticodons pair with codons on the ribosome"
+   ],
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "visuals": [
+  {
+   "id": "demo-visual-viva-1",
+   "topic_code": "bio-2.12",
+   "title": "Two stages of photosynthesis",
+   "aliases": [
+    "photosynthesis",
+    "light dependent and calvin cycle"
+   ],
+   "keywords": [
+    "photosynthesis",
+    "light",
+    "calvin",
+    "chloroplast",
+    "thylakoid"
+   ],
+   "kind": "flowchart",
+   "alt_text": "Light reactions feed the Calvin cycle.",
+   "image": "assets/demo/visuals/viva_photosynthesis.png",
+   "width": 1000,
+   "height": 750,
+   "style": "flat_colour",
+   "labels": [
+    {
+     "number": 1,
+     "name": "Light energy",
+     "description": "Absorbed by chlorophyll",
+     "x": 0.054,
+     "y": 0.196
+    },
+    {
+     "number": 2,
+     "name": "Photolysis",
+     "description": "Water split, O2 released",
+     "x": 0.054,
+     "y": 0.472
+    },
+    {
+     "number": 3,
+     "name": "ATP and NADPH",
+     "description": "Made on thylakoids",
+     "x": 0.054,
+     "y": 0.748
+    },
+    {
+     "number": 4,
+     "name": "Carbon fixation",
+     "description": "Rubisco adds CO2 to RuBP",
+     "x": 0.534,
+     "y": 0.196
+    },
+    {
+     "number": 5,
+     "name": "Reduction",
+     "description": "Uses ATP and NADPH",
+     "x": 0.534,
+     "y": 0.472
+    },
+    {
+     "number": 6,
+     "name": "Sugars",
+     "description": "Glucose and starch made",
+     "x": 0.534,
+     "y": 0.748
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-visual-viva-2",
+   "topic_code": "bio-5.12",
+   "title": "Transmission across a synapse",
+   "aliases": [
+    "synapse",
+    "synaptic transmission"
+   ],
+   "keywords": [
+    "synapse",
+    "neurotransmitter",
+    "neuron",
+    "impulse",
+    "acetylcholine"
+   ],
+   "kind": "flowchart",
+   "alt_text": "Steps of synaptic transmission.",
+   "image": "assets/demo/visuals/viva_synapse.png",
+   "width": 1000,
+   "height": 750,
+   "style": "flat_colour",
+   "labels": [
+    {
+     "number": 1,
+     "name": "Impulse arrives",
+     "description": "At the presynaptic knob",
+     "x": 0.054,
+     "y": 0.196
+    },
+    {
+     "number": 2,
+     "name": "Calcium enters",
+     "description": "Ca2+ channels open",
+     "x": 0.054,
+     "y": 0.472
+    },
+    {
+     "number": 3,
+     "name": "Vesicles release",
+     "description": "Neurotransmitter into cleft",
+     "x": 0.054,
+     "y": 0.748
+    },
+    {
+     "number": 4,
+     "name": "Binding",
+     "description": "To receptors on next neuron",
+     "x": 0.534,
+     "y": 0.196
+    },
+    {
+     "number": 5,
+     "name": "New impulse",
+     "description": "Postsynaptic membrane depolarises",
+     "x": 0.534,
+     "y": 0.472
+    },
+    {
+     "number": 6,
+     "name": "Breakdown",
+     "description": "Enzyme removes transmitter",
+     "x": 0.534,
+     "y": 0.748
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-visual-viva-3",
+   "topic_code": "bio-2.10",
+   "title": "Mitosis compared with meiosis",
+   "aliases": [
+    "mitosis vs meiosis",
+    "meiosis"
+   ],
+   "keywords": [
+    "meiosis",
+    "mitosis",
+    "haploid",
+    "diploid",
+    "cell division"
+   ],
+   "kind": "table",
+   "alt_text": "Comparison of mitosis and meiosis.",
+   "image": "assets/demo/visuals/viva_meiosis.png",
+   "width": 1000,
+   "height": 750,
+   "style": "flat_colour",
+   "labels": [
+    {
+     "number": 1,
+     "name": "One division / Two divisions",
+     "description": "",
+     "x": null,
+     "y": null
+    },
+    {
+     "number": 2,
+     "name": "Two daughter cells / Four daughter cells",
+     "description": "",
+     "x": null,
+     "y": null
+    },
+    {
+     "number": 3,
+     "name": "Diploid, identical / Haploid, genetically different",
+     "description": "",
+     "x": null,
+     "y": null
+    },
+    {
+     "number": 4,
+     "name": "Growth and repair / Gamete formation",
+     "description": "",
+     "x": null,
+     "y": null
+    },
+    {
+     "number": 5,
+     "name": "No crossing over / Crossing over in prophase I",
+     "description": "",
+     "x": null,
+     "y": null
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-visual-viva-4",
+   "topic_code": "bio-8.2",
+   "title": "The carbon cycle",
+   "aliases": [
+    "carbon cycle"
+   ],
+   "keywords": [
+    "carbon",
+    "cycle",
+    "photosynthesis",
+    "respiration",
+    "combustion"
+   ],
+   "kind": "flowchart",
+   "alt_text": "How carbon moves between air and living things.",
+   "image": "assets/demo/visuals/viva_carbon.png",
+   "width": 1000,
+   "height": 750,
+   "style": "flat_colour",
+   "labels": [
+    {
+     "number": 1,
+     "name": "CO2 in air",
+     "description": "Atmosphere",
+     "x": 0.364,
+     "y": 0.144
+    },
+    {
+     "number": 2,
+     "name": "Photosynthesis",
+     "description": "Producers fix CO2",
+     "x": 0.663,
+     "y": 0.319
+    },
+    {
+     "number": 3,
+     "name": "Food chains",
+     "description": "Carbon in consumers",
+     "x": 0.663,
+     "y": 0.668
+    },
+    {
+     "number": 4,
+     "name": "Decomposition",
+     "description": "Dead matter broken down",
+     "x": 0.364,
+     "y": 0.843
+    },
+    {
+     "number": 5,
+     "name": "Respiration",
+     "description": "CO2 released",
+     "x": 0.065,
+     "y": 0.668
+    },
+    {
+     "number": 6,
+     "name": "Combustion",
+     "description": "Fossil fuels burned",
+     "x": 0.065,
+     "y": 0.319
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-visual-viva-5",
+   "topic_code": "bio-7.2",
+   "title": "DNA replication",
+   "aliases": [
+    "dna replication",
+    "semi conservative replication"
+   ],
+   "keywords": [
+    "replication",
+    "dna",
+    "helicase",
+    "polymerase",
+    "okazaki"
+   ],
+   "kind": "flowchart",
+   "alt_text": "Steps of semi-conservative DNA replication.",
+   "image": "assets/demo/visuals/viva_replication.png",
+   "width": 1000,
+   "height": 750,
+   "style": "flat_colour",
+   "labels": [
+    {
+     "number": 1,
+     "name": "Unwinding",
+     "description": "Helicase breaks H bonds",
+     "x": 0.054,
+     "y": 0.196
+    },
+    {
+     "number": 2,
+     "name": "Priming",
+     "description": "RNA primers added",
+     "x": 0.054,
+     "y": 0.472
+    },
+    {
+     "number": 3,
+     "name": "Base pairing",
+     "description": "A-T and C-G",
+     "x": 0.054,
+     "y": 0.748
+    },
+    {
+     "number": 4,
+     "name": "Elongation",
+     "description": "DNA polymerase, 5' to 3'",
+     "x": 0.534,
+     "y": 0.196
+    },
+    {
+     "number": 5,
+     "name": "Joining",
+     "description": "Ligase joins Okazaki fragments",
+     "x": 0.534,
+     "y": 0.472
+    },
+    {
+     "number": 6,
+     "name": "Two molecules",
+     "description": "Each half old, half new",
+     "x": 0.534,
+     "y": 0.748
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "ocr": {
+  "question_id": "demo-viva-2",
+  "image": "assets/demo/ocr/handwritten_answer.png",
+  "text": "Blood enters the glomerulus at high pressure. Ultrafiltration forces water, glucose, urea and salts into Bowman's capsule, but blood cells and proteins stay in the blood.\nIn the proximal tubule glucose is reabsorbed by selective reabsorption.\nThe loop of Henle makes the medulla salty and water is reabsorbed in the collecting duct when ADH is present.",
+  "source": "authored",
+  "reviewed": false
+ }
+}

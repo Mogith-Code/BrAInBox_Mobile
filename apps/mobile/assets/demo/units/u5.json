@@ -1,0 +1,1192 @@
+{
+ "schema_version": 1,
+ "unit": 5,
+ "notes": [
+  {
+   "id": "demo-note-u5-1",
+   "topic_code": "bio-5.5",
+   "full": [
+    {
+     "type": "heading",
+     "text": "The human heart",
+     "level": 2
+    },
+    {
+     "type": "paragraph",
+     "text": "The heart has four chambers: two atria and two ventricles. The right side pumps deoxygenated blood to the lungs; the left side pumps oxygenated blood to the body (double circulation).",
+     "highlights": [
+      "atria",
+      "ventricles",
+      "double circulation"
+     ]
+    },
+    {
+     "type": "bullet_list",
+     "items": [
+      "Atrioventricular valves (tricuspid and bicuspid) stop backflow into the atria",
+      "Semilunar valves stop backflow from the arteries into the ventricles",
+      "The left ventricle wall is thickest because it pumps blood around the whole body"
+     ]
+    },
+    {
+     "type": "heading",
+     "text": "Cardiac cycle",
+     "level": 3
+    },
+    {
+     "type": "paragraph",
+     "text": "Atrial systole, ventricular systole and diastole. The heartbeat starts at the sinoatrial node (pacemaker), spreads to the atrioventricular node, then down the bundle of His and Purkinje fibres.",
+     "highlights": [
+      "sinoatrial node",
+      "atrioventricular node",
+      "bundle of His"
+     ]
+    },
+    {
+     "type": "definition",
+     "term": "Myogenic",
+     "text": "The heartbeat starts in the heart muscle itself, without nervous stimulation."
+    },
+    {
+     "type": "heading",
+     "text": "Blood vessels",
+     "level": 3
+    },
+    {
+     "type": "bullet_list",
+     "items": [
+      "Arteries: thick muscular, elastic walls; high pressure",
+      "Veins: thin walls, wide lumen, valves; low pressure",
+      "Capillaries: one cell thick, for exchange"
+     ]
+    },
+    {
+     "type": "tip",
+     "title": "Past-paper tip",
+     "text": "Explain valve opening and closing in terms of pressure differences between chambers."
+    }
+   ],
+   "short": [
+    {
+     "type": "bullet_list",
+     "items": [
+      "4 chambers; double circulation",
+      "Left ventricle thickest wall",
+      "AV valves and semilunar valves prevent backflow",
+      "SAN, AVN, bundle of His, Purkinje fibres",
+      "Heart muscle is myogenic",
+      "Arteries thick walls; veins have valves; capillaries one cell thick"
+     ]
+    }
+   ],
+   "read_minutes": 7,
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-note-u5-2",
+   "topic_code": "bio-5.11",
+   "full": [
+    {
+     "type": "heading",
+     "text": "The human kidney",
+     "level": 2
+    },
+    {
+     "type": "paragraph",
+     "text": "The functional unit of the kidney is the nephron.",
+     "highlights": [
+      "nephron"
+     ]
+    },
+    {
+     "type": "bullet_list",
+     "items": [
+      "Ultrafiltration in the glomerulus and Bowman's capsule: small molecules pass out under high pressure",
+      "Selective reabsorption in the proximal convoluted tubule: all glucose, amino acids and much water and salts return to the blood",
+      "Loop of Henle: creates a high salt concentration in the medulla",
+      "Distal tubule and collecting duct: water reabsorption controlled by *ADH*"
+     ]
+    },
+    {
+     "type": "definition",
+     "term": "Ultrafiltration",
+     "text": "Filtration of blood under high pressure through the glomerular capillary walls and basement membrane, leaving cells and large proteins behind."
+    },
+    {
+     "type": "heading",
+     "text": "Osmoregulation",
+     "level": 3
+    },
+    {
+     "type": "paragraph",
+     "text": "When blood water potential falls, the hypothalamus detects it and the posterior pituitary releases ADH. ADH makes the collecting duct more permeable to water, so more water is reabsorbed and urine becomes concentrated.",
+     "highlights": []
+    },
+    {
+     "type": "tip",
+     "title": "Past-paper tip",
+     "text": "Glucose in urine is a sign that blood glucose is above the kidney's reabsorption threshold, as in diabetes mellitus."
+    }
+   ],
+   "short": [
+    {
+     "type": "bullet_list",
+     "items": [
+      "Nephron = functional unit",
+      "Glomerulus + Bowman's capsule: ultrafiltration",
+      "PCT: reabsorbs glucose, amino acids, water",
+      "Loop of Henle: salty medulla",
+      "Collecting duct: water reabsorption under ADH",
+      "ADH from posterior pituitary"
+     ]
+    }
+   ],
+   "read_minutes": 7,
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-note-u5-3",
+   "topic_code": "bio-5.12",
+   "full": [
+    {
+     "type": "heading",
+     "text": "The neuron",
+     "level": 2
+    },
+    {
+     "type": "paragraph",
+     "text": "A neuron has a cell body, dendrites that receive impulses and an axon that carries them away. Many axons have a myelin sheath with gaps called nodes of Ranvier.",
+     "highlights": [
+      "cell body",
+      "dendrites",
+      "axon",
+      "myelin sheath",
+      "nodes of Ranvier"
+     ]
+    },
+    {
+     "type": "definition",
+     "term": "Resting potential",
+     "text": "The potential difference of about -70 mV across the membrane of a neuron that is not conducting an impulse."
+    },
+    {
+     "type": "heading",
+     "text": "Action potential",
+     "level": 3
+    },
+    {
+     "type": "bullet_list",
+     "items": [
+      "Depolarisation: sodium channels open and Na+ ions enter",
+      "Repolarisation: potassium channels open and K+ ions leave",
+      "The sodium-potassium pump restores the resting potential"
+     ]
+    },
+    {
+     "type": "paragraph",
+     "text": "In myelinated axons the impulse jumps from node to node (saltatory conduction), which is faster.",
+     "highlights": [
+      "saltatory conduction"
+     ]
+    },
+    {
+     "type": "heading",
+     "text": "Synapse",
+     "level": 3
+    },
+    {
+     "type": "paragraph",
+     "text": "At a synapse the impulse causes release of a neurotransmitter such as acetylcholine, which diffuses across the cleft and binds to receptors on the next neuron.",
+     "highlights": [
+      "neurotransmitter"
+     ]
+    },
+    {
+     "type": "tip",
+     "title": "Past-paper tip",
+     "text": "Synapses make transmission one-way because neurotransmitter is released only from the presynaptic side."
+    }
+   ],
+   "short": [
+    {
+     "type": "bullet_list",
+     "items": [
+      "Dendrites in, axon out, myelin speeds conduction",
+      "Resting potential about -70 mV",
+      "Depolarisation: Na+ in; repolarisation: K+ out",
+      "Saltatory conduction between nodes of Ranvier",
+      "Synapse: neurotransmitter crosses the cleft; one-way"
+     ]
+    }
+   ],
+   "read_minutes": 6,
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "mcqs": [
+  {
+   "id": "demo-mcq-u5-01",
+   "topic_code": "bio-5.1",
+   "stem": "Which animal tissue covers body surfaces and lines cavities?",
+   "options": [
+    "Epithelial",
+    "Muscular",
+    "Nervous",
+    "Connective",
+    "Skeletal"
+   ],
+   "answer": 0,
+   "explanation": "Epithelial tissue covers surfaces and lines organs.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u5-02",
+   "topic_code": "bio-5.2",
+   "stem": "Which enzyme begins the digestion of starch in the mouth?",
+   "options": [
+    "Pepsin",
+    "Salivary amylase",
+    "Lipase",
+    "Trypsin",
+    "Maltase only"
+   ],
+   "answer": 1,
+   "explanation": "Salivary amylase breaks starch into maltose.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u5-03",
+   "topic_code": "bio-5.2",
+   "stem": "Bile is produced by the",
+   "options": [
+    "gall bladder",
+    "liver",
+    "pancreas",
+    "stomach",
+    "small intestine"
+   ],
+   "answer": 1,
+   "explanation": "Bile is made in the liver and stored in the gall bladder.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u5-04",
+   "topic_code": "bio-5.3",
+   "stem": "Villi increase the rate of absorption mainly by",
+   "options": [
+    "producing enzymes",
+    "increasing surface area",
+    "moving food",
+    "killing bacteria",
+    "storing fat"
+   ],
+   "answer": 1,
+   "explanation": "Villi and microvilli give a huge surface area.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u5-05",
+   "topic_code": "bio-5.3",
+   "stem": "Fatty acids and glycerol are absorbed mainly into the",
+   "options": [
+    "blood capillaries",
+    "lacteals",
+    "liver directly",
+    "large intestine",
+    "stomach wall"
+   ],
+   "answer": 1,
+   "explanation": "Lipids enter lacteals, part of the lymphatic system.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u5-06",
+   "topic_code": "bio-5.4",
+   "stem": "In fish the circulation is",
+   "options": [
+    "single",
+    "double",
+    "open",
+    "absent",
+    "partly double"
+   ],
+   "answer": 0,
+   "explanation": "Blood passes through the heart once per circuit in fish.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u5-07",
+   "topic_code": "bio-5.5",
+   "stem": "Which chamber of the heart has the thickest wall?",
+   "options": [
+    "Right atrium",
+    "Left atrium",
+    "Right ventricle",
+    "Left ventricle",
+    "All are equal"
+   ],
+   "answer": 3,
+   "explanation": "The left ventricle pumps blood around the whole body.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u5-08",
+   "topic_code": "bio-5.5",
+   "stem": "The pacemaker of the heart is the",
+   "options": [
+    "AV node",
+    "SA node",
+    "bundle of His",
+    "Purkinje fibres",
+    "vagus nerve"
+   ],
+   "answer": 1,
+   "explanation": "The sinoatrial node starts each heartbeat.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u5-09",
+   "topic_code": "bio-5.5",
+   "stem": "Which blood vessels have valves along their length?",
+   "options": [
+    "Arteries",
+    "Arterioles",
+    "Capillaries",
+    "Veins",
+    "Aorta"
+   ],
+   "answer": 3,
+   "explanation": "Veins have valves to stop backflow at low pressure.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u5-10",
+   "topic_code": "bio-5.5",
+   "stem": "The vessel that carries oxygenated blood from the lungs to the heart is the",
+   "options": [
+    "pulmonary artery",
+    "pulmonary vein",
+    "vena cava",
+    "aorta",
+    "hepatic portal vein"
+   ],
+   "answer": 1,
+   "explanation": "Pulmonary veins carry oxygenated blood to the left atrium.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u5-11",
+   "topic_code": "bio-5.6",
+   "stem": "The main function of haemoglobin is to",
+   "options": [
+    "fight infection",
+    "carry oxygen",
+    "clot blood",
+    "make antibodies",
+    "digest food"
+   ],
+   "answer": 1,
+   "explanation": "Haemoglobin binds oxygen in the lungs and releases it in tissues.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u5-12",
+   "topic_code": "bio-5.6",
+   "stem": "Blood cells that produce antibodies are",
+   "options": [
+    "B lymphocytes (plasma cells)",
+    "erythrocytes",
+    "platelets",
+    "neutrophils",
+    "macrophages only"
+   ],
+   "answer": 0,
+   "explanation": "Plasma cells derived from B lymphocytes secrete antibodies.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u5-13",
+   "topic_code": "bio-5.7",
+   "stem": "Gas exchange surfaces are efficient because they",
+   "options": [
+    "are thick and dry",
+    "have a large surface area and are thin and moist",
+    "have few blood vessels",
+    "are always internal only",
+    "are covered by a cuticle"
+   ],
+   "answer": 1,
+   "explanation": "Large, thin, moist surfaces with a good supply favour diffusion.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u5-14",
+   "topic_code": "bio-5.8",
+   "stem": "During inspiration the diaphragm",
+   "options": [
+    "relaxes and domes upwards",
+    "contracts and flattens",
+    "does not move",
+    "pushes air out",
+    "contracts and domes upwards"
+   ],
+   "answer": 1,
+   "explanation": "Diaphragm contraction increases the thoracic volume.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u5-15",
+   "topic_code": "bio-5.9",
+   "stem": "Vaccination gives which type of immunity?",
+   "options": [
+    "Natural passive",
+    "Artificial passive",
+    "Artificial active",
+    "Natural active",
+    "Innate only"
+   ],
+   "answer": 2,
+   "explanation": "A vaccine makes the body produce its own antibodies and memory cells.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u5-16",
+   "topic_code": "bio-5.9",
+   "stem": "Antibodies received by a baby through breast milk give",
+   "options": [
+    "artificial active immunity",
+    "natural passive immunity",
+    "natural active immunity",
+    "artificial passive immunity",
+    "no immunity"
+   ],
+   "answer": 1,
+   "explanation": "Antibodies come ready-made from the mother.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u5-17",
+   "topic_code": "bio-5.10",
+   "stem": "The main nitrogenous excretory product of humans is",
+   "options": [
+    "ammonia",
+    "urea",
+    "uric acid",
+    "creatine",
+    "nitrate"
+   ],
+   "answer": 1,
+   "explanation": "Humans excrete nitrogen mainly as urea.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u5-18",
+   "topic_code": "bio-5.11",
+   "stem": "Ultrafiltration takes place in the",
+   "options": [
+    "loop of Henle",
+    "glomerulus and Bowman's capsule",
+    "collecting duct",
+    "ureter",
+    "distal tubule"
+   ],
+   "answer": 1,
+   "explanation": "High pressure in the glomerulus forces filtrate into Bowman's capsule.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u5-19",
+   "topic_code": "bio-5.11",
+   "stem": "Glucose is normally completely reabsorbed in the",
+   "options": [
+    "proximal convoluted tubule",
+    "loop of Henle",
+    "collecting duct",
+    "bladder",
+    "glomerulus"
+   ],
+   "answer": 0,
+   "explanation": "The PCT reabsorbs all glucose in a healthy person.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u5-20",
+   "topic_code": "bio-5.11",
+   "stem": "ADH increases water reabsorption by acting on the",
+   "options": [
+    "glomerulus",
+    "collecting duct",
+    "proximal tubule",
+    "ureter",
+    "renal artery"
+   ],
+   "answer": 1,
+   "explanation": "ADH makes collecting duct walls more permeable to water.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u5-21",
+   "topic_code": "bio-5.12",
+   "stem": "During depolarisation of a neuron",
+   "options": [
+    "K+ ions enter",
+    "Na+ ions enter",
+    "Na+ ions leave",
+    "Cl- ions leave",
+    "no ions move"
+   ],
+   "answer": 1,
+   "explanation": "Voltage-gated sodium channels open and Na+ enters.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u5-22",
+   "topic_code": "bio-5.12",
+   "stem": "Saltatory conduction happens in",
+   "options": [
+    "unmyelinated axons",
+    "myelinated axons",
+    "dendrites only",
+    "synapses",
+    "muscle fibres"
+   ],
+   "answer": 1,
+   "explanation": "Impulses jump between nodes of Ranvier.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u5-23",
+   "topic_code": "bio-5.13",
+   "stem": "The part of the brain that controls balance and coordination is the",
+   "options": [
+    "cerebrum",
+    "cerebellum",
+    "medulla oblongata",
+    "hypothalamus",
+    "thalamus"
+   ],
+   "answer": 1,
+   "explanation": "The cerebellum coordinates movement and balance.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u5-24",
+   "topic_code": "bio-5.15",
+   "stem": "Insulin is secreted by",
+   "options": [
+    "alpha cells of the pancreas",
+    "beta cells of the islets of Langerhans",
+    "the adrenal gland",
+    "the thyroid",
+    "the liver"
+   ],
+   "answer": 1,
+   "explanation": "Beta cells secrete insulin, which lowers blood glucose.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u5-25",
+   "topic_code": "bio-5.18",
+   "stem": "The joint at the knee is an example of a",
+   "options": [
+    "ball and socket joint",
+    "hinge joint",
+    "pivot joint",
+    "fixed joint",
+    "gliding joint"
+   ],
+   "answer": 1,
+   "explanation": "The knee allows movement mainly in one plane.",
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "written": [
+  {
+   "id": "demo-s-u5-1",
+   "topic_code": "bio-5.5",
+   "type": "structured",
+   "stem": "Explain how the heartbeat is started and coordinated.",
+   "marks": 4,
+   "model_answer": "The heartbeat is myogenic. The sinoatrial node sends a wave of excitation over the atria, which contract. The atrioventricular node delays it, then passes it down the bundle of His and Purkinje fibres so the ventricles contract from the apex upwards.",
+   "points": [
+    {
+     "text": "Myogenic / SA node is the pacemaker",
+     "marks": 1,
+     "keywords": [
+      "sinoatrial",
+      "pacemaker"
+     ]
+    },
+    {
+     "text": "Atria contract first",
+     "marks": 1,
+     "keywords": [
+      "atria"
+     ]
+    },
+    {
+     "text": "AV node delays the impulse",
+     "marks": 1,
+     "keywords": [
+      "atrioventricular",
+      "delay"
+     ]
+    },
+    {
+     "text": "Bundle of His / Purkinje fibres, ventricles contract",
+     "marks": 1,
+     "keywords": [
+      "purkinje",
+      "ventricle"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-s-u5-2",
+   "topic_code": "bio-5.11",
+   "type": "structured",
+   "stem": "Describe how urine is formed in a nephron.",
+   "marks": 4,
+   "model_answer": "Blood is filtered under high pressure in the glomerulus into Bowman's capsule (ultrafiltration). Glucose, amino acids, salts and water are selectively reabsorbed in the proximal tubule. The loop of Henle concentrates salts in the medulla. Water is reabsorbed from the collecting duct under the control of ADH.",
+   "points": [
+    {
+     "text": "Ultrafiltration in glomerulus / Bowman's capsule",
+     "marks": 1,
+     "keywords": [
+      "ultrafiltration",
+      "glomerulus"
+     ]
+    },
+    {
+     "text": "Selective reabsorption in proximal tubule",
+     "marks": 1,
+     "keywords": [
+      "reabsorption",
+      "proximal"
+     ]
+    },
+    {
+     "text": "Loop of Henle concentrates medulla",
+     "marks": 1,
+     "keywords": [
+      "loop of henle"
+     ]
+    },
+    {
+     "text": "Collecting duct water reabsorption with ADH",
+     "marks": 1,
+     "keywords": [
+      "collecting duct",
+      "adh"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-s-u5-3",
+   "topic_code": "bio-5.12",
+   "type": "structured",
+   "stem": "Explain how an action potential is produced in a neuron.",
+   "marks": 4,
+   "model_answer": "A stimulus opens sodium channels, Na+ ions enter and the membrane depolarises. Then sodium channels close and potassium channels open, K+ ions leave and the membrane repolarises. The sodium-potassium pump restores the resting potential.",
+   "points": [
+    {
+     "text": "Na+ channels open, Na+ enters",
+     "marks": 1,
+     "keywords": [
+      "sodium",
+      "enter"
+     ]
+    },
+    {
+     "text": "Depolarisation",
+     "marks": 1,
+     "keywords": [
+      "depolarisation"
+     ]
+    },
+    {
+     "text": "K+ leaves, repolarisation",
+     "marks": 1,
+     "keywords": [
+      "potassium",
+      "repolarisation"
+     ]
+    },
+    {
+     "text": "Sodium-potassium pump restores resting potential",
+     "marks": 1,
+     "keywords": [
+      "pump",
+      "resting"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-s-u5-4",
+   "topic_code": "bio-5.9",
+   "type": "structured",
+   "stem": "Distinguish between active and passive immunity with one example of each.",
+   "marks": 4,
+   "model_answer": "Active immunity is when the body makes its own antibodies and memory cells, for example after infection or vaccination; it is long-lasting. Passive immunity is when ready-made antibodies are received, for example from the mother or an antiserum; it is short-lived.",
+   "points": [
+    {
+     "text": "Active: body makes own antibodies / memory cells",
+     "marks": 1,
+     "keywords": [
+      "own",
+      "antibody"
+     ]
+    },
+    {
+     "text": "Active example: vaccination or infection",
+     "marks": 1,
+     "keywords": [
+      "vaccine",
+      "infection"
+     ]
+    },
+    {
+     "text": "Passive: ready-made antibodies received",
+     "marks": 1,
+     "keywords": [
+      "ready made",
+      "receive"
+     ]
+    },
+    {
+     "text": "Passive example: from mother / antiserum, short-lived",
+     "marks": 1,
+     "keywords": [
+      "mother",
+      "antiserum"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-e-u5-5",
+   "topic_code": "bio-5.16",
+   "type": "essay",
+   "stem": "Explain how blood glucose concentration is kept constant in humans.",
+   "marks": 10,
+   "model_answer": "Blood glucose is detected by the islets of Langerhans in the pancreas. When it rises, beta cells secrete insulin, which increases uptake of glucose by cells and its conversion to glycogen in the liver and muscles, lowering blood glucose. When it falls, alpha cells secrete glucagon, which causes the liver to break down glycogen to glucose and raises blood glucose. This is negative feedback.",
+   "points": [
+    {
+     "text": "Pancreas / islets detect the change",
+     "marks": 2,
+     "keywords": [
+      "pancreas",
+      "islet"
+     ]
+    },
+    {
+     "text": "Insulin from beta cells lowers glucose",
+     "marks": 2,
+     "keywords": [
+      "insulin",
+      "beta"
+     ]
+    },
+    {
+     "text": "Glycogen formed in liver / muscles",
+     "marks": 2,
+     "keywords": [
+      "glycogen",
+      "liver"
+     ]
+    },
+    {
+     "text": "Glucagon from alpha cells raises glucose",
+     "marks": 2,
+     "keywords": [
+      "glucagon",
+      "alpha"
+     ]
+    },
+    {
+     "text": "Negative feedback",
+     "marks": 2,
+     "keywords": [
+      "negative feedback"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-e-u5-6",
+   "topic_code": "bio-5.8",
+   "type": "essay",
+   "stem": "Describe the mechanism of breathing in humans.",
+   "marks": 10,
+   "model_answer": "During inspiration the external intercostal muscles contract, moving the ribs up and out, and the diaphragm contracts and flattens. The thoracic volume increases and pressure falls below atmospheric, so air enters. During expiration these muscles relax, volume decreases, pressure rises above atmospheric and air is pushed out; in forced expiration the internal intercostals and abdominal muscles contract.",
+   "points": [
+    {
+     "text": "Intercostal muscles move ribs up and out",
+     "marks": 2,
+     "keywords": [
+      "intercostal",
+      "rib"
+     ]
+    },
+    {
+     "text": "Diaphragm contracts and flattens",
+     "marks": 2,
+     "keywords": [
+      "diaphragm",
+      "flatten"
+     ]
+    },
+    {
+     "text": "Volume increases, pressure decreases, air in",
+     "marks": 2,
+     "keywords": [
+      "volume",
+      "pressure"
+     ]
+    },
+    {
+     "text": "Expiration: muscles relax, air pushed out",
+     "marks": 2,
+     "keywords": [
+      "expiration",
+      "relax"
+     ]
+    },
+    {
+     "text": "Forced expiration: internal intercostals / abdominal muscles",
+     "marks": 2,
+     "keywords": [
+      "internal",
+      "abdominal"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "ask": [
+  {
+   "id": "demo-ask-u5-1",
+   "topic_code": "bio-5.11",
+   "question": "How does the kidney form urine?",
+   "aliases": [
+    "urine formation",
+    "nephron function"
+   ],
+   "keywords": [
+    "kidney",
+    "nephron",
+    "urine",
+    "ultrafiltration"
+   ],
+   "answer": "In each nephron blood is filtered under pressure in the glomerulus into Bowman's capsule. Useful substances such as glucose and much water are reabsorbed in the proximal tubule. The loop of Henle and the collecting duct, controlled by ADH, adjust how much water is kept, and the rest leaves as urine.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 5.11: The human kidney"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u5-2",
+   "topic_code": "bio-5.5",
+   "question": "Why is the left ventricle wall thicker than the right?",
+   "aliases": [
+    "left ventricle thick wall"
+   ],
+   "keywords": [
+    "ventricle",
+    "heart",
+    "wall"
+   ],
+   "answer": "The left ventricle pumps blood all around the body, which needs much higher pressure. The right ventricle pumps only to the nearby lungs, so it has a thinner muscular wall.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 5.5: The human heart and blood vessels"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u5-3",
+   "topic_code": "bio-5.12",
+   "question": "What is saltatory conduction?",
+   "aliases": [
+    "saltatory",
+    "nodes of ranvier"
+   ],
+   "keywords": [
+    "myelin",
+    "neuron",
+    "saltatory",
+    "impulse"
+   ],
+   "answer": "In myelinated axons the action potential jumps from one node of Ranvier to the next, because the myelin sheath insulates the axon in between. This is saltatory conduction and makes the impulse much faster.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 5.12: Nervous coordination and the neuron"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u5-4",
+   "topic_code": "bio-5.9",
+   "question": "How do vaccines work?",
+   "aliases": [
+    "what is vaccination"
+   ],
+   "keywords": [
+    "vaccine",
+    "immunity",
+    "antibody",
+    "memory cell"
+   ],
+   "answer": "A vaccine contains antigens from a weakened, killed or partial pathogen. The immune system makes antibodies and memory cells against it, so a later infection is met with a faster and stronger response. This is artificial active immunity.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 5.9: Immunity"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u5-5",
+   "topic_code": "bio-5.15",
+   "question": "What does insulin do?",
+   "aliases": [
+    "function of insulin"
+   ],
+   "keywords": [
+    "insulin",
+    "glucose",
+    "pancreas"
+   ],
+   "answer": "Insulin is secreted by the beta cells of the pancreas when blood glucose is high. It increases glucose uptake by cells and its conversion to glycogen in the liver and muscles, lowering blood glucose.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 5.15: Endocrine system"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "uploads": [
+  {
+   "id": "demo-upload-u5-1",
+   "topic_code": "bio-5.11",
+   "title": "Excretion and the kidney",
+   "aliases": [
+    "kidney notes",
+    "nephron notes"
+   ],
+   "keywords": [
+    "kidney",
+    "nephron",
+    "excretion",
+    "urine"
+   ],
+   "summary": "These notes explain the structure of the kidney and nephron and how urine is formed by ultrafiltration, selective reabsorption and water reabsorption under ADH control.",
+   "key_points": [
+    "Nephron is the functional unit",
+    "Ultrafiltration in the glomerulus",
+    "Glucose reabsorbed in the proximal tubule",
+    "ADH controls water reabsorption"
+   ],
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "visuals": [
+  {
+   "id": "demo-visual-u5-1",
+   "topic_code": "bio-5.11",
+   "title": "How a nephron makes urine",
+   "aliases": [
+    "nephron",
+    "kidney nephron",
+    "urine formation"
+   ],
+   "keywords": [
+    "nephron",
+    "kidney",
+    "glomerulus",
+    "urine",
+    "loop of henle"
+   ],
+   "kind": "flowchart",
+   "alt_text": "Stages of urine formation along a nephron.",
+   "image": "assets/demo/visuals/u5_nephron.png",
+   "width": 1000,
+   "height": 750,
+   "style": "flat_colour",
+   "labels": [
+    {
+     "number": 1,
+     "name": "Glomerulus",
+     "description": "Ultrafiltration under pressure",
+     "x": 0.054,
+     "y": 0.196
+    },
+    {
+     "number": 2,
+     "name": "Bowman's capsule",
+     "description": "Collects filtrate",
+     "x": 0.054,
+     "y": 0.472
+    },
+    {
+     "number": 3,
+     "name": "Proximal tubule",
+     "description": "Reabsorbs glucose, water",
+     "x": 0.054,
+     "y": 0.748
+    },
+    {
+     "number": 4,
+     "name": "Loop of Henle",
+     "description": "Salty medulla",
+     "x": 0.534,
+     "y": 0.196
+    },
+    {
+     "number": 5,
+     "name": "Distal tubule",
+     "description": "Salt balance",
+     "x": 0.534,
+     "y": 0.472
+    },
+    {
+     "number": 6,
+     "name": "Collecting duct",
+     "description": "Water out with ADH",
+     "x": 0.534,
+     "y": 0.748
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-visual-u5-2",
+   "topic_code": "bio-5.5",
+   "title": "Path of blood through the heart",
+   "aliases": [
+    "blood flow heart",
+    "double circulation"
+   ],
+   "keywords": [
+    "heart",
+    "blood",
+    "atrium",
+    "ventricle",
+    "circulation"
+   ],
+   "kind": "flowchart",
+   "alt_text": "Double circulation through the heart.",
+   "image": "assets/demo/visuals/u5_heart.png",
+   "width": 1000,
+   "height": 750,
+   "style": "flat_colour",
+   "labels": [
+    {
+     "number": 1,
+     "name": "Right atrium",
+     "description": "From vena cava",
+     "x": 0.364,
+     "y": 0.144
+    },
+    {
+     "number": 2,
+     "name": "Right ventricle",
+     "description": "To pulmonary artery",
+     "x": 0.663,
+     "y": 0.319
+    },
+    {
+     "number": 3,
+     "name": "Lungs",
+     "description": "Blood oxygenated",
+     "x": 0.663,
+     "y": 0.668
+    },
+    {
+     "number": 4,
+     "name": "Left atrium",
+     "description": "From pulmonary vein",
+     "x": 0.364,
+     "y": 0.843
+    },
+    {
+     "number": 5,
+     "name": "Left ventricle",
+     "description": "Into the aorta",
+     "x": 0.065,
+     "y": 0.668
+    },
+    {
+     "number": 6,
+     "name": "Body",
+     "description": "Oxygen delivered",
+     "x": 0.065,
+     "y": 0.319
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  }
+ ]
+}

@@ -1,0 +1,1167 @@
+{
+ "schema_version": 1,
+ "unit": 2,
+ "notes": [
+  {
+   "id": "demo-note-u2-1",
+   "topic_code": "bio-2.8",
+   "full": [
+    {
+     "type": "heading",
+     "text": "The cell membrane",
+     "level": 2
+    },
+    {
+     "type": "paragraph",
+     "text": "The cell membrane is described by the fluid mosaic model: a phospholipid bilayer with proteins scattered through it.",
+     "highlights": [
+      "fluid mosaic model",
+      "phospholipid bilayer"
+     ]
+    },
+    {
+     "type": "bullet_list",
+     "items": [
+      "Phospholipids: hydrophilic heads face outwards, hydrophobic tails face inwards",
+      "Proteins: channel, carrier, receptor and enzyme proteins",
+      "Cholesterol: regulates fluidity in animal cells",
+      "Glycoproteins and glycolipids: cell recognition"
+     ]
+    },
+    {
+     "type": "heading",
+     "text": "Membrane transport",
+     "level": 2
+    },
+    {
+     "type": "definition",
+     "term": "Diffusion",
+     "text": "Net movement of particles from a region of higher concentration to a region of lower concentration, without using ATP."
+    },
+    {
+     "type": "definition",
+     "term": "Osmosis",
+     "text": "Net movement of water molecules from a region of higher water potential to a region of lower water potential through a partially permeable membrane."
+    },
+    {
+     "type": "paragraph",
+     "text": "Facilitated diffusion uses channel or carrier proteins but no ATP. Active transport moves substances against the concentration gradient using carrier proteins and ATP. Large particles enter by endocytosis and leave by exocytosis.",
+     "highlights": [
+      "Facilitated diffusion",
+      "Active transport",
+      "endocytosis",
+      "exocytosis"
+     ]
+    },
+    {
+     "type": "tip",
+     "title": "Past-paper tip",
+     "text": "In osmosis questions always use the term water potential, and say water moves from higher (less negative) to lower (more negative) water potential."
+    }
+   ],
+   "short": [
+    {
+     "type": "bullet_list",
+     "items": [
+      "Fluid mosaic model: phospholipid bilayer + proteins",
+      "Diffusion: high to low concentration, passive",
+      "Facilitated diffusion: uses channel/carrier proteins, passive",
+      "Osmosis: water, high to low water potential, partially permeable membrane",
+      "Active transport: against gradient, needs ATP and carriers",
+      "Endocytosis and exocytosis for bulk transport"
+     ]
+    }
+   ],
+   "read_minutes": 7,
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-note-u2-2",
+   "topic_code": "bio-2.9",
+   "full": [
+    {
+     "type": "heading",
+     "text": "The cell cycle",
+     "level": 2
+    },
+    {
+     "type": "paragraph",
+     "text": "The cell cycle has interphase (G1, S and G2) and the M phase (mitosis and cytokinesis). DNA is replicated in the S phase.",
+     "highlights": [
+      "interphase",
+      "M phase"
+     ]
+    },
+    {
+     "type": "heading",
+     "text": "Stages of mitosis",
+     "level": 2
+    },
+    {
+     "type": "bullet_list",
+     "items": [
+      "Prophase: chromosomes condense, nuclear envelope breaks down, spindle forms",
+      "Metaphase: chromosomes line up on the equator, attached to spindle fibres at the centromere",
+      "Anaphase: sister chromatids separate and move to opposite poles",
+      "Telophase: nuclear envelopes re-form, chromosomes uncoil"
+     ]
+    },
+    {
+     "type": "paragraph",
+     "text": "Cytokinesis divides the cytoplasm: by a cleavage furrow in animal cells and a cell plate in plant cells.",
+     "highlights": [
+      "cleavage furrow",
+      "cell plate"
+     ]
+    },
+    {
+     "type": "definition",
+     "term": "Mitosis",
+     "text": "Nuclear division that produces two genetically identical daughter nuclei with the same chromosome number as the parent."
+    },
+    {
+     "type": "heading",
+     "text": "Importance",
+     "level": 3
+    },
+    {
+     "type": "paragraph",
+     "text": "Mitosis is used for growth, repair of tissues and asexual reproduction.",
+     "highlights": []
+    },
+    {
+     "type": "tip",
+     "title": "Past-paper tip",
+     "text": "Remember PMAT for the order of mitosis, and that anaphase is when chromatids (not homologous chromosomes) separate."
+    }
+   ],
+   "short": [
+    {
+     "type": "bullet_list",
+     "items": [
+      "Interphase: G1, S (DNA replication), G2",
+      "Prophase: condense, envelope breaks, spindle forms",
+      "Metaphase: line up at equator",
+      "Anaphase: chromatids separate to poles",
+      "Telophase: nuclei re-form",
+      "Cytokinesis: furrow (animal), cell plate (plant)",
+      "Result: 2 identical cells; growth and repair"
+     ]
+    }
+   ],
+   "read_minutes": 7,
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-note-u2-3",
+   "topic_code": "bio-2.14",
+   "full": [
+    {
+     "type": "heading",
+     "text": "Cellular respiration",
+     "level": 2
+    },
+    {
+     "type": "paragraph",
+     "text": "Respiration releases energy from organic molecules, mainly glucose, and stores it in ATP.",
+     "highlights": [
+      "ATP"
+     ]
+    },
+    {
+     "type": "heading",
+     "text": "Stages of aerobic respiration",
+     "level": 2
+    },
+    {
+     "type": "bullet_list",
+     "items": [
+      "Glycolysis (cytoplasm): glucose is split into 2 pyruvate, with a net gain of 2 ATP and 2 NADH",
+      "Link reaction (mitochondrial matrix): pyruvate becomes acetyl CoA, releasing CO2",
+      "Krebs cycle (matrix): acetyl CoA is oxidised, releasing CO2 and producing NADH, FADH2 and ATP",
+      "Oxidative phosphorylation (inner membrane): the electron transport chain uses oxygen as the final electron acceptor and makes most of the ATP"
+     ]
+    },
+    {
+     "type": "definition",
+     "term": "Anaerobic respiration",
+     "text": "Respiration without oxygen; in animals pyruvate forms lactate, in yeast it forms ethanol and carbon dioxide."
+    },
+    {
+     "type": "paragraph",
+     "text": "Aerobic respiration releases far more ATP per glucose than anaerobic respiration, which only makes the 2 ATP of glycolysis.",
+     "highlights": []
+    },
+    {
+     "type": "tip",
+     "title": "Past-paper tip",
+     "text": "State where each stage happens. Many marks are lost by placing glycolysis in the mitochondrion."
+    }
+   ],
+   "short": [
+    {
+     "type": "bullet_list",
+     "items": [
+      "Glycolysis: cytoplasm, glucose to 2 pyruvate, net 2 ATP",
+      "Link reaction: pyruvate to acetyl CoA + CO2",
+      "Krebs cycle: matrix, CO2, NADH, FADH2",
+      "Electron transport chain: inner membrane, O2 final acceptor, most ATP",
+      "Anaerobic: lactate (animals), ethanol + CO2 (yeast)"
+     ]
+    }
+   ],
+   "read_minutes": 8,
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "mcqs": [
+  {
+   "id": "demo-mcq-u2-01",
+   "topic_code": "bio-2.1",
+   "stem": "Which property of water makes it a good solvent in living cells?",
+   "options": [
+    "Its low density",
+    "Its polarity",
+    "Its high viscosity",
+    "Its colour",
+    "Its low boiling point"
+   ],
+   "answer": 1,
+   "explanation": "Water is polar, so ions and polar molecules dissolve in it.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u2-02",
+   "topic_code": "bio-2.1",
+   "stem": "The high specific heat capacity of water helps organisms to",
+   "options": [
+    "absorb light",
+    "keep a stable temperature",
+    "transport oxygen",
+    "store energy as fat",
+    "make proteins"
+   ],
+   "answer": 1,
+   "explanation": "Water absorbs a lot of heat with little temperature change.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u2-03",
+   "topic_code": "bio-2.2",
+   "stem": "Which of these is a polysaccharide?",
+   "options": [
+    "Glucose",
+    "Sucrose",
+    "Starch",
+    "Fructose",
+    "Maltose"
+   ],
+   "answer": 2,
+   "explanation": "Starch is a polymer of alpha glucose.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u2-04",
+   "topic_code": "bio-2.2",
+   "stem": "The bond that joins two monosaccharides is a",
+   "options": [
+    "peptide bond",
+    "glycosidic bond",
+    "ester bond",
+    "hydrogen bond only",
+    "phosphodiester bond"
+   ],
+   "answer": 1,
+   "explanation": "Monosaccharides join by glycosidic bonds in a condensation reaction.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u2-05",
+   "topic_code": "bio-2.3",
+   "stem": "A triglyceride is formed from glycerol and",
+   "options": [
+    "three fatty acids",
+    "three amino acids",
+    "three glucose units",
+    "one phosphate",
+    "two nucleotides"
+   ],
+   "answer": 0,
+   "explanation": "One glycerol joins three fatty acids by ester bonds.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u2-06",
+   "topic_code": "bio-2.4",
+   "stem": "The sequence of amino acids in a polypeptide is its",
+   "options": [
+    "primary structure",
+    "secondary structure",
+    "tertiary structure",
+    "quaternary structure",
+    "active site"
+   ],
+   "answer": 0,
+   "explanation": "Primary structure is the order of amino acids.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u2-07",
+   "topic_code": "bio-2.4",
+   "stem": "Amino acids are joined together by",
+   "options": [
+    "glycosidic bonds",
+    "ester bonds",
+    "peptide bonds",
+    "ionic bonds only",
+    "disulfide bonds only"
+   ],
+   "answer": 2,
+   "explanation": "Peptide bonds form between the carboxyl group of one amino acid and the amino group of the next.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u2-08",
+   "topic_code": "bio-2.5",
+   "stem": "Which base is found in RNA but not in DNA?",
+   "options": [
+    "Adenine",
+    "Thymine",
+    "Uracil",
+    "Guanine",
+    "Cytosine"
+   ],
+   "answer": 2,
+   "explanation": "RNA contains uracil instead of thymine.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u2-09",
+   "topic_code": "bio-2.6",
+   "stem": "The cell theory states that",
+   "options": [
+    "all cells contain chloroplasts",
+    "all living things are made of cells and cells come from pre-existing cells",
+    "cells are made of tissues",
+    "only animals have cells",
+    "cells arise from non-living matter"
+   ],
+   "answer": 1,
+   "explanation": "Cells are the unit of life and arise only from existing cells.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u2-10",
+   "topic_code": "bio-2.6",
+   "stem": "Which microscope gives the highest resolution?",
+   "options": [
+    "Hand lens",
+    "Light microscope",
+    "Transmission electron microscope",
+    "Stereo microscope",
+    "Compound light microscope with a green filter"
+   ],
+   "answer": 2,
+   "explanation": "Electron microscopes use electrons, which have a much shorter wavelength than light.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u2-11",
+   "topic_code": "bio-2.7",
+   "stem": "Which structure is found in prokaryotic cells?",
+   "options": [
+    "Nucleus with an envelope",
+    "Mitochondria",
+    "70S ribosomes",
+    "Golgi apparatus",
+    "Endoplasmic reticulum"
+   ],
+   "answer": 2,
+   "explanation": "Prokaryotes have 70S ribosomes but no membrane-bound organelles.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u2-12",
+   "topic_code": "bio-2.7",
+   "stem": "The main site of aerobic ATP production in a eukaryotic cell is the",
+   "options": [
+    "ribosome",
+    "mitochondrion",
+    "Golgi apparatus",
+    "lysosome",
+    "nucleolus"
+   ],
+   "answer": 1,
+   "explanation": "Most ATP is made by oxidative phosphorylation in mitochondria.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u2-13",
+   "topic_code": "bio-2.8",
+   "stem": "Which describes osmosis?",
+   "options": [
+    "Movement of solutes against a gradient",
+    "Movement of water from lower to higher water potential",
+    "Movement of water from higher to lower water potential through a partially permeable membrane",
+    "Uptake of large particles by the membrane",
+    "Movement of ions through carriers using ATP"
+   ],
+   "answer": 2,
+   "explanation": "Osmosis is the net movement of water down a water potential gradient across a partially permeable membrane.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u2-14",
+   "topic_code": "bio-2.8",
+   "stem": "Active transport differs from facilitated diffusion because it",
+   "options": [
+    "uses channel proteins",
+    "is passive",
+    "requires ATP",
+    "moves only water",
+    "needs no proteins"
+   ],
+   "answer": 2,
+   "explanation": "Active transport uses ATP to move substances against their concentration gradient.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u2-15",
+   "topic_code": "bio-2.8",
+   "stem": "A red blood cell placed in distilled water will",
+   "options": [
+    "shrink",
+    "stay the same",
+    "swell and burst",
+    "become plasmolysed",
+    "divide"
+   ],
+   "answer": 2,
+   "explanation": "Water enters by osmosis and the cell bursts (haemolysis) because it has no cell wall.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u2-16",
+   "topic_code": "bio-2.9",
+   "stem": "DNA replication takes place in which phase of the cell cycle?",
+   "options": [
+    "G1",
+    "S",
+    "G2",
+    "Prophase",
+    "Anaphase"
+   ],
+   "answer": 1,
+   "explanation": "DNA is copied in the S (synthesis) phase of interphase.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u2-17",
+   "topic_code": "bio-2.9",
+   "stem": "Sister chromatids separate during",
+   "options": [
+    "prophase",
+    "metaphase",
+    "anaphase",
+    "telophase",
+    "interphase"
+   ],
+   "answer": 2,
+   "explanation": "In anaphase the centromeres split and chromatids move to opposite poles.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u2-18",
+   "topic_code": "bio-2.9",
+   "stem": "In plant cells, cytokinesis takes place by",
+   "options": [
+    "a cleavage furrow",
+    "a cell plate",
+    "budding",
+    "binary fission",
+    "crossing over"
+   ],
+   "answer": 1,
+   "explanation": "Plant cells build a cell plate between the two nuclei.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u2-19",
+   "topic_code": "bio-2.10",
+   "stem": "Crossing over between homologous chromosomes occurs in",
+   "options": [
+    "prophase I",
+    "metaphase II",
+    "anaphase II",
+    "telophase I",
+    "interphase"
+   ],
+   "answer": 0,
+   "explanation": "Crossing over happens at chiasmata during prophase I of meiosis.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u2-20",
+   "topic_code": "bio-2.10",
+   "stem": "Meiosis produces",
+   "options": [
+    "two identical diploid cells",
+    "four genetically different haploid cells",
+    "four identical diploid cells",
+    "two haploid identical cells",
+    "one haploid cell"
+   ],
+   "answer": 1,
+   "explanation": "Meiosis gives four haploid cells that differ genetically.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u2-21",
+   "topic_code": "bio-2.11",
+   "stem": "Enzymes speed up reactions by",
+   "options": [
+    "raising the temperature",
+    "lowering the activation energy",
+    "adding energy to substrates",
+    "changing the products",
+    "being used up"
+   ],
+   "answer": 1,
+   "explanation": "Enzymes lower the activation energy needed for a reaction.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u2-22",
+   "topic_code": "bio-2.11",
+   "stem": "A competitive inhibitor",
+   "options": [
+    "binds to the active site",
+    "binds to an allosteric site only",
+    "destroys the enzyme permanently",
+    "increases Vmax",
+    "is always a metal ion"
+   ],
+   "answer": 0,
+   "explanation": "Competitive inhibitors resemble the substrate and compete for the active site.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u2-23",
+   "topic_code": "bio-2.12",
+   "stem": "The light-dependent reactions of photosynthesis occur in the",
+   "options": [
+    "stroma",
+    "thylakoid membranes",
+    "cytoplasm",
+    "mitochondrial matrix",
+    "cell wall"
+   ],
+   "answer": 1,
+   "explanation": "Photosystems and the electron transport chain are in the thylakoid membranes.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u2-24",
+   "topic_code": "bio-2.13",
+   "stem": "The enzyme that fixes carbon dioxide in the Calvin cycle is",
+   "options": [
+    "ATP synthase",
+    "Rubisco",
+    "amylase",
+    "DNA polymerase",
+    "catalase"
+   ],
+   "answer": 1,
+   "explanation": "Rubisco combines CO2 with RuBP.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u2-25",
+   "topic_code": "bio-2.14",
+   "stem": "Glycolysis takes place in the",
+   "options": [
+    "mitochondrial matrix",
+    "cytoplasm",
+    "inner mitochondrial membrane",
+    "nucleus",
+    "chloroplast"
+   ],
+   "answer": 1,
+   "explanation": "Glycolysis happens in the cytoplasm and does not need oxygen.",
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "written": [
+  {
+   "id": "demo-s-u2-1",
+   "topic_code": "bio-2.8",
+   "type": "structured",
+   "stem": "Define osmosis and explain what happens to a plant cell placed in a concentrated sugar solution.",
+   "marks": 4,
+   "model_answer": "Osmosis is the net movement of water from higher to lower water potential through a partially permeable membrane. In a concentrated solution the outside water potential is lower, so water leaves the cell, the vacuole shrinks and the membrane pulls away from the wall (plasmolysis).",
+   "points": [
+    {
+     "text": "Definition: water moves high to low water potential",
+     "marks": 1,
+     "keywords": [
+      "water potential"
+     ]
+    },
+    {
+     "text": "Through a partially permeable membrane",
+     "marks": 1,
+     "keywords": [
+      "partially permeable",
+      "membrane"
+     ]
+    },
+    {
+     "text": "Water leaves the cell",
+     "marks": 1,
+     "keywords": [
+      "water",
+      "leave"
+     ]
+    },
+    {
+     "text": "Plasmolysis / membrane pulls away from wall",
+     "marks": 1,
+     "keywords": [
+      "plasmolysis"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-s-u2-2",
+   "topic_code": "bio-2.9",
+   "type": "structured",
+   "stem": "Describe the events of the four stages of mitosis.",
+   "marks": 4,
+   "model_answer": "Prophase: chromosomes condense and the nuclear envelope breaks down while the spindle forms. Metaphase: chromosomes line up on the equator. Anaphase: sister chromatids separate to opposite poles. Telophase: nuclear envelopes re-form and chromosomes uncoil.",
+   "points": [
+    {
+     "text": "Prophase: chromosomes condense / envelope breaks / spindle",
+     "marks": 1,
+     "keywords": [
+      "prophase",
+      "condense"
+     ]
+    },
+    {
+     "text": "Metaphase: line up at equator",
+     "marks": 1,
+     "keywords": [
+      "metaphase",
+      "equator"
+     ]
+    },
+    {
+     "text": "Anaphase: chromatids separate to poles",
+     "marks": 1,
+     "keywords": [
+      "anaphase",
+      "chromatid"
+     ]
+    },
+    {
+     "text": "Telophase: nuclear envelope re-forms",
+     "marks": 1,
+     "keywords": [
+      "telophase",
+      "envelope"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-s-u2-3",
+   "topic_code": "bio-2.11",
+   "type": "structured",
+   "stem": "Explain how temperature affects the rate of an enzyme-controlled reaction.",
+   "marks": 4,
+   "model_answer": "As temperature rises, molecules gain kinetic energy and collide more often, so the rate increases up to the optimum temperature. Above the optimum, bonds holding the tertiary structure break, the active site changes shape and the enzyme is denatured, so the rate falls.",
+   "points": [
+    {
+     "text": "Rate rises with kinetic energy / collisions",
+     "marks": 1,
+     "keywords": [
+      "kinetic energy",
+      "collision"
+     ]
+    },
+    {
+     "text": "Optimum temperature",
+     "marks": 1,
+     "keywords": [
+      "optimum"
+     ]
+    },
+    {
+     "text": "Above optimum the active site changes shape",
+     "marks": 1,
+     "keywords": [
+      "active site",
+      "shape"
+     ]
+    },
+    {
+     "text": "Enzyme denatured, rate falls",
+     "marks": 1,
+     "keywords": [
+      "denature"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-s-u2-4",
+   "topic_code": "bio-2.14",
+   "type": "structured",
+   "stem": "Name the stages of aerobic respiration and state where each one takes place.",
+   "marks": 4,
+   "model_answer": "Glycolysis happens in the cytoplasm; the link reaction and Krebs cycle happen in the mitochondrial matrix; oxidative phosphorylation happens on the inner mitochondrial membrane.",
+   "points": [
+    {
+     "text": "Glycolysis in the cytoplasm",
+     "marks": 1,
+     "keywords": [
+      "glycolysis",
+      "cytoplasm"
+     ]
+    },
+    {
+     "text": "Link reaction in the matrix",
+     "marks": 1,
+     "keywords": [
+      "link reaction",
+      "matrix"
+     ]
+    },
+    {
+     "text": "Krebs cycle in the matrix",
+     "marks": 1,
+     "keywords": [
+      "krebs",
+      "matrix"
+     ]
+    },
+    {
+     "text": "Oxidative phosphorylation / ETC on the inner membrane",
+     "marks": 1,
+     "keywords": [
+      "inner membrane"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-e-u2-5",
+   "topic_code": "bio-2.8",
+   "type": "essay",
+   "stem": "Describe the fluid mosaic model of the cell membrane and explain the ways substances move across it.",
+   "marks": 10,
+   "model_answer": "The membrane is a phospholipid bilayer with hydrophobic tails inside and hydrophilic heads outside, with proteins, cholesterol and glycoproteins. Small non-polar molecules diffuse through the bilayer; ions and polar molecules use channel or carrier proteins in facilitated diffusion; water moves by osmosis; active transport uses ATP and carriers against the gradient; bulk transport is by endocytosis and exocytosis.",
+   "points": [
+    {
+     "text": "Phospholipid bilayer with heads and tails",
+     "marks": 2,
+     "keywords": [
+      "phospholipid",
+      "bilayer"
+     ]
+    },
+    {
+     "text": "Proteins, cholesterol, glycoproteins",
+     "marks": 2,
+     "keywords": [
+      "protein",
+      "cholesterol"
+     ]
+    },
+    {
+     "text": "Diffusion and facilitated diffusion",
+     "marks": 2,
+     "keywords": [
+      "diffusion",
+      "facilitated"
+     ]
+    },
+    {
+     "text": "Osmosis",
+     "marks": 1,
+     "keywords": [
+      "osmosis"
+     ]
+    },
+    {
+     "text": "Active transport using ATP",
+     "marks": 2,
+     "keywords": [
+      "active transport",
+      "atp"
+     ]
+    },
+    {
+     "text": "Endocytosis / exocytosis",
+     "marks": 1,
+     "keywords": [
+      "endocytosis",
+      "exocytosis"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-e-u2-6",
+   "topic_code": "bio-2.14",
+   "type": "essay",
+   "stem": "Compare aerobic and anaerobic respiration in organisms.",
+   "marks": 10,
+   "model_answer": "Both start with glycolysis in the cytoplasm. Aerobic respiration uses oxygen, continues through the link reaction, Krebs cycle and electron transport chain in mitochondria and releases much ATP, carbon dioxide and water. Anaerobic respiration has no oxygen; pyruvate becomes lactate in animals or ethanol and carbon dioxide in yeast, and only 2 ATP are made per glucose.",
+   "points": [
+    {
+     "text": "Both begin with glycolysis",
+     "marks": 2,
+     "keywords": [
+      "glycolysis"
+     ]
+    },
+    {
+     "text": "Aerobic uses oxygen and mitochondria",
+     "marks": 2,
+     "keywords": [
+      "oxygen",
+      "mitochondria"
+     ]
+    },
+    {
+     "text": "Aerobic yields much ATP, CO2 and water",
+     "marks": 2,
+     "keywords": [
+      "atp",
+      "water"
+     ]
+    },
+    {
+     "text": "Anaerobic: lactate in animals",
+     "marks": 2,
+     "keywords": [
+      "lactate"
+     ]
+    },
+    {
+     "text": "Anaerobic: ethanol and CO2 in yeast",
+     "marks": 2,
+     "keywords": [
+      "ethanol",
+      "yeast"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "ask": [
+  {
+   "id": "demo-ask-u2-1",
+   "topic_code": "bio-2.8",
+   "question": "What is osmosis?",
+   "aliases": [
+    "define osmosis",
+    "explain osmosis"
+   ],
+   "keywords": [
+    "osmosis",
+    "water potential",
+    "membrane"
+   ],
+   "answer": "Osmosis is the net movement of water molecules from a region of higher water potential to a region of lower water potential through a partially permeable membrane. It is passive and needs no ATP.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 2.8: Cell membrane and membrane transport"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u2-2",
+   "topic_code": "bio-2.9",
+   "question": "What happens in anaphase of mitosis?",
+   "aliases": [
+    "anaphase stage"
+   ],
+   "keywords": [
+    "anaphase",
+    "mitosis",
+    "chromatid"
+   ],
+   "answer": "In anaphase the centromeres split and the spindle fibres shorten, pulling the sister chromatids apart to opposite poles of the cell.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 2.9: Cell cycle and mitosis"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u2-3",
+   "topic_code": "bio-2.14",
+   "question": "Where does glycolysis take place?",
+   "aliases": [
+    "location of glycolysis"
+   ],
+   "keywords": [
+    "glycolysis",
+    "respiration",
+    "cytoplasm"
+   ],
+   "answer": "Glycolysis takes place in the cytoplasm. One glucose is split into two pyruvate molecules with a net gain of 2 ATP and 2 NADH. It does not need oxygen.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 2.14: Cellular respiration"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u2-4",
+   "topic_code": "bio-2.11",
+   "question": "How do enzymes work?",
+   "aliases": [
+    "how enzymes speed up reactions"
+   ],
+   "keywords": [
+    "enzyme",
+    "active site",
+    "activation energy"
+   ],
+   "answer": "An enzyme's active site binds a specific substrate to form an enzyme-substrate complex. This lowers the activation energy of the reaction, so it happens faster. The enzyme is not used up.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 2.11: Energy, metabolism and enzymes"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u2-5",
+   "topic_code": "bio-2.10",
+   "question": "What is the difference between mitosis and meiosis?",
+   "aliases": [
+    "mitosis vs meiosis"
+   ],
+   "keywords": [
+    "mitosis",
+    "meiosis",
+    "haploid"
+   ],
+   "answer": "Mitosis is one division that gives two genetically identical diploid cells for growth and repair. Meiosis is two divisions that give four genetically different haploid cells for sexual reproduction, with crossing over and independent assortment.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 2.10: Meiosis"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "uploads": [
+  {
+   "id": "demo-upload-u2-1",
+   "topic_code": "bio-2.8",
+   "title": "Membrane transport",
+   "aliases": [
+    "cell membrane notes",
+    "transport across membranes"
+   ],
+   "keywords": [
+    "membrane",
+    "transport",
+    "osmosis",
+    "diffusion"
+   ],
+   "summary": "These notes describe the fluid mosaic model and compare passive and active ways of moving substances across the cell membrane.",
+   "key_points": [
+    "Phospholipid bilayer with proteins",
+    "Diffusion and facilitated diffusion are passive",
+    "Osmosis depends on water potential",
+    "Active transport needs ATP and carrier proteins"
+   ],
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "visuals": [
+  {
+   "id": "demo-visual-u2-1",
+   "topic_code": "bio-2.9",
+   "title": "Stages of mitosis",
+   "aliases": [
+    "mitosis stages",
+    "cell division"
+   ],
+   "keywords": [
+    "mitosis",
+    "prophase",
+    "metaphase",
+    "anaphase",
+    "telophase"
+   ],
+   "kind": "flowchart",
+   "alt_text": "The order of the stages of mitosis.",
+   "image": "assets/demo/visuals/u2_mitosis.png",
+   "width": 1000,
+   "height": 750,
+   "style": "flat_colour",
+   "labels": [
+    {
+     "number": 1,
+     "name": "Interphase",
+     "description": "DNA replicated in S phase",
+     "x": 0.054,
+     "y": 0.196
+    },
+    {
+     "number": 2,
+     "name": "Prophase",
+     "description": "Chromosomes condense",
+     "x": 0.054,
+     "y": 0.472
+    },
+    {
+     "number": 3,
+     "name": "Metaphase",
+     "description": "Line up at the equator",
+     "x": 0.054,
+     "y": 0.748
+    },
+    {
+     "number": 4,
+     "name": "Anaphase",
+     "description": "Chromatids move to poles",
+     "x": 0.534,
+     "y": 0.196
+    },
+    {
+     "number": 5,
+     "name": "Telophase",
+     "description": "Nuclei re-form",
+     "x": 0.534,
+     "y": 0.472
+    },
+    {
+     "number": 6,
+     "name": "Cytokinesis",
+     "description": "Cytoplasm divides",
+     "x": 0.534,
+     "y": 0.748
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-visual-u2-2",
+   "topic_code": "bio-2.14",
+   "title": "Stages of aerobic respiration",
+   "aliases": [
+    "cellular respiration",
+    "aerobic respiration"
+   ],
+   "keywords": [
+    "respiration",
+    "glycolysis",
+    "krebs",
+    "atp"
+   ],
+   "kind": "flowchart",
+   "alt_text": "Glycolysis to oxidative phosphorylation.",
+   "image": "assets/demo/visuals/u2_respiration.png",
+   "width": 1000,
+   "height": 750,
+   "style": "flat_colour",
+   "labels": [
+    {
+     "number": 1,
+     "name": "Glycolysis",
+     "description": "Cytoplasm: glucose to 2 pyruvate",
+     "x": 0.204,
+     "y": 0.169
+    },
+    {
+     "number": 2,
+     "name": "Link reaction",
+     "description": "Matrix: acetyl CoA + CO2",
+     "x": 0.204,
+     "y": 0.376
+    },
+    {
+     "number": 3,
+     "name": "Krebs cycle",
+     "description": "Matrix: NADH, FADH2, CO2",
+     "x": 0.204,
+     "y": 0.582
+    },
+    {
+     "number": 4,
+     "name": "Oxidative phosphorylation",
+     "description": "Inner membrane: most ATP",
+     "x": 0.204,
+     "y": 0.789
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  }
+ ]
+}
