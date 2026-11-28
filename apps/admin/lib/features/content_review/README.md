@@ -5,7 +5,7 @@
 | **Owner** | Samni (`@samni`) |
 | **App** | admin portal (`apps/admin`) |
 | **Purpose** | Approve, edit or reject AI notes, short notes and images. |
-| **Jira epic** | `BRN-??` *(TODO: add the epic key)* |
+| **Jira epic** | `BRN-??` *(TODO(samni): add the epic key)* |
 | **Git branch** | `feature/admin-content-review` (tickets: `feature/admin-content-review/BRN-xx-short-name`) |
 
 ## Screens

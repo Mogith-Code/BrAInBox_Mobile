@@ -6,11 +6,8 @@
 /// context.push(AppRoutes.unitDetailPath(unit.id));
 /// ```
 /// When you add a screen: add its path here, register it in `router.dart`,
-/// and add it to [catalog] so it shows up in the dev menu.
+/// and add it to [catalog] so the router test opens it.
 abstract final class AppRoutes {
-  /// DEBUG ONLY: list of every screen (see `dev_menu_screen.dart`).
-  static const devMenu = '/dev';
-
   // Splash (Mogith)
   static const splash = '/';
 
@@ -30,9 +27,13 @@ abstract final class AppRoutes {
   static const newPassword = '/auth/new-password';
 
   // Profile (Mogith)
+  /// Profile setup: onboarding, or an edit with `?edit=all|goals|availability`
+  /// (full screen, e.g. from My profile opened on Home).
   static const profileSetup = '/profile/setup';
+  static String profileEditPath([String section = 'all']) =>
+      _withQuery(profileSetup, {'edit': section});
 
-  /// My profile: stats, achievements and goal (Figma F1).
+  /// Old path, kept as a redirect to [settingsProfile].
   static const myProfile = '/profile';
 
   // Home (Samni)
@@ -191,9 +192,21 @@ abstract final class AppRoutes {
   // Notifications (Samni)
   static const notifications = '/notifications';
 
-  // Settings (Samni)
+  // Settings (Samni) - the Settings tab. Its pages open on top inside the
+  // tab, so the bottom bar stays.
   static const settings = '/settings';
   static const privacy = '/settings/privacy';
+
+  /// My profile: stats, achievements and goal (Figma F1), inside the
+  /// Settings tab. The avatar on Home opens it too.
+  static const settingsProfile = '/settings/profile';
+
+  /// Profile setup in edit mode inside the Settings tab.
+  /// `?edit=all|goals|availability`.
+  static const settingsPersonalDetails = '/settings/personal-details';
+  static const settingsEditProfile = '/settings/edit-profile';
+  static String settingsEditProfilePath([String section = 'all']) =>
+      _withQuery(settingsEditProfile, {'edit': section});
 
   /// Routes a signed-OUT student may stay on (used by the redirect).
   static const signedOutRoutes = {
@@ -212,7 +225,7 @@ abstract final class AppRoutes {
     diagnosticResult,
   };
 
-  /// Every screen with a sample path. Used by the dev menu and router test.
+  /// Every screen with a sample path. Used by the router test.
   static final List<({String title, String owner, String path})> catalog = [
     (title: 'Splash', owner: 'Mogith', path: splash),
     (title: 'Onboarding', owner: 'Mogith', path: onboarding),
@@ -223,7 +236,7 @@ abstract final class AppRoutes {
     (title: 'Check your inbox (reset)', owner: 'Mogith', path: resetCode),
     (title: 'Set a new password', owner: 'Mogith', path: newPassword),
     (title: 'Profile setup', owner: 'Mogith', path: profileSetup),
-    (title: 'My profile', owner: 'Mogith', path: myProfile),
+    (title: 'Edit profile', owner: 'Mogith', path: profileSetup),
     (title: 'Home', owner: 'Samni', path: home),
     (title: 'Learn', owner: 'Keshomigha', path: learn),
     (title: 'Unit detail', owner: 'Keshomigha', path: unitDetailPath('unit-6')),
@@ -286,5 +299,11 @@ abstract final class AppRoutes {
     (title: 'Notifications', owner: 'Samni', path: notifications),
     (title: 'Settings', owner: 'Samni', path: settings),
     (title: 'Data & privacy', owner: 'Samni', path: privacy),
+    (title: 'My profile (Settings)', owner: 'Mogith', path: settingsProfile),
+    (
+      title: 'Edit profile (Settings)',
+      owner: 'Mogith',
+      path: settingsEditProfile,
+    ),
   ];
 }

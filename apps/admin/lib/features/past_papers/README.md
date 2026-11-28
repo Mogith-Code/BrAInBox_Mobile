@@ -5,7 +5,7 @@
 | **Owner** | Udith (`@udith`) |
 | **App** | admin portal (`apps/admin`) |
 | **Purpose** | Upload past papers and their marking schemes. |
-| **Jira epic** | `BRN-??` *(TODO: add the epic key)* |
+| **Jira epic** | `BRN-??` *(TODO(udith): add the epic key)* |
 | **Git branch** | `feature/admin-past-papers` (tickets: `feature/admin-past-papers/BRN-xx-short-name`) |
 
 ## Screens

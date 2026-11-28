@@ -1,4 +1,3 @@
-import 'package:brainbox_core/brainbox_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../widgets/admin_page.dart';
@@ -41,7 +40,7 @@ class ModelAnswersController extends AsyncNotifier<List<ModelAnswer>> {
       }
       return null;
     } catch (e) {
-      return ErrorMessages.of(e);
+      return adminErrorMessage(e);
     }
   }
 
@@ -58,7 +57,7 @@ class ModelAnswersController extends AsyncNotifier<List<ModelAnswer>> {
       ]);
       return null;
     } catch (e) {
-      return ErrorMessages.of(e);
+      return adminErrorMessage(e);
     }
   }
 }

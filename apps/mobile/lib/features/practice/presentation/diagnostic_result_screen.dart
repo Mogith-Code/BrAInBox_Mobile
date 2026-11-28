@@ -35,6 +35,14 @@ class DiagnosticResultScreen extends ConsumerWidget {
   }
 }
 
+/// "Not checked yet: Unit 10. We'll add it when questions are ready."
+String unitsNotCheckedText(List<UnitRef> units) {
+  final names = units.map((unit) => unit.unitLabel).join(', ');
+  final pronoun = units.length == 1 ? 'it' : 'them';
+  return "Not checked yet: $names. We'll add $pronoun when questions are "
+      'ready.';
+}
+
 class _ResultBody extends StatelessWidget {
   const _ResultBody({required this.result});
 
@@ -158,6 +166,20 @@ class _ResultBody extends StatelessWidget {
                     ],
                   ),
                 ),
+                if (result.unitsNotChecked.isNotEmpty) ...[
+                  const SizedBox(height: AppSpacing.md),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.sm,
+                    ),
+                    child: Text(
+                      unitsNotCheckedText(result.unitsNotChecked),
+                      style: textTheme.bodyMedium?.copyWith(
+                        color: AppColors.muted,
+                      ),
+                    ),
+                  ),
+                ],
                 const SizedBox(height: AppSpacing.md),
                 _Disclaimer(text: result.disclaimer),
               ],

@@ -52,15 +52,12 @@ class _QuestionBankScreenState extends ConsumerState<QuestionBankScreen> {
       );
       if (ok != true) return;
     }
-    final ok = await ref
+    final error = await ref
         .read(questionBankControllerProvider.notifier)
         .bulk(_selected.toList(), action);
     if (!mounted) return;
-    showAdminSnack(
-      context,
-      ok ? '${action.label}: done.' : "Couldn't do that. Try again.",
-    );
-    if (ok) setState(_selected.clear);
+    showAdminSnack(context, error ?? '${action.label}: done.');
+    if (error == null) setState(_selected.clear);
   }
 
   @override
@@ -80,13 +77,16 @@ class _QuestionBankScreenState extends ConsumerState<QuestionBankScreen> {
                     '${page.pastPaperPercent}% from past papers',
           title: 'Question bank',
           actions: [
-            TextButton.icon(
-              onPressed: () => showAdminSnack(
-                context,
-                'CSV import uses POST /admin/questions/import.',
+            // The backend has no question import route yet.
+            Tooltip(
+              message:
+                  'Not available yet: the server cannot import a CSV of '
+                  'questions. Add them with New question.',
+              child: TextButton.icon(
+                onPressed: null,
+                icon: const Icon(Icons.upload_outlined, size: 18),
+                label: const Text('Import CSV'),
               ),
-              icon: const Icon(Icons.upload_outlined, size: 18),
-              label: const Text('Import CSV'),
             ),
             FilledButton.icon(
               onPressed: () => context.go(AdminRoutes.questionEditPath('new')),
@@ -163,7 +163,8 @@ class _QuestionBankScreenState extends ConsumerState<QuestionBankScreen> {
                     },
                   ),
                   if (page != null && page.items.isNotEmpty)
-                    _Pager(
+                    TablePager(
+                      pageSize: QuestionFilter.pageSize,
                       page: filter.page,
                       shown: page.items.length,
                       total: page.total,
@@ -334,55 +335,6 @@ class _Line extends StatelessWidget {
                 child: cells[i],
               ),
             ),
-        ],
-      ),
-    );
-  }
-}
-
-class _Pager extends StatelessWidget {
-  const _Pager({
-    required this.page,
-    required this.shown,
-    required this.total,
-    required this.onPage,
-  });
-
-  final int page;
-  final int shown;
-  final int total;
-  final ValueChanged<int> onPage;
-
-  @override
-  Widget build(BuildContext context) {
-    final first = (page - 1) * QuestionFilter.pageSize + 1;
-    final last = first + shown - 1;
-    final pages = (total / QuestionFilter.pageSize).ceil();
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.lg,
-        vertical: AppSpacing.sm,
-      ),
-      child: Row(
-        children: [
-          Text(
-            'Showing $first–$last of ${Formatters.thousands(total)}',
-            style: Theme.of(
-              context,
-            ).textTheme.bodySmall?.copyWith(color: AppColors.muted),
-          ),
-          const Spacer(),
-          IconButton(
-            tooltip: 'Previous page',
-            onPressed: page > 1 ? () => onPage(page - 1) : null,
-            icon: const Icon(Icons.chevron_left),
-          ),
-          Text('$page / $pages'),
-          IconButton(
-            tooltip: 'Next page',
-            onPressed: page < pages ? () => onPage(page + 1) : null,
-            icon: const Icon(Icons.chevron_right),
-          ),
         ],
       ),
     );

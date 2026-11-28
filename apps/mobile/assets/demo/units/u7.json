@@ -1,0 +1,1123 @@
+{
+ "schema_version": 1,
+ "unit": 7,
+ "notes": [
+  {
+   "id": "demo-note-u7-1",
+   "topic_code": "bio-7.2",
+   "full": [
+    {
+     "type": "heading",
+     "text": "DNA replication",
+     "level": 2
+    },
+    {
+     "type": "paragraph",
+     "text": "DNA replicates by the semi-conservative method: each new molecule has one original strand and one new strand. Meselson and Stahl showed this with heavy nitrogen (15N).",
+     "highlights": [
+      "semi-conservative"
+     ]
+    },
+    {
+     "type": "bullet_list",
+     "items": [
+      "Helicase unwinds the double helix and breaks hydrogen bonds between bases",
+      "Free nucleotides pair with exposed bases: A with T, C with G",
+      "DNA polymerase joins nucleotides in the 5' to 3' direction",
+      "The leading strand is made continuously; the lagging strand is made in Okazaki fragments joined by DNA ligase",
+      "A short RNA primer is needed to start each new strand"
+     ]
+    },
+    {
+     "type": "definition",
+     "term": "Semi-conservative replication",
+     "text": "Each daughter DNA molecule contains one parental strand and one newly made strand."
+    },
+    {
+     "type": "tip",
+     "title": "Past-paper tip",
+     "text": "DNA polymerase can only add nucleotides to the 3' end of a growing strand. This explains why the lagging strand is discontinuous."
+    }
+   ],
+   "short": [
+    {
+     "type": "bullet_list",
+     "items": [
+      "Semi-conservative (Meselson and Stahl)",
+      "Helicase unwinds, breaks H bonds",
+      "Complementary pairing A-T, C-G",
+      "DNA polymerase works 5' to 3'",
+      "Leading strand continuous; lagging strand Okazaki fragments",
+      "DNA ligase joins fragments"
+     ]
+    }
+   ],
+   "read_minutes": 6,
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-note-u7-2",
+   "topic_code": "bio-7.3",
+   "full": [
+    {
+     "type": "heading",
+     "text": "Transcription",
+     "level": 2
+    },
+    {
+     "type": "definition",
+     "term": "Transcription",
+     "text": "The making of an RNA copy of a gene, using one DNA strand as a template."
+    },
+    {
+     "type": "bullet_list",
+     "items": [
+      "RNA polymerase binds to the *promoter* and unwinds the DNA",
+      "Free RNA nucleotides pair with the template strand: A with U, T with A, C with G",
+      "RNA polymerase joins them to form pre-mRNA, 5' to 3'",
+      "Transcription stops at a terminator sequence"
+     ]
+    },
+    {
+     "type": "paragraph",
+     "text": "In eukaryotes the pre-mRNA is processed in the nucleus: introns are removed by splicing, a 5' cap and poly-A tail are added, and the mature mRNA leaves through a nuclear pore.",
+     "highlights": [
+      "introns"
+     ]
+    },
+    {
+     "type": "tip",
+     "title": "Past-paper tip",
+     "text": "Uracil replaces thymine in RNA. Questions often ask you to write the mRNA sequence from a template strand."
+    }
+   ],
+   "short": [
+    {
+     "type": "bullet_list",
+     "items": [
+      "RNA polymerase binds promoter",
+      "Template strand read; uracil pairs with adenine",
+      "Pre-mRNA made 5' to 3'",
+      "Eukaryotes: introns removed, cap and poly-A tail added",
+      "mRNA leaves nucleus via pores"
+     ]
+    }
+   ],
+   "read_minutes": 6,
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-note-u7-3",
+   "topic_code": "bio-7.7",
+   "full": [
+    {
+     "type": "heading",
+     "text": "Recombinant DNA technology",
+     "level": 2
+    },
+    {
+     "type": "paragraph",
+     "text": "Recombinant DNA joins DNA from different sources, often to make a genetically modified organism.",
+     "highlights": [
+      "genetically modified organism"
+     ]
+    },
+    {
+     "type": "bullet_list",
+     "items": [
+      "Restriction enzymes cut DNA at specific recognition sequences, often leaving *sticky ends*",
+      "The same enzyme cuts the *vector*, such as a bacterial plasmid",
+      "DNA ligase joins the gene into the vector",
+      "The recombinant plasmid is put into host cells (transformation)",
+      "Cells that took up the plasmid are selected using marker genes, such as antibiotic resistance"
+     ]
+    },
+    {
+     "type": "definition",
+     "term": "Vector",
+     "text": "A DNA molecule, such as a plasmid or virus, used to carry a foreign gene into a host cell."
+    },
+    {
+     "type": "heading",
+     "text": "Example",
+     "level": 3
+    },
+    {
+     "type": "paragraph",
+     "text": "The human insulin gene inserted into bacteria lets them make human insulin for people with diabetes.",
+     "highlights": []
+    },
+    {
+     "type": "tip",
+     "title": "Past-paper tip",
+     "text": "Name both enzymes: restriction endonuclease to cut, DNA ligase to join."
+    }
+   ],
+   "short": [
+    {
+     "type": "bullet_list",
+     "items": [
+      "Restriction enzymes cut; sticky ends",
+      "Vector: plasmid or virus",
+      "DNA ligase joins gene and vector",
+      "Transformation of host cells",
+      "Marker genes to select",
+      "Example: human insulin from bacteria"
+     ]
+    }
+   ],
+   "read_minutes": 7,
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "mcqs": [
+  {
+   "id": "demo-mcq-u7-01",
+   "topic_code": "bio-7.1",
+   "stem": "In DNA, adenine pairs with",
+   "options": [
+    "guanine",
+    "cytosine",
+    "thymine",
+    "uracil",
+    "adenine"
+   ],
+   "answer": 2,
+   "explanation": "A pairs with T by two hydrogen bonds.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u7-02",
+   "topic_code": "bio-7.1",
+   "stem": "The sugar found in RNA is",
+   "options": [
+    "deoxyribose",
+    "ribose",
+    "glucose",
+    "fructose",
+    "sucrose"
+   ],
+   "answer": 1,
+   "explanation": "RNA contains ribose; DNA contains deoxyribose.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u7-03",
+   "topic_code": "bio-7.1",
+   "stem": "The two strands of DNA are held together by",
+   "options": [
+    "peptide bonds",
+    "hydrogen bonds between bases",
+    "glycosidic bonds",
+    "ionic bonds with proteins",
+    "disulfide bonds"
+   ],
+   "answer": 1,
+   "explanation": "Complementary bases form hydrogen bonds.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u7-04",
+   "topic_code": "bio-7.1",
+   "stem": "If a DNA sample has 20% adenine, the percentage of guanine is",
+   "options": [
+    "20%",
+    "30%",
+    "40%",
+    "60%",
+    "80%"
+   ],
+   "answer": 1,
+   "explanation": "A = T = 20%, so C + G = 60% and G = 30%.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u7-05",
+   "topic_code": "bio-7.2",
+   "stem": "DNA replication is described as",
+   "options": [
+    "conservative",
+    "semi-conservative",
+    "dispersive",
+    "random",
+    "non-complementary"
+   ],
+   "answer": 1,
+   "explanation": "Each new molecule keeps one parental strand.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u7-06",
+   "topic_code": "bio-7.2",
+   "stem": "The enzyme that unwinds the DNA double helix is",
+   "options": [
+    "ligase",
+    "helicase",
+    "primase",
+    "RNA polymerase",
+    "restriction enzyme"
+   ],
+   "answer": 1,
+   "explanation": "Helicase breaks hydrogen bonds between bases.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u7-07",
+   "topic_code": "bio-7.2",
+   "stem": "Okazaki fragments are formed on the",
+   "options": [
+    "leading strand",
+    "lagging strand",
+    "mRNA",
+    "tRNA",
+    "template of transcription"
+   ],
+   "answer": 1,
+   "explanation": "The lagging strand is made in short pieces.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u7-08",
+   "topic_code": "bio-7.2",
+   "stem": "Okazaki fragments are joined by",
+   "options": [
+    "DNA polymerase",
+    "helicase",
+    "DNA ligase",
+    "RNA polymerase",
+    "topoisomerase only"
+   ],
+   "answer": 2,
+   "explanation": "DNA ligase seals the gaps.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u7-09",
+   "topic_code": "bio-7.3",
+   "stem": "Transcription takes place in the",
+   "options": [
+    "ribosome",
+    "nucleus",
+    "cytoplasm only",
+    "Golgi body",
+    "lysosome"
+   ],
+   "answer": 1,
+   "explanation": "In eukaryotes mRNA is made in the nucleus.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u7-10",
+   "topic_code": "bio-7.3",
+   "stem": "The enzyme that makes mRNA is",
+   "options": [
+    "DNA polymerase",
+    "RNA polymerase",
+    "ligase",
+    "reverse transcriptase",
+    "helicase only"
+   ],
+   "answer": 1,
+   "explanation": "RNA polymerase synthesises RNA.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u7-11",
+   "topic_code": "bio-7.3",
+   "stem": "The mRNA made from the template strand TAC GGA is",
+   "options": [
+    "ATG CCT",
+    "AUG CCU",
+    "UAC GGA",
+    "TAC GGA",
+    "AUC CCU"
+   ],
+   "answer": 1,
+   "explanation": "Complementary bases with U in place of T.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u7-12",
+   "topic_code": "bio-7.3",
+   "stem": "Non-coding sequences removed from pre-mRNA are",
+   "options": [
+    "exons",
+    "introns",
+    "codons",
+    "anticodons",
+    "promoters"
+   ],
+   "answer": 1,
+   "explanation": "Introns are spliced out.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u7-13",
+   "topic_code": "bio-7.4",
+   "stem": "A codon consists of",
+   "options": [
+    "one base",
+    "two bases",
+    "three bases",
+    "four bases",
+    "one amino acid"
+   ],
+   "answer": 2,
+   "explanation": "The genetic code is a triplet code.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u7-14",
+   "topic_code": "bio-7.4",
+   "stem": "The start codon on mRNA is",
+   "options": [
+    "UAA",
+    "AUG",
+    "UGA",
+    "UAG",
+    "GGG"
+   ],
+   "answer": 1,
+   "explanation": "AUG codes for methionine and starts translation.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u7-15",
+   "topic_code": "bio-7.4",
+   "stem": "The molecule that carries amino acids to the ribosome is",
+   "options": [
+    "mRNA",
+    "tRNA",
+    "rRNA",
+    "DNA",
+    "ATP"
+   ],
+   "answer": 1,
+   "explanation": "tRNA has an anticodon and carries an amino acid.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u7-16",
+   "topic_code": "bio-7.4",
+   "stem": "The genetic code is described as degenerate because",
+   "options": [
+    "it is not universal",
+    "most amino acids have more than one codon",
+    "codons overlap",
+    "it has no stop codons",
+    "it changes with age"
+   ],
+   "answer": 1,
+   "explanation": "61 codons code for 20 amino acids.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u7-17",
+   "topic_code": "bio-7.5",
+   "stem": "In the lac operon, lactose acts as",
+   "options": [
+    "a repressor",
+    "an inducer",
+    "a promoter",
+    "an operator",
+    "a structural gene"
+   ],
+   "answer": 1,
+   "explanation": "Lactose binds the repressor so the genes are transcribed.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u7-18",
+   "topic_code": "bio-7.6",
+   "stem": "A mutation that changes one base and one amino acid is a",
+   "options": [
+    "frameshift",
+    "substitution (missense)",
+    "deletion of a chromosome",
+    "nonsense codon only",
+    "silent mutation always"
+   ],
+   "answer": 1,
+   "explanation": "A base substitution can change one amino acid.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u7-19",
+   "topic_code": "bio-7.6",
+   "stem": "Sickle cell anaemia is caused by",
+   "options": [
+    "a frameshift",
+    "a base substitution in the haemoglobin gene",
+    "trisomy",
+    "a chromosome deletion",
+    "a viral infection"
+   ],
+   "answer": 1,
+   "explanation": "One base change replaces glutamic acid with valine.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u7-20",
+   "topic_code": "bio-7.7",
+   "stem": "Restriction enzymes",
+   "options": [
+    "join DNA fragments",
+    "cut DNA at specific sequences",
+    "copy RNA into DNA",
+    "unwind DNA",
+    "make proteins"
+   ],
+   "answer": 1,
+   "explanation": "They recognise specific base sequences.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u7-21",
+   "topic_code": "bio-7.7",
+   "stem": "A plasmid is",
+   "options": [
+    "a protein",
+    "a small circular DNA molecule in bacteria",
+    "a type of virus",
+    "an enzyme",
+    "part of the nucleus"
+   ],
+   "answer": 1,
+   "explanation": "Plasmids are used as vectors.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u7-22",
+   "topic_code": "bio-7.7",
+   "stem": "Genes for antibiotic resistance in plasmids are used as",
+   "options": [
+    "promoters",
+    "marker genes",
+    "restriction sites",
+    "introns",
+    "primers"
+   ],
+   "answer": 1,
+   "explanation": "They let scientists select transformed cells.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u7-23",
+   "topic_code": "bio-7.8",
+   "stem": "PCR is used to",
+   "options": [
+    "cut DNA",
+    "amplify a DNA sequence",
+    "separate proteins",
+    "translate mRNA",
+    "sequence amino acids"
+   ],
+   "answer": 1,
+   "explanation": "PCR makes many copies of DNA.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u7-24",
+   "topic_code": "bio-7.8",
+   "stem": "In gel electrophoresis, DNA fragments move towards the positive electrode because they",
+   "options": [
+    "are positively charged",
+    "are negatively charged",
+    "are neutral",
+    "are large",
+    "contain sugar"
+   ],
+   "answer": 1,
+   "explanation": "Phosphate groups give DNA a negative charge.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u7-25",
+   "topic_code": "bio-7.9",
+   "stem": "Bt crops are resistant to",
+   "options": [
+    "herbicides",
+    "insect pests",
+    "drought",
+    "frost",
+    "viruses only"
+   ],
+   "answer": 1,
+   "explanation": "They make a Bacillus thuringiensis toxin that kills certain insects.",
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "written": [
+  {
+   "id": "demo-s-u7-1",
+   "topic_code": "bio-7.2",
+   "type": "structured",
+   "stem": "Describe the process of DNA replication.",
+   "marks": 4,
+   "model_answer": "Helicase unwinds DNA and breaks hydrogen bonds. Free nucleotides pair with complementary bases on each template strand. DNA polymerase joins them 5' to 3'. The lagging strand forms Okazaki fragments that DNA ligase joins. Each new molecule has one old and one new strand (semi-conservative).",
+   "points": [
+    {
+     "text": "Helicase unwinds / breaks hydrogen bonds",
+     "marks": 1,
+     "keywords": [
+      "helicase"
+     ]
+    },
+    {
+     "text": "Complementary base pairing",
+     "marks": 1,
+     "keywords": [
+      "complementary"
+     ]
+    },
+    {
+     "text": "DNA polymerase joins nucleotides",
+     "marks": 1,
+     "keywords": [
+      "polymerase"
+     ]
+    },
+    {
+     "text": "Semi-conservative / Okazaki and ligase",
+     "marks": 1,
+     "keywords": [
+      "semi conservative",
+      "ligase"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-s-u7-2",
+   "topic_code": "bio-7.3",
+   "type": "structured",
+   "stem": "Explain how mRNA is formed during transcription in a eukaryotic cell.",
+   "marks": 4,
+   "model_answer": "RNA polymerase binds to the promoter and unwinds the DNA. RNA nucleotides pair with the template strand with uracil opposite adenine and are joined to form pre-mRNA. Introns are removed by splicing and the mature mRNA leaves the nucleus.",
+   "points": [
+    {
+     "text": "RNA polymerase binds promoter",
+     "marks": 1,
+     "keywords": [
+      "rna polymerase",
+      "promoter"
+     ]
+    },
+    {
+     "text": "Template strand, complementary pairing with uracil",
+     "marks": 1,
+     "keywords": [
+      "template",
+      "uracil"
+     ]
+    },
+    {
+     "text": "Pre-mRNA formed",
+     "marks": 1,
+     "keywords": [
+      "pre mrna"
+     ]
+    },
+    {
+     "text": "Introns removed / splicing",
+     "marks": 1,
+     "keywords": [
+      "intron",
+      "splicing"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-s-u7-3",
+   "topic_code": "bio-7.7",
+   "type": "structured",
+   "stem": "Outline the steps used to produce human insulin using bacteria.",
+   "marks": 4,
+   "model_answer": "The insulin gene is cut out with a restriction enzyme. A plasmid is cut with the same enzyme. DNA ligase joins the gene into the plasmid. The recombinant plasmid is taken up by bacteria, which are selected with marker genes and grown to produce insulin.",
+   "points": [
+    {
+     "text": "Restriction enzyme cuts gene",
+     "marks": 1,
+     "keywords": [
+      "restriction"
+     ]
+    },
+    {
+     "text": "Plasmid cut with same enzyme",
+     "marks": 1,
+     "keywords": [
+      "plasmid"
+     ]
+    },
+    {
+     "text": "DNA ligase joins",
+     "marks": 1,
+     "keywords": [
+      "ligase"
+     ]
+    },
+    {
+     "text": "Transformation and selection of bacteria",
+     "marks": 1,
+     "keywords": [
+      "transformation",
+      "marker"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-s-u7-4",
+   "topic_code": "bio-7.8",
+   "type": "structured",
+   "stem": "Explain the principle of the polymerase chain reaction (PCR).",
+   "marks": 4,
+   "model_answer": "DNA is heated to about 95 C to separate the strands; it is cooled to about 55 C so primers anneal; then at about 72 C a heat-stable DNA polymerase (Taq) extends the primers. The cycle is repeated, doubling the DNA each time.",
+   "points": [
+    {
+     "text": "Denaturation by heating",
+     "marks": 1,
+     "keywords": [
+      "heat",
+      "separate"
+     ]
+    },
+    {
+     "text": "Primers anneal on cooling",
+     "marks": 1,
+     "keywords": [
+      "primer",
+      "anneal"
+     ]
+    },
+    {
+     "text": "Taq polymerase extends",
+     "marks": 1,
+     "keywords": [
+      "taq",
+      "polymerase"
+     ]
+    },
+    {
+     "text": "Repeated cycles double the DNA",
+     "marks": 1,
+     "keywords": [
+      "cycle",
+      "double"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-e-u7-5",
+   "topic_code": "bio-7.4",
+   "type": "essay",
+   "stem": "Describe how a polypeptide is made at a ribosome during translation.",
+   "marks": 10,
+   "model_answer": "mRNA attaches to the small ribosomal subunit and the start codon AUG is found. A tRNA with the complementary anticodon brings methionine. The next tRNA binds the next codon, and a peptide bond forms between the amino acids. The ribosome moves along one codon at a time, releasing tRNAs, until a stop codon is reached and the polypeptide is released.",
+   "points": [
+    {
+     "text": "mRNA binds ribosome, start codon AUG",
+     "marks": 2,
+     "keywords": [
+      "ribosome",
+      "aug"
+     ]
+    },
+    {
+     "text": "tRNA anticodon pairs with codon",
+     "marks": 2,
+     "keywords": [
+      "trna",
+      "anticodon"
+     ]
+    },
+    {
+     "text": "Peptide bonds join amino acids",
+     "marks": 2,
+     "keywords": [
+      "peptide bond"
+     ]
+    },
+    {
+     "text": "Ribosome moves along mRNA",
+     "marks": 2,
+     "keywords": [
+      "move",
+      "codon"
+     ]
+    },
+    {
+     "text": "Stop codon releases the polypeptide",
+     "marks": 2,
+     "keywords": [
+      "stop codon"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-e-u7-6",
+   "topic_code": "bio-7.9",
+   "type": "essay",
+   "stem": "Discuss the benefits and concerns of genetically modified organisms.",
+   "marks": 10,
+   "model_answer": "Benefits include crops with higher yield, pest resistance (Bt crops), herbicide tolerance and better nutrition (Golden Rice), and microbes that make medicines such as insulin. Concerns include gene flow to wild relatives, effects on non-target organisms, reduced biodiversity, possible allergies, and ethical and economic issues such as seed patents.",
+   "points": [
+    {
+     "text": "Crop benefits: yield / pest resistance",
+     "marks": 3,
+     "keywords": [
+      "yield",
+      "pest"
+     ]
+    },
+    {
+     "text": "Medical benefits: insulin",
+     "marks": 2,
+     "keywords": [
+      "insulin",
+      "medicine"
+     ]
+    },
+    {
+     "text": "Environmental concerns: gene flow / biodiversity",
+     "marks": 3,
+     "keywords": [
+      "gene flow",
+      "biodiversity"
+     ]
+    },
+    {
+     "text": "Health or ethical concerns",
+     "marks": 2,
+     "keywords": [
+      "allergy",
+      "ethical"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "ask": [
+  {
+   "id": "demo-ask-u7-1",
+   "topic_code": "bio-7.2",
+   "question": "Why is DNA replication called semi-conservative?",
+   "aliases": [
+    "semi conservative replication"
+   ],
+   "keywords": [
+    "replication",
+    "semi conservative",
+    "dna"
+   ],
+   "answer": "Each new DNA molecule contains one strand from the original molecule and one newly made strand. Meselson and Stahl showed this using DNA labelled with heavy nitrogen.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 7.2: DNA replication"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u7-2",
+   "topic_code": "bio-7.3",
+   "question": "What happens during transcription?",
+   "aliases": [
+    "explain transcription"
+   ],
+   "keywords": [
+    "transcription",
+    "mrna",
+    "rna polymerase"
+   ],
+   "answer": "RNA polymerase binds to the promoter, unwinds the DNA and builds an mRNA copy of one template strand using complementary base pairing, with uracil instead of thymine. In eukaryotes introns are then removed.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 7.3: Transcription"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u7-3",
+   "topic_code": "bio-7.4",
+   "question": "What is a codon?",
+   "aliases": [
+    "genetic code codon"
+   ],
+   "keywords": [
+    "codon",
+    "genetic code",
+    "translation"
+   ],
+   "answer": "A codon is a sequence of three bases on mRNA that codes for one amino acid or a stop signal. AUG is the start codon.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 7.4: Translation and the genetic code"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u7-4",
+   "topic_code": "bio-7.7",
+   "question": "What is recombinant DNA?",
+   "aliases": [
+    "genetic engineering"
+   ],
+   "keywords": [
+    "recombinant",
+    "plasmid",
+    "restriction enzyme",
+    "genetic engineering"
+   ],
+   "answer": "Recombinant DNA is DNA made by joining DNA from different sources. A gene is cut with a restriction enzyme, inserted into a vector such as a plasmid with DNA ligase, and transferred into a host cell.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 7.7: Recombinant DNA technology"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u7-5",
+   "topic_code": "bio-7.8",
+   "question": "What is PCR used for?",
+   "aliases": [
+    "polymerase chain reaction"
+   ],
+   "keywords": [
+    "pcr",
+    "dna",
+    "amplify"
+   ],
+   "answer": "PCR makes millions of copies of a chosen DNA sequence by repeated cycles of heating, primer annealing and extension by a heat-stable DNA polymerase. It is used in forensics, diagnosis and research.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 7.8: PCR, gel electrophoresis and DNA analysis"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "uploads": [
+  {
+   "id": "demo-upload-u7-1",
+   "topic_code": "bio-7.7",
+   "title": "Genetic engineering",
+   "aliases": [
+    "biotechnology notes",
+    "recombinant dna notes"
+   ],
+   "keywords": [
+    "recombinant",
+    "genetic engineering",
+    "biotechnology",
+    "plasmid",
+    "dna"
+   ],
+   "summary": "These notes describe the tools of recombinant DNA technology and how genes are transferred into bacteria to make products such as human insulin.",
+   "key_points": [
+    "Restriction enzymes cut at specific sequences",
+    "Plasmids are common vectors",
+    "DNA ligase joins the gene into the vector",
+    "Marker genes identify transformed cells"
+   ],
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "visuals": [
+  {
+   "id": "demo-visual-u7-1",
+   "topic_code": "bio-7.4",
+   "title": "From gene to protein",
+   "aliases": [
+    "protein synthesis",
+    "transcription and translation",
+    "central dogma"
+   ],
+   "keywords": [
+    "protein synthesis",
+    "transcription",
+    "translation",
+    "mrna",
+    "gene"
+   ],
+   "kind": "flowchart",
+   "alt_text": "DNA to mRNA to protein.",
+   "image": "assets/demo/visuals/u7_protein.png",
+   "width": 1000,
+   "height": 750,
+   "style": "flat_colour",
+   "labels": [
+    {
+     "number": 1,
+     "name": "DNA",
+     "description": "Gene in the nucleus",
+     "x": 0.054,
+     "y": 0.196
+    },
+    {
+     "number": 2,
+     "name": "Transcription",
+     "description": "RNA polymerase makes pre-mRNA",
+     "x": 0.054,
+     "y": 0.472
+    },
+    {
+     "number": 3,
+     "name": "Processing",
+     "description": "Introns removed",
+     "x": 0.054,
+     "y": 0.748
+    },
+    {
+     "number": 4,
+     "name": "mRNA",
+     "description": "Leaves via nuclear pore",
+     "x": 0.534,
+     "y": 0.196
+    },
+    {
+     "number": 5,
+     "name": "Translation",
+     "description": "Ribosome reads codons",
+     "x": 0.534,
+     "y": 0.472
+    },
+    {
+     "number": 6,
+     "name": "Polypeptide",
+     "description": "Folds into a protein",
+     "x": 0.534,
+     "y": 0.748
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-visual-u7-2",
+   "topic_code": "bio-7.7",
+   "title": "Making recombinant DNA",
+   "aliases": [
+    "genetic engineering steps",
+    "insulin production"
+   ],
+   "keywords": [
+    "recombinant",
+    "plasmid",
+    "restriction",
+    "ligase",
+    "insulin"
+   ],
+   "kind": "flowchart",
+   "alt_text": "Steps to insert a gene into bacteria.",
+   "image": "assets/demo/visuals/u7_recombinant.png",
+   "width": 1000,
+   "height": 750,
+   "style": "flat_colour",
+   "labels": [
+    {
+     "number": 1,
+     "name": "Isolate gene",
+     "description": "Cut with restriction enzyme",
+     "x": 0.054,
+     "y": 0.196
+    },
+    {
+     "number": 2,
+     "name": "Cut plasmid",
+     "description": "Same enzyme, sticky ends",
+     "x": 0.054,
+     "y": 0.472
+    },
+    {
+     "number": 3,
+     "name": "Join",
+     "description": "DNA ligase",
+     "x": 0.054,
+     "y": 0.748
+    },
+    {
+     "number": 4,
+     "name": "Transform",
+     "description": "Plasmid into bacteria",
+     "x": 0.534,
+     "y": 0.196
+    },
+    {
+     "number": 5,
+     "name": "Select",
+     "description": "Marker genes",
+     "x": 0.534,
+     "y": 0.472
+    },
+    {
+     "number": 6,
+     "name": "Produce",
+     "description": "Bacteria make insulin",
+     "x": 0.534,
+     "y": 0.748
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  }
+ ]
+}

@@ -1,6 +1,12 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <!-- Needed to call the BrAInBox API in every build type. -->
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- The camera plugin adds the microphone permission, but the app never
+         records audio (photos only), so drop it from the merged manifest. -->
+    <uses-permission
+        android:name="android.permission.RECORD_AUDIO"
+        tools:node="remove"/>
     <application
         android:label="BrAInBox"
         android:name="${applicationName}"

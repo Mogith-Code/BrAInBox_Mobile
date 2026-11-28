@@ -132,13 +132,16 @@ class _ContentReviewScreenState extends ConsumerState<ContentReviewScreen> {
               : 'Notes, short notes & diagrams',
           title: 'Content library',
           actions: [
-            FilledButton.icon(
-              onPressed: () => showAdminSnack(
-                context,
-                'AI notes are generated per topic (POST /admin/content/generate).',
+            // The backend has no admin "generate notes" route yet.
+            Tooltip(
+              message:
+                  'Not available yet: the server cannot generate notes '
+                  'from the admin portal.',
+              child: FilledButton.icon(
+                onPressed: null,
+                icon: const Icon(Icons.auto_awesome, size: 18),
+                label: const Text('Generate'),
               ),
-              icon: const Icon(Icons.auto_awesome, size: 18),
-              label: const Text('Generate'),
             ),
           ],
         ),
@@ -270,18 +273,14 @@ class _PreviewState extends ConsumerState<_Preview> {
 
   Future<void> _review(bool approve) async {
     setState(() => _busy = true);
-    final saved = await ref
+    final error = await ref
         .read(contentReviewControllerProvider.notifier)
         .review(widget.item.id, approve: approve, note: _note.text);
     if (!mounted) return;
     setState(() => _busy = false);
     showAdminSnack(
       context,
-      saved == null
-          ? "Couldn't save the review. Try again."
-          : approve
-          ? 'Approved. Students can see it now.'
-          : 'Rejected.',
+      error ?? (approve ? 'Approved. Students can see it now.' : 'Rejected.'),
     );
   }
 
@@ -291,12 +290,10 @@ class _PreviewState extends ConsumerState<_Preview> {
       builder: (_) => _EditDialog(initial: widget.item.bodyMarkdown ?? ''),
     );
     if (body == null || !mounted) return;
-    final saved = await ref
+    final error = await ref
         .read(contentReviewControllerProvider.notifier)
         .edit(widget.item.id, body);
-    if (mounted) {
-      showAdminSnack(context, saved == null ? "Couldn't save." : 'Saved.');
-    }
+    if (mounted) showAdminSnack(context, error ?? 'Saved.');
   }
 
   @override

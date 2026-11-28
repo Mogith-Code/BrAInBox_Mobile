@@ -1,7 +1,7 @@
 name: brainbox_mobile
 description: BrAInBox - AI study app for G.C.E. A/L Biology students (Android).
 publish_to: none
-version: 0.1.0+1
+version: 1.0.0+1
 resolution: workspace
 
 environment:
@@ -55,3 +55,8 @@ flutter:
     - assets/icons/
     - assets/logo/
     - assets/illustrations/
+    # Saved AI outputs, read only when built with --dart-define=DEMO_AI=true.
+    - assets/demo/
+    - assets/demo/units/
+    - assets/demo/visuals/
+    - assets/demo/ocr/

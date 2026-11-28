@@ -104,7 +104,11 @@ class _EditorState extends ConsumerState<_Editor> {
         .save(q, publish: publish);
     if (!mounted) return;
     if (saved == null) {
-      showAdminSnack(context, "Couldn't save. Try again.");
+      final error = ref.read(questionEditorProvider).error;
+      showAdminSnack(
+        context,
+        error == null ? "Couldn't save. Try again." : adminErrorMessage(error),
+      );
       return;
     }
     setState(

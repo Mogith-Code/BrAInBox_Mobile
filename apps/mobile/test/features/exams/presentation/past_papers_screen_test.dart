@@ -213,6 +213,72 @@ void main() {
     expect(find.text('RESULT'), findsOneWidget);
   });
 
+  testWidgets('exam mode: back asks first once something is answered', (
+    tester,
+  ) async {
+    await _pump(tester, repo, AppRoutes.pastPapers);
+    await tester.tap(find.text('2023 A/L Biology'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('A unit of heredity'));
+    await tester.pumpAndSettle();
+
+    await tester.binding.handlePopRoute();
+    await tester.pumpAndSettle();
+    expect(find.text('Leave exam?'), findsOneWidget);
+
+    await tester.tap(find.text('Keep working'));
+    await tester.pumpAndSettle();
+    expect(find.text('Answered'), findsOneWidget);
+
+    await tester.binding.handlePopRoute();
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Leave'));
+    await tester.pumpAndSettle();
+    expect(find.text('What is a gene?'), findsNothing);
+    expect(find.text('Hide outdated questions'), findsOneWidget);
+  });
+
+  testWidgets('exam mode: the palette reaches a far question', (tester) async {
+    final detail = _detail()
+      ..['questions'] = [
+        for (var i = 1; i <= 40; i++)
+          {
+            'id': 'q$i',
+            'position': i,
+            'question_type': 'mcq',
+            'topic': 'Genetics',
+            'stem': 'Stem $i',
+            'marks': 1,
+            'options': [
+              {'label': 'A', 'text': 'First $i'},
+              {'label': 'B', 'text': 'Second $i'},
+            ],
+            'is_outdated': false,
+          },
+      ];
+    when(
+      () => repo.fetchPaper(any(), hideOutdated: any(named: 'hideOutdated')),
+    ).thenAnswer((_) async => PaperDetail.fromJson(detail));
+    await _pump(tester, repo, AppRoutes.examAttemptPath('p1'));
+
+    await tester.tap(find.byTooltip('Question palette'));
+    await tester.pumpAndSettle();
+    final cell = find.bySemanticsLabel('Question 40, Unanswered');
+    await tester.ensureVisible(cell);
+    await tester.pumpAndSettle();
+    await tester.tap(cell);
+    await tester.pump(const Duration(milliseconds: 400));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Stem 40').hitTestable(), findsOneWidget);
+  });
+
+  test('optionLetter does not run out of letters', () {
+    expect(optionLetter(0), 'A');
+    expect(optionLetter(5), 'F');
+    expect(optionLetter(26), '27');
+  });
+
   testWidgets('generate: starts the job, polls, then opens the paper', (
     tester,
   ) async {

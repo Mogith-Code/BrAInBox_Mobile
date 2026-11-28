@@ -1,0 +1,1157 @@
+{
+ "schema_version": 1,
+ "unit": 4,
+ "notes": [
+  {
+   "id": "demo-note-u4-1",
+   "topic_code": "bio-4.5",
+   "full": [
+    {
+     "type": "heading",
+     "text": "Transpiration",
+     "level": 2
+    },
+    {
+     "type": "definition",
+     "term": "Transpiration",
+     "text": "The loss of water vapour from the aerial parts of a plant, mainly through the stomata of the leaves."
+    },
+    {
+     "type": "paragraph",
+     "text": "Water evaporates from the walls of mesophyll cells into air spaces and diffuses out through open stomata down a water potential gradient.",
+     "highlights": [
+      "mesophyll",
+      "stomata"
+     ]
+    },
+    {
+     "type": "heading",
+     "text": "Factors that increase the rate",
+     "level": 3
+    },
+    {
+     "type": "bullet_list",
+     "items": [
+      "Higher temperature",
+      "Lower humidity",
+      "Higher wind speed",
+      "Higher light intensity (stomata open)"
+     ]
+    },
+    {
+     "type": "heading",
+     "text": "Importance",
+     "level": 3
+    },
+    {
+     "type": "paragraph",
+     "text": "Transpiration pulls water up the xylem (the transpiration stream), carries mineral ions and cools the leaf.",
+     "highlights": [
+      "xylem"
+     ]
+    },
+    {
+     "type": "paragraph",
+     "text": "The potometer measures water uptake, which is close to the rate of transpiration.",
+     "highlights": [
+      "potometer"
+     ]
+    },
+    {
+     "type": "tip",
+     "title": "Past-paper tip",
+     "text": "A potometer measures water uptake, not transpiration directly. Some water is used in photosynthesis and to keep cells turgid."
+    }
+   ],
+   "short": [
+    {
+     "type": "bullet_list",
+     "items": [
+      "Water vapour lost through stomata",
+      "Evaporation from mesophyll then diffusion out",
+      "Faster with heat, wind, light, low humidity",
+      "Creates the transpiration pull in xylem",
+      "Measured with a potometer (water uptake)"
+     ]
+    }
+   ],
+   "read_minutes": 6,
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-note-u4-2",
+   "topic_code": "bio-4.6",
+   "full": [
+    {
+     "type": "heading",
+     "text": "Translocation in the phloem",
+     "level": 2
+    },
+    {
+     "type": "definition",
+     "term": "Translocation",
+     "text": "The movement of organic solutes, mainly sucrose, through the phloem from sources to sinks."
+    },
+    {
+     "type": "bullet_list",
+     "items": [
+      "Source: where sugars are made or released, such as mature leaves",
+      "Sink: where sugars are used or stored, such as roots, fruits and growing tips"
+     ]
+    },
+    {
+     "type": "heading",
+     "text": "Mass flow hypothesis",
+     "level": 3
+    },
+    {
+     "type": "paragraph",
+     "text": "Sucrose is actively loaded into sieve tubes at the source with help from companion cells. This lowers the water potential, so water enters from the xylem by osmosis and the hydrostatic pressure rises. At the sink sucrose is removed, water leaves and the pressure falls. Sap flows from high to low pressure.",
+     "highlights": [
+      "sieve tubes",
+      "companion cells",
+      "hydrostatic pressure"
+     ]
+    },
+    {
+     "type": "tip",
+     "title": "Past-paper tip",
+     "text": "Ringing experiments and aphid stylets are classic evidence that sugars move in the phloem."
+    }
+   ],
+   "short": [
+    {
+     "type": "bullet_list",
+     "items": [
+      "Sucrose moves in phloem, source to sink",
+      "Companion cells load sucrose (active, ATP)",
+      "Water enters by osmosis, pressure rises at source",
+      "Mass flow down the pressure gradient",
+      "Evidence: ringing, aphid stylets, radioactive tracers"
+     ]
+    }
+   ],
+   "read_minutes": 6,
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-note-u4-3",
+   "topic_code": "bio-4.9",
+   "full": [
+    {
+     "type": "heading",
+     "text": "Reproduction in flowering plants",
+     "level": 2
+    },
+    {
+     "type": "heading",
+     "text": "Parts of a flower",
+     "level": 3
+    },
+    {
+     "type": "bullet_list",
+     "items": [
+      "Stamen: anther (makes pollen) and filament",
+      "Carpel: stigma, style and ovary containing ovules",
+      "Petals attract pollinators; sepals protect the bud"
+     ]
+    },
+    {
+     "type": "definition",
+     "term": "Pollination",
+     "text": "The transfer of pollen from an anther to a stigma."
+    },
+    {
+     "type": "paragraph",
+     "text": "Pollination may be self-pollination or cross-pollination, by insects, wind, water or animals.",
+     "highlights": [
+      "self-pollination",
+      "cross-pollination"
+     ]
+    },
+    {
+     "type": "heading",
+     "text": "Double fertilisation",
+     "level": 3
+    },
+    {
+     "type": "paragraph",
+     "text": "The pollen tube grows down the style and delivers two male nuclei. One fuses with the egg to form the zygote (2n); the other fuses with the two polar nuclei to form the endosperm nucleus (3n).",
+     "highlights": [
+      "zygote",
+      "endosperm"
+     ]
+    },
+    {
+     "type": "tip",
+     "title": "Past-paper tip",
+     "text": "Double fertilisation is unique to angiosperms. State the ploidy of the zygote and endosperm."
+    }
+   ],
+   "short": [
+    {
+     "type": "bullet_list",
+     "items": [
+      "Stamen = anther + filament",
+      "Carpel = stigma + style + ovary",
+      "Pollination: anther to stigma",
+      "Pollen tube carries two male nuclei",
+      "Male + egg = zygote (2n)",
+      "Male + 2 polar nuclei = endosperm (3n)"
+     ]
+    }
+   ],
+   "read_minutes": 7,
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "mcqs": [
+  {
+   "id": "demo-mcq-u4-01",
+   "topic_code": "bio-4.1",
+   "stem": "Which plant tissue is responsible for growth in length?",
+   "options": [
+    "Apical meristem",
+    "Cork",
+    "Xylem",
+    "Collenchyma",
+    "Epidermis"
+   ],
+   "answer": 0,
+   "explanation": "Apical meristems at root and shoot tips cause primary growth.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u4-02",
+   "topic_code": "bio-4.1",
+   "stem": "Dead cells with lignified walls that carry water are",
+   "options": [
+    "sieve tubes",
+    "companion cells",
+    "xylem vessels",
+    "parenchyma",
+    "collenchyma"
+   ],
+   "answer": 2,
+   "explanation": "Xylem vessels are dead, hollow and lignified.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u4-03",
+   "topic_code": "bio-4.2",
+   "stem": "Secondary growth in thickness is produced by the",
+   "options": [
+    "apical meristem",
+    "vascular cambium",
+    "pericycle only",
+    "epidermis",
+    "endodermis"
+   ],
+   "answer": 1,
+   "explanation": "The vascular cambium produces secondary xylem and phloem.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u4-04",
+   "topic_code": "bio-4.3",
+   "stem": "Which plant growth regulator promotes fruit ripening?",
+   "options": [
+    "Auxin",
+    "Gibberellin",
+    "Cytokinin",
+    "Ethylene",
+    "Abscisic acid"
+   ],
+   "answer": 3,
+   "explanation": "Ethylene is a gas that triggers ripening.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u4-05",
+   "topic_code": "bio-4.3",
+   "stem": "Abscisic acid causes",
+   "options": [
+    "stem elongation",
+    "stomatal closure",
+    "cell division",
+    "seed germination",
+    "fruit growth"
+   ],
+   "answer": 1,
+   "explanation": "ABA closes stomata during water stress.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u4-06",
+   "topic_code": "bio-4.4",
+   "stem": "Water enters root hair cells mainly by",
+   "options": [
+    "active transport",
+    "osmosis",
+    "phagocytosis",
+    "facilitated diffusion of sugar",
+    "exocytosis"
+   ],
+   "answer": 1,
+   "explanation": "Root hair cells have a lower water potential than soil water.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u4-07",
+   "topic_code": "bio-4.4",
+   "stem": "The Casparian strip is found in the",
+   "options": [
+    "epidermis",
+    "cortex",
+    "endodermis",
+    "phloem",
+    "pith"
+   ],
+   "answer": 2,
+   "explanation": "It is a band of suberin in endodermal cell walls.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u4-08",
+   "topic_code": "bio-4.5",
+   "stem": "Water vapour leaves the leaf mainly through the",
+   "options": [
+    "cuticle",
+    "stomata",
+    "xylem",
+    "phloem",
+    "lenticels"
+   ],
+   "answer": 1,
+   "explanation": "Most transpiration is through stomata.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u4-09",
+   "topic_code": "bio-4.5",
+   "stem": "Which condition decreases the rate of transpiration?",
+   "options": [
+    "High wind speed",
+    "High temperature",
+    "High humidity",
+    "Bright light",
+    "Low humidity"
+   ],
+   "answer": 2,
+   "explanation": "Humid air reduces the water potential gradient.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u4-10",
+   "topic_code": "bio-4.5",
+   "stem": "A potometer actually measures",
+   "options": [
+    "photosynthesis",
+    "water uptake",
+    "respiration",
+    "mineral uptake",
+    "translocation"
+   ],
+   "answer": 1,
+   "explanation": "It measures water uptake, which approximates transpiration.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u4-11",
+   "topic_code": "bio-4.5",
+   "stem": "Guard cells open the stoma when they",
+   "options": [
+    "lose water and become flaccid",
+    "take in water and become turgid",
+    "die",
+    "lose potassium ions",
+    "make ABA"
+   ],
+   "answer": 1,
+   "explanation": "Turgid guard cells bow apart and open the pore.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u4-12",
+   "topic_code": "bio-4.6",
+   "stem": "The main sugar transported in the phloem is",
+   "options": [
+    "glucose",
+    "sucrose",
+    "starch",
+    "fructose",
+    "cellulose"
+   ],
+   "answer": 1,
+   "explanation": "Sucrose is the main transport sugar.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u4-13",
+   "topic_code": "bio-4.6",
+   "stem": "In the mass flow hypothesis, water enters the sieve tube at the source by",
+   "options": [
+    "active transport",
+    "osmosis",
+    "transpiration",
+    "guttation",
+    "endocytosis"
+   ],
+   "answer": 1,
+   "explanation": "Loading sucrose lowers the water potential so water follows by osmosis.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u4-14",
+   "topic_code": "bio-4.6",
+   "stem": "Which cell loads sucrose into sieve tube elements?",
+   "options": [
+    "Companion cell",
+    "Guard cell",
+    "Xylem vessel",
+    "Root hair cell",
+    "Palisade cell"
+   ],
+   "answer": 0,
+   "explanation": "Companion cells actively load sucrose using ATP.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u4-15",
+   "topic_code": "bio-4.7",
+   "stem": "Gas exchange in woody stems occurs through",
+   "options": [
+    "stomata",
+    "lenticels",
+    "root hairs",
+    "xylem",
+    "cuticle"
+   ],
+   "answer": 1,
+   "explanation": "Lenticels are pores in bark.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u4-16",
+   "topic_code": "bio-4.8",
+   "stem": "A deficiency of magnesium in plants causes",
+   "options": [
+    "purple leaves only",
+    "yellowing of leaves (chlorosis)",
+    "faster growth",
+    "bigger roots",
+    "no effect"
+   ],
+   "answer": 1,
+   "explanation": "Magnesium is part of chlorophyll.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u4-17",
+   "topic_code": "bio-4.8",
+   "stem": "Nitrogen is absorbed by most plants mainly as",
+   "options": [
+    "nitrogen gas",
+    "nitrate ions",
+    "proteins",
+    "urea",
+    "amino acids from air"
+   ],
+   "answer": 1,
+   "explanation": "Roots take up nitrate (and ammonium) ions.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u4-18",
+   "topic_code": "bio-4.9",
+   "stem": "The transfer of pollen from anther to stigma is",
+   "options": [
+    "fertilisation",
+    "pollination",
+    "germination",
+    "dispersal",
+    "budding"
+   ],
+   "answer": 1,
+   "explanation": "Pollination is pollen transfer; fertilisation is fusion of gametes.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u4-19",
+   "topic_code": "bio-4.9",
+   "stem": "The endosperm nucleus in flowering plants is",
+   "options": [
+    "haploid",
+    "diploid",
+    "triploid",
+    "tetraploid",
+    "absent"
+   ],
+   "answer": 2,
+   "explanation": "A male nucleus fuses with two polar nuclei, giving 3n.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u4-20",
+   "topic_code": "bio-4.9",
+   "stem": "The part of the carpel that receives pollen is the",
+   "options": [
+    "ovary",
+    "style",
+    "stigma",
+    "anther",
+    "filament"
+   ],
+   "answer": 2,
+   "explanation": "The stigma is sticky and receives pollen.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u4-21",
+   "topic_code": "bio-4.10",
+   "stem": "After fertilisation, the ovary develops into the",
+   "options": [
+    "seed",
+    "fruit",
+    "embryo",
+    "endosperm",
+    "testa"
+   ],
+   "answer": 1,
+   "explanation": "The ovary becomes the fruit and ovules become seeds.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u4-22",
+   "topic_code": "bio-4.10",
+   "stem": "Fruits with hooks are usually dispersed by",
+   "options": [
+    "wind",
+    "water",
+    "animals",
+    "explosion",
+    "gravity only"
+   ],
+   "answer": 2,
+   "explanation": "Hooks attach to animal fur.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u4-23",
+   "topic_code": "bio-4.11",
+   "stem": "In ferns, the dominant generation is the",
+   "options": [
+    "gametophyte",
+    "sporophyte",
+    "prothallus",
+    "zygote",
+    "spore"
+   ],
+   "answer": 1,
+   "explanation": "The fern plant we see is the sporophyte.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u4-24",
+   "topic_code": "bio-4.12",
+   "stem": "The growth of a shoot towards light is",
+   "options": [
+    "positive phototropism",
+    "negative phototropism",
+    "geotropism",
+    "thigmotropism",
+    "hydrotropism"
+   ],
+   "answer": 0,
+   "explanation": "Auxin moves to the shaded side, causing bending towards light.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u4-25",
+   "topic_code": "bio-4.12",
+   "stem": "Auxin causes shoot bending towards light by",
+   "options": [
+    "killing cells on the lit side",
+    "stimulating cell elongation on the shaded side",
+    "closing stomata",
+    "making fruit",
+    "stopping cell division"
+   ],
+   "answer": 1,
+   "explanation": "Auxin accumulates on the shaded side and increases elongation there.",
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "written": [
+  {
+   "id": "demo-s-u4-1",
+   "topic_code": "bio-4.5",
+   "type": "structured",
+   "stem": "Describe four environmental factors that affect the rate of transpiration.",
+   "marks": 4,
+   "model_answer": "Higher temperature increases evaporation and diffusion; lower humidity increases the water potential gradient; wind removes humid air near the leaf; light opens stomata, so all of these increase the rate.",
+   "points": [
+    {
+     "text": "Temperature",
+     "marks": 1,
+     "keywords": [
+      "temperature"
+     ]
+    },
+    {
+     "text": "Humidity",
+     "marks": 1,
+     "keywords": [
+      "humidity"
+     ]
+    },
+    {
+     "text": "Wind / air movement",
+     "marks": 1,
+     "keywords": [
+      "wind"
+     ]
+    },
+    {
+     "text": "Light opens stomata",
+     "marks": 1,
+     "keywords": [
+      "light",
+      "stomata"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-s-u4-2",
+   "topic_code": "bio-4.6",
+   "type": "structured",
+   "stem": "Explain the mass flow hypothesis of translocation.",
+   "marks": 4,
+   "model_answer": "Sucrose is actively loaded into sieve tubes at the source, lowering water potential. Water enters from the xylem by osmosis, raising hydrostatic pressure. At the sink sucrose is unloaded and water leaves, lowering the pressure, so sap flows from source to sink.",
+   "points": [
+    {
+     "text": "Sucrose loaded at source (active)",
+     "marks": 1,
+     "keywords": [
+      "sucrose",
+      "source"
+     ]
+    },
+    {
+     "text": "Water enters by osmosis",
+     "marks": 1,
+     "keywords": [
+      "osmosis"
+     ]
+    },
+    {
+     "text": "High hydrostatic pressure at source",
+     "marks": 1,
+     "keywords": [
+      "pressure"
+     ]
+    },
+    {
+     "text": "Unloaded at sink; flows source to sink",
+     "marks": 1,
+     "keywords": [
+      "sink"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-s-u4-3",
+   "topic_code": "bio-4.9",
+   "type": "structured",
+   "stem": "Describe double fertilisation in flowering plants.",
+   "marks": 4,
+   "model_answer": "The pollen tube enters the ovule and releases two male nuclei. One fuses with the egg cell to form a diploid zygote. The other fuses with the two polar nuclei to form a triploid endosperm nucleus.",
+   "points": [
+    {
+     "text": "Pollen tube delivers two male nuclei",
+     "marks": 1,
+     "keywords": [
+      "pollen tube",
+      "male"
+     ]
+    },
+    {
+     "text": "One fuses with egg",
+     "marks": 1,
+     "keywords": [
+      "egg"
+     ]
+    },
+    {
+     "text": "Forms diploid zygote",
+     "marks": 1,
+     "keywords": [
+      "zygote"
+     ]
+    },
+    {
+     "text": "Other fuses with polar nuclei to form triploid endosperm",
+     "marks": 1,
+     "keywords": [
+      "polar",
+      "endosperm"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-s-u4-4",
+   "topic_code": "bio-4.3",
+   "type": "structured",
+   "stem": "State the main function of each of the plant growth regulators auxin, gibberellin, cytokinin and ethylene.",
+   "marks": 4,
+   "model_answer": "Auxin promotes cell elongation and phototropism; gibberellin promotes stem elongation and seed germination; cytokinin promotes cell division; ethylene promotes fruit ripening.",
+   "points": [
+    {
+     "text": "Auxin: cell elongation / tropism",
+     "marks": 1,
+     "keywords": [
+      "auxin",
+      "elongation"
+     ]
+    },
+    {
+     "text": "Gibberellin: stem growth / germination",
+     "marks": 1,
+     "keywords": [
+      "gibberellin"
+     ]
+    },
+    {
+     "text": "Cytokinin: cell division",
+     "marks": 1,
+     "keywords": [
+      "cytokinin",
+      "division"
+     ]
+    },
+    {
+     "text": "Ethylene: fruit ripening",
+     "marks": 1,
+     "keywords": [
+      "ethylene",
+      "ripening"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-e-u4-5",
+   "topic_code": "bio-4.4",
+   "type": "essay",
+   "stem": "Describe how water moves from the soil into the root and up to the leaves of a plant.",
+   "marks": 10,
+   "model_answer": "Water enters root hair cells by osmosis because they have a lower water potential than the soil. It crosses the cortex by the apoplast and symplast pathways. At the endodermis the Casparian strip forces it into the symplast. It enters the xylem and is pulled up by transpiration pull, helped by cohesion between water molecules and adhesion to xylem walls, and by root pressure.",
+   "points": [
+    {
+     "text": "Root hair: osmosis / water potential",
+     "marks": 2,
+     "keywords": [
+      "root hair",
+      "osmosis"
+     ]
+    },
+    {
+     "text": "Apoplast and symplast pathways",
+     "marks": 2,
+     "keywords": [
+      "apoplast",
+      "symplast"
+     ]
+    },
+    {
+     "text": "Casparian strip at endodermis",
+     "marks": 2,
+     "keywords": [
+      "casparian",
+      "endodermis"
+     ]
+    },
+    {
+     "text": "Transpiration pull in xylem",
+     "marks": 2,
+     "keywords": [
+      "transpiration",
+      "xylem"
+     ]
+    },
+    {
+     "text": "Cohesion and adhesion / root pressure",
+     "marks": 2,
+     "keywords": [
+      "cohesion",
+      "adhesion"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-e-u4-6",
+   "topic_code": "bio-4.12",
+   "type": "essay",
+   "stem": "Explain how plants respond to light and gravity.",
+   "marks": 10,
+   "model_answer": "Shoots show positive phototropism: auxin moves to the shaded side and stimulates cell elongation there, so the shoot bends towards light. Shoots are negatively and roots positively gravitropic; in roots, auxin collects on the lower side and inhibits elongation, so the root bends downwards. These responses help leaves get light and roots get water and anchorage.",
+   "points": [
+    {
+     "text": "Phototropism of shoots",
+     "marks": 2,
+     "keywords": [
+      "phototropism"
+     ]
+    },
+    {
+     "text": "Auxin moves to shaded side, elongation",
+     "marks": 3,
+     "keywords": [
+      "auxin",
+      "shade",
+      "elongation"
+     ]
+    },
+    {
+     "text": "Gravitropism / geotropism in roots and shoots",
+     "marks": 2,
+     "keywords": [
+      "gravitropism",
+      "geotropism"
+     ]
+    },
+    {
+     "text": "Auxin inhibits root elongation on lower side",
+     "marks": 2,
+     "keywords": [
+      "inhibit",
+      "root"
+     ]
+    },
+    {
+     "text": "Survival value",
+     "marks": 1,
+     "keywords": [
+      "water",
+      "light"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "ask": [
+  {
+   "id": "demo-ask-u4-1",
+   "topic_code": "bio-4.5",
+   "question": "What is transpiration?",
+   "aliases": [
+    "define transpiration"
+   ],
+   "keywords": [
+    "transpiration",
+    "stomata",
+    "water vapour"
+   ],
+   "answer": "Transpiration is the loss of water vapour from the aerial parts of a plant, mainly through the stomata. Water evaporates from mesophyll cell walls and diffuses out down a water potential gradient. It pulls water up the xylem.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 4.5: Transpiration"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u4-2",
+   "topic_code": "bio-4.6",
+   "question": "How does translocation work?",
+   "aliases": [
+    "explain translocation",
+    "mass flow hypothesis"
+   ],
+   "keywords": [
+    "translocation",
+    "phloem",
+    "sucrose",
+    "mass flow"
+   ],
+   "answer": "Sucrose is actively loaded into the phloem sieve tubes at a source. Water follows by osmosis and raises the pressure. At the sink sucrose is removed and the pressure falls, so sap flows by mass flow from source to sink.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 4.6: Translocation in the phloem"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u4-3",
+   "topic_code": "bio-4.9",
+   "question": "What is double fertilisation?",
+   "aliases": [
+    "double fertilization"
+   ],
+   "keywords": [
+    "double fertilisation",
+    "endosperm",
+    "zygote"
+   ],
+   "answer": "In flowering plants the pollen tube releases two male nuclei. One fuses with the egg to form the diploid zygote and the other fuses with the two polar nuclei to form the triploid endosperm.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 4.9: Reproduction in flowering plants"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u4-4",
+   "topic_code": "bio-4.12",
+   "question": "What is phototropism?",
+   "aliases": [
+    "plants growing towards light"
+   ],
+   "keywords": [
+    "phototropism",
+    "auxin",
+    "light"
+   ],
+   "answer": "Phototropism is a growth response to the direction of light. In shoots, auxin moves to the shaded side and causes more cell elongation there, so the shoot bends towards the light.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 4.12: Plant responses to stimuli"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u4-5",
+   "topic_code": "bio-4.3",
+   "question": "What does ethylene do in plants?",
+   "aliases": [
+    "role of ethylene"
+   ],
+   "keywords": [
+    "ethylene",
+    "ripening",
+    "growth regulator"
+   ],
+   "answer": "Ethylene is a gaseous plant growth regulator that promotes fruit ripening and the fall of leaves and fruits.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 4.3: Plant growth regulators"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "uploads": [
+  {
+   "id": "demo-upload-u4-1",
+   "topic_code": "bio-4.5",
+   "title": "Transport in plants",
+   "aliases": [
+    "plant transport notes",
+    "xylem and phloem"
+   ],
+   "keywords": [
+    "transport",
+    "xylem",
+    "phloem",
+    "transpiration",
+    "plant"
+   ],
+   "summary": "These notes cover how water and minerals move through the xylem by transpiration pull and how sugars move through the phloem by mass flow.",
+   "key_points": [
+    "Transpiration pull, cohesion and adhesion move water",
+    "Stomata control water loss",
+    "Sucrose moves from source to sink",
+    "Companion cells load the phloem"
+   ],
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "visuals": [
+  {
+   "id": "demo-visual-u4-1",
+   "topic_code": "bio-4.5",
+   "title": "Water movement through a plant",
+   "aliases": [
+    "transpiration stream",
+    "water transport"
+   ],
+   "keywords": [
+    "transpiration",
+    "xylem",
+    "root",
+    "stomata",
+    "water"
+   ],
+   "kind": "flowchart",
+   "alt_text": "Water path from soil to air.",
+   "image": "assets/demo/visuals/u4_transpiration.png",
+   "width": 1000,
+   "height": 750,
+   "style": "flat_colour",
+   "labels": [
+    {
+     "number": 1,
+     "name": "Soil water",
+     "description": "High water potential",
+     "x": 0.054,
+     "y": 0.196
+    },
+    {
+     "number": 2,
+     "name": "Root hair",
+     "description": "Enters by osmosis",
+     "x": 0.054,
+     "y": 0.472
+    },
+    {
+     "number": 3,
+     "name": "Cortex",
+     "description": "Apoplast and symplast",
+     "x": 0.054,
+     "y": 0.748
+    },
+    {
+     "number": 4,
+     "name": "Endodermis",
+     "description": "Casparian strip",
+     "x": 0.534,
+     "y": 0.196
+    },
+    {
+     "number": 5,
+     "name": "Xylem",
+     "description": "Transpiration pull",
+     "x": 0.534,
+     "y": 0.472
+    },
+    {
+     "number": 6,
+     "name": "Leaf stomata",
+     "description": "Lost as water vapour",
+     "x": 0.534,
+     "y": 0.748
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-visual-u4-2",
+   "topic_code": "bio-4.9",
+   "title": "Parts of a flower",
+   "aliases": [
+    "flower structure"
+   ],
+   "keywords": [
+    "flower",
+    "stamen",
+    "carpel",
+    "pollination"
+   ],
+   "kind": "diagram",
+   "alt_text": "Main parts of a flower.",
+   "image": "assets/demo/visuals/u4_flower.png",
+   "width": 1000,
+   "height": 750,
+   "style": "flat_colour",
+   "labels": [
+    {
+     "number": 1,
+     "name": "Flower",
+     "description": "Reproductive shoot",
+     "x": 0.314,
+     "y": 0.156
+    },
+    {
+     "number": 2,
+     "name": "Sepal",
+     "description": "Protects bud",
+     "x": 0.034,
+     "y": 0.616
+    },
+    {
+     "number": 3,
+     "name": "Petal",
+     "description": "Attracts pollinators",
+     "x": 0.274,
+     "y": 0.616
+    },
+    {
+     "number": 4,
+     "name": "Stamen",
+     "description": "Anther + filament",
+     "x": 0.514,
+     "y": 0.616
+    },
+    {
+     "number": 5,
+     "name": "Carpel",
+     "description": "Stigma, style, ovary",
+     "x": 0.754,
+     "y": 0.616
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  }
+ ]
+}

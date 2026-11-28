@@ -5,6 +5,7 @@ import '../../auth/application/auth_flow_controllers.dart';
 import '../../auth/application/session_controller.dart';
 import '../../home/application/home_controller.dart';
 import '../../offline/offline_cache.dart';
+import '../../onboarding/application/onboarding_controller.dart';
 import '../../practice/application/diagnostic_controller.dart';
 import '../../profile/application/profile_overview_controller.dart';
 import '../data/settings_repository.dart';
@@ -100,6 +101,8 @@ class LogoutController extends _$LogoutController {
         ..invalidate(settingsControllerProvider)
         ..invalidate(privacyControllerProvider);
       await ref.read(offlineCacheProvider).clear();
+      // After logging out, go to Log in rather than the introduction.
+      await ref.read(welcomeSeenProvider.notifier).markSeen();
       await session.signOut();
     });
     if (ref.mounted) state = result;

@@ -74,7 +74,15 @@ void main() {
     // Opening the topic is reported.
     expect(repo.progressLog.first.$2, ProgressEvent.opened);
 
-    // Notes render every block type.
+    // Government notes open first; Unit 6 has no book in the mock.
+    expect(
+      find.text("Government notes aren't available for this topic yet"),
+      findsOneWidget,
+    );
+    await tester.tap(find.text('Open AI notes'));
+    await tester.pumpAndSettle();
+
+    // AI notes render every block type.
     expect(find.text('Unit 6 · 6.1 Mendelian inheritance'), findsOneWidget);
     expect(find.text('AI-generated'), findsOneWidget);
     expect(find.text('6 min read'), findsOneWidget);

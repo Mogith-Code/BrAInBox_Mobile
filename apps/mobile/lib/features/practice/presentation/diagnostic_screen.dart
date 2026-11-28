@@ -68,10 +68,10 @@ class DiagnosticIntroScreen extends ConsumerWidget {
                     ),
                     const SizedBox(height: AppSpacing.md),
                     Text(
-                      'A quick check across all 10 units so your plan starts '
+                      'A quick check across the syllabus so your plan starts '
                       "where you actually are. No pressure — it's not graded.",
                       style: textTheme.bodyLarge?.copyWith(
-                        color: AppColors.muted,
+                        color: context.appMuted,
                         height: 1.5,
                       ),
                     ),
@@ -141,7 +141,7 @@ class DiagnosticIntroScreen extends ConsumerWidget {
                     onPressed: run.busy ? null : skip,
                     style: TextButton.styleFrom(
                       minimumSize: const Size(48, 48),
-                      foregroundColor: AppColors.primary,
+                      foregroundColor: context.appPrimaryText,
                       textStyle: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,

@@ -41,17 +41,16 @@ class _SyllabusManagerScreenState extends ConsumerState<SyllabusManagerScreen> {
       builder: (_) => AddNodeDialog(kind: kind),
     );
     if (result == null || !mounted) return;
-    final ok = await ref
+    final error = await ref
         .read(syllabusEditorProvider.notifier)
         .add(kind, parentId: parentId, name: result.$1, code: result.$2);
-    if (ok && kind != NodeKind.unit) {
+    if (!mounted) return;
+    if (error == null && kind != NodeKind.unit) {
       setState(
         () => (kind == NodeKind.topic ? _openUnits : _openTopics).add(parentId),
       );
     }
-    if (mounted) {
-      showAdminSnack(context, ok ? 'Added.' : "Couldn't add it. Try again.");
-    }
+    showAdminSnack(context, error ?? 'Added.');
   }
 
   @override

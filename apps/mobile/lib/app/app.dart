@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../features/settings/application/settings_controller.dart';
+import 'demo/demo_label.dart';
 import 'router.dart';
 
 /// The root widget of the student app.
@@ -24,6 +25,10 @@ class BrainBoxApp extends ConsumerWidget {
       // otherwise "Firebase not configured" at the top if it isn't.
       builder: (context, child) {
         final app = child ?? const SizedBox.shrink();
+        // DEMO_AI=true: AI answers come from saved demo data (always shown).
+        if (Env.demoAi) {
+          return DemoDataLabel(child: FirebaseStatusBanner(child: app));
+        }
         if (Env.useFakeApi) {
           return Banner(
             message: 'FAKE API',

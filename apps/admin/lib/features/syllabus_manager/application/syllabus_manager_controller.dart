@@ -1,5 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../app/admin_errors.dart';
+
 import '../data/syllabus_manager_repository.dart';
 import '../domain/syllabus_manager_models.dart';
 
@@ -21,13 +23,14 @@ Future<List<AdminConcept>> topicConcepts(Ref ref, String topicId) =>
     ref.watch(syllabusManagerRepositoryProvider).concepts(topicId);
 
 /// Saving and adding nodes. After a change the right list reloads.
+/// Both return why it failed (e.g. the unit number is taken), or null.
 @riverpod
 class SyllabusEditor extends _$SyllabusEditor {
   @override
   AsyncValue<void> build() => const AsyncData(null);
 
   /// Saves the edit form (only the fields the backend knows for [node]).
-  Future<bool> save(
+  Future<String?> save(
     SelectedNode node, {
     required String name,
     required String code,
@@ -57,14 +60,19 @@ class SyllabusEditor extends _$SyllabusEditor {
   });
 
   /// Adds a unit / topic / concept under [parentId].
-  Future<bool> add(
+  Future<String?> add(
     NodeKind kind, {
     required String parentId,
     required String name,
     required String code,
   }) => _run(() async {
     final fields = switch (kind) {
-      NodeKind.unit => {'number': int.parse(code.trim()), 'title': name.trim()},
+      NodeKind.unit => {
+        'number':
+            int.tryParse(code.trim()) ??
+            (throw const FormatException('unit number')),
+        'title': name.trim(),
+      },
       NodeKind.topic => {'number': code.trim(), 'title': name.trim()},
       NodeKind.concept => {
         if (code.trim().isNotEmpty) 'code': code.trim(),
@@ -89,10 +97,10 @@ class SyllabusEditor extends _$SyllabusEditor {
     }
   }
 
-  Future<bool> _run(Future<void> Function() body) async {
+  Future<String?> _run(Future<void> Function() body) async {
     state = const AsyncLoading();
     final next = await AsyncValue.guard(body);
     if (ref.mounted) state = next;
-    return !next.hasError;
+    return next.hasError ? adminErrorMessage(next.error) : null;
   }
 }

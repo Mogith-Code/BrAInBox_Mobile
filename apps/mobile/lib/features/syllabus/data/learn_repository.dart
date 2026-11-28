@@ -1,8 +1,8 @@
-import '../../offline/offline_cache.dart';
 import 'package:brainbox_core/brainbox_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../offline/offline_cache.dart';
 import '../domain/learn_models.dart';
 import '../domain/syllabus_models.dart';
 import 'api_learn_repository.dart';
@@ -45,6 +45,14 @@ abstract interface class LearnRepository {
   /// `GET /topics/{topicId}/notes?type=` - null when there are no notes
   /// yet (404).
   Future<TopicNote?> fetchNote(String topicId, NoteType type);
+
+  /// `GET /topics/{topicId}/official-notes` - the government books for this
+  /// topic and the page to open first.
+  Future<OfficialNotes> fetchOfficialNotes(String topicId);
+
+  /// `GET /official-notes/{documentId}/pages/{page}` - one JPEG page.
+  /// Pages start at 1.
+  Future<Uint8List> fetchOfficialPage(String documentId, int page);
 
   /// `POST /topics/{topicId}/notes/generate` - returns the job id.
   Future<String> startNoteGeneration(

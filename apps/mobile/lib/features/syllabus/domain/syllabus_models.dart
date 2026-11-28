@@ -189,28 +189,50 @@ abstract class TopicDetail with _$TopicDetail {
     final topicJson = json['topic'] is Map
         ? Map<String, dynamic>.from(json['topic'] as Map)
         : json;
+    // The backend sends the breadcrumb as {subject: {...}, unit: {...}}.
+    // Older responses sent a plain list, so both shapes are accepted.
+    final rawCrumb = json['breadcrumb'];
+    final crumbUnit = rawCrumb is Map && rawCrumb['unit'] is Map
+        ? Map<String, dynamic>.from(rawCrumb['unit'] as Map)
+        : null;
     final unit = json['unit'] is Map
         ? UnitProgress.fromJson(Map<String, dynamic>.from(json['unit'] as Map))
         : UnitProgress(
-            id: '${json['unit_id'] ?? ''}',
-            title: '${json['unit_title'] ?? ''}',
-            order: _asInt(json['unit_order'] ?? json['unit_number']) ?? 0,
+            id: '${crumbUnit?['id'] ?? json['unit_id'] ?? ''}',
+            title: '${crumbUnit?['title'] ?? json['unit_title'] ?? ''}',
+            order:
+                _asInt(
+                  crumbUnit?['number'] ??
+                      json['unit_order'] ??
+                      json['unit_number'],
+                ) ??
+                0,
           );
-    final crumbs = (json['breadcrumb'] as List?) ?? const [];
+    final crumbs = switch (rawCrumb) {
+      final List<dynamic> list => [
+        for (final c in list)
+          c is Map ? '${c['title'] ?? c['name'] ?? ''}' : '$c',
+      ],
+      final Map<dynamic, dynamic> map => [
+        if (map['subject'] is Map) '${(map['subject'] as Map)['name'] ?? ''}',
+        if (crumbUnit != null) 'Unit ${crumbUnit['number'] ?? unit.order}',
+        '${topicJson['title'] ?? ''}',
+      ],
+      _ => const <String>[],
+    };
+    // Mastery arrives nested as {mastery_percent, mastery_level, is_weak}.
+    final mastery = json['mastery'] is Map ? json['mastery'] as Map : json;
     return TopicDetail(
       topic: TopicProgress.fromJson({'unit_id': unit.id, ...topicJson}),
       unit: unit,
-      breadcrumb: [
-        for (final c in crumbs)
-          c is Map ? '${c['title'] ?? c['name'] ?? ''}' : '$c',
-      ],
+      breadcrumb: crumbs,
       masteryLevel: MasteryLevel.values.firstWhere(
-        (m) => m.name == json['mastery_level'],
+        (m) => m.name == mastery['mastery_level'],
         orElse: () => MasteryLevel.improving,
       ),
-      masteryPercent: (json['mastery_percent'] as num?)?.toDouble() ?? 0,
+      masteryPercent: (mastery['mastery_percent'] as num?)?.toDouble() ?? 0,
       saved: json['is_bookmarked'] == true,
-      syllabusCode: json['syllabus_code'] as String?,
+      syllabusCode: (json['syllabus_code'] ?? json['number']) as String?,
       syllabusVersion: json['syllabus_version']?.toString(),
       isOutdated: json['is_outdated'] == true,
     );

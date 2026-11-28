@@ -5,7 +5,7 @@
 | **Owner** | Mogith (`@mogith`) |
 | **App** | admin portal (`apps/admin`) |
 | **Purpose** | Admin login. Only users with role "admin" get past the router guard. |
-| **Jira epic** | `BRN-??` *(TODO: add the epic key)* |
+| **Jira epic** | `BRN-??` *(TODO(mogith): add the epic key)* |
 | **Git branch** | `feature/admin-auth` (tickets: `feature/admin-auth/BRN-xx-short-name`) |
 
 ## Screens

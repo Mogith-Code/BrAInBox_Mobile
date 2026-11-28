@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
 import '../theme/app_spacing.dart';
+import '../theme/app_text_colors.dart';
 
 /// A rounded square with a soft background and an icon
 /// (the shield on "Forgot password", the bell on "Check your inbox").
@@ -52,7 +53,7 @@ class OrDivider extends StatelessWidget {
             label,
             style: Theme.of(
               context,
-            ).textTheme.labelMedium?.copyWith(color: AppColors.muted),
+            ).textTheme.labelMedium?.copyWith(color: context.appMuted),
           ),
         ),
         const Expanded(child: Divider(color: AppColors.border)),
@@ -93,12 +94,12 @@ class InlineLink extends StatelessWidget {
                   children: [
                     TextSpan(
                       text: text.isEmpty ? '' : '$text ',
-                      style: style?.copyWith(color: AppColors.muted),
+                      style: style?.copyWith(color: context.appMuted),
                     ),
                     TextSpan(
                       text: link,
                       style: style?.copyWith(
-                        color: AppColors.primary,
+                        color: context.appPrimaryText,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -161,7 +162,7 @@ class ScreenHeading extends StatelessWidget {
           child: Text(
             title,
             style: textTheme.headlineMedium?.copyWith(
-              color: AppColors.ink,
+              color: context.appInk,
               fontWeight: FontWeight.w700,
               height: 1.2,
             ),
@@ -174,7 +175,7 @@ class ScreenHeading extends StatelessWidget {
           else
             Text(
               '$subtitle',
-              style: textTheme.bodyLarge?.copyWith(color: AppColors.muted),
+              style: textTheme.bodyLarge?.copyWith(color: context.appMuted),
             ),
         ],
       ],

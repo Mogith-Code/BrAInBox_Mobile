@@ -30,10 +30,22 @@ class VisualImage extends StatelessWidget {
   final Visual visual;
   final BoxFit fit;
 
+  /// Image urls with this prefix are app assets, not web addresses.
+  static const assetScheme = 'asset://';
+
   @override
   Widget build(BuildContext context) {
     final url = DiagramRenderer.imageUrlOf(visual);
     if (url == null) return const _ImageProblem();
+    // Demo mode's bundled pictures: asset://demo/x.png -> assets/demo/x.png.
+    if (url.startsWith(assetScheme)) {
+      return Image.asset(
+        'assets/${url.substring(assetScheme.length)}',
+        fit: fit,
+        semanticLabel: visual.altText ?? visual.title,
+        errorBuilder: (context, error, stack) => const _ImageProblem(),
+      );
+    }
     return Image.network(
       url,
       fit: fit,

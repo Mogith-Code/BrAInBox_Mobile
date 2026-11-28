@@ -5,7 +5,7 @@
 | **Owner** | Keshomigha (`@keshomigha`) |
 | **App** | student app (`apps/mobile`) |
 | **Purpose** | Per-topic results: overview, mastery map (heatmap), topic detail. Mistake journal later. |
-| **Jira epic** | `BRN-??` *(TODO: add the epic key)* |
+| **Jira epic** | `BRN-??` *(TODO(keshomigha): add the epic key)* |
 | **Git branch** | `feature/insights` (tickets: `feature/insights-BRN-xx-short-name`) |
 
 ## Screens

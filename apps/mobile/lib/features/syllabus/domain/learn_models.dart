@@ -91,6 +91,38 @@ sealed class NoteBlock with _$NoteBlock {
       _$NoteBlockFromJson(json);
 }
 
+/// One uploaded government book that covers a topic's unit.
+@freezed
+abstract class OfficialBook with _$OfficialBook {
+  const factory OfficialBook({
+    required String documentId,
+    required String title,
+    @Default(0) int pageCount,
+  }) = _OfficialBook;
+
+  factory OfficialBook.fromJson(Map<String, dynamic> json) =>
+      _$OfficialBookFromJson(json);
+}
+
+/// The government notes for a topic, and where to start reading.
+/// `GET /learn/topics/{topicId}/official-notes`.
+@freezed
+abstract class OfficialNotes with _$OfficialNotes {
+  const factory OfficialNotes({
+    required String topicId,
+    @Default(false) bool available,
+    @Default(<OfficialBook>[]) List<OfficialBook> books,
+    String? openDocumentId,
+    @Default(1) int openPage,
+
+    /// False when the exact page is unknown and we open the unit's start.
+    @Default(false) bool exactMatch,
+  }) = _OfficialNotes;
+
+  factory OfficialNotes.fromJson(Map<String, dynamic> json) =>
+      _$OfficialNotesFromJson(json);
+}
+
 /// Notes for a topic. `GET /learn/topics/{topicId}/notes?type=full|short`.
 @freezed
 abstract class TopicNote with _$TopicNote {

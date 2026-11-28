@@ -1,0 +1,1127 @@
+{
+ "schema_version": 1,
+ "unit": 9,
+ "notes": [
+  {
+   "id": "demo-note-u9-1",
+   "topic_code": "bio-9.4",
+   "full": [
+    {
+     "type": "heading",
+     "text": "Viruses",
+     "level": 2
+    },
+    {
+     "type": "paragraph",
+     "text": "Viruses are very small, non-cellular infectious particles that reproduce only inside living host cells.",
+     "highlights": []
+    },
+    {
+     "type": "bullet_list",
+     "items": [
+      "A core of nucleic acid: DNA or RNA, never both",
+      "A protein coat called the *capsid*",
+      "Some have a lipid *envelope* from the host membrane"
+     ]
+    },
+    {
+     "type": "definition",
+     "term": "Bacteriophage",
+     "text": "A virus that infects bacteria."
+    },
+    {
+     "type": "heading",
+     "text": "Lytic cycle",
+     "level": 3
+    },
+    {
+     "type": "paragraph",
+     "text": "Attachment to the host, injection of nucleic acid, replication of viral parts using the host's machinery, assembly of new viruses and lysis of the host cell to release them.",
+     "highlights": [
+      "lysis"
+     ]
+    },
+    {
+     "type": "paragraph",
+     "text": "In the lysogenic cycle the viral DNA joins the host chromosome and is copied with it until it becomes active.",
+     "highlights": [
+      "lysogenic cycle"
+     ]
+    },
+    {
+     "type": "paragraph",
+     "text": "Antibiotics do not work against viruses because viruses have no cell wall, ribosomes or metabolism of their own.",
+     "highlights": []
+    },
+    {
+     "type": "tip",
+     "title": "Past-paper tip",
+     "text": "State that viruses can be crystallised and have no metabolism, which places them on the border of living and non-living."
+    }
+   ],
+   "short": [
+    {
+     "type": "bullet_list",
+     "items": [
+      "Non-cellular; nucleic acid + capsid",
+      "DNA or RNA, not both",
+      "Lytic: attach, inject, replicate, assemble, lyse",
+      "Lysogenic: viral DNA in host chromosome",
+      "Antibiotics do not affect viruses"
+     ]
+    }
+   ],
+   "read_minutes": 6,
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-note-u9-2",
+   "topic_code": "bio-9.3",
+   "full": [
+    {
+     "type": "heading",
+     "text": "Microbial growth",
+     "level": 2
+    },
+    {
+     "type": "paragraph",
+     "text": "A bacterial population in a closed culture shows four phases of growth.",
+     "highlights": []
+    },
+    {
+     "type": "bullet_list",
+     "items": [
+      "Lag phase: cells adjust, little division",
+      "Log (exponential) phase: rapid division by binary fission",
+      "Stationary phase: division rate equals death rate as nutrients run out and wastes build up",
+      "Death (decline) phase: more cells die than are formed"
+     ]
+    },
+    {
+     "type": "definition",
+     "term": "Generation time",
+     "text": "The time taken for a bacterial population to double."
+    },
+    {
+     "type": "heading",
+     "text": "Control of microbial growth",
+     "level": 3
+    },
+    {
+     "type": "bullet_list",
+     "items": [
+      "Physical: heat (autoclaving at 121 C), refrigeration, drying, radiation, filtration",
+      "Chemical: disinfectants, antiseptics, preservatives",
+      "Antibiotics act on bacteria inside the body"
+     ]
+    },
+    {
+     "type": "tip",
+     "title": "Past-paper tip",
+     "text": "Sterilisation kills all microorganisms including spores; disinfection only reduces their number."
+    }
+   ],
+   "short": [
+    {
+     "type": "bullet_list",
+     "items": [
+      "Lag, log, stationary, death phases",
+      "Binary fission in log phase",
+      "Stationary: nutrients run out, wastes build up",
+      "Autoclave 121 C sterilises",
+      "Disinfectants, antiseptics, antibiotics"
+     ]
+    }
+   ],
+   "read_minutes": 6,
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-note-u9-3",
+   "topic_code": "bio-9.6",
+   "full": [
+    {
+     "type": "heading",
+     "text": "Microbes in industry and food",
+     "level": 2
+    },
+    {
+     "type": "paragraph",
+     "text": "Microorganisms are used to make many useful products.",
+     "highlights": []
+    },
+    {
+     "type": "bullet_list",
+     "items": [
+      "Yeast (Saccharomyces): bread, alcoholic drinks by fermentation",
+      "Lactobacillus: yoghurt, curd and cheese by lactic acid fermentation",
+      "Penicillium: the antibiotic penicillin",
+      "Aspergillus: citric acid and enzymes",
+      "Genetically modified bacteria: insulin and other proteins"
+     ]
+    },
+    {
+     "type": "definition",
+     "term": "Fermentation",
+     "text": "Anaerobic breakdown of organic substances by microorganisms, producing useful products such as ethanol or lactic acid."
+    },
+    {
+     "type": "paragraph",
+     "text": "Industrial production uses large fermenters with controlled temperature, pH, oxygen and nutrient supply, under aseptic conditions.",
+     "highlights": [
+      "fermenters"
+     ]
+    },
+    {
+     "type": "tip",
+     "title": "Past-paper tip",
+     "text": "Name the microbe together with the product. Many answers lose marks by naming only the product."
+    }
+   ],
+   "short": [
+    {
+     "type": "bullet_list",
+     "items": [
+      "Yeast: bread, alcohol",
+      "Lactobacillus: yoghurt, curd",
+      "Penicillium: penicillin",
+      "Aspergillus: citric acid",
+      "Fermenters control temperature, pH, oxygen"
+     ]
+    }
+   ],
+   "read_minutes": 6,
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "mcqs": [
+  {
+   "id": "demo-mcq-u9-01",
+   "topic_code": "bio-9.1",
+   "stem": "Bacteria reproduce asexually by",
+   "options": [
+    "budding",
+    "binary fission",
+    "spores only",
+    "fragmentation",
+    "meiosis"
+   ],
+   "answer": 1,
+   "explanation": "One cell divides into two.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u9-02",
+   "topic_code": "bio-9.1",
+   "stem": "Rod-shaped bacteria are called",
+   "options": [
+    "cocci",
+    "bacilli",
+    "spirilla",
+    "vibrios",
+    "spirochaetes"
+   ],
+   "answer": 1,
+   "explanation": "Bacilli are rod-shaped.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u9-03",
+   "topic_code": "bio-9.1",
+   "stem": "Gram-positive bacteria stain purple because they have",
+   "options": [
+    "a thick peptidoglycan layer",
+    "an outer membrane",
+    "no cell wall",
+    "chitin",
+    "cellulose"
+   ],
+   "answer": 0,
+   "explanation": "The thick wall keeps crystal violet.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u9-04",
+   "topic_code": "bio-9.2",
+   "stem": "Aseptic technique is used to",
+   "options": [
+    "kill all bacteria in the body",
+    "prevent contamination of cultures and people",
+    "grow viruses",
+    "speed up growth",
+    "stain bacteria"
+   ],
+   "answer": 1,
+   "explanation": "It keeps unwanted microbes out.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u9-05",
+   "topic_code": "bio-9.2",
+   "stem": "An inoculating loop is sterilised by",
+   "options": [
+    "washing in water",
+    "heating in a flame until red hot",
+    "freezing",
+    "drying",
+    "soaking in sugar"
+   ],
+   "answer": 1,
+   "explanation": "Flaming kills microbes on the loop.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u9-06",
+   "topic_code": "bio-9.3",
+   "stem": "Bacterial numbers increase fastest in the",
+   "options": [
+    "lag phase",
+    "log phase",
+    "stationary phase",
+    "death phase",
+    "dormant phase"
+   ],
+   "answer": 1,
+   "explanation": "Exponential growth happens in the log phase.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u9-07",
+   "topic_code": "bio-9.3",
+   "stem": "Standard autoclaving uses",
+   "options": [
+    "60 C for 1 minute",
+    "100 C for 1 hour",
+    "121 C at high pressure for about 15 minutes",
+    "200 C dry heat for 1 minute",
+    "37 C overnight"
+   ],
+   "answer": 2,
+   "explanation": "Pressurised steam at 121 C kills spores.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u9-08",
+   "topic_code": "bio-9.3",
+   "stem": "The stationary phase of growth occurs because",
+   "options": [
+    "cells stop dying",
+    "nutrients run out and wastes build up",
+    "temperature rises",
+    "cells divide faster",
+    "oxygen increases"
+   ],
+   "answer": 1,
+   "explanation": "Birth and death rates become equal.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u9-09",
+   "topic_code": "bio-9.3",
+   "stem": "Antibiotics are effective against",
+   "options": [
+    "viruses",
+    "bacteria",
+    "all microbes",
+    "prions",
+    "only fungi"
+   ],
+   "answer": 1,
+   "explanation": "They target bacterial structures and processes.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u9-10",
+   "topic_code": "bio-9.4",
+   "stem": "The protein coat of a virus is the",
+   "options": [
+    "envelope",
+    "capsid",
+    "cell wall",
+    "membrane",
+    "nucleoid"
+   ],
+   "answer": 1,
+   "explanation": "The capsid surrounds the nucleic acid.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u9-11",
+   "topic_code": "bio-9.4",
+   "stem": "A virus that infects bacteria is a",
+   "options": [
+    "retrovirus",
+    "bacteriophage",
+    "prion",
+    "viroid",
+    "plasmid"
+   ],
+   "answer": 1,
+   "explanation": "Bacteriophages infect bacteria.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u9-12",
+   "topic_code": "bio-9.4",
+   "stem": "In the lytic cycle, new viruses are released by",
+   "options": [
+    "binary fission",
+    "lysis of the host cell",
+    "conjugation",
+    "spore formation",
+    "budding of the virus"
+   ],
+   "answer": 1,
+   "explanation": "The host cell bursts.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u9-13",
+   "topic_code": "bio-9.4",
+   "stem": "HIV is an example of a",
+   "options": [
+    "DNA bacteriophage",
+    "retrovirus",
+    "bacterium",
+    "fungus",
+    "protozoan"
+   ],
+   "answer": 1,
+   "explanation": "HIV is an RNA virus with reverse transcriptase.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u9-14",
+   "topic_code": "bio-9.5",
+   "stem": "Tuberculosis is caused by",
+   "options": [
+    "a virus",
+    "Mycobacterium tuberculosis",
+    "Plasmodium",
+    "a fungus",
+    "a worm"
+   ],
+   "answer": 1,
+   "explanation": "TB is a bacterial disease.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u9-15",
+   "topic_code": "bio-9.5",
+   "stem": "Dengue fever is caused by a",
+   "options": [
+    "bacterium",
+    "virus",
+    "protozoan",
+    "fungus",
+    "worm"
+   ],
+   "answer": 1,
+   "explanation": "Dengue virus is spread by Aedes mosquitoes.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u9-16",
+   "topic_code": "bio-9.5",
+   "stem": "Cholera is mainly spread through",
+   "options": [
+    "air droplets",
+    "contaminated water and food",
+    "mosquito bites",
+    "skin contact",
+    "blood transfusion only"
+   ],
+   "answer": 1,
+   "explanation": "Vibrio cholerae spreads in faecally contaminated water.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u9-17",
+   "topic_code": "bio-9.5",
+   "stem": "Which disease is caused by a protozoan?",
+   "options": [
+    "Malaria",
+    "Tuberculosis",
+    "Influenza",
+    "Typhoid",
+    "Ringworm"
+   ],
+   "answer": 0,
+   "explanation": "Malaria is caused by Plasmodium.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u9-18",
+   "topic_code": "bio-9.6",
+   "stem": "Yeast is used in bread making because it produces",
+   "options": [
+    "lactic acid",
+    "carbon dioxide",
+    "oxygen",
+    "citric acid",
+    "penicillin"
+   ],
+   "answer": 1,
+   "explanation": "CO2 makes the dough rise.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u9-19",
+   "topic_code": "bio-9.6",
+   "stem": "Yoghurt is made using",
+   "options": [
+    "Saccharomyces",
+    "Lactobacillus",
+    "Penicillium",
+    "Rhizobium",
+    "Nitrobacter"
+   ],
+   "answer": 1,
+   "explanation": "Lactobacillus produces lactic acid.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u9-20",
+   "topic_code": "bio-9.6",
+   "stem": "Penicillin is produced by the fungus",
+   "options": [
+    "Aspergillus",
+    "Penicillium",
+    "Mucor",
+    "Rhizopus",
+    "Saccharomyces"
+   ],
+   "answer": 1,
+   "explanation": "Fleming discovered penicillin from Penicillium.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u9-21",
+   "topic_code": "bio-9.6",
+   "stem": "In alcoholic fermentation yeast converts glucose into",
+   "options": [
+    "lactic acid",
+    "ethanol and carbon dioxide",
+    "water and oxygen",
+    "starch",
+    "citric acid"
+   ],
+   "answer": 1,
+   "explanation": "Anaerobic respiration in yeast gives ethanol and CO2.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u9-22",
+   "topic_code": "bio-9.7",
+   "stem": "Microorganisms that break down dead organic matter are",
+   "options": [
+    "producers",
+    "decomposers",
+    "parasites",
+    "pathogens",
+    "predators"
+   ],
+   "answer": 1,
+   "explanation": "Decomposers recycle nutrients.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u9-23",
+   "topic_code": "bio-9.7",
+   "stem": "Biogas produced from organic waste is mainly",
+   "options": [
+    "oxygen",
+    "methane",
+    "nitrogen",
+    "hydrogen sulfide only",
+    "ozone"
+   ],
+   "answer": 1,
+   "explanation": "Methanogenic bacteria produce methane.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u9-24",
+   "topic_code": "bio-9.7",
+   "stem": "Using microorganisms to clean up pollutants is called",
+   "options": [
+    "bioremediation",
+    "biomagnification",
+    "bioaccumulation",
+    "biosynthesis",
+    "biofouling"
+   ],
+   "answer": 0,
+   "explanation": "Bioremediation uses microbes to break down pollutants.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u9-25",
+   "topic_code": "bio-9.7",
+   "stem": "Biofertilisers such as Azolla with Anabaena add which nutrient to paddy fields?",
+   "options": [
+    "Phosphorus",
+    "Nitrogen",
+    "Potassium",
+    "Calcium",
+    "Iron"
+   ],
+   "answer": 1,
+   "explanation": "Anabaena fixes atmospheric nitrogen.",
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "written": [
+  {
+   "id": "demo-s-u9-1",
+   "topic_code": "bio-9.3",
+   "type": "structured",
+   "stem": "Describe the four phases of bacterial growth in a closed culture.",
+   "marks": 4,
+   "model_answer": "In the lag phase cells adjust and make enzymes with little division. In the log phase they divide rapidly by binary fission. In the stationary phase nutrients run out and wastes build up so division equals death. In the death phase more cells die than are produced.",
+   "points": [
+    {
+     "text": "Lag phase: adjusting, little division",
+     "marks": 1,
+     "keywords": [
+      "lag"
+     ]
+    },
+    {
+     "text": "Log phase: rapid binary fission",
+     "marks": 1,
+     "keywords": [
+      "log",
+      "rapid"
+     ]
+    },
+    {
+     "text": "Stationary: nutrients run out / wastes",
+     "marks": 1,
+     "keywords": [
+      "stationary",
+      "nutrient"
+     ]
+    },
+    {
+     "text": "Death phase: more die",
+     "marks": 1,
+     "keywords": [
+      "death"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-s-u9-2",
+   "topic_code": "bio-9.4",
+   "type": "structured",
+   "stem": "Describe the lytic cycle of a bacteriophage.",
+   "marks": 4,
+   "model_answer": "The phage attaches to the bacterial cell and injects its DNA. The viral DNA takes over the host to make viral nucleic acid and proteins. New phages are assembled and the host cell bursts (lysis), releasing them.",
+   "points": [
+    {
+     "text": "Attachment",
+     "marks": 1,
+     "keywords": [
+      "attach"
+     ]
+    },
+    {
+     "text": "Injection of nucleic acid",
+     "marks": 1,
+     "keywords": [
+      "inject"
+     ]
+    },
+    {
+     "text": "Replication and assembly using the host",
+     "marks": 1,
+     "keywords": [
+      "replicate",
+      "assemble"
+     ]
+    },
+    {
+     "text": "Lysis releases new phages",
+     "marks": 1,
+     "keywords": [
+      "lysis",
+      "burst"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-s-u9-3",
+   "topic_code": "bio-9.6",
+   "type": "structured",
+   "stem": "Name four useful products made by microorganisms and the microorganism used for each.",
+   "marks": 4,
+   "model_answer": "Bread and alcohol by yeast (Saccharomyces); yoghurt by Lactobacillus; penicillin by Penicillium; citric acid by Aspergillus; insulin by genetically modified bacteria.",
+   "points": [
+    {
+     "text": "Yeast: bread or alcohol",
+     "marks": 1,
+     "keywords": [
+      "yeast"
+     ]
+    },
+    {
+     "text": "Lactobacillus: yoghurt / curd",
+     "marks": 1,
+     "keywords": [
+      "lactobacillus"
+     ]
+    },
+    {
+     "text": "Penicillium: penicillin",
+     "marks": 1,
+     "keywords": [
+      "penicillium"
+     ]
+    },
+    {
+     "text": "Aspergillus or GM bacteria with product",
+     "marks": 1,
+     "keywords": [
+      "aspergillus",
+      "insulin"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-s-u9-4",
+   "topic_code": "bio-9.2",
+   "type": "structured",
+   "stem": "Explain three steps of aseptic technique used when transferring bacteria.",
+   "marks": 4,
+   "model_answer": "Sterilise the inoculating loop by flaming until red hot and let it cool; flame the neck of the culture bottle when opening and closing it; lift the lid of the Petri dish only slightly and work near a Bunsen flame to reduce contamination.",
+   "points": [
+    {
+     "text": "Flame the loop",
+     "marks": 1,
+     "keywords": [
+      "flame",
+      "loop"
+     ]
+    },
+    {
+     "text": "Flame the bottle neck",
+     "marks": 1,
+     "keywords": [
+      "neck"
+     ]
+    },
+    {
+     "text": "Open Petri dish lid only slightly",
+     "marks": 1,
+     "keywords": [
+      "lid"
+     ]
+    },
+    {
+     "text": "Reason: prevent contamination",
+     "marks": 1,
+     "keywords": [
+      "contamination"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-e-u9-5",
+   "topic_code": "bio-9.5",
+   "type": "essay",
+   "stem": "Describe the cause, transmission and control of dengue fever and tuberculosis.",
+   "marks": 10,
+   "model_answer": "Dengue is caused by the dengue virus and spread by the bite of Aedes mosquitoes; it is controlled by removing breeding places, using repellents and nets. Tuberculosis is caused by the bacterium Mycobacterium tuberculosis and spread through air droplets from coughing; it is controlled by BCG vaccination, early diagnosis and a full course of antibiotics.",
+   "points": [
+    {
+     "text": "Dengue: virus",
+     "marks": 2,
+     "keywords": [
+      "dengue",
+      "virus"
+     ]
+    },
+    {
+     "text": "Dengue: Aedes mosquito",
+     "marks": 2,
+     "keywords": [
+      "aedes",
+      "mosquito"
+     ]
+    },
+    {
+     "text": "Dengue control: breeding sites",
+     "marks": 1,
+     "keywords": [
+      "breeding"
+     ]
+    },
+    {
+     "text": "TB: Mycobacterium, air droplets",
+     "marks": 3,
+     "keywords": [
+      "mycobacterium",
+      "droplet"
+     ]
+    },
+    {
+     "text": "TB control: BCG / antibiotics",
+     "marks": 2,
+     "keywords": [
+      "bcg",
+      "antibiotic"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-e-u9-6",
+   "topic_code": "bio-9.7",
+   "type": "essay",
+   "stem": "Discuss the importance of microorganisms in agriculture and the environment.",
+   "marks": 10,
+   "model_answer": "Decomposers recycle nutrients from dead matter. Nitrogen-fixing bacteria such as Rhizobium and cyanobacteria such as Anabaena increase soil nitrogen and act as biofertilisers. Microbes are used in composting and biogas production and in bioremediation of pollutants such as oil. Some microbes are used as biopesticides, such as Bacillus thuringiensis. Some cause plant diseases.",
+   "points": [
+    {
+     "text": "Decomposition / nutrient recycling",
+     "marks": 2,
+     "keywords": [
+      "decompose",
+      "recycle"
+     ]
+    },
+    {
+     "text": "Nitrogen fixation / biofertiliser",
+     "marks": 2,
+     "keywords": [
+      "nitrogen",
+      "biofertiliser"
+     ]
+    },
+    {
+     "text": "Compost and biogas",
+     "marks": 2,
+     "keywords": [
+      "compost",
+      "biogas"
+     ]
+    },
+    {
+     "text": "Bioremediation",
+     "marks": 2,
+     "keywords": [
+      "bioremediation"
+     ]
+    },
+    {
+     "text": "Biopesticides or plant disease",
+     "marks": 2,
+     "keywords": [
+      "biopesticide",
+      "disease"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "ask": [
+  {
+   "id": "demo-ask-u9-1",
+   "topic_code": "bio-9.4",
+   "question": "Why don't antibiotics work on viruses?",
+   "aliases": [
+    "antibiotics and viruses"
+   ],
+   "keywords": [
+    "antibiotic",
+    "virus"
+   ],
+   "answer": "Antibiotics act on bacterial structures and processes such as cell walls and bacterial ribosomes. Viruses have no cell wall, ribosomes or metabolism of their own, so antibiotics cannot affect them.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 9.4: Viruses"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u9-2",
+   "topic_code": "bio-9.3",
+   "question": "What are the phases of bacterial growth?",
+   "aliases": [
+    "bacterial growth curve"
+   ],
+   "keywords": [
+    "bacterial growth",
+    "lag",
+    "log",
+    "stationary"
+   ],
+   "answer": "In a closed culture there is a lag phase, a log (exponential) phase, a stationary phase when nutrients run out and wastes build up, and a death phase.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 9.3: Microbial growth and its control"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u9-3",
+   "topic_code": "bio-9.6",
+   "question": "How is yoghurt made?",
+   "aliases": [
+    "yoghurt production"
+   ],
+   "keywords": [
+    "yoghurt",
+    "lactobacillus",
+    "fermentation"
+   ],
+   "answer": "Milk is heated, cooled and inoculated with lactic acid bacteria such as Lactobacillus. They ferment lactose to lactic acid, which lowers the pH and makes the milk proteins thicken.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 9.6: Microbes in industry and food"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u9-4",
+   "topic_code": "bio-9.5",
+   "question": "How is dengue spread?",
+   "aliases": [
+    "dengue transmission"
+   ],
+   "keywords": [
+    "dengue",
+    "mosquito",
+    "aedes"
+   ],
+   "answer": "Dengue is caused by a virus spread by the bite of infected Aedes mosquitoes. Removing water where mosquitoes breed is the main way to control it.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 9.5: Microbial diseases of humans"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u9-5",
+   "topic_code": "bio-9.4",
+   "question": "What is a bacteriophage?",
+   "aliases": [
+    "phage"
+   ],
+   "keywords": [
+    "bacteriophage",
+    "virus",
+    "bacteria"
+   ],
+   "answer": "A bacteriophage is a virus that infects bacteria. It injects its nucleic acid into the bacterium and may reproduce by the lytic cycle, bursting the cell, or join the host DNA in the lysogenic cycle.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 9.4: Viruses"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "uploads": [
+  {
+   "id": "demo-upload-u9-1",
+   "topic_code": "bio-9.4",
+   "title": "Microorganisms and viruses",
+   "aliases": [
+    "microbiology notes",
+    "virus notes"
+   ],
+   "keywords": [
+    "microorganism",
+    "virus",
+    "bacteria",
+    "microbiology"
+   ],
+   "summary": "These notes compare bacteria, fungi and viruses, describe the lytic cycle of a phage and explain how microbial growth is controlled.",
+   "key_points": [
+    "Viruses are non-cellular",
+    "Bacteria reproduce by binary fission",
+    "Growth curve: lag, log, stationary, death",
+    "Autoclaving at 121 C sterilises"
+   ],
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "visuals": [
+  {
+   "id": "demo-visual-u9-1",
+   "topic_code": "bio-9.4",
+   "title": "Lytic cycle of a bacteriophage",
+   "aliases": [
+    "lytic cycle",
+    "phage life cycle"
+   ],
+   "keywords": [
+    "lytic",
+    "bacteriophage",
+    "virus",
+    "cycle"
+   ],
+   "kind": "flowchart",
+   "alt_text": "The five steps of the lytic cycle.",
+   "image": "assets/demo/visuals/u9_lytic.png",
+   "width": 1000,
+   "height": 750,
+   "style": "flat_colour",
+   "labels": [
+    {
+     "number": 1,
+     "name": "Attachment",
+     "description": "Phage binds host",
+     "x": 0.364,
+     "y": 0.144
+    },
+    {
+     "number": 2,
+     "name": "Injection",
+     "description": "DNA enters bacterium",
+     "x": 0.692,
+     "y": 0.385
+    },
+    {
+     "number": 3,
+     "name": "Replication",
+     "description": "Viral parts made",
+     "x": 0.567,
+     "y": 0.776
+    },
+    {
+     "number": 4,
+     "name": "Assembly",
+     "description": "New phages built",
+     "x": 0.161,
+     "y": 0.776
+    },
+    {
+     "number": 5,
+     "name": "Lysis",
+     "description": "Cell bursts, phages released",
+     "x": 0.036,
+     "y": 0.385
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-visual-u9-2",
+   "topic_code": "bio-9.3",
+   "title": "Phases of bacterial growth",
+   "aliases": [
+    "bacterial growth curve",
+    "growth phases"
+   ],
+   "keywords": [
+    "bacterial growth",
+    "lag",
+    "log",
+    "stationary",
+    "death"
+   ],
+   "kind": "flowchart",
+   "alt_text": "Phases of growth in a closed culture.",
+   "image": "assets/demo/visuals/u9_growth.png",
+   "width": 1000,
+   "height": 750,
+   "style": "flat_colour",
+   "labels": [
+    {
+     "number": 1,
+     "name": "Lag phase",
+     "description": "Cells adjust, make enzymes",
+     "x": 0.204,
+     "y": 0.169
+    },
+    {
+     "number": 2,
+     "name": "Log phase",
+     "description": "Rapid binary fission",
+     "x": 0.204,
+     "y": 0.376
+    },
+    {
+     "number": 3,
+     "name": "Stationary phase",
+     "description": "Nutrients run out",
+     "x": 0.204,
+     "y": 0.582
+    },
+    {
+     "number": 4,
+     "name": "Death phase",
+     "description": "More cells die",
+     "x": 0.204,
+     "y": 0.789
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  }
+ ]
+}

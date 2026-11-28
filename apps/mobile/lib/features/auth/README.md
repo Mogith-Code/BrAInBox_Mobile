@@ -5,7 +5,7 @@
 | **Owner** | Mogith (`@mogith`) |
 | **App** | student app (`apps/mobile`) |
 | **Purpose** | Login, sign up, forgot password and email verification (Firebase Auth). |
-| **Jira epic** | `BRN-??` *(TODO: add the epic key)* |
+| **Jira epic** | `BRN-??` *(TODO(mogith): add the epic key)* |
 | **Git branch** | `feature/auth` (tickets: `feature/auth/BRN-xx-short-name`) |
 
 ## Screens

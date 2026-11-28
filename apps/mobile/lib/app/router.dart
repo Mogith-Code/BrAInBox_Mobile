@@ -40,7 +40,9 @@ import '../features/practice/presentation/mcq_question_screen.dart';
 import '../features/practice/presentation/practice_hub_screen.dart';
 import '../features/practice/presentation/quiz_result_screen.dart';
 import '../features/practice/presentation/quiz_setup_screen.dart';
+import '../features/profile/application/profile_setup_controller.dart';
 import '../features/profile/presentation/profile_overview_screen.dart';
+import '../features/profile/presentation/personal_details_screen.dart';
 import '../features/profile/presentation/profile_screen.dart';
 import '../features/recommendations/presentation/next_steps_screen.dart';
 import '../features/recommendations/presentation/reassessment_screen.dart';
@@ -58,7 +60,6 @@ import '../features/visuals/presentation/diagram_gallery_screen.dart';
 import '../features/visuals/presentation/diagram_viewer_screen.dart';
 import '../features/visuals/presentation/generate_visual_screen.dart';
 import '../features/visuals/presentation/my_visuals_screen.dart';
-import 'dev_menu_screen.dart';
 import 'routes.dart';
 import 'shell_scaffold.dart';
 
@@ -125,11 +126,14 @@ GoRouter router(Ref ref) {
       ),
       GoRoute(
         path: AppRoutes.profileSetup,
-        builder: (context, state) => const ProfileSetupScreen(),
+        builder: (context, state) => ProfileSetupScreen(
+          edit: ProfileEditSection.parse(state.uri.queryParameters['edit']),
+        ),
       ),
+      // Old profile link: Profile now lives in the Settings tab.
       GoRoute(
         path: AppRoutes.myProfile,
-        builder: (context, state) => const ProfileOverviewScreen(),
+        redirect: (context, state) => AppRoutes.settingsProfile,
       ),
       GoRoute(
         path: AppRoutes.topicNotes,
@@ -266,20 +270,9 @@ GoRouter router(Ref ref) {
         path: AppRoutes.notifications,
         builder: (context, state) => const NotificationsScreen(),
       ),
-      GoRoute(
-        path: AppRoutes.settings,
-        builder: (context, state) => const SettingsScreen(),
-      ),
-      GoRoute(
-        path: AppRoutes.privacy,
-        builder: (context, state) => const PrivacyScreen(),
-      ),
-      GoRoute(
-        path: AppRoutes.devMenu,
-        builder: (context, state) => const DevMenuScreen(),
-      ),
 
-      // Bottom navigation: Home, Learn, Practice, Insights, Community.
+      // Bottom navigation: Home, Learn, Practice, Insights, Community,
+      // Settings.
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) =>
             ShellScaffold(navigationShell: navigationShell),
@@ -402,6 +395,38 @@ GoRouter router(Ref ref) {
                 path: AppRoutes.createPost,
                 builder: (context, state) => CreatePostScreen(
                   groupId: state.uri.queryParameters['groupId'],
+                ),
+              ),
+            ],
+          ),
+          // Tab: /settings - profile and app settings. Its pages are pushed
+          // on top inside the tab, so the bottom bar stays.
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoutes.settings,
+                builder: (context, state) => const SettingsScreen(),
+              ),
+              GoRoute(
+                path: AppRoutes.privacy,
+                builder: (context, state) => const PrivacyScreen(),
+              ),
+              GoRoute(
+                path: AppRoutes.settingsProfile,
+                builder: (context, state) => const ProfileOverviewScreen(),
+              ),
+              GoRoute(
+                path: AppRoutes.settingsPersonalDetails,
+                builder: (context, state) => const PersonalDetailsScreen(),
+              ),
+              GoRoute(
+                path: AppRoutes.settingsEditProfile,
+                builder: (context, state) => ProfileSetupScreen(
+                  edit:
+                      ProfileEditSection.parse(
+                        state.uri.queryParameters['edit'],
+                      ) ??
+                      ProfileEditSection.all,
                 ),
               ),
             ],

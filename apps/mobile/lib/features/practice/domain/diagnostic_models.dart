@@ -27,7 +27,7 @@ abstract class DiagnosticQuestion with _$DiagnosticQuestion {
     @Default(<DiagnosticOption>[]) List<DiagnosticOption> options,
 
     /// Set when the question was already answered (resuming an attempt).
-    /// TODO(udith): ask the backend to return this from /diagnostic/start.
+    /// (`selected_option_id` from `POST /diagnostic/start`.)
     String? selectedOptionId,
   }) = _DiagnosticQuestion;
 
@@ -116,6 +116,11 @@ abstract class DiagnosticResult with _$DiagnosticResult {
     UnitRef? strongest,
     UnitRef? needsWork,
     @Default(<UnitResult>[]) List<UnitResult> units,
+
+    /// Units left out because they have no approved questions yet.
+    @JsonKey(name: 'units_not_checked')
+    @Default(<UnitRef>[])
+    List<UnitRef> unitsNotChecked,
     @Default('') String summary,
     @Default(true) bool summaryAiGenerated,
     @Default('Formative feedback — not an official exam mark.')

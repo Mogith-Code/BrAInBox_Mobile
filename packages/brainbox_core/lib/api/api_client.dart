@@ -20,6 +20,7 @@ class ApiClient {
     Dio? dio,
     IdTokenGetter? getIdToken,
     void Function(bool online)? onNetworkStatus,
+    List<Interceptor> leadingInterceptors = const [],
   }) : dio =
            dio ??
            Dio(
@@ -31,6 +32,9 @@ class ApiClient {
                headers: {'Accept': 'application/json'},
              ),
            ) {
+    // Run before auth and the network, so a request they answer themselves
+    // (the student app's demo mode) sends no token and opens no connection.
+    this.dio.interceptors.addAll(leadingInterceptors);
     this.dio.interceptors.add(
       AuthInterceptor(dio: this.dio, getIdToken: getIdToken),
     );
@@ -41,7 +45,7 @@ class ApiClient {
       // Logs requests/responses in the debug console.
       // requestHeader is off so the ID token is never printed.
       this.dio.interceptors.add(
-        LogInterceptor(
+        _ApiLogInterceptor(
           requestHeader: false,
           requestBody: true,
           responseBody: true,
@@ -57,6 +61,21 @@ class ApiClient {
   /// GET [path] and return the decoded JSON body.
   Future<T> get<T>(String path, {Map<String, dynamic>? query}) =>
       _send(() => dio.get<T>(path, queryParameters: query));
+
+  /// GET [path] and return the raw bytes (e.g. a protected image).
+  /// The login token is sent, which `Image.network` would not do.
+  Future<Uint8List> getBytes(String path) async {
+    final bytes = await _send<List<int>>(
+      () => dio.get<List<int>>(
+        path,
+        options: Options(
+          responseType: ResponseType.bytes,
+          headers: {'Accept': 'image/*'},
+        ),
+      ),
+    );
+    return Uint8List.fromList(bytes);
+  }
 
   /// POST [data] (usually a `Map`) as JSON to [path].
   Future<T> post<T>(String path, {Object? data, Map<String, dynamic>? query}) =>
@@ -118,6 +137,29 @@ class ApiClient {
     } on DioException catch (e) {
       throw ApiException.fromDioException(e);
     }
+  }
+}
+
+/// Debug logging that skips binary replies, so an image doesn't print
+/// thousands of numbers to the console.
+class _ApiLogInterceptor extends LogInterceptor {
+  _ApiLogInterceptor({
+    super.requestHeader,
+    super.requestBody,
+    super.responseBody,
+    super.logPrint,
+  });
+
+  @override
+  void onResponse(
+    Response<dynamic> response,
+    ResponseInterceptorHandler handler,
+  ) {
+    if (response.requestOptions.responseType == ResponseType.bytes) {
+      handler.next(response);
+      return;
+    }
+    super.onResponse(response, handler);
   }
 }
 

@@ -1,8 +1,9 @@
 import 'package:brainbox_admin/features/auth/data/auth_repository.dart';
-import 'package:brainbox_admin/features/auth/domain/auth_models.dart';
+import 'package:brainbox_admin/features/auth/data/console_stats_repository.dart';
 import 'package:brainbox_admin/features/auth/presentation/login_screen.dart';
 import 'package:brainbox_admin/features/auth/presentation/widgets/login_brand_panel.dart';
 import 'package:brainbox_admin/widgets/admin_logo.dart';
+import 'package:brainbox_core/brainbox_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -10,21 +11,32 @@ import 'package:mocktail/mocktail.dart';
 
 class _MockRepository extends Mock implements AuthRepository {}
 
-const _admin = AppUser(id: 'a1', email: 'tharushi@brainbox.lk', role: 'admin');
-
 void main() {
   late _MockRepository repository;
 
-  Future<void> pumpLogin(WidgetTester tester, Size size) async {
+  Future<void> pumpLogin(
+    WidgetTester tester,
+    Size size, {
+    Future<ConsoleStats> Function()? stats,
+  }) async {
     tester.view.physicalSize = size;
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
 
-    // Fake the data layer so the test never touches Firebase.
+    // Fake the data layer so the test never touches Firebase or the network.
     repository = _MockRepository();
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [authRepositoryProvider.overrideWithValue(repository)],
+        overrides: [
+          authRepositoryProvider.overrideWithValue(repository),
+          consoleStatsProvider.overrideWith(
+            (ref) =>
+                stats?.call() ??
+                Future.value(
+                  const ConsoleStats(aiItemsToReview: 2, students: 1),
+                ),
+          ),
+        ],
         child: const MaterialApp(home: LoginScreen()),
       ),
     );
@@ -38,7 +50,7 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  void answer(Future<AppUser> Function() result) => when(
+  void answer(Future<void> Function() result) => when(
     () => repository.signIn(
       email: any(named: 'email'),
       password: any(named: 'password'),
@@ -52,6 +64,60 @@ void main() {
     expect(find.byType(LoginBrandPanel), findsOneWidget);
     expect(find.text('Sign in'), findsOneWidget);
     expect(find.text('Sign in to console'), findsOneWidget);
+  });
+
+  testWidgets('shows the live totals; no accuracy yet shows a dash', (
+    tester,
+  ) async {
+    await pumpLogin(
+      tester,
+      const Size(1400, 900),
+      stats: () async =>
+          const ConsoleStats(aiItemsToReview: 14, students: 2418),
+    );
+
+    expect(find.text('14'), findsOneWidget);
+    expect(find.text(Formatters.thousands(2418)), findsOneWidget);
+    expect(find.text('students'), findsOneWidget);
+    expect(find.text('active students'), findsNothing);
+    expect(find.text('—'), findsOneWidget);
+  });
+
+  testWidgets('shows the accuracy as a percentage', (tester) async {
+    await pumpLogin(
+      tester,
+      const Size(1400, 900),
+      stats: () async => const ConsoleStats(
+        aiItemsToReview: 0,
+        students: 0,
+        evalAccuracyPercent: 96.2,
+      ),
+    );
+
+    expect(find.text('96.2%'), findsOneWidget);
+  });
+
+  testWidgets('a failed request shows dashes and sign-in still works', (
+    tester,
+  ) async {
+    await pumpLogin(
+      tester,
+      const Size(1400, 900),
+      stats: () async => throw const ApiException(code: 'x', message: 'Down'),
+    );
+
+    expect(find.text('—'), findsNWidgets(3));
+    expect(find.text('Sign in to console'), findsOneWidget);
+
+    answer(() async {});
+    await fillAndSubmit(tester);
+    verify(
+      () => repository.signIn(
+        email: 'a@b.lk',
+        password: 'secret',
+        keepSignedIn: true,
+      ),
+    ).called(1);
   });
 
   testWidgets('narrow: form only, with the logo above it', (tester) async {
@@ -82,7 +148,7 @@ void main() {
     tester,
   ) async {
     await pumpLogin(tester, const Size(1400, 900));
-    answer(() async => _admin);
+    answer(() async {});
 
     await tester.tap(find.text('Keep me signed in')); // turns it off
     await fillAndSubmit(tester);
@@ -94,16 +160,25 @@ void main() {
         keepSignedIn: false,
       ),
     ).called(1);
-    expect(find.text(NotAdminException.message), findsNothing);
   });
 
-  testWidgets('a student account is refused', (tester) async {
+  testWidgets('a wrong password shows the reason under the form', (
+    tester,
+  ) async {
     await pumpLogin(tester, const Size(1400, 900));
-    answer(() async => throw const NotAdminException());
+    answer(
+      () async => throw const ApiException(
+        code: 'AUTH_NOT_CONFIGURED',
+        message: 'Firebase is not set up for the admin portal yet.',
+      ),
+    );
 
     await fillAndSubmit(tester);
 
-    expect(find.text('This account is not an admin.'), findsOneWidget);
+    expect(
+      find.text('Firebase is not set up for the admin portal yet.'),
+      findsOneWidget,
+    );
   });
 
   testWidgets('Forgot password explains the reset through the app', (

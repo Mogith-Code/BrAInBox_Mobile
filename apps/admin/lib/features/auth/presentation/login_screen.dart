@@ -6,8 +6,8 @@ import '../../../widgets/admin_logo.dart';
 import '../application/auth_controller.dart';
 import 'widgets/login_brand_panel.dart';
 
-/// Admin login screen - Email + password sign-in. Non-admin accounts are refused
-/// ("This account is not an admin").
+/// Admin login screen - Email + password sign-in. A non-admin account is
+/// then sent to "This account is not an admin" by the router guard.
 ///
 /// Route: `/login`
 ///

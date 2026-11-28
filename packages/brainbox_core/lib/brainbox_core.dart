@@ -37,6 +37,7 @@ export 'models/visual.dart';
 // Theme
 export 'theme/app_colors.dart';
 export 'theme/app_spacing.dart';
+export 'theme/app_text_colors.dart';
 export 'theme/app_theme.dart';
 export 'theme/app_typography.dart';
 export 'theme/brand_assets.dart';

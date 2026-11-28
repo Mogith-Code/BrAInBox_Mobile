@@ -39,7 +39,10 @@ Future<FakeProfileOverviewRepository> _pump(
         path: AppRoutes.myProfile,
         builder: (_, _) => const ProfileOverviewScreen(),
       ),
-      for (final path in [AppRoutes.settings, AppRoutes.profileSetup])
+      for (final path in [
+        AppRoutes.settings,
+        AppRoutes.settingsPersonalDetails,
+      ])
         GoRoute(
           path: path,
           builder: (_, s) => Scaffold(body: Text('AT ${s.uri.path}')),
@@ -92,7 +95,10 @@ void main() {
 
     await tester.tap(find.text('Edit profile'));
     await tester.pumpAndSettle();
-    expect(find.text('AT ${AppRoutes.profileSetup}'), findsOneWidget);
+    expect(
+      find.text('AT ${AppRoutes.settingsPersonalDetails}'),
+      findsOneWidget,
+    );
   });
 
   testWidgets('Home shows a new achievement once (F8)', (tester) async {
@@ -111,4 +117,38 @@ void main() {
     final again = await tester.runAsync(repo.overview);
     expect(again!.unseen, isNull); // marked seen
   });
+
+  testWidgets('Profile says so when there are no achievements', (tester) async {
+    tester.view.physicalSize = const Size(400, 1000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    final router = GoRouter(
+      initialLocation: AppRoutes.myProfile,
+      routes: [
+        GoRoute(
+          path: AppRoutes.myProfile,
+          builder: (_, _) => const ProfileOverviewScreen(),
+        ),
+      ],
+    );
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          profileOverviewRepositoryProvider.overrideWithValue(_Empty()),
+        ],
+        child: MaterialApp.router(routerConfig: router),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.textContaining('No achievements yet'), findsOneWidget);
+  });
+}
+
+class _Empty implements ProfileOverviewRepository {
+  @override
+  Future<ProfileOverview> overview() async =>
+      const ProfileOverview(fullName: 'Nethmi Perera');
+
+  @override
+  Future<void> markSeen(String achievementId) async {}
 }

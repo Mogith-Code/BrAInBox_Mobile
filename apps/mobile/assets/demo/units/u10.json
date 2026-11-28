@@ -1,0 +1,1134 @@
+{
+ "schema_version": 1,
+ "unit": 10,
+ "notes": [
+  {
+   "id": "demo-note-u10-1",
+   "topic_code": "bio-10.2",
+   "full": [
+    {
+     "type": "heading",
+     "text": "Plant tissue culture",
+     "level": 2
+    },
+    {
+     "type": "definition",
+     "term": "Plant tissue culture",
+     "text": "Growing plant cells, tissues or organs on a sterile nutrient medium under controlled conditions to produce new plants."
+    },
+    {
+     "type": "paragraph",
+     "text": "It depends on totipotency: a plant cell can develop into a whole plant.",
+     "highlights": [
+      "totipotency"
+     ]
+    },
+    {
+     "type": "bullet_list",
+     "items": [
+      "Select an explant, such as a shoot tip or leaf piece",
+      "Surface sterilise it and place it on a sterile medium with nutrients and growth regulators",
+      "A mass of undifferentiated cells (*callus*) may form",
+      "Adjust the auxin to cytokinin ratio to form shoots and roots",
+      "Harden off the plantlets before transfer to soil"
+     ]
+    },
+    {
+     "type": "heading",
+     "text": "Advantages",
+     "level": 3
+    },
+    {
+     "type": "paragraph",
+     "text": "Many identical, disease-free plants can be made quickly from one plant, all year round, in a small space.",
+     "highlights": []
+    },
+    {
+     "type": "tip",
+     "title": "Past-paper tip",
+     "text": "A high cytokinin to auxin ratio favours shoots; a high auxin to cytokinin ratio favours roots."
+    }
+   ],
+   "short": [
+    {
+     "type": "bullet_list",
+     "items": [
+      "Based on totipotency",
+      "Explant, sterilise, culture medium",
+      "Callus forms",
+      "Cytokinin high: shoots; auxin high: roots",
+      "Harden off plantlets",
+      "Many identical disease-free plants"
+     ]
+    }
+   ],
+   "read_minutes": 6,
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-note-u10-2",
+   "topic_code": "bio-10.3",
+   "full": [
+    {
+     "type": "heading",
+     "text": "Hydroponics",
+     "level": 2
+    },
+    {
+     "type": "definition",
+     "term": "Hydroponics",
+     "text": "Growing plants without soil, with roots in a nutrient solution containing all essential elements."
+    },
+    {
+     "type": "bullet_list",
+     "items": [
+      "The solution supplies macronutrients and micronutrients in the correct amounts",
+      "Roots must be aerated, for example by bubbling air",
+      "pH and nutrient concentration are monitored"
+     ]
+    },
+    {
+     "type": "heading",
+     "text": "Advantages and disadvantages",
+     "level": 3
+    },
+    {
+     "type": "paragraph",
+     "text": "Hydroponics gives high yields in small spaces, uses less water and avoids soil-borne pests. It needs more starting cost, technical knowledge and careful monitoring.",
+     "highlights": []
+    },
+    {
+     "type": "heading",
+     "text": "Horticulture",
+     "level": 2
+    },
+    {
+     "type": "paragraph",
+     "text": "Horticulture is growing fruits, vegetables, flowers and ornamental plants, using methods such as grafting, budding and layering to propagate plants.",
+     "highlights": []
+    },
+    {
+     "type": "tip",
+     "title": "Past-paper tip",
+     "text": "When explaining why roots need aeration, link it to aerobic respiration and active uptake of mineral ions."
+    }
+   ],
+   "short": [
+    {
+     "type": "bullet_list",
+     "items": [
+      "Soil-free growing in nutrient solution",
+      "Aerate roots; monitor pH and nutrients",
+      "High yield, less water, fewer soil pests",
+      "Costly and needs skill",
+      "Horticulture: grafting, budding, layering"
+     ]
+    }
+   ],
+   "read_minutes": 5,
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-note-u10-3",
+   "topic_code": "bio-10.4",
+   "full": [
+    {
+     "type": "heading",
+     "text": "Vector-borne diseases",
+     "level": 2
+    },
+    {
+     "type": "definition",
+     "term": "Vector",
+     "text": "An organism, often an insect, that carries a pathogen from one host to another."
+    },
+    {
+     "type": "bullet_list",
+     "items": [
+      "Dengue: virus, spread by Aedes mosquitoes",
+      "Malaria: Plasmodium (a protozoan), spread by female Anopheles mosquitoes",
+      "Filariasis: Wuchereria bancrofti (a nematode), spread by Culex mosquitoes",
+      "Leishmaniasis: Leishmania (a protozoan), spread by sandflies"
+     ]
+    },
+    {
+     "type": "heading",
+     "text": "Control",
+     "level": 3
+    },
+    {
+     "type": "bullet_list",
+     "items": [
+      "Remove or treat breeding sites of mosquitoes",
+      "Use nets, repellents and protective clothing",
+      "Biological control, such as larvivorous fish",
+      "Early diagnosis and treatment of patients"
+     ]
+    },
+    {
+     "type": "tip",
+     "title": "Past-paper tip",
+     "text": "Learn the pathogen and the vector for each disease as a pair; questions often mix them up."
+    }
+   ],
+   "short": [
+    {
+     "type": "bullet_list",
+     "items": [
+      "Dengue: virus, Aedes",
+      "Malaria: Plasmodium, Anopheles",
+      "Filariasis: Wuchereria, Culex",
+      "Leishmaniasis: Leishmania, sandfly",
+      "Control: breeding sites, nets, repellents, larvivorous fish"
+     ]
+    }
+   ],
+   "read_minutes": 6,
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "mcqs": [
+  {
+   "id": "demo-mcq-u10-01",
+   "topic_code": "bio-10.1",
+   "stem": "Ornamental fish tanks need aeration mainly to",
+   "options": [
+    "keep water warm",
+    "supply dissolved oxygen",
+    "remove light",
+    "add food",
+    "kill plants"
+   ],
+   "answer": 1,
+   "explanation": "Fish need dissolved oxygen for respiration.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u10-02",
+   "topic_code": "bio-10.1",
+   "stem": "Which fish is commonly bred as an ornamental fish?",
+   "options": [
+    "Guppy",
+    "Tuna",
+    "Shark",
+    "Salmon",
+    "Mackerel"
+   ],
+   "answer": 0,
+   "explanation": "Guppies are popular ornamental fish.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u10-03",
+   "topic_code": "bio-10.1",
+   "stem": "Excess feeding in an aquarium is harmful mainly because it",
+   "options": [
+    "makes fish grow too fast",
+    "decays and pollutes the water",
+    "adds oxygen",
+    "cools the water",
+    "kills algae only"
+   ],
+   "answer": 1,
+   "explanation": "Uneaten food decomposes and lowers water quality.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u10-04",
+   "topic_code": "bio-10.2",
+   "stem": "The ability of a single plant cell to grow into a whole plant is",
+   "options": [
+    "totipotency",
+    "differentiation",
+    "dormancy",
+    "apical dominance",
+    "polyploidy"
+   ],
+   "answer": 0,
+   "explanation": "Totipotency is the basis of tissue culture.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u10-05",
+   "topic_code": "bio-10.2",
+   "stem": "An undifferentiated mass of cells in tissue culture is",
+   "options": [
+    "a callus",
+    "an explant",
+    "a meristem",
+    "a seedling",
+    "a cutting"
+   ],
+   "answer": 0,
+   "explanation": "Callus forms from the explant.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u10-06",
+   "topic_code": "bio-10.2",
+   "stem": "A high cytokinin to auxin ratio in the medium promotes",
+   "options": [
+    "root formation",
+    "shoot formation",
+    "callus death",
+    "flowering only",
+    "seed formation"
+   ],
+   "answer": 1,
+   "explanation": "Cytokinin favours shoot development.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u10-07",
+   "topic_code": "bio-10.2",
+   "stem": "Why must the culture medium be sterile?",
+   "options": [
+    "To speed up growth",
+    "To prevent microbial contamination",
+    "To add oxygen",
+    "To make callus",
+    "To increase light"
+   ],
+   "answer": 1,
+   "explanation": "Microbes grow faster than the plant cells.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u10-08",
+   "topic_code": "bio-10.2",
+   "stem": "Plants produced by tissue culture from one parent are",
+   "options": [
+    "genetically varied",
+    "genetically identical clones",
+    "always polyploid",
+    "sterile",
+    "haploid"
+   ],
+   "answer": 1,
+   "explanation": "They are produced by mitosis.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u10-09",
+   "topic_code": "bio-10.3",
+   "stem": "Hydroponics is growing plants",
+   "options": [
+    "in soil only",
+    "without soil in a nutrient solution",
+    "in the dark",
+    "without water",
+    "only in greenhouses"
+   ],
+   "answer": 1,
+   "explanation": "Roots are in a nutrient solution.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u10-10",
+   "topic_code": "bio-10.3",
+   "stem": "Roots in hydroponic culture need aeration for",
+   "options": [
+    "photosynthesis",
+    "aerobic respiration",
+    "transpiration",
+    "pollination",
+    "germination only"
+   ],
+   "answer": 1,
+   "explanation": "Root cells need oxygen to respire and absorb ions.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u10-11",
+   "topic_code": "bio-10.3",
+   "stem": "Joining a scion onto a rootstock is called",
+   "options": [
+    "layering",
+    "grafting",
+    "cutting",
+    "budding of yeast",
+    "tissue culture"
+   ],
+   "answer": 1,
+   "explanation": "Grafting joins two plant parts.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u10-12",
+   "topic_code": "bio-10.3",
+   "stem": "An advantage of hydroponics is",
+   "options": [
+    "no need to monitor nutrients",
+    "fewer soil-borne pests",
+    "low initial cost",
+    "no need for light",
+    "plants need no minerals"
+   ],
+   "answer": 1,
+   "explanation": "There is no soil for pests to live in.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u10-13",
+   "topic_code": "bio-10.4",
+   "stem": "Malaria is transmitted by",
+   "options": [
+    "Aedes mosquitoes",
+    "female Anopheles mosquitoes",
+    "houseflies",
+    "Culex mosquitoes",
+    "sandflies"
+   ],
+   "answer": 1,
+   "explanation": "Female Anopheles carry Plasmodium.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u10-14",
+   "topic_code": "bio-10.4",
+   "stem": "The vector of filariasis in Sri Lanka is mainly",
+   "options": [
+    "Anopheles",
+    "Culex",
+    "Aedes",
+    "sandfly",
+    "tsetse fly"
+   ],
+   "answer": 1,
+   "explanation": "Culex mosquitoes spread Wuchereria bancrofti.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u10-15",
+   "topic_code": "bio-10.4",
+   "stem": "Leishmaniasis is spread by",
+   "options": [
+    "mosquitoes",
+    "sandflies",
+    "ticks",
+    "fleas",
+    "lice"
+   ],
+   "answer": 1,
+   "explanation": "Sandflies carry Leishmania.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u10-16",
+   "topic_code": "bio-10.4",
+   "stem": "Larvivorous fish are used to",
+   "options": [
+    "purify drinking water",
+    "eat mosquito larvae",
+    "fertilise ponds",
+    "control weeds",
+    "produce food"
+   ],
+   "answer": 1,
+   "explanation": "They are a biological control of mosquitoes.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u10-17",
+   "topic_code": "bio-10.4",
+   "stem": "Dengue mosquitoes mainly breed in",
+   "options": [
+    "flowing rivers",
+    "clean stagnant water in containers",
+    "salt water",
+    "dry soil",
+    "tree bark"
+   ],
+   "answer": 1,
+   "explanation": "Aedes breed in small containers of clean water.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u10-18",
+   "topic_code": "bio-10.5",
+   "stem": "Food preservation methods mainly work by",
+   "options": [
+    "adding microbes",
+    "preventing or slowing microbial growth",
+    "increasing moisture",
+    "warming food",
+    "adding oxygen"
+   ],
+   "answer": 1,
+   "explanation": "They stop microbes spoiling food.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u10-19",
+   "topic_code": "bio-10.5",
+   "stem": "Drying preserves food because microorganisms need",
+   "options": [
+    "light",
+    "water",
+    "salt",
+    "sugar",
+    "heat"
+   ],
+   "answer": 1,
+   "explanation": "Removing water stops microbial growth.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u10-20",
+   "topic_code": "bio-10.5",
+   "stem": "Pasteurisation of milk involves",
+   "options": [
+    "boiling for an hour",
+    "heating to about 72 C for 15 seconds then rapid cooling",
+    "freezing",
+    "adding salt",
+    "drying"
+   ],
+   "answer": 1,
+   "explanation": "This kills most pathogens without spoiling taste.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u10-21",
+   "topic_code": "bio-10.5",
+   "stem": "Postharvest losses of fruits can be reduced by",
+   "options": [
+    "rough handling",
+    "cool storage and careful packaging",
+    "keeping fruit in sunlight",
+    "storing with ripe fruit",
+    "washing with dirty water"
+   ],
+   "answer": 1,
+   "explanation": "Cooling slows respiration and ripening.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u10-22",
+   "topic_code": "bio-10.6",
+   "stem": "Using organisms or their parts to make products is",
+   "options": [
+    "biotechnology",
+    "taxonomy",
+    "ecology",
+    "anatomy",
+    "palaeontology"
+   ],
+   "answer": 0,
+   "explanation": "Biotechnology uses living systems for products.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u10-23",
+   "topic_code": "bio-10.6",
+   "stem": "CRISPR-Cas9 is a tool used for",
+   "options": [
+    "counting cells",
+    "editing genes",
+    "staining tissues",
+    "measuring pH",
+    "growing callus"
+   ],
+   "answer": 1,
+   "explanation": "It cuts DNA at a chosen sequence.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u10-24",
+   "topic_code": "bio-10.6",
+   "stem": "Stem cells are useful in medicine because they can",
+   "options": [
+    "only make red blood cells",
+    "differentiate into many cell types",
+    "never divide",
+    "make antibiotics",
+    "fix nitrogen"
+   ],
+   "answer": 1,
+   "explanation": "Stem cells are unspecialised and can differentiate.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u10-25",
+   "topic_code": "bio-10.6",
+   "stem": "Biosensors are devices that",
+   "options": [
+    "use a biological component to detect a substance",
+    "kill bacteria",
+    "grow plants",
+    "store DNA",
+    "make vaccines only"
+   ],
+   "answer": 0,
+   "explanation": "For example glucose biosensors use an enzyme.",
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "written": [
+  {
+   "id": "demo-s-u10-1",
+   "topic_code": "bio-10.2",
+   "type": "structured",
+   "stem": "Describe the main steps of plant tissue culture.",
+   "marks": 4,
+   "model_answer": "Take an explant such as a shoot tip and surface sterilise it. Place it on a sterile medium with nutrients and growth regulators. A callus forms; adjust the auxin and cytokinin ratio to form shoots and roots. Harden off the plantlets and move them to soil.",
+   "points": [
+    {
+     "text": "Explant taken and sterilised",
+     "marks": 1,
+     "keywords": [
+      "explant",
+      "sterilise"
+     ]
+    },
+    {
+     "text": "Sterile medium with nutrients and regulators",
+     "marks": 1,
+     "keywords": [
+      "medium",
+      "nutrient"
+     ]
+    },
+    {
+     "text": "Callus forms; auxin/cytokinin ratio",
+     "marks": 1,
+     "keywords": [
+      "callus",
+      "cytokinin"
+     ]
+    },
+    {
+     "text": "Hardening off and transfer",
+     "marks": 1,
+     "keywords": [
+      "harden"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-s-u10-2",
+   "topic_code": "bio-10.3",
+   "type": "structured",
+   "stem": "State two advantages and two disadvantages of hydroponics.",
+   "marks": 4,
+   "model_answer": "Advantages: high yield in a small space, less water used, fewer soil-borne pests and weeds. Disadvantages: high starting cost, needs technical knowledge and constant monitoring of nutrients and pH.",
+   "points": [
+    {
+     "text": "Advantage: high yield / small space",
+     "marks": 1,
+     "keywords": [
+      "yield",
+      "space"
+     ]
+    },
+    {
+     "text": "Advantage: less water / fewer pests",
+     "marks": 1,
+     "keywords": [
+      "water",
+      "pest"
+     ]
+    },
+    {
+     "text": "Disadvantage: high cost",
+     "marks": 1,
+     "keywords": [
+      "cost"
+     ]
+    },
+    {
+     "text": "Disadvantage: needs skill / monitoring",
+     "marks": 1,
+     "keywords": [
+      "monitor",
+      "knowledge"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-s-u10-3",
+   "topic_code": "bio-10.4",
+   "type": "structured",
+   "stem": "Name the pathogen and vector of malaria and dengue, and give one control method for each.",
+   "marks": 4,
+   "model_answer": "Malaria is caused by Plasmodium and spread by female Anopheles mosquitoes; control by bed nets. Dengue is caused by the dengue virus and spread by Aedes mosquitoes; control by removing breeding sites.",
+   "points": [
+    {
+     "text": "Malaria: Plasmodium",
+     "marks": 1,
+     "keywords": [
+      "plasmodium"
+     ]
+    },
+    {
+     "text": "Malaria vector Anopheles",
+     "marks": 1,
+     "keywords": [
+      "anopheles"
+     ]
+    },
+    {
+     "text": "Dengue: virus, Aedes",
+     "marks": 1,
+     "keywords": [
+      "aedes"
+     ]
+    },
+    {
+     "text": "Control methods",
+     "marks": 1,
+     "keywords": [
+      "net",
+      "breeding"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-s-u10-4",
+   "topic_code": "bio-10.5",
+   "type": "structured",
+   "stem": "Explain how three methods of food preservation prevent spoilage.",
+   "marks": 4,
+   "model_answer": "Refrigeration slows microbial growth and enzyme activity by lowering temperature. Drying removes the water microbes need. Salting or adding sugar lowers water potential so microbes lose water by osmosis. Heating such as pasteurisation kills microbes.",
+   "points": [
+    {
+     "text": "Cooling slows microbes / enzymes",
+     "marks": 1,
+     "keywords": [
+      "refrigeration",
+      "temperature"
+     ]
+    },
+    {
+     "text": "Drying removes water",
+     "marks": 1,
+     "keywords": [
+      "drying",
+      "water"
+     ]
+    },
+    {
+     "text": "Salt or sugar: osmosis",
+     "marks": 1,
+     "keywords": [
+      "salt",
+      "osmosis"
+     ]
+    },
+    {
+     "text": "Heat kills microbes",
+     "marks": 1,
+     "keywords": [
+      "heat",
+      "pasteurisation"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-e-u10-5",
+   "topic_code": "bio-10.4",
+   "type": "essay",
+   "stem": "Discuss the control of mosquito-borne diseases in Sri Lanka.",
+   "marks": 10,
+   "model_answer": "Mosquito-borne diseases include dengue (Aedes), malaria (Anopheles) and filariasis (Culex). Control includes removing and covering water containers, cleaning drains and gutters to destroy breeding sites, using larvivorous fish and biological larvicides such as Bacillus thuringiensis, chemical insecticides and fogging during outbreaks, personal protection with nets and repellents, and early diagnosis and treatment with public health surveillance and community education.",
+   "points": [
+    {
+     "text": "Names diseases and vectors",
+     "marks": 2,
+     "keywords": [
+      "dengue",
+      "malaria",
+      "filariasis"
+     ]
+    },
+    {
+     "text": "Destroy breeding sites",
+     "marks": 2,
+     "keywords": [
+      "breeding"
+     ]
+    },
+    {
+     "text": "Biological control: larvivorous fish / Bt",
+     "marks": 2,
+     "keywords": [
+      "larvivorous",
+      "biological"
+     ]
+    },
+    {
+     "text": "Personal protection: nets / repellents",
+     "marks": 2,
+     "keywords": [
+      "net",
+      "repellent"
+     ]
+    },
+    {
+     "text": "Diagnosis, treatment and education",
+     "marks": 2,
+     "keywords": [
+      "diagnosis",
+      "education"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-e-u10-6",
+   "topic_code": "bio-10.2",
+   "type": "essay",
+   "stem": "Explain the uses and advantages of plant tissue culture in agriculture.",
+   "marks": 10,
+   "model_answer": "Tissue culture produces many genetically identical plants quickly (micropropagation), all year round and in a small space. Meristem culture produces virus-free plants. It conserves rare and endangered plants, multiplies plants that are hard to grow from seed, such as orchids and bananas, and supports genetic engineering by regenerating transformed cells into whole plants.",
+   "points": [
+    {
+     "text": "Rapid mass propagation / micropropagation",
+     "marks": 2,
+     "keywords": [
+      "micropropagation",
+      "many"
+     ]
+    },
+    {
+     "text": "Identical clones",
+     "marks": 2,
+     "keywords": [
+      "identical",
+      "clone"
+     ]
+    },
+    {
+     "text": "Disease-free plants from meristems",
+     "marks": 2,
+     "keywords": [
+      "disease free",
+      "meristem"
+     ]
+    },
+    {
+     "text": "Conservation of rare plants",
+     "marks": 2,
+     "keywords": [
+      "conservation",
+      "rare"
+     ]
+    },
+    {
+     "text": "Examples such as orchids or bananas",
+     "marks": 2,
+     "keywords": [
+      "orchid",
+      "banana"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "ask": [
+  {
+   "id": "demo-ask-u10-1",
+   "topic_code": "bio-10.2",
+   "question": "What is plant tissue culture?",
+   "aliases": [
+    "tissue culture"
+   ],
+   "keywords": [
+    "tissue culture",
+    "callus",
+    "explant",
+    "totipotency"
+   ],
+   "answer": "Plant tissue culture grows small pieces of plant tissue (explants) on a sterile nutrient medium with growth regulators. Because plant cells are totipotent, they form callus and then whole plants that are genetically identical to the parent.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 10.2: Plant tissue culture and nursery management"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u10-2",
+   "topic_code": "bio-10.3",
+   "question": "What is hydroponics?",
+   "aliases": [
+    "growing plants without soil"
+   ],
+   "keywords": [
+    "hydroponics",
+    "nutrient solution"
+   ],
+   "answer": "Hydroponics is growing plants without soil, with their roots in an aerated nutrient solution that contains all the essential elements.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 10.3: Hydroponics and horticulture"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u10-3",
+   "topic_code": "bio-10.4",
+   "question": "Which mosquito spreads malaria?",
+   "aliases": [
+    "malaria vector"
+   ],
+   "keywords": [
+    "malaria",
+    "anopheles",
+    "mosquito"
+   ],
+   "answer": "Malaria is caused by the protozoan Plasmodium and is spread by the bite of infected female Anopheles mosquitoes.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 10.4: Vector-borne diseases and their control"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u10-4",
+   "topic_code": "bio-10.5",
+   "question": "How does pasteurisation preserve milk?",
+   "aliases": [
+    "pasteurisation"
+   ],
+   "keywords": [
+    "pasteurisation",
+    "milk",
+    "preservation"
+   ],
+   "answer": "Pasteurisation heats milk to about 72 C for about 15 seconds and then cools it quickly. This kills most pathogenic bacteria while keeping the taste of the milk.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 10.5: Food preservation and postharvest technology"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u10-5",
+   "topic_code": "bio-10.6",
+   "question": "What are stem cells used for?",
+   "aliases": [
+    "stem cells"
+   ],
+   "keywords": [
+    "stem cell",
+    "differentiate"
+   ],
+   "answer": "Stem cells are unspecialised cells that can divide and differentiate into other cell types. They are studied for repairing damaged tissues, for example in bone marrow transplants.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 10.6: Emerging technologies in biology"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "uploads": [
+  {
+   "id": "demo-upload-u10-1",
+   "topic_code": "bio-10.4",
+   "title": "Vector-borne diseases",
+   "aliases": [
+    "mosquito diseases notes",
+    "dengue notes"
+   ],
+   "keywords": [
+    "vector",
+    "mosquito",
+    "dengue",
+    "malaria",
+    "disease"
+   ],
+   "summary": "These notes list the main vector-borne diseases in Sri Lanka with their pathogens and vectors, and explain how they can be controlled.",
+   "key_points": [
+    "Dengue: virus spread by Aedes",
+    "Malaria: Plasmodium spread by Anopheles",
+    "Filariasis: spread by Culex",
+    "Destroying breeding sites is the main control"
+   ],
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "visuals": [
+  {
+   "id": "demo-visual-u10-1",
+   "topic_code": "bio-10.2",
+   "title": "Steps of plant tissue culture",
+   "aliases": [
+    "tissue culture steps",
+    "micropropagation"
+   ],
+   "keywords": [
+    "tissue culture",
+    "callus",
+    "explant",
+    "plantlet"
+   ],
+   "kind": "flowchart",
+   "alt_text": "From explant to plant in soil.",
+   "image": "assets/demo/visuals/u10_tissueculture.png",
+   "width": 1000,
+   "height": 750,
+   "style": "flat_colour",
+   "labels": [
+    {
+     "number": 1,
+     "name": "Explant",
+     "description": "Shoot tip or leaf piece",
+     "x": 0.054,
+     "y": 0.196
+    },
+    {
+     "number": 2,
+     "name": "Sterilise",
+     "description": "Remove microbes",
+     "x": 0.054,
+     "y": 0.472
+    },
+    {
+     "number": 3,
+     "name": "Culture medium",
+     "description": "Nutrients + regulators",
+     "x": 0.054,
+     "y": 0.748
+    },
+    {
+     "number": 4,
+     "name": "Callus",
+     "description": "Undifferentiated cells",
+     "x": 0.534,
+     "y": 0.196
+    },
+    {
+     "number": 5,
+     "name": "Plantlets",
+     "description": "Shoots and roots form",
+     "x": 0.534,
+     "y": 0.472
+    },
+    {
+     "number": 6,
+     "name": "Hardening",
+     "description": "Move to soil",
+     "x": 0.534,
+     "y": 0.748
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-visual-u10-2",
+   "topic_code": "bio-10.4",
+   "title": "Vector-borne diseases",
+   "aliases": [
+    "mosquito diseases",
+    "disease vectors"
+   ],
+   "keywords": [
+    "vector",
+    "mosquito",
+    "dengue",
+    "malaria",
+    "filariasis"
+   ],
+   "kind": "table",
+   "alt_text": "Diseases with their pathogens and vectors.",
+   "image": "assets/demo/visuals/u10_vectors.png",
+   "width": 1000,
+   "height": 750,
+   "style": "flat_colour",
+   "labels": [
+    {
+     "number": 1,
+     "name": "Dengue (virus) / Aedes mosquito",
+     "description": "",
+     "x": null,
+     "y": null
+    },
+    {
+     "number": 2,
+     "name": "Malaria (Plasmodium) / Female Anopheles",
+     "description": "",
+     "x": null,
+     "y": null
+    },
+    {
+     "number": 3,
+     "name": "Filariasis (Wuchereria) / Culex mosquito",
+     "description": "",
+     "x": null,
+     "y": null
+    },
+    {
+     "number": 4,
+     "name": "Leishmaniasis (Leishmania) / Sandfly",
+     "description": "",
+     "x": null,
+     "y": null
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  }
+ ]
+}

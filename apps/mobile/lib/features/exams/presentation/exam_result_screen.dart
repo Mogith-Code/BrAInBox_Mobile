@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/routes.dart';
 import '../application/exams_controller.dart';
 import '../domain/exams_models.dart';
-import 'exam_attempt_screen.dart' show kOptionLetters;
+import 'exam_attempt_screen.dart' show optionLetter;
 
 Color _scoreColor(double p) {
   if (p >= 75) return AppColors.success;
@@ -221,7 +221,7 @@ class ExamResultScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '${kOptionLetters[idx]}.',
+            '${optionLetter(idx)}.',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: isCorrect

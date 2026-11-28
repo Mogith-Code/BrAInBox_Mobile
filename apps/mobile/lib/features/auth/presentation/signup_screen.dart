@@ -179,7 +179,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
         Text(
           'By continuing with Google you agree to how your learning data is used.',
           textAlign: TextAlign.center,
-          style: textTheme.labelSmall?.copyWith(color: AppColors.muted),
+          style: textTheme.labelSmall?.copyWith(color: context.appMuted),
         ),
       ],
     );
@@ -228,18 +228,20 @@ class _ConsentRow extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 12),
                 child: Text.rich(
                   TextSpan(
-                    style: textTheme.bodyMedium?.copyWith(color: AppColors.ink),
+                    style: textTheme.bodyMedium?.copyWith(
+                      color: context.appInk,
+                    ),
                     children: [
                       const TextSpan(
                         text: 'I agree to how my learning data is used. ',
                       ),
                       TextSpan(
                         text: 'Privacy policy',
-                        style: const TextStyle(
-                          color: AppColors.primary,
+                        style: TextStyle(
+                          color: context.appPrimaryText,
                           fontWeight: FontWeight.w700,
                           decoration: TextDecoration.underline,
-                          decorationColor: AppColors.primary,
+                          decorationColor: context.appPrimaryText,
                         ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () => launchUrl(

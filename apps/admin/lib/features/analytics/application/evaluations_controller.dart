@@ -1,5 +1,6 @@
-import 'package:brainbox_core/brainbox_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../app/admin_errors.dart';
 
 import '../data/evaluations_repository.dart';
 import '../domain/evaluation_models.dart';
@@ -45,7 +46,7 @@ class EvaluationsController extends AsyncNotifier<EvaluationPage> {
       ref.invalidate(evaluationAccuracyProvider);
       return null;
     } catch (e) {
-      return ErrorMessages.of(e);
+      return adminErrorMessage(e);
     }
   }
 }

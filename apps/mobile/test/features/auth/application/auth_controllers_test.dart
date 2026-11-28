@@ -41,7 +41,8 @@ void main() {
       final c = _withMock(repo);
       final session = await c.read(sessionProvider.future);
       expect(session.signedIn, isFalse);
-      expect(session.welcomeSeen, isTrue);
+      // Every new app launch starts on the introduction.
+      expect(session.welcomeSeen, isFalse);
     });
 
     test('GET /auth/me 404 -> registers with the Firebase name', () async {

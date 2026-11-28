@@ -88,7 +88,7 @@ class GeneratePaperController extends Notifier<GenerateState> {
               if (!done.isCompleted) done.complete(null);
             },
           );
-      return done.future;
+      return await done.future;
     } catch (e) {
       if (ref.mounted) state = GenerateState(error: ErrorMessages.of(e));
       return null;
@@ -125,6 +125,12 @@ class ExamAttemptState {
   bool isAnswered(String questionId) =>
       mcq.containsKey(questionId) ||
       (written[questionId]?.trim().isNotEmpty ?? false);
+
+  /// True once leaving the exam would lose an answer or a flag.
+  bool get hasProgress =>
+      mcq.isNotEmpty ||
+      flagged.isNotEmpty ||
+      written.values.any((text) => text.trim().isNotEmpty);
 
   ExamAttemptState copyWith({
     Map<String, String>? mcq,

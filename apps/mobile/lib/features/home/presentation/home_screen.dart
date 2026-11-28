@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:brainbox_core/brainbox_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -56,14 +55,6 @@ class HomeScreen extends ConsumerWidget {
           _ => const HomeSkeleton(),
         },
       ),
-      // DEBUG ONLY: jump to any screen while features are being built.
-      floatingActionButton: kDebugMode
-          ? FloatingActionButton.small(
-              tooltip: 'Dev menu',
-              onPressed: () => context.push(AppRoutes.devMenu),
-              child: const Icon(Icons.developer_mode),
-            )
-          : null,
     );
   }
 }
@@ -122,7 +113,9 @@ class _Dashboard extends ConsumerWidget {
           HomeHeader(
             summary: summary,
             now: now,
-            onAvatarTap: () => context.push(AppRoutes.myProfile),
+            // `go`, not `push`: Profile lives in the Settings tab, and pushing
+            // it could put the tab shell on the stack twice.
+            onAvatarTap: () => context.go(AppRoutes.settingsProfile),
           ),
           const SizedBox(height: AppSpacing.lg),
           if (action != null) ...[

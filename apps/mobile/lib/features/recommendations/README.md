@@ -5,7 +5,7 @@
 | **Owner** | Udith (`@udith`) |
 | **App** | student app (`apps/mobile`) |
 | **Purpose** | Next steps, resources, study plan and reassessment. |
-| **Jira epic** | `BRN-??` *(TODO: add the epic key)* |
+| **Jira epic** | `BRN-??` *(TODO(udith): add the epic key)* |
 | **Git branch** | `feature/recommendations` (tickets: `feature/recommendations/BRN-xx-short-name`) |
 
 ## Screens

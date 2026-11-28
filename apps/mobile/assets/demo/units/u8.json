@@ -1,0 +1,1149 @@
+{
+ "schema_version": 1,
+ "unit": 8,
+ "notes": [
+  {
+   "id": "demo-note-u8-1",
+   "topic_code": "bio-8.1",
+   "full": [
+    {
+     "type": "heading",
+     "text": "Ecosystem structure",
+     "level": 2
+    },
+    {
+     "type": "paragraph",
+     "text": "An ecosystem is made of biotic components (producers, consumers, decomposers) and abiotic components (light, temperature, water, soil, minerals).",
+     "highlights": [
+      "biotic",
+      "abiotic"
+     ]
+    },
+    {
+     "type": "definition",
+     "term": "Trophic level",
+     "text": "The position of an organism in a food chain, such as producer or primary consumer."
+    },
+    {
+     "type": "heading",
+     "text": "Energy flow",
+     "level": 2
+    },
+    {
+     "type": "paragraph",
+     "text": "Energy enters as sunlight, is fixed by producers in photosynthesis and passes along food chains. At each step much energy is lost as heat in respiration, in faeces and in uneaten parts.",
+     "highlights": []
+    },
+    {
+     "type": "bullet_list",
+     "items": [
+      "Only about 10% of the energy at one trophic level is passed to the next",
+      "This limits food chains to usually four or five levels",
+      "Energy flows in one direction; nutrients are recycled"
+     ]
+    },
+    {
+     "type": "paragraph",
+     "text": "Pyramids of energy are always upright; pyramids of numbers and biomass can be inverted.",
+     "highlights": [
+      "Pyramids of energy"
+     ]
+    },
+    {
+     "type": "tip",
+     "title": "Past-paper tip",
+     "text": "Explain energy loss between trophic levels as respiration (heat), excretion and parts not eaten or digested."
+    }
+   ],
+   "short": [
+    {
+     "type": "bullet_list",
+     "items": [
+      "Biotic: producers, consumers, decomposers",
+      "Abiotic: light, temperature, water, soil",
+      "Energy enters by photosynthesis",
+      "About 10% transferred per trophic level",
+      "Energy flows one way; nutrients cycle",
+      "Pyramid of energy always upright"
+     ]
+    }
+   ],
+   "read_minutes": 6,
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-note-u8-2",
+   "topic_code": "bio-8.2",
+   "full": [
+    {
+     "type": "heading",
+     "text": "Biogeochemical cycles",
+     "level": 2
+    },
+    {
+     "type": "paragraph",
+     "text": "Elements such as carbon and nitrogen cycle between living organisms and the environment.",
+     "highlights": []
+    },
+    {
+     "type": "heading",
+     "text": "Carbon cycle",
+     "level": 3
+    },
+    {
+     "type": "bullet_list",
+     "items": [
+      "Photosynthesis removes CO2 from the air",
+      "Respiration, decomposition and combustion return CO2",
+      "Carbon is stored in fossil fuels and carbonate rocks"
+     ]
+    },
+    {
+     "type": "heading",
+     "text": "Nitrogen cycle",
+     "level": 3
+    },
+    {
+     "type": "bullet_list",
+     "items": [
+      "Nitrogen fixation: N2 to ammonia by bacteria such as *Rhizobium* in root nodules, and by lightning",
+      "Nitrification: ammonium to nitrite (*Nitrosomonas*) to nitrate (*Nitrobacter*)",
+      "Denitrification: nitrate back to N2 by denitrifying bacteria in waterlogged soils",
+      "Ammonification: decomposers turn proteins and urea into ammonium"
+     ]
+    },
+    {
+     "type": "definition",
+     "term": "Nitrogen fixation",
+     "text": "Conversion of atmospheric nitrogen gas into ammonia or other usable nitrogen compounds."
+    },
+    {
+     "type": "tip",
+     "title": "Past-paper tip",
+     "text": "Name the bacteria for each step of the nitrogen cycle; this is a common structured question."
+    }
+   ],
+   "short": [
+    {
+     "type": "bullet_list",
+     "items": [
+      "Carbon: photosynthesis removes CO2; respiration, combustion return it",
+      "Fixation: N2 to NH3 (Rhizobium, lightning)",
+      "Nitrification: NH4+ to NO2- to NO3- (Nitrosomonas, Nitrobacter)",
+      "Denitrification: NO3- to N2",
+      "Ammonification by decomposers"
+     ]
+    }
+   ],
+   "read_minutes": 6,
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-note-u8-3",
+   "topic_code": "bio-8.6",
+   "full": [
+    {
+     "type": "heading",
+     "text": "Biodiversity",
+     "level": 2
+    },
+    {
+     "type": "definition",
+     "term": "Biodiversity",
+     "text": "The variety of life in an area, including genetic diversity, species diversity and ecosystem diversity."
+    },
+    {
+     "type": "heading",
+     "text": "Threats to biodiversity",
+     "level": 3
+    },
+    {
+     "type": "bullet_list",
+     "items": [
+      "Habitat loss and fragmentation (deforestation, urbanisation)",
+      "Overexploitation (overfishing, illegal hunting)",
+      "Invasive alien species",
+      "Pollution",
+      "Climate change"
+     ]
+    },
+    {
+     "type": "paragraph",
+     "text": "Sri Lanka is part of a global biodiversity hotspot and has many endemic species, which makes conservation especially important.",
+     "highlights": [
+      "biodiversity hotspot",
+      "endemic"
+     ]
+    },
+    {
+     "type": "tip",
+     "title": "Past-paper tip",
+     "text": "Give a named example for each threat where you can, and link it to a specific effect on species."
+    }
+   ],
+   "short": [
+    {
+     "type": "bullet_list",
+     "items": [
+      "Biodiversity: genetic, species, ecosystem",
+      "Threats: habitat loss, overexploitation, invasive species, pollution, climate change",
+      "Sri Lanka: biodiversity hotspot, many endemics"
+     ]
+    }
+   ],
+   "read_minutes": 6,
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "mcqs": [
+  {
+   "id": "demo-mcq-u8-01",
+   "topic_code": "bio-8.1",
+   "stem": "Organisms that make their own food from inorganic substances are",
+   "options": [
+    "consumers",
+    "producers",
+    "decomposers",
+    "detritivores",
+    "parasites"
+   ],
+   "answer": 1,
+   "explanation": "Producers such as green plants photosynthesise.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u8-02",
+   "topic_code": "bio-8.1",
+   "stem": "Roughly what percentage of energy is passed from one trophic level to the next?",
+   "options": [
+    "1%",
+    "10%",
+    "50%",
+    "90%",
+    "100%"
+   ],
+   "answer": 1,
+   "explanation": "About 10%; the rest is lost mainly as heat.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u8-03",
+   "topic_code": "bio-8.1",
+   "stem": "Which ecological pyramid can never be inverted?",
+   "options": [
+    "Numbers",
+    "Biomass",
+    "Energy",
+    "Size",
+    "Age"
+   ],
+   "answer": 2,
+   "explanation": "Energy decreases at every level.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u8-04",
+   "topic_code": "bio-8.1",
+   "stem": "Energy is lost between trophic levels mainly through",
+   "options": [
+    "photosynthesis",
+    "respiration as heat",
+    "decomposition only",
+    "transpiration",
+    "absorption"
+   ],
+   "answer": 1,
+   "explanation": "Respiration releases heat to the environment.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u8-05",
+   "topic_code": "bio-8.1",
+   "stem": "Which is an abiotic factor?",
+   "options": [
+    "Predators",
+    "Temperature",
+    "Parasites",
+    "Competitors",
+    "Decomposers"
+   ],
+   "answer": 1,
+   "explanation": "Abiotic factors are non-living.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u8-06",
+   "topic_code": "bio-8.2",
+   "stem": "Bacteria in root nodules of legumes that fix nitrogen belong to the genus",
+   "options": [
+    "Nitrosomonas",
+    "Nitrobacter",
+    "Rhizobium",
+    "Pseudomonas",
+    "Clostridium only"
+   ],
+   "answer": 2,
+   "explanation": "Rhizobium lives in legume root nodules.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u8-07",
+   "topic_code": "bio-8.2",
+   "stem": "Conversion of nitrite to nitrate is carried out by",
+   "options": [
+    "Nitrosomonas",
+    "Nitrobacter",
+    "Rhizobium",
+    "denitrifying bacteria",
+    "fungi"
+   ],
+   "answer": 1,
+   "explanation": "Nitrobacter oxidises nitrite to nitrate.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u8-08",
+   "topic_code": "bio-8.2",
+   "stem": "Denitrification is favoured by",
+   "options": [
+    "well-aerated soil",
+    "waterlogged, anaerobic soil",
+    "high light",
+    "dry soil",
+    "acid rain only"
+   ],
+   "answer": 1,
+   "explanation": "Denitrifying bacteria are active without oxygen.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u8-09",
+   "topic_code": "bio-8.2",
+   "stem": "Which process removes carbon dioxide from the atmosphere?",
+   "options": [
+    "Respiration",
+    "Combustion",
+    "Photosynthesis",
+    "Decomposition",
+    "Volcanic activity"
+   ],
+   "answer": 2,
+   "explanation": "Photosynthesis fixes CO2.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u8-10",
+   "topic_code": "bio-8.2",
+   "stem": "Ammonification is the",
+   "options": [
+    "conversion of N2 to NH3",
+    "breakdown of organic nitrogen to ammonium by decomposers",
+    "oxidation of nitrite",
+    "release of N2",
+    "uptake of nitrate"
+   ],
+   "answer": 1,
+   "explanation": "Decomposers release ammonium from proteins and urea.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u8-11",
+   "topic_code": "bio-8.3",
+   "stem": "The maximum population an environment can support is its",
+   "options": [
+    "biotic potential",
+    "carrying capacity",
+    "growth rate",
+    "density",
+    "niche"
+   ],
+   "answer": 1,
+   "explanation": "Carrying capacity is set by limiting resources.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u8-12",
+   "topic_code": "bio-8.3",
+   "stem": "A relationship in which both species benefit is",
+   "options": [
+    "parasitism",
+    "commensalism",
+    "mutualism",
+    "predation",
+    "competition"
+   ],
+   "answer": 2,
+   "explanation": "Mutualism benefits both partners.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u8-13",
+   "topic_code": "bio-8.3",
+   "stem": "The role of a species in its ecosystem is its",
+   "options": [
+    "habitat",
+    "niche",
+    "population",
+    "biome",
+    "community"
+   ],
+   "answer": 1,
+   "explanation": "A niche includes what it eats and how it interacts.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u8-14",
+   "topic_code": "bio-8.4",
+   "stem": "Which biome has the highest biodiversity?",
+   "options": [
+    "Desert",
+    "Tundra",
+    "Tropical rainforest",
+    "Taiga",
+    "Grassland"
+   ],
+   "answer": 2,
+   "explanation": "Warm, wet conditions support many species.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u8-15",
+   "topic_code": "bio-8.5",
+   "stem": "Mangrove ecosystems are found",
+   "options": [
+    "on mountain tops",
+    "in coastal areas where rivers meet the sea",
+    "in deserts",
+    "in dry zone forests only",
+    "in grasslands"
+   ],
+   "answer": 1,
+   "explanation": "Mangroves grow in brackish intertidal zones.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u8-16",
+   "topic_code": "bio-8.5",
+   "stem": "Sinharaja Forest Reserve is an example of",
+   "options": [
+    "a tropical lowland rainforest",
+    "a desert",
+    "a mangrove",
+    "a montane grassland",
+    "a coral reef"
+   ],
+   "answer": 0,
+   "explanation": "Sinharaja is a lowland wet evergreen rainforest.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u8-17",
+   "topic_code": "bio-8.6",
+   "stem": "A species found naturally only in one area is",
+   "options": [
+    "invasive",
+    "endemic",
+    "exotic",
+    "migratory",
+    "keystone"
+   ],
+   "answer": 1,
+   "explanation": "Endemic species occur nowhere else.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u8-18",
+   "topic_code": "bio-8.6",
+   "stem": "The main cause of biodiversity loss worldwide is",
+   "options": [
+    "habitat destruction",
+    "volcanoes",
+    "meteor impacts",
+    "tides",
+    "seasons"
+   ],
+   "answer": 0,
+   "explanation": "Habitat loss affects the most species.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u8-19",
+   "topic_code": "bio-8.6",
+   "stem": "Species introduced to a new area that spread and harm native species are",
+   "options": [
+    "endemic",
+    "invasive alien species",
+    "keystone species",
+    "indicator species",
+    "native species"
+   ],
+   "answer": 1,
+   "explanation": "Invasive species outcompete natives.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u8-20",
+   "topic_code": "bio-8.7",
+   "stem": "The enhanced greenhouse effect is caused mainly by increased",
+   "options": [
+    "oxygen",
+    "carbon dioxide and methane",
+    "nitrogen",
+    "argon",
+    "water only"
+   ],
+   "answer": 1,
+   "explanation": "These gases trap more heat.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u8-21",
+   "topic_code": "bio-8.7",
+   "stem": "Ozone depletion is caused mainly by",
+   "options": [
+    "carbon dioxide",
+    "CFCs",
+    "methane",
+    "sulfur dioxide",
+    "nitrogen"
+   ],
+   "answer": 1,
+   "explanation": "Chlorofluorocarbons release chlorine that destroys ozone.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u8-22",
+   "topic_code": "bio-8.7",
+   "stem": "Eutrophication of lakes is caused by excess",
+   "options": [
+    "nitrates and phosphates",
+    "oxygen",
+    "sand",
+    "salt only",
+    "fish"
+   ],
+   "answer": 0,
+   "explanation": "Nutrients cause algal blooms and later oxygen depletion.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u8-23",
+   "topic_code": "bio-8.7",
+   "stem": "Acid rain is caused mainly by",
+   "options": [
+    "CO and O3",
+    "SO2 and nitrogen oxides",
+    "CFCs",
+    "methane",
+    "water vapour"
+   ],
+   "answer": 1,
+   "explanation": "These gases form sulfuric and nitric acids.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u8-24",
+   "topic_code": "bio-8.8",
+   "stem": "Conserving a species in its natural habitat is",
+   "options": [
+    "ex situ conservation",
+    "in situ conservation",
+    "cloning",
+    "seed banking",
+    "captive breeding"
+   ],
+   "answer": 1,
+   "explanation": "In situ means on site, as in national parks.",
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-mcq-u8-25",
+   "topic_code": "bio-8.8",
+   "stem": "A seed bank is an example of",
+   "options": [
+    "in situ conservation",
+    "ex situ conservation",
+    "habitat restoration",
+    "a wildlife corridor",
+    "a sanctuary"
+   ],
+   "answer": 1,
+   "explanation": "Ex situ conservation is outside the natural habitat.",
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "written": [
+  {
+   "id": "demo-s-u8-1",
+   "topic_code": "bio-8.1",
+   "type": "structured",
+   "stem": "Explain why food chains rarely have more than five trophic levels.",
+   "marks": 4,
+   "model_answer": "Only about 10% of energy passes from one level to the next. Energy is lost as heat in respiration, in faeces and urine, and in parts not eaten. After a few levels too little energy remains to support another population.",
+   "points": [
+    {
+     "text": "Only about 10% transferred",
+     "marks": 1,
+     "keywords": [
+      "10"
+     ]
+    },
+    {
+     "text": "Lost as heat in respiration",
+     "marks": 1,
+     "keywords": [
+      "heat",
+      "respiration"
+     ]
+    },
+    {
+     "text": "Lost in faeces / uneaten parts",
+     "marks": 1,
+     "keywords": [
+      "faeces",
+      "uneaten"
+     ]
+    },
+    {
+     "text": "Too little energy for higher levels",
+     "marks": 1,
+     "keywords": [
+      "little energy",
+      "not enough"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-s-u8-2",
+   "topic_code": "bio-8.2",
+   "type": "structured",
+   "stem": "Describe the roles of bacteria in the nitrogen cycle.",
+   "marks": 4,
+   "model_answer": "Nitrogen-fixing bacteria such as Rhizobium convert N2 into ammonia. Decomposers convert proteins and urea into ammonium (ammonification). Nitrosomonas oxidises ammonium to nitrite and Nitrobacter oxidises nitrite to nitrate (nitrification). Denitrifying bacteria convert nitrate to N2.",
+   "points": [
+    {
+     "text": "Nitrogen fixation by Rhizobium",
+     "marks": 1,
+     "keywords": [
+      "fixation",
+      "rhizobium"
+     ]
+    },
+    {
+     "text": "Ammonification by decomposers",
+     "marks": 1,
+     "keywords": [
+      "ammonification",
+      "decomposer"
+     ]
+    },
+    {
+     "text": "Nitrification by Nitrosomonas / Nitrobacter",
+     "marks": 1,
+     "keywords": [
+      "nitrification",
+      "nitrosomonas"
+     ]
+    },
+    {
+     "text": "Denitrification to N2",
+     "marks": 1,
+     "keywords": [
+      "denitrification"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-s-u8-3",
+   "topic_code": "bio-8.6",
+   "type": "structured",
+   "stem": "List four threats to biodiversity and give an example of one.",
+   "marks": 4,
+   "model_answer": "Habitat loss, overexploitation, invasive alien species, pollution and climate change threaten biodiversity. For example, deforestation destroys the habitat of forest species.",
+   "points": [
+    {
+     "text": "Habitat loss",
+     "marks": 1,
+     "keywords": [
+      "habitat"
+     ]
+    },
+    {
+     "text": "Overexploitation",
+     "marks": 1,
+     "keywords": [
+      "overexploitation",
+      "overfishing",
+      "hunting"
+     ]
+    },
+    {
+     "text": "Invasive species",
+     "marks": 1,
+     "keywords": [
+      "invasive"
+     ]
+    },
+    {
+     "text": "Pollution or climate change with example",
+     "marks": 1,
+     "keywords": [
+      "pollution",
+      "climate"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-s-u8-4",
+   "topic_code": "bio-8.7",
+   "type": "structured",
+   "stem": "Explain how excess fertiliser can cause eutrophication of a lake.",
+   "marks": 4,
+   "model_answer": "Nitrates and phosphates wash into the lake and cause rapid growth of algae (algal bloom). Algae block light and plants below die. Bacteria decompose the dead material and use up oxygen, so fish and other animals die.",
+   "points": [
+    {
+     "text": "Nitrates / phosphates run off",
+     "marks": 1,
+     "keywords": [
+      "nitrate",
+      "phosphate"
+     ]
+    },
+    {
+     "text": "Algal bloom",
+     "marks": 1,
+     "keywords": [
+      "algal bloom",
+      "algae"
+     ]
+    },
+    {
+     "text": "Decomposition by bacteria",
+     "marks": 1,
+     "keywords": [
+      "bacteria",
+      "decompose"
+     ]
+    },
+    {
+     "text": "Oxygen depleted, fish die",
+     "marks": 1,
+     "keywords": [
+      "oxygen",
+      "fish"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-e-u8-5",
+   "topic_code": "bio-8.2",
+   "type": "essay",
+   "stem": "Describe the carbon cycle and explain how human activities affect it.",
+   "marks": 10,
+   "model_answer": "Carbon dioxide is fixed by producers in photosynthesis and passed along food chains. Respiration by all organisms and decomposition return CO2 to the air. Some carbon is stored long term in fossil fuels and limestone. Burning fossil fuels and deforestation add CO2 faster than it is removed, increasing the greenhouse effect and causing global warming.",
+   "points": [
+    {
+     "text": "Photosynthesis fixes CO2",
+     "marks": 2,
+     "keywords": [
+      "photosynthesis"
+     ]
+    },
+    {
+     "text": "Respiration and decomposition release CO2",
+     "marks": 2,
+     "keywords": [
+      "respiration",
+      "decomposition"
+     ]
+    },
+    {
+     "text": "Fossil fuel stores",
+     "marks": 2,
+     "keywords": [
+      "fossil fuel"
+     ]
+    },
+    {
+     "text": "Combustion and deforestation increase CO2",
+     "marks": 2,
+     "keywords": [
+      "combustion",
+      "deforestation"
+     ]
+    },
+    {
+     "text": "Greenhouse effect / global warming",
+     "marks": 2,
+     "keywords": [
+      "greenhouse",
+      "warming"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-e-u8-6",
+   "topic_code": "bio-8.8",
+   "type": "essay",
+   "stem": "Discuss in situ and ex situ methods of conserving biodiversity.",
+   "marks": 10,
+   "model_answer": "In situ conservation protects species in their natural habitats, for example national parks, forest reserves and sanctuaries; it keeps ecosystems and interactions intact. Ex situ conservation keeps species outside their habitats, for example zoos, botanical gardens, seed banks and captive breeding; it protects species at high risk and can reintroduce them. Laws, education and sustainable use support both.",
+   "points": [
+    {
+     "text": "In situ definition",
+     "marks": 2,
+     "keywords": [
+      "in situ",
+      "natural habitat"
+     ]
+    },
+    {
+     "text": "In situ examples: national park / reserve",
+     "marks": 2,
+     "keywords": [
+      "national park",
+      "reserve"
+     ]
+    },
+    {
+     "text": "Ex situ definition",
+     "marks": 2,
+     "keywords": [
+      "ex situ",
+      "outside"
+     ]
+    },
+    {
+     "text": "Ex situ examples: zoo / seed bank / botanical garden",
+     "marks": 2,
+     "keywords": [
+      "zoo",
+      "seed bank"
+     ]
+    },
+    {
+     "text": "Supporting measures: laws / education",
+     "marks": 2,
+     "keywords": [
+      "law",
+      "education"
+     ]
+    }
+   ],
+   "samples": {},
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "ask": [
+  {
+   "id": "demo-ask-u8-1",
+   "topic_code": "bio-8.1",
+   "question": "Why is energy lost between trophic levels?",
+   "aliases": [
+    "energy flow food chain"
+   ],
+   "keywords": [
+    "energy",
+    "trophic level",
+    "food chain"
+   ],
+   "answer": "At each trophic level energy is lost as heat from respiration, in faeces and urine, and in parts that are not eaten. Only about 10% is passed on to the next level.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 8.1: Ecosystem structure and energy flow"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u8-2",
+   "topic_code": "bio-8.2",
+   "question": "What is nitrogen fixation?",
+   "aliases": [
+    "nitrogen cycle fixation"
+   ],
+   "keywords": [
+    "nitrogen fixation",
+    "nitrogen cycle",
+    "rhizobium"
+   ],
+   "answer": "Nitrogen fixation is the conversion of nitrogen gas into ammonia or other usable compounds. It is done by bacteria such as Rhizobium in legume root nodules, by free-living bacteria, by lightning and by the industrial Haber process.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 8.2: Biogeochemical cycles"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u8-3",
+   "topic_code": "bio-8.6",
+   "question": "What are the threats to biodiversity?",
+   "aliases": [
+    "biodiversity loss"
+   ],
+   "keywords": [
+    "biodiversity",
+    "threat",
+    "habitat"
+   ],
+   "answer": "The main threats are habitat loss and fragmentation, overexploitation, invasive alien species, pollution and climate change.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 8.6: Biodiversity and its threats"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u8-4",
+   "topic_code": "bio-8.7",
+   "question": "What causes eutrophication?",
+   "aliases": [
+    "eutrophication"
+   ],
+   "keywords": [
+    "eutrophication",
+    "algal bloom",
+    "fertiliser"
+   ],
+   "answer": "Excess nitrates and phosphates, often from fertilisers or sewage, cause algal blooms. When the algae die, bacteria decompose them and use up the oxygen, so fish and other animals die.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 8.7: Global environmental problems"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-ask-u8-5",
+   "topic_code": "bio-8.8",
+   "question": "What is the difference between in situ and ex situ conservation?",
+   "aliases": [
+    "conservation methods"
+   ],
+   "keywords": [
+    "conservation",
+    "in situ",
+    "ex situ"
+   ],
+   "answer": "In situ conservation protects species in their natural habitats, such as national parks. Ex situ conservation protects them outside their habitats, such as in zoos, botanical gardens and seed banks.",
+   "sources": [
+    {
+     "title": "A/L Biology syllabus (2025), topic 8.8: Conservation of biodiversity"
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "uploads": [
+  {
+   "id": "demo-upload-u8-1",
+   "topic_code": "bio-8.2",
+   "title": "Nutrient cycles",
+   "aliases": [
+    "nitrogen cycle notes",
+    "carbon cycle notes"
+   ],
+   "keywords": [
+    "cycle",
+    "nitrogen",
+    "carbon",
+    "ecosystem"
+   ],
+   "summary": "These notes explain how carbon and nitrogen cycle through ecosystems and the role of microorganisms in each step.",
+   "key_points": [
+    "Photosynthesis and respiration drive the carbon cycle",
+    "Rhizobium fixes nitrogen in root nodules",
+    "Nitrosomonas and Nitrobacter carry out nitrification",
+    "Denitrification returns N2 to the air"
+   ],
+   "source": "authored",
+   "reviewed": false
+  }
+ ],
+ "visuals": [
+  {
+   "id": "demo-visual-u8-1",
+   "topic_code": "bio-8.2",
+   "title": "The nitrogen cycle",
+   "aliases": [
+    "nitrogen cycle"
+   ],
+   "keywords": [
+    "nitrogen",
+    "cycle",
+    "nitrification",
+    "fixation",
+    "bacteria"
+   ],
+   "kind": "flowchart",
+   "alt_text": "Main steps of the nitrogen cycle.",
+   "image": "assets/demo/visuals/u8_nitrogen.png",
+   "width": 1000,
+   "height": 750,
+   "style": "flat_colour",
+   "labels": [
+    {
+     "number": 1,
+     "name": "Nitrogen gas (N2)",
+     "description": "In the atmosphere",
+     "x": 0.364,
+     "y": 0.144
+    },
+    {
+     "number": 2,
+     "name": "Fixation",
+     "description": "Rhizobium, lightning",
+     "x": 0.663,
+     "y": 0.319
+    },
+    {
+     "number": 3,
+     "name": "Ammonium",
+     "description": "Also from decomposers",
+     "x": 0.663,
+     "y": 0.668
+    },
+    {
+     "number": 4,
+     "name": "Nitrite",
+     "description": "Nitrosomonas",
+     "x": 0.364,
+     "y": 0.843
+    },
+    {
+     "number": 5,
+     "name": "Nitrate",
+     "description": "Nitrobacter; taken up by plants",
+     "x": 0.065,
+     "y": 0.668
+    },
+    {
+     "number": 6,
+     "name": "Denitrification",
+     "description": "Back to N2",
+     "x": 0.065,
+     "y": 0.319
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  },
+  {
+   "id": "demo-visual-u8-2",
+   "topic_code": "bio-8.1",
+   "title": "Energy flow in a food chain",
+   "aliases": [
+    "food chain",
+    "energy pyramid"
+   ],
+   "keywords": [
+    "food chain",
+    "energy",
+    "trophic",
+    "producer",
+    "consumer"
+   ],
+   "kind": "flowchart",
+   "alt_text": "Energy passed along trophic levels.",
+   "image": "assets/demo/visuals/u8_foodchain.png",
+   "width": 1000,
+   "height": 750,
+   "style": "flat_colour",
+   "labels": [
+    {
+     "number": 1,
+     "name": "Sun",
+     "description": "Light energy",
+     "x": 0.054,
+     "y": 0.196
+    },
+    {
+     "number": 2,
+     "name": "Producer",
+     "description": "Grass fixes energy",
+     "x": 0.054,
+     "y": 0.472
+    },
+    {
+     "number": 3,
+     "name": "Primary consumer",
+     "description": "Grasshopper, ~10%",
+     "x": 0.054,
+     "y": 0.748
+    },
+    {
+     "number": 4,
+     "name": "Secondary consumer",
+     "description": "Frog, ~10%",
+     "x": 0.534,
+     "y": 0.196
+    },
+    {
+     "number": 5,
+     "name": "Tertiary consumer",
+     "description": "Snake, ~10%",
+     "x": 0.534,
+     "y": 0.472
+    }
+   ],
+   "source": "authored",
+   "reviewed": false
+  }
+ ]
+}

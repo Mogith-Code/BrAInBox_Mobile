@@ -13,7 +13,17 @@ Future<void> _frames(WidgetTester tester, [int n = 20]) async {
   }
 }
 
+/// The Notes tab opens on Government notes. These topics have no book, so
+/// the empty state offers a button to AI notes.
+Future<void> _showAiNotes(WidgetTester tester) async {
+  final button = find.text('Open AI notes');
+  if (button.evaluate().isEmpty) return;
+  await tester.tap(button);
+  await tester.pumpAndSettle();
+}
+
 Future<void> _openSheet(WidgetTester tester, String topicId) async {
+  await _showAiNotes(tester);
   await tester.tap(find.text('Generate notes'));
   await tester.pumpAndSettle();
   expect(find.text('Generate'), findsOneWidget);
@@ -26,6 +36,7 @@ void main() {
       repository: fastMock(),
       initialLocation: AppRoutes.topicPath('t-pedigree'),
     );
+    await _showAiNotes(tester);
     expect(find.text('No notes yet'), findsOneWidget);
     await _openSheet(tester, 't-pedigree');
 

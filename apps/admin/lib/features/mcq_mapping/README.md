@@ -5,7 +5,7 @@
 | **Owner** | Udith (`@udith`) |
 | **App** | admin portal (`apps/admin`) |
 | **Purpose** | Tag the misconception behind each wrong MCQ option. |
-| **Jira epic** | `BRN-??` *(TODO: add the epic key)* |
+| **Jira epic** | `BRN-??` *(TODO(udith): add the epic key)* |
 | **Git branch** | `feature/admin-mcq-mapping` (tickets: `feature/admin-mcq-mapping/BRN-xx-short-name`) |
 
 ## Screens

@@ -16,13 +16,16 @@ import '../../../../app/routes.dart';
 };
 
 /// Opens the screen a recommendation or plan item points at.
+///
+/// Next steps and Study plan are full-screen pages above the bottom tabs.
+/// Quiz setup and topics live inside the tabs, so they must open with `go`:
+/// a `push` would put the tab shell on the stack twice and crash.
 Future<void> openAction(
   BuildContext context, {
   required String? action,
   required Map<String, dynamic> target,
   String? topicId,
   String? conceptId,
-  String? recommendationId,
 }) async {
   final topic = topicId ?? target['topic_id'] as String?;
   final concept = conceptId ?? target['concept_id'] as String?;
@@ -32,21 +35,17 @@ Future<void> openAction(
     case 'view_visual' when topic != null:
       await context.push(AppRoutes.visualsPath(topic));
     case 'practice_quiz' || 'reassess':
-      await context.push(AppRoutes.quizSetupPath(conceptId: concept));
-      if (context.mounted && recommendationId != null) {
-        // Back from the quiz: show the before / after.
-        await context.push(AppRoutes.reassessmentPath(recommendationId));
-      }
+      context.go(AppRoutes.quizSetupPath(conceptId: concept));
     case 'watch_video':
       final url = Uri.tryParse('${target['url'] ?? ''}');
       if (url != null && url.hasScheme) {
         await launchUrl(url, mode: LaunchMode.externalApplication);
       } else if (topic != null && context.mounted) {
-        await context.push(AppRoutes.topicPath(topic));
+        context.go(AppRoutes.topicPath(topic));
       }
     case 'retry_answer':
       await context.push(AppRoutes.writtenQuestions);
     default:
-      if (topic != null) await context.push(AppRoutes.topicPath(topic));
+      if (topic != null) context.go(AppRoutes.topicPath(topic));
   }
 }

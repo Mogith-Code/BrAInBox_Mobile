@@ -2,6 +2,8 @@ import 'package:brainbox_core/brainbox_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../notes/presentation/official_notes_view.dart'
+    show NotesZoomNotification;
 import '../application/topic_controller.dart';
 import '../domain/syllabus_models.dart';
 import 'topic_tabs.dart';
@@ -82,9 +84,15 @@ class _TopicShellState extends ConsumerState<_TopicShell>
     });
   }
 
+  /// True while the student pinches or is zoomed into a government notes
+  /// page, so a sideways finger move pans the page instead of changing tab.
+  bool _swipeLocked = false;
+
   void _onTabChanged() {
     // Rebuild once the tab settles, to show / hide the Ask button.
-    if (!_tabs.indexIsChanging) setState(() {});
+    if (!_tabs.indexIsChanging) {
+      setState(() => _swipeLocked = false);
+    }
   }
 
   @override
@@ -215,12 +223,21 @@ class _TopicShellState extends ConsumerState<_TopicShell>
               tabs: [for (final tab in TopicTab.values) Tab(text: tab.label)],
             ),
             Expanded(
-              child: TabBarView(
-                controller: _tabs,
-                children: [
-                  for (final tab in TopicTab.values)
-                    TopicTabBody(tab: tab, detail: detail),
-                ],
+              child: NotificationListener<NotesZoomNotification>(
+                onNotification: (zoom) {
+                  setState(() => _swipeLocked = zoom.active);
+                  return true;
+                },
+                child: TabBarView(
+                  controller: _tabs,
+                  physics: _swipeLocked
+                      ? const NeverScrollableScrollPhysics()
+                      : null,
+                  children: [
+                    for (final tab in TopicTab.values)
+                      TopicTabBody(tab: tab, detail: detail),
+                  ],
+                ),
               ),
             ),
           ],

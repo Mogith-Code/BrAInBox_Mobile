@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:brainbox_core/brainbox_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -9,8 +10,9 @@ import '../../../app/routes.dart';
 import '../application/exams_controller.dart';
 import '../domain/paper_models.dart';
 
-/// Answer letters, "A" = first option.
-const List<String> kOptionLetters = ['A', 'B', 'C', 'D', 'E'];
+/// Answer letter for option [index]: 0 = "A". Past "Z" it uses the number.
+String optionLetter(int index) =>
+    index < 26 ? String.fromCharCode(65 + index) : '${index + 1}';
 
 /// Status of one question in the palette.
 enum QuestionStatus {
@@ -95,21 +97,16 @@ class _ExamViewState extends ConsumerState<_ExamView>
     length: _types.length,
     vsync: this,
   );
+  late final Map<PaperQuestionType, ScrollController> _scrolls = {
+    for (final t in _types) t: ScrollController(),
+  };
   final Map<String, GlobalKey> _keys = {};
-  Timer? _timer;
-  int _elapsed = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      if (mounted) setState(() => _elapsed++);
-    });
-  }
 
   @override
   void dispose() {
-    _timer?.cancel();
+    for (final c in _scrolls.values) {
+      c.dispose();
+    }
     _tabs.dispose();
     super.dispose();
   }
@@ -121,24 +118,54 @@ class _ExamViewState extends ConsumerState<_ExamView>
         : QuestionStatus.unanswered;
   }
 
-  String get _clock {
-    final limit = widget.paper.durationMinutes;
-    final secs = limit == null ? _elapsed : limit * 60 - _elapsed;
-    final s = secs.abs();
-    final text =
-        '${s ~/ 3600}:${(s ~/ 60 % 60).toString().padLeft(2, '0')}:'
-        '${(s % 60).toString().padLeft(2, '0')}';
-    if (limit == null) return text;
-    return secs < 0 ? 'Over by $text' : '$text left';
-  }
-
   Future<void> _jumpTo(PaperQuestion q) async {
     Navigator.of(context).pop();
     _tabs.animateTo(_types.indexOf(q.type));
     await Future<void>.delayed(const Duration(milliseconds: 350));
-    final ctx = _keys[q.id]?.currentContext;
-    if (ctx != null && ctx.mounted) {
-      await Scrollable.ensureVisible(ctx, alignment: 0.1);
+    if (!mounted) return;
+    final card = _keys[q.id]?.currentContext?.findRenderObject();
+    final scroll = _scrolls[q.type]!;
+    if (card == null || !scroll.hasClients) return;
+    // Scrolls only this tab. Scrollable.ensureVisible would also move the
+    // horizontal TabBarView.
+    final target = RenderAbstractViewport.of(card)
+        .getOffsetToReveal(card, 0)
+        .offset
+        .clamp(
+          scroll.position.minScrollExtent,
+          scroll.position.maxScrollExtent,
+        );
+    await scroll.animateTo(
+      target,
+      duration: const Duration(milliseconds: 250),
+      curve: Curves.easeOut,
+    );
+  }
+
+  Future<void> _confirmLeave() async {
+    final leave = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Leave exam?'),
+        content: const Text('Your answers will be lost.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: const Text('Keep working'),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(backgroundColor: AppColors.error),
+            onPressed: () => Navigator.pop(ctx, true),
+            child: const Text('Leave'),
+          ),
+        ],
+      ),
+    );
+    if (leave != true || !mounted) return;
+    if (context.canPop()) {
+      context.pop();
+    } else {
+      context.go(AppRoutes.pastPapers);
     }
   }
 
@@ -234,85 +261,142 @@ class _ExamViewState extends ConsumerState<_ExamView>
     final s = ref.watch(examAttemptControllerProvider(p.id));
     final ctrl = ref.read(examAttemptControllerProvider(p.id).notifier);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(p.title, overflow: TextOverflow.ellipsis),
-        actions: [
-          IconButton(
-            tooltip: 'Question palette',
-            icon: const Icon(Icons.grid_view_rounded),
-            onPressed: _showPalette,
-          ),
-        ],
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(76),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  const SizedBox(width: AppSpacing.lg),
-                  const Icon(Icons.timer_outlined, size: 18),
-                  const SizedBox(width: AppSpacing.xs),
-                  Text(_clock),
-                  const Spacer(),
-                  if (p.isAiGenerated) const AiBadge(),
-                  const SizedBox(width: AppSpacing.lg),
-                ],
-              ),
-              TabBar(
-                controller: _tabs,
-                isScrollable: _types.length > 2,
-                tabs: [for (final t in _types) Tab(text: t.label)],
-              ),
-            ],
-          ),
-        ),
-      ),
-      body: TabBarView(
-        controller: _tabs,
-        children: [
-          for (final t in _types)
-            ListView(
-              padding: const EdgeInsets.all(AppSpacing.lg),
+    return PopScope(
+      canPop: !s.hasProgress && !s.submitting,
+      onPopInvokedWithResult: (didPop, _) {
+        if (didPop || s.submitting) return;
+        _confirmLeave();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(p.title, overflow: TextOverflow.ellipsis),
+          actions: [
+            IconButton(
+              tooltip: 'Question palette',
+              icon: const Icon(Icons.grid_view_rounded),
+              onPressed: _showPalette,
+            ),
+          ],
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(76),
+            child: Column(
               children: [
-                for (final q in p.ofType(t))
-                  _QuestionCard(
-                    key: _keys.putIfAbsent(q.id, GlobalKey.new),
-                    number: p.questions.indexOf(q) + 1,
-                    question: q,
-                    status: _status(s, q.id),
-                    selected: s.mcq[q.id],
-                    text: s.written[q.id] ?? '',
-                    onSelect: (l) => ctrl.selectOption(q.id, l),
-                    onText: (v) => ctrl.setWritten(q.id, v),
-                    onFlag: () => ctrl.toggleFlag(q.id),
-                  ),
+                Row(
+                  children: [
+                    const SizedBox(width: AppSpacing.lg),
+                    const Icon(Icons.timer_outlined, size: 18),
+                    const SizedBox(width: AppSpacing.xs),
+                    _ExamClock(limitMinutes: p.durationMinutes),
+                    const Spacer(),
+                    if (p.isAiGenerated) const AiBadge(),
+                    const SizedBox(width: AppSpacing.lg),
+                  ],
+                ),
+                TabBar(
+                  controller: _tabs,
+                  isScrollable: _types.length > 2,
+                  tabs: [for (final t in _types) Tab(text: t.label)],
+                ),
               ],
             ),
-        ],
-      ),
-      bottomNavigationBar: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.lg),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (s.error != null) ...[
-                ErrorBanner(message: s.error!),
-                const SizedBox(height: AppSpacing.sm),
-              ],
-              AppButton(
-                label: 'Submit paper',
-                icon: Icons.send_rounded,
-                isLoading: s.submitting,
-                onPressed: s.submitting ? null : _confirmSubmit,
+          ),
+        ),
+        body: TabBarView(
+          controller: _tabs,
+          children: [
+            for (final t in _types)
+              // A Column keeps every card built, so the palette can reach
+              // any question. Papers have about 60 questions at most.
+              SingleChildScrollView(
+                key: PageStorageKey<String>('exam-tab-${t.name}'),
+                controller: _scrolls[t],
+                padding: const EdgeInsets.all(AppSpacing.lg),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    for (final q in p.ofType(t))
+                      _QuestionCard(
+                        key: _keys.putIfAbsent(q.id, GlobalKey.new),
+                        number: p.questions.indexOf(q) + 1,
+                        question: q,
+                        status: _status(s, q.id),
+                        selected: s.mcq[q.id],
+                        text: s.written[q.id] ?? '',
+                        onSelect: (l) => ctrl.selectOption(q.id, l),
+                        onText: (v) => ctrl.setWritten(q.id, v),
+                        onFlag: () => ctrl.toggleFlag(q.id),
+                      ),
+                  ],
+                ),
               ),
-            ],
+          ],
+        ),
+        bottomNavigationBar: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(AppSpacing.lg),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (s.error != null) ...[
+                  ErrorBanner(message: s.error!),
+                  const SizedBox(height: AppSpacing.sm),
+                ],
+                AppButton(
+                  label: 'Submit paper',
+                  icon: Icons.send_rounded,
+                  isLoading: s.submitting,
+                  onPressed: s.submitting ? null : _confirmSubmit,
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
+}
+
+/// Ticks on its own so the question cards do not rebuild every second.
+class _ExamClock extends StatefulWidget {
+  const _ExamClock({required this.limitMinutes});
+
+  final int? limitMinutes;
+
+  @override
+  State<_ExamClock> createState() => _ExamClockState();
+}
+
+class _ExamClockState extends State<_ExamClock> {
+  Timer? _timer;
+  int _elapsed = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      setState(() => _elapsed++);
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  String get _label {
+    final limit = widget.limitMinutes;
+    final secs = limit == null ? _elapsed : limit * 60 - _elapsed;
+    final s = secs.abs();
+    final text =
+        '${s ~/ 3600}:${(s ~/ 60 % 60).toString().padLeft(2, '0')}:'
+        '${(s % 60).toString().padLeft(2, '0')}';
+    if (limit == null) return text;
+    return secs < 0 ? 'Over by $text' : '$text left';
+  }
+
+  @override
+  Widget build(BuildContext context) => Text(_label);
 }
 
 class _QuestionCard extends StatelessWidget {
@@ -397,15 +481,15 @@ class _QuestionCard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: AppSpacing.sm),
                   child: McqOptionTile(
-                    letter: o.label.isEmpty ? kOptionLetters[i] : o.label,
+                    letter: o.label.isEmpty ? optionLetter(i) : o.label,
                     text: o.text,
                     state:
                         selected ==
-                            (o.label.isEmpty ? kOptionLetters[i] : o.label)
+                            (o.label.isEmpty ? optionLetter(i) : o.label)
                         ? McqOptionState.selected
                         : McqOptionState.normal,
                     onTap: () =>
-                        onSelect(o.label.isEmpty ? kOptionLetters[i] : o.label),
+                        onSelect(o.label.isEmpty ? optionLetter(i) : o.label),
                   ),
                 )
             else
